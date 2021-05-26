@@ -1,0 +1,5 @@
+displayName = Destiny
+author = MikhailMCraft & Co.
+version = 0.0.8.0
+buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*
+homepage = https://discord.gg/ZrjsCq96zM

@@ -1,0 +1,27 @@
+Adds items and such from the Bungie video game Destiny and its sequel Destiny 2. Currently a work in progress, join the official Discord over at https://discord.gg/ZrjsCq96zM to get in on the conversation!
+
+Developers
+---------
+Cuno - Programmer
+Brent dya - Spriter
+luzza - Spriter
+
+Changelogs have been moved to the Discord, join it if you want to see the content in the latest updates
+
+Support us on Patreon: https://patreon.com/destinymod
+
+The Guardian Games are on! :party:
+Added the Podium, purchasable from Zavala for the duration of the Games
+Added Laurels, which drop from enemies during the Games with a 1/15 chance while you have any class mark equipped
+Added Titan, Warlock, and Hunter-themed decor
+Resprited Raze Lighter, Bolt Caster, Ace of Spades, and Golden Gun
+Added a new config toggle that changes gameplay
+Fixed a crash that could occur if you attempted to reforge Golden Gun
+Golden Gun now only allows you to shoot 6 times before cancelling your super
+Fixed issue where Ghost was not actually a light pet
+Fixed issue where some of Xur's prices were incorrect
+Changed item rarity of Gambit Dye
+Changed weapons which Drifter and Zavala use to defend themselves
+Saving & Exiting the game while an item is in the Cryptarch's decryption slot will now return the item to you
+
+© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
