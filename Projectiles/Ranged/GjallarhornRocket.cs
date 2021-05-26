@@ -10,6 +10,8 @@ namespace TheDestinyMod.Projectiles.Ranged
     {
         public override string Texture => "Terraria/Projectile_" + ProjectileID.RocketI;
 
+		private bool target = false;
+
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.RocketI);
             aiType = ProjectileID.RocketI;
@@ -26,24 +28,14 @@ namespace TheDestinyMod.Projectiles.Ranged
 		}
 
         public override void AI() {
+			target = false;
 			if (projectile.localAI[0] == 0f) {
 				AdjustMagnitude(ref projectile.velocity);
 				projectile.localAI[0] = 1f;
 			}
 			Vector2 move = Vector2.Zero;
 			float distance = 400f;
-			bool target = false;
-			for (int k = 0; k < 200; k++) {
-				if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5 && Main.npc[k].damage > 0) {
-					Vector2 newMove = Main.npc[k].Center - projectile.Center;
-					float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-					if (distanceTo < distance) {
-						move = newMove;
-						distance = distanceTo;
-						target = true;
-					}
-				}
-			}
+			target = TheDestinyMod.HomeIn(distance, projectile, ref move);
 			if (target) {
 				AdjustMagnitude(ref move);
 				projectile.velocity = (10 * projectile.velocity + move) / 11f;
@@ -51,10 +43,12 @@ namespace TheDestinyMod.Projectiles.Ranged
 			}
 		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            for (int i = 0; i < 6; i++) {
-				Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
-				Projectile.NewProjectile(projectile.position, velocity, ModContent.ProjectileType<GjallarhornMiniRocket>(), damage/5, 0, projectile.owner);
+        public override void OnHitNPC(NPC uselessUnusedVariableThatIDontCareAboutButVisualStudioComplainsThatItConflictsWithTheOtherPreviousVariableThatWasDefinedSoIHaveToChangeItToThisUnusuallyLongName, int damage, float knockback, bool crit) {
+			if (target) {
+				for (int i = 0; i < 6; i++) {
+					Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
+					Projectile.NewProjectile(projectile.position, velocity, ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, projectile.owner);
+				}
 			}
         }
 

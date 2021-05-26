@@ -1,5 +1,8 @@
 displayName = Destiny
 author = MikhailMCraft & Co.
 version = 0.0.8.0
-buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*
+buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*
+hideCode = true
+hideResources = true
+includeSource = false
 homepage = https://discord.gg/ZrjsCq96zM

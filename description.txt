@@ -5,8 +5,9 @@ Developers
 Cuno - Programmer
 Brent dya - Spriter
 luzza - Spriter
+[c/FF1919:We are currently looking for spriters or programmers,] if you are either and would like to help in the making of this mod please join the Discord and contact Cuno#3435
 
-Changelogs have been moved to the Discord, join it if you want to see the content in the latest updates
+Changelogs have been moved to the Discord, join it if you would like to see the content in the latest updates
 
 Support us on Patreon: https://patreon.com/destinymod
 
@@ -23,5 +24,7 @@ Fixed issue where some of Xur's prices were incorrect
 Changed item rarity of Gambit Dye
 Changed weapons which Drifter and Zavala use to defend themselves
 Saving & Exiting the game while an item is in the Cryptarch's decryption slot will now return the item to you
+Gjallarhorn now splits into mini rockets only if it was homing onto an NPC
+All homing projectiles will now only home in on enemies they can hit
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

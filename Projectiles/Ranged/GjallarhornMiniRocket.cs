@@ -37,18 +37,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 			}
 			Vector2 move = Vector2.Zero;
 			float distance = 400f;
-			bool target = false;
-			for (int k = 0; k < 200; k++) {
-				if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5 && Main.npc[k].damage > 0) {
-					Vector2 newMove = Main.npc[k].Center - projectile.Center;
-					float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-					if (distanceTo < distance) {
-						move = newMove;
-						distance = distanceTo;
-						target = true;
-					}
-				}
-			}
+			bool target = TheDestinyMod.HomeIn(distance, projectile, ref move);
 			if (target) {
 				AdjustMagnitude(ref move);
 				projectile.velocity = (10 * projectile.velocity + move) / 11f;
