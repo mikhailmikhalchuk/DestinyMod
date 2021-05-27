@@ -33,8 +33,6 @@ namespace TheDestinyMod.Items
             Lighting.AddLight(item.Center, Color.WhiteSmoke.ToVector3() * 0.55f * Main.essScale);
         }
 
-		public override bool CanBurnInLava() {
-			return true;
-		}
+		public override bool CanBurnInLava() => true;
 	}
 }

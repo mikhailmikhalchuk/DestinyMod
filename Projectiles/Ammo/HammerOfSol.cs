@@ -54,9 +54,9 @@ namespace TheDestinyMod.Projectiles.Ammo
     {
         public override string Texture => "TheDestinyMod/Projectiles/Ammo/SunspotSummon";
 
-        internal int turnProgress = 1;
+        private int turnProgress = 1;
 
-        internal int frameSkip = 0;
+        private int frameSkip = 0;
 
         public override void SetDefaults() {
             projectile.friendly = true;

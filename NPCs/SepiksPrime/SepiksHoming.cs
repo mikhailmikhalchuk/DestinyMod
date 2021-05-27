@@ -9,7 +9,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
 {
     public class SepiksHoming : ModNPC
     {
-        internal int currentFrame = 1;
+        private int currentFrame = 1;
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Homing Eye Blast");

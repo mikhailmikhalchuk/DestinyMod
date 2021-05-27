@@ -10,11 +10,11 @@ namespace TheDestinyMod.Projectiles
 {
     public class VoidSeeker : ModProjectile
     {
-        internal int turnProgress = 1;
+        private int turnProgress = 1;
 
-        internal int frameSkip = 0;
+        private int frameSkip;
 
-        internal bool dye = false;
+        private bool dye;
 
         public override void SetStaticDefaults() {
             ProjectileID.Sets.Homing[projectile.type] = true;
@@ -41,7 +41,7 @@ namespace TheDestinyMod.Projectiles
                 }
                 Vector2 move = Vector2.Zero;
                 float distance = 200f;
-                bool target = TheDestinyMod.HomeIn(distance, projectile, ref move);
+                bool target = DestinyHelper.HomeInOnNPC(distance, projectile, ref move);
                 if (target) {
                     AdjustMagnitude(ref move);
                     projectile.velocity = (10 * projectile.velocity + move) / 11f;

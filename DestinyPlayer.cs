@@ -19,12 +19,12 @@ namespace TheDestinyMod
 	{
 		public int motesGiven;
 		public int drifterRewards;
-		public int zavalaBounty = 0;
-		public int zavalaEnemies = 0;
+		public int zavalaBounty;
+		public int zavalaEnemies;
 		public int pCharge;
 		public int monteMethod;
-		public int superChargeCurrent = 0;
-		public int superActiveTime = 0;
+		public int superChargeCurrent;
+		public int superActiveTime;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -32,19 +32,19 @@ namespace TheDestinyMod
 		public bool boughtRare;
 		public bool ghostPet;
 		public bool servitorMinion;
-		public bool releasedMouseLeft = false;
-		public bool notifiedThatSuperIsReady = false;
+		public bool releasedMouseLeft;
+		public bool notifiedThatSuperIsReady;
 		public bool titan;
 		public bool warlock;
 		public bool hunter;
 		public bool exoticEquipped;
 
-		public static bool gorgonsHaveSpotted = false;
+		public static bool gorgonsHaveSpotted;
 
-		internal int superRegenTimer = 0;
-		internal int trinaryCounter = -1;
-		internal int timesClicked = 0;
-		internal int spottedIntensity = 60;
+		private int superRegenTimer = 0;
+		private int trinaryCounter = -1;
+		private int timesClicked = 0;
+		private int spottedIntensity = 60;
 
 		public override void ResetEffects() {
             ghostPet = false;
@@ -242,11 +242,11 @@ namespace TheDestinyMod
 			if (superActiveTime > 0) {
 				damage /= 4;
 			}
-            return true;
+			return true;
         }
 
         public override void PostUpdateMiscEffects() {
-			if (!notifiedThatSuperIsReady && superChargeCurrent == 100 && !Main.dedServ && DestinyConfig.Instance.notifyOnSuper && superActiveTime == 0) {
+			if (!notifiedThatSuperIsReady && superChargeCurrent == 100 && !Main.dedServ && DestinyConfig.Instance.notifyOnSuper && superActiveTime == 0 && !player.dead) {
 				Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperCharge"), new Color(255, 255, 0));
 				notifiedThatSuperIsReady = true;
 			}
@@ -271,5 +271,5 @@ namespace TheDestinyMod
 				}
 			}
         }
-	}
+    }
 }

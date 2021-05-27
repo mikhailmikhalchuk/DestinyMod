@@ -10,17 +10,17 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
     {
         public override string Texture => "Terraria/NPC_" + NPCID.DemonEye;
 
-        internal bool alreadySummoned = false;
+        private bool alreadySummoned = false;
 
-        internal int timesShown;
+        private int timesShown;
 
-        internal int counter;
+        private int counter;
 
-        internal List<int> oraclePositions = new List<int>();
+        private List<int> oraclePositions = new List<int>();
 
-        internal List<int> alreadyCalled = new List<int>();
+        private List<int> alreadyCalled = new List<int>();
 
-        internal List<int> orderOfTheOracles = new List<int>();
+        private List<int> orderOfTheOracles = new List<int>();
 
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DemonEye);

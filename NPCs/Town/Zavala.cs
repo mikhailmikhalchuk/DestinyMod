@@ -14,7 +14,7 @@ namespace TheDestinyMod.NPCs.Town
 	[AutoloadHead]
 	public class Zavala : ModNPC
 	{
-		internal bool hasClosedCeremony = false;
+		private bool hasClosedCeremony = false;
 
 		public override string Texture => "TheDestinyMod/NPCs/Town/Zavala";
 
@@ -184,9 +184,7 @@ namespace TheDestinyMod.NPCs.Town
 			}
 		}
 
-		public override bool CanGoToStatue(bool toKingStatue) {
-			return true;
-		}
+		public override bool CanBurnInLava() => true;
 
 		public override void OnGoToStatue(bool toKingStatue) {
 			if (Main.netMode == NetmodeID.Server) {

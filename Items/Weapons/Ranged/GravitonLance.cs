@@ -9,7 +9,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 {
     public class GravitonLance : ModItem
 	{
-		internal int shot;
+		private int shot;
 
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("Second shot of a burst deals double damage\nKills with this bullet summon a seeking projectile\n\"Think of space-time as a tapestry on a loom. This weapon is the needle.\"");

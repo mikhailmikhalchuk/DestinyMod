@@ -209,9 +209,7 @@ namespace TheDestinyMod.NPCs.Town
             }
 		}
 
-		public override bool CanGoToStatue(bool toKingStatue) {
-			return true;
-		}
+		public override bool CanBurnInLava() => true;
 
 		public override void OnGoToStatue(bool toKingStatue) {
 			if (Main.netMode == NetmodeID.Server) {

@@ -24,9 +24,5 @@ namespace TheDestinyMod.Items.Materials
 			scale *= 0.5f;
             return true;
         }
-
-		public override bool CanBurnInLava() {
-			return true;
-		}
 	}
 }

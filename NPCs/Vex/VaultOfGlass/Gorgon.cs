@@ -9,15 +9,11 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
     {
         public override string Texture => "Terraria/NPC_" + NPCID.DemonEye;
 
-        internal int stepsTaken;
+        private int stepsTaken;
 
-        internal int switcher = 0;
+        private bool forward = true;
 
-        internal bool otherSwitch = false;
-
-        internal bool forward = true;
-
-        internal int timeUntilEveryoneIsDead;
+        private int timeUntilEveryoneIsDead;
 
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DemonEye);

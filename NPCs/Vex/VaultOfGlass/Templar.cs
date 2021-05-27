@@ -7,9 +7,9 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
 {
     public class Templar : ModNPC
     {
-        internal int counter;
+        private int counter;
 
-        internal float progress = 0;
+        private float progress = 0;
 
         public override string Texture => "Terraria/NPC_" + NPCID.DemonEye;
 

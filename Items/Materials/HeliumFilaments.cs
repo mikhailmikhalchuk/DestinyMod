@@ -16,9 +16,5 @@ namespace TheDestinyMod.Items.Materials
 			item.maxStack = 999;
 			item.value = Item.buyPrice(0, 0, 1, 0);
 		}
-
-		public override bool CanBurnInLava() {
-			return true;
-		}
 	}
 }

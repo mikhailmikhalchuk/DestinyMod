@@ -24,9 +24,7 @@ namespace TheDestinyMod.Items.BossBags
 			item.expert = true;
 		}
 
-		public override bool CanRightClick() {
-			return true;
-		}
+		public override bool CanRightClick() => true;
 
 		public override void OpenBossBag(Player player) {
 			player.TryGettingDevArmor();

@@ -47,8 +47,6 @@ namespace TheDestinyMod.Items
 			return false;
 		}
 
-		public override bool CanBurnInLava() {
-			return true;
-		}
+		public override bool CanBurnInLava() => true;
 	}
 }

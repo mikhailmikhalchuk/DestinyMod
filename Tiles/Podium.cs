@@ -15,10 +15,10 @@ namespace TheDestinyMod.Tiles
 {
 	public class Podium : ModTile
 	{
-		internal string gameClass;
-		internal int toDeposit = 0;
-		internal int cooldown = 0;
-		internal float num99;
+		private string gameClass;
+		private int toDeposit;
+		private int cooldown;
+		private float num99;
 
 		public override void SetDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -33,7 +33,7 @@ namespace TheDestinyMod.Tiles
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
-			TileObjectData.addTile(Type);
+			TileObjectData.addTile(Type); 
 			dustType = 63;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Podium");

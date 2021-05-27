@@ -19,9 +19,7 @@ namespace TheDestinyMod.Items
             item.rare = ItemRarityID.Gray;
         }
 
-        public override bool ItemSpace(Player player) {
-            return true;
-        }
+        public override bool ItemSpace(Player player) => true;
 
         public override bool CanPickup(Player player) {
             DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
