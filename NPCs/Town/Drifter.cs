@@ -209,9 +209,11 @@ namespace TheDestinyMod.NPCs.Town
             }
 		}
 
-		public override bool CanBurnInLava() => true;
+        public override bool CanGoToStatue(bool toKingStatue) {
+			return true;
+        }
 
-		public override void OnGoToStatue(bool toKingStatue) {
+        public override void OnGoToStatue(bool toKingStatue) {
 			if (Main.netMode == NetmodeID.Server) {
 				ModPacket packet = mod.GetPacket();
 				packet.Write((byte)npc.whoAmI);

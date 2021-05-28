@@ -16,8 +16,7 @@ namespace TheDestinyMod.Buffs
 
         public override void Update(Player player, ref int buffIndex) {
             player.meleeDamageMult = 1.25f;
-            DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
-			dPlayer.monteMethod--;
+			player.GetModPlayer<DestinyPlayer>().monteMethod--;
         }
 	}
 }

@@ -1,6 +1,6 @@
 displayName = Destiny
 author = MikhailMCraft & Co.
-version = 0.0.8.0
+version = 0.0.8.1
 buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*
 hideCode = true
 hideResources = true

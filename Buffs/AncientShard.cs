@@ -15,8 +15,7 @@ namespace TheDestinyMod.Buffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
-            dPlayer.ancientShard = true;
+            player.GetModPlayer<DestinyPlayer>().ancientShard = true;
         }
     }
 }
