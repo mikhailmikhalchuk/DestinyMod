@@ -25,8 +25,8 @@ namespace TheDestinyMod.NPCs.Town
 			NPCID.Sets.ExtraFramesCount[npc.type] = 9;
 			NPCID.Sets.AttackFrameCount[npc.type] = 4;
 			NPCID.Sets.DangerDetectRange[npc.type] = 700;
-			NPCID.Sets.AttackType[npc.type] = 0;
-			NPCID.Sets.AttackTime[npc.type] = 90;
+			NPCID.Sets.AttackType[npc.type] = 1;
+			NPCID.Sets.AttackTime[npc.type] = 30;
 			NPCID.Sets.AttackAverageChance[npc.type] = 30;
 			NPCID.Sets.HatOffsetY[npc.type] = 4;
 		}
@@ -184,7 +184,9 @@ namespace TheDestinyMod.NPCs.Town
 			}
 		}
 
-		public override bool CanBurnInLava() => true;
+		public override bool CanGoToStatue(bool toKingStatue) {
+			return true;
+		}
 
 		public override void OnGoToStatue(bool toKingStatue) {
 			if (Main.netMode == NetmodeID.Server) {
@@ -220,7 +222,7 @@ namespace TheDestinyMod.NPCs.Town
 		}
 
         public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness) {
-			scale = 0.5f;
+			scale = 0.7f;
 			item = ModContent.ItemType<TheThirdAxiom>();
 			closeness = 20;
 		}

@@ -15,16 +15,5 @@ The Guardian Games are on! :party:
 Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/15 chance while you have any class mark equipped
 Added Titan, Warlock, and Hunter-themed decor
-Resprited Raze Lighter, Bolt Caster, Ace of Spades, and Golden Gun
-Added a new config toggle that changes gameplay
-Fixed a crash that could occur if you attempted to reforge Golden Gun
-Golden Gun now only allows you to shoot 6 times before cancelling your super
-Fixed issue where Ghost was not actually a light pet
-Fixed issue where some of Xur's prices were incorrect
-Changed item rarity of Gambit Dye
-Changed weapons which Drifter and Zavala use to defend themselves
-Saving & Exiting the game while an item is in the Cryptarch's decryption slot will now return the item to you
-Gjallarhorn now splits into mini rockets only if it was homing onto an NPC
-All homing projectiles will now only home in on enemies they can hit
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

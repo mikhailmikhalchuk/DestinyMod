@@ -45,7 +45,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void OnHitNPC(NPC uselessUnusedVariableThatIDontCareAboutButVisualStudioComplainsThatItConflictsWithTheOtherPreviousVariableThatWasDefinedSoIHaveToChangeItToThisUnusuallyLongName, int damage, float knockback, bool crit) {
 			if (target) {
-				for (int i = 0; i < 6; i++) {
+				for (int i = 0; i < 5; i++) {
 					Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
 					Projectile.NewProjectile(projectile.position, velocity, ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, projectile.owner);
 				}

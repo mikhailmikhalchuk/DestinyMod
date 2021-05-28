@@ -326,13 +326,13 @@ namespace TheDestinyMod
                     if (item.IsAir) {
                         Main.LocalPlayer.inventory[slot] = clone;
                         Main.PlaySound(SoundID.Grab);
-                        continue;
+                        break;
                     }
                     else if (item.type == clone.type && ++item.stack != item.maxStack) {
                         clone.stack = item.stack;
                         Main.LocalPlayer.inventory[slot] = clone;
                         Main.PlaySound(SoundID.Grab);
-                        continue;
+                        break;
                     }
                     slot++;
                 }
