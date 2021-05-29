@@ -15,5 +15,13 @@ The Guardian Games are on! :party:
 Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/15 chance while you have any class mark equipped
 Added Titan, Warlock, and Hunter-themed decor
+--
+Significantly decreased the spawn rate of Microphasic Datalattice and Spinmetal
+Relic Iron can now be placed
+Removed Trinary System's use time buff
+Fixed Trinary System's tooltip
+Scaled Bottom Dollar down
+Made the Cryptarch's head smaller on the map
+Added a tribute to the Cryptarch
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

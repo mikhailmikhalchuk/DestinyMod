@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -11,7 +12,6 @@ namespace TheDestinyMod.Tiles
 	{
 		public override void SetDefaults() {
 			Main.tileFrameImportant[Type] = true;
-            animationFrameHeight = 56;
             disableSmartCursor = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.StyleHorizontal = true;
@@ -29,19 +29,11 @@ namespace TheDestinyMod.Tiles
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Main.tile[i, j];
-			Texture2D texture;
-			if (Main.canDrawColorTile(i, j)) {
-				texture = Main.tileAltTexture[Type, tile.color()];
-			}
-			else {
-				texture = Main.tileTexture[Type];
-			}
 			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen) {
 				zero = Vector2.Zero;
 			}
-			int height = tile.frameY % animationFrameHeight == 36 ? 18 : 16;
-			Main.spriteBatch.Draw(texture, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY, 16, height), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(Main.tileTexture[Type], new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.frameX, tile.frameY, 16, 16), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
             return false;
 		}
 		

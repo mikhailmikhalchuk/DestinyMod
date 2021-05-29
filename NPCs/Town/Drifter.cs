@@ -70,21 +70,22 @@ namespace TheDestinyMod.NPCs.Town
 		public override string GetChat() {
 			int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
 			int xur = NPC.FindFirstNPC(ModContent.NPCType<AgentOfNine>());
+			string gender = Main.LocalPlayer.Male ? "brother" : "sister";
 			List<string> dialogue = new List<string>();
 			if (taxCollector >= 0) {
 				int zavala = NPC.FindFirstNPC(ModContent.NPCType<Zavala>());
 				if (zavala >= 0) {
-					dialogue.Add($"Gah, what's with {Main.npc[taxCollector].GivenName}, {(Main.LocalPlayer.Male ? "brother" : "sister")}? He reminds me of ol' Zavala back at the Tower...what do you mean Zavala is here?!");
+					dialogue.Add($"Gah, what's with {Main.npc[taxCollector].GivenName}, {gender}? He reminds me of ol' Zavala back at the Tower...what do you mean Zavala is here?!");
 				}
 				else {
-					dialogue.Add($"Gah, what's with {Main.npc[taxCollector].GivenName}, {(Main.LocalPlayer.Male ? "brother" : "sister")}? He reminds me of ol' Zavala back at the Tower, always killing all the fun...");
+					dialogue.Add($"Gah, what's with {Main.npc[taxCollector].GivenName}, {gender}? He reminds me of ol' Zavala back at the Tower, always killing all the fun...");
 				}
 			}
 			if (xur >= 0) {
-				dialogue.Add($"Oh, no, no, no, that CREEP is here again. When will him and these...\"Nine\" stop botherin' us, {(Main.LocalPlayer.Male ? "brother" : "sister")}?");
+				dialogue.Add($"Oh, no, no, no, that CREEP is here again. When will him and these...\"Nine\" stop botherin' us, {gender}?");
 			}
 			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(6)) {
-				dialogue.Add($"Hey, {(Main.LocalPlayer.Male ? "brother" : "sister")}, wanna top off this party with some Gambit?");
+				dialogue.Add($"Hey, {gender}, wanna top off this party with some Gambit?");
 			}
 			if (Main.eclipse) {
 				dialogue.Add("What happened? Did the Taken Take the sun or somethin'?!");
@@ -95,7 +96,7 @@ namespace TheDestinyMod.NPCs.Town
 				dialogue.Add("Light, Dark... Let me tell you, the only thing that matters is the hand holding the gun.");
 			}
 			dialogue.Add("How you livin'?");
-			dialogue.Add($"Get me those Motes and I'll make you rich, {(Main.LocalPlayer.Male ? "brother" : "sister")}, I promise.");
+			dialogue.Add($"Get me those Motes and I'll make you rich, {gender}, I promise.");
 			dialogue.Add("Call me Drifter.");
 			dialogue.Add("Ready to bang knuckles?");
 			dialogue.Add("Transmat firing!");
@@ -113,10 +114,11 @@ namespace TheDestinyMod.NPCs.Town
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			string gender = Main.LocalPlayer.Male ? "brother" : "sister";
 			if (firstButton) {
 				if (Main.LocalPlayer.HasItem(ModContent.ItemType<MoteOfDark>())) {
 					if (Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>()) < 25) {
-						Main.npcChatText = $"Thank you, {(Main.LocalPlayer.Male ? "brother" : "sister")}. I'll do something real special with these Motes, trust.";
+						Main.npcChatText = $"Thank you, {gender}. I'll do something real special with these Motes, trust.";
 					}
 					else if (Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>()) > 25 && Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>()) < 50) {
 						Main.npcChatText = "Ooh, that's quite the haul you have there, thank you very much. I'ma do something real special with these Motes, somethin' that'll make you shiver.";
@@ -124,7 +126,7 @@ namespace TheDestinyMod.NPCs.Town
 					else {
 						switch (Main.rand.Next(3)) {
 							case 1:
-								Main.npcChatText = $"Thanks for the Motes, {(Main.LocalPlayer.Male ? "brother" : "sister")}.";
+								Main.npcChatText = $"Thanks for the Motes, {gender}.";
 								break;
 							case 2:
 								Main.npcChatText = "Nice work. The line between Light and Dark's gettin' thinner every day. Keep walking it.";
@@ -136,7 +138,7 @@ namespace TheDestinyMod.NPCs.Town
 					}
 					foreach (Item item in Main.LocalPlayer.inventory) {
 						if (item.type == ModContent.ItemType<MoteOfDark>()) {
-							player.motesGiven = player.motesGiven + Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>());
+							player.motesGiven += Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>());
 							Main.LocalPlayer.inventory[Main.LocalPlayer.FindItem(ModContent.ItemType<MoteOfDark>())].TurnToAir();
 						}
 					}
@@ -149,7 +151,7 @@ namespace TheDestinyMod.NPCs.Town
 					if (player.motesGiven > 20 && player.drifterRewards < 2) {
 						player.drifterRewards = 2;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<ImpactShard>());
-						Main.npcChatText = $"Motes? Motes! Speaking of Motes, I've gotta way for you to get more, faster. This is for you, {(Main.LocalPlayer.Male ? "brother" : "sister")}.";
+						Main.npcChatText = $"Motes? Motes! Speaking of Motes, I've gotta way for you to get more, faster. This is for you, {gender}.";
 					}
 					if (player.motesGiven > 30 && player.drifterRewards < 3) {
 						player.drifterRewards = 3;
@@ -159,51 +161,51 @@ namespace TheDestinyMod.NPCs.Town
 					if (player.motesGiven > 40 && player.drifterRewards < 4) {
 						player.drifterRewards = 4;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<GambitDye>(), 3);
-						Main.npcChatText = $"Mmm, Motes...ooh, I think you're gonna like this, {(Main.LocalPlayer.Male ? "brother" : "sister")}. Free merchandise, on the house!";
+						Main.npcChatText = $"Mmm, Motes...ooh, I think you're gonna like this, {gender}. Free merchandise, on the house!";
 					}
 					if (player.motesGiven > 50 && player.drifterRewards < 5) {
 						player.drifterRewards = 5;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<GunsmithMaterials>(), 100);
-						Main.npcChatText = $"Thanks for the Motes! By the way, I found these parts lying around. Maybe you could put 'em to good use, {(Main.LocalPlayer.Male ? "brother" : "sister")}?";
+						Main.npcChatText = $"Thanks for the Motes! By the way, I found these parts lying around. Maybe you could put 'em to good use, {gender}?";
 					}
 					if (player.motesGiven > 60 && player.drifterRewards < 6) {
 						player.drifterRewards = 6;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Ghost>());
-						Main.npcChatText = $"These are some nice Motes...oh yeah, I found this...thing, on the ground. Not sure what it is, but it's yours now, {(Main.LocalPlayer.Male ? "brother" : "sister")}.";
+						Main.npcChatText = $"These are some nice Motes...oh yeah, I found this...thing, on the ground. Not sure what it is, but it's yours now, {gender}.";
 					}
 					if (player.motesGiven > 70 && player.drifterRewards < 7) {
 						player.drifterRewards = 7;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TrinarySystem>());
-						Main.npcChatText = $"Motes, {(Main.LocalPlayer.Male ? "brother" : "sister")}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.";
+						Main.npcChatText = $"Motes, {gender}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.";
 					}
 					return;
 				}
                 else {
 					switch (Main.rand.Next(3)) {
 						case 1:
-							Main.npcChatText = $"{(Main.LocalPlayer.Male ? "Brother" : "Sister")}, you gotta have those Motes on you! Come back when you got some.";
+							Main.npcChatText = $"{gender}, you gotta have those Motes on you! Come back when you got some.";
 							return;
 						case 2:
 							Main.npcChatText = "Thanks for the...huh? You don't have any Motes for me to unload off 'ya!";
 							return;
 						default:
-							Main.npcChatText = $"Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {(Main.LocalPlayer.Male ? "brother" : "sister")}.";
+							Main.npcChatText = $"Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {gender}.";
 							return;
 					}
                 }
 			}
             else {
 				if (player.motesGiven == 0) {
-					Main.npcChatText = $"Aw man, {(Main.LocalPlayer.Male ? "brother" : "sister")}, you haven't deposited any Motes yet!";
+					Main.npcChatText = $"Aw man, {gender}, you haven't deposited any Motes yet!";
 				}
 				else if (player.motesGiven > 200) {
-					Main.npcChatText = $"Woo, you've deposited {player.motesGiven} Motes! This is one heckuva collection, {(Main.LocalPlayer.Male ? "brother" : "sister")}.";
+					Main.npcChatText = $"Woo, you've deposited {player.motesGiven} Motes! This is one heckuva collection, {gender}.";
 				}
                 else if (player.motesGiven > 100) {
-					Main.npcChatText = $"You've deposited {player.motesGiven} Motes so far, {(Main.LocalPlayer.Male ? "brother" : "sister")}. Not bad.";
+					Main.npcChatText = $"You've deposited {player.motesGiven} Motes so far, {gender}. Not bad.";
 				}
 				else {
-					Main.npcChatText = $"You've deposited a total of {player.motesGiven} Motes, {(Main.LocalPlayer.Male ? "brother" : "sister")}.";
+					Main.npcChatText = $"You've deposited a total of {player.motesGiven} Motes, {gender}.";
 				}
 				return;
             }

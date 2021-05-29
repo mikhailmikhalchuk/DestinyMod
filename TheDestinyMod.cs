@@ -170,6 +170,9 @@ namespace TheDestinyMod
             text.AddTranslation(GameCulture.Polish, "To są podróbki. Ktoś marnuje nasz czas!");
             text.AddTranslation(GameCulture.Spanish, "Estas son falsificaciones. ¡Alguien nos está haciendo perder el tiempo!");
             AddTranslation(text);
+            text = CreateTranslation("Cryptarch8");
+            text.SetDefault("Hmm, this one is labeled \"Bigm55\"...yes, Guardian?");
+            AddTranslation(text);
             text = CreateTranslation("RelicShard");
             text.SetDefault("Relic Shards have begun to grow!");
             text.AddTranslation(GameCulture.Polish, "Odłamki reliktów zaczęły rosnąć!");
@@ -272,9 +275,7 @@ namespace TheDestinyMod
         }
 
         public override void UpdateUI(GameTime gameTime) {
-            if (Main.playerInventory) {
-                destinyInterface?.Update(gameTime);
-            }
+            destinyInterface?.Update(gameTime);
             superChargeInterface?.Update(gameTime);
             CryptarchUserInterface?.Update(gameTime);
         }

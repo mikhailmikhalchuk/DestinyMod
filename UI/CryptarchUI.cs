@@ -48,7 +48,6 @@ namespace TheDestinyMod.UI
 			const int slotX = 50;
 			const int slotY = 270;
 			if (!_vanillaItemSlot.Item.IsAir) {
-				ItemSlot.DrawSavings(Main.spriteBatch, slotX + 130, Main.instance.invBottom, true);
 				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Decrypt {_vanillaItemSlot.Item.Name}", new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, (byte)Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One, -1f, 2f);
 				int decryptX = slotX + 70;
 				int decryptY = slotY + 40;

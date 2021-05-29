@@ -9,10 +9,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 {
 	public class TrinarySystem : ModItem
 	{
-		public static bool buffed = false;
+		public bool buffed;
+
+		private int counter;
 
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Scales with world progression\nSlightly decreases item use time on initial use\n\"Never count yourself out.\"");
+			Tooltip.SetDefault("Scales with world progression\n\"The mathematics are quite complicated.\"");
 		}
 
 		public override void SetDefaults() {
@@ -48,25 +50,21 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.scale = 1.5f;
 		}
 
-        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			if (!buffed) {
-				item.useTime = item.useAnimation = 15;
-			}
-			else {
-				item.useTime = item.useAnimation = 13;
-			}
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 30f;
+            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
+                position += muzzleOffset;
+            }
+            Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, type, damage, knockBack, player.whoAmI);
+            return false;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 30f;
-			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
-				position += muzzleOffset;
-			}
-			Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, type, damage, knockBack, player.whoAmI);
-			return false;
-		}
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+			scale *= 1.5f;
+            return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
 
-		public override Vector2? HoldoutOffset() {
+        public override Vector2? HoldoutOffset() {
 			return new Vector2(0, 0);
 		}
 	}

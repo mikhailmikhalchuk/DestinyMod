@@ -77,6 +77,7 @@ namespace TheDestinyMod.NPCs.Town
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Cryptarch5"));
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Cryptarch6"));
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Cryptarch7"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Cryptarch8"));
 			return dialogue[Main.rand.Next(dialogue.Count)];
 		}
 

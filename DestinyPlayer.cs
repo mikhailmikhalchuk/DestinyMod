@@ -42,7 +42,6 @@ namespace TheDestinyMod
 		public static bool gorgonsHaveSpotted;
 
 		private int superRegenTimer = 0;
-		private int trinaryCounter = -1;
 		private int timesClicked = 0;
 		private int spottedIntensity = 60;
 
@@ -110,10 +109,6 @@ namespace TheDestinyMod
 						timesClicked = 0;
 					}
 				}
-				if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Ranged.TrinarySystem>() || Main.mouseItem.type == ModContent.ItemType<Items.Weapons.Ranged.TrinarySystem>()) {
-					Items.Weapons.Ranged.TrinarySystem.buffed = true;
-					trinaryCounter = 30;
-				}
 			}
 			if (PlayerInput.Triggers.JustReleased.MouseLeft) {
 				releasedMouseLeft = true;
@@ -132,16 +127,6 @@ namespace TheDestinyMod
 			}
 			return null;
 		}
-
-		public override void PostUpdate() {
-			if (trinaryCounter > 0) {
-				trinaryCounter--;
-			}
-			else if (trinaryCounter == 0) {
-				trinaryCounter = -1;
-				Items.Weapons.Ranged.TrinarySystem.buffed = false;
-			}
-        }
 
         public override void PostUpdateEquips() {
 			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");

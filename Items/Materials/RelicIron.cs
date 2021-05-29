@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -15,10 +16,17 @@ namespace TheDestinyMod.Items.Materials
 		}
 
         public override void SetDefaults() {
-			item.height = 24;
-			item.width = 24;
+			item.height = 16;
+			item.width = 18;
 			item.maxStack = 999;
 			item.value = Item.buyPrice(0, 0, 10, 0);
+			item.useTurn = true;
+			item.consumable = true;
+			item.autoReuse = true;
+			item.useTime = 10;
+			item.useAnimation = 15;
+			item.useStyle = ItemUseStyleID.SwingThrow;
+			item.createTile = ModContent.TileType<Tiles.RelicShard>();
         }
 	}
 }

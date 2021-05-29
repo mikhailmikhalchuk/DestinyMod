@@ -152,7 +152,7 @@ namespace TheDestinyMod
                         }
                     }
                     if (placementOK) {
-                        if (!WorldGen.SolidTile(i, j + 1) || Main.tile[i, j].active()) {
+                        if (!WorldGen.SolidTile(i, j + 1) || Main.tile[i, j].active() || Main.tile[i, j].type != TileID.JungleGrass) {
                             placementOK = false;
                         }
                         if (placementOK) {
@@ -187,7 +187,7 @@ namespace TheDestinyMod
         }
 
         public override void PostUpdate() {
-            if (Main.rand.NextBool(7500)) {
+            if (Main.rand.NextBool(25000)) {
                 int attempts = 0;
                 Tile tile;
                 Tile tileBelow;
@@ -207,7 +207,7 @@ namespace TheDestinyMod
                     }
                 }
             }
-            if (Main.rand.NextBool(7500)) {
+            if (Main.rand.NextBool(50000)) {
                 int attempts = 0;
                 Tile tile;
                 Tile tileBelow;
@@ -218,7 +218,7 @@ namespace TheDestinyMod
                     int y = WorldGen.genRand.Next(20, (int)Main.worldSurface);
                     tile = Main.tile[x, y];
                     tileBelow = Main.tile[x, y + 1];
-                    if (!tile.active() && tileBelow.nactive() && !tileBelow.halfBrick() && tileBelow.slope() == 0 && tileBelow.type == TileID.Mud) {
+                    if (!tile.active() && tileBelow.nactive() && !tileBelow.halfBrick() && tileBelow.slope() == 0 && tileBelow.type == TileID.JungleGrass) {
                         WorldGen.PlaceTile(x, y, ModContent.TileType<MicrophasicDatalattice>(), true);
                         placeSuccessful = tile.active() && tile.type == ModContent.TileType<MicrophasicDatalattice>();
                     }

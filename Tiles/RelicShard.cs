@@ -25,7 +25,7 @@ namespace TheDestinyMod.Tiles
             name.SetDefault("Relic Shard");
             name.AddTranslation(GameCulture.Polish, "Odłamek Reliktu");
             AddMapEntry(new Color(210, 105, 30), name);
-            dustType = 84;
+            dustType = 144;
             drop = ModContent.ItemType<RelicIron>();
             soundType = SoundID.Tink;
             soundStyle = 1;

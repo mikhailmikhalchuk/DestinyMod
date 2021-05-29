@@ -26,7 +26,7 @@ namespace TheDestinyMod.Tiles
 			TileID.Sets.HasOutlines[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Height = 9;
-			TileObjectData.newTile.Origin = new Point16(1, 8);
+			TileObjectData.newTile.Origin = new Point16(5, 8);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16, 16, 16, 16, 16};
 			TileObjectData.newTile.Width = 10;
 			TileObjectData.newTile.CoordinateWidth = 16;
