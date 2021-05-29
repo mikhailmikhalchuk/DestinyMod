@@ -35,15 +35,15 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
             if (counter == 600) {
                 Main.NewText("The Templar prepares the Ritual of Negation");
             }
-            if (Main.netMode != NetmodeID.Server && !Filters.Scene["Shockwave"].IsActive() && counter > 900) {
+            if (Main.netMode != NetmodeID.Server && !Filters.Scene["TheDestinyMod:Shockwave"].IsActive() && counter > 900) {
                 Main.NewText("RITUAL OF NEGATION!", new Microsoft.Xna.Framework.Color(255, 255, 0));
-                Filters.Scene.Activate("Shockwave", npc.Center).GetShader().UseColor(1, 7, 15).UseTargetPosition(npc.Center);
+                Filters.Scene.Activate("TheDestinyMod:Shockwave", npc.Center).GetShader().UseColor(1, 7, 15).UseTargetPosition(npc.Center);
             }
-            if (Main.netMode != NetmodeID.Server && Filters.Scene["Shockwave"].IsActive()) {
+            if (Main.netMode != NetmodeID.Server && Filters.Scene["TheDestinyMod:Shockwave"].IsActive()) {
                 progress += 0.01f;
-                Filters.Scene["Shockwave"].GetShader().UseProgress(progress).UseOpacity(100f * (1 - progress / 3f));
+                Filters.Scene["TheDestinyMod:Shockwave"].GetShader().UseProgress(progress).UseOpacity(100f * (1 - progress / 3f));
                 if (progress >= 2.5f) {
-                    Filters.Scene["Shockwave"].Deactivate();
+                    Filters.Scene["TheDestinyMod:Shockwave"].Deactivate();
                     foreach (Player player in Main.player) {
                         if (player.active && player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedForNegation>())) {
                             Terraria.DataStructures.PlayerDeathReason deathReason = new Terraria.DataStructures.PlayerDeathReason

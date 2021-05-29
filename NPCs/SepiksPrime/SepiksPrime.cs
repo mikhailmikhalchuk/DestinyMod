@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Shaders;
 
 namespace TheDestinyMod.NPCs.SepiksPrime
 {
@@ -61,7 +62,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
         public override void AI() {
             npc.ai[0]++;
             Player target = Main.player[npc.target];
-            npc.rotation = (float)Math.Atan2(npc.position.Y + npc.height - 80f - target.position.Y - (target.height/2), npc.position.X + (npc.width/2) - target.position.X - (target.width/2)) + (float)Math.PI / 2f;
+            npc.rotation = (float)Math.Atan2(npc.position.Y + npc.height - 80f - target.position.Y - (target.height / 2), npc.position.X + (npc.width / 2) - target.position.X - (target.width / 2)) + (float)Math.PI / 2f;
             if (!target.active || target.dead) {
                 npc.TargetClosest(true);
                 target = Main.player[npc.target];
@@ -130,7 +131,8 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             }
             else if (phase == 3) {
                 if (npc.ai[0] == 40f || npc.ai[0] == 55f || npc.ai[0] == 70f) {
-                    if (timesFiredThisCycle >= 3) return;
+                    if (timesFiredThisCycle >= 3)
+                        return;
                     timesFiredThisCycle++;
                     FireBlastAtTarget();
                 }

@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using TheDestinyMod.UI;
+using Terraria.Graphics.Effects;
 
 namespace TheDestinyMod
 {
@@ -25,6 +26,8 @@ namespace TheDestinyMod
 		public int monteMethod;
 		public int superChargeCurrent;
 		public int superActiveTime;
+
+		public float markedByVoidTimer = 1f;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -64,7 +67,7 @@ namespace TheDestinyMod
 		}
 
         public override float UseTimeMultiplier(Item item) {
-			if (item.type == ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>() && Main.LocalPlayer.HasBuff(ModContent.BuffType<Buffs.SunWarrior>())) {
+			if (item.type == ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>() && player.HasBuff(ModContent.BuffType<Buffs.SunWarrior>())) {
 				return 2f;
 			}
             return base.UseTimeMultiplier(item);
@@ -79,7 +82,7 @@ namespace TheDestinyMod
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
 			var itemPos = 0;
-            if (TheDestinyMod.activateSuper.JustPressed && superChargeCurrent == 100 && !Main.LocalPlayer.dead) {
+            if (TheDestinyMod.activateSuper.JustPressed && superChargeCurrent == 100 && !player.dead) {
 				foreach (Item item in Main.LocalPlayer.inventory) {
 					itemPos++;
 					if (itemPos >= 50) {
@@ -87,9 +90,9 @@ namespace TheDestinyMod
 					}
 					if (item.IsAir) {
 						//Main.PlaySound(SoundID.Item74, Main.LocalPlayer.position);
-						Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), Main.LocalPlayer.position);
+						Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
 						Projectile.NewProjectile(Main.LocalPlayer.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, Main.LocalPlayer.whoAmI);
-						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>(), 1);
+						player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>(), 1);
 						superActiveTime = 600;
 						notifiedThatSuperIsReady = false;
 						break;
@@ -101,11 +104,11 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
 				releasedMouseLeft = false;
-				if (Main.LocalPlayer.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>())) {
+				if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>())) {
 					timesClicked++;
 					Main.PlaySound(SoundID.Item50, player.Center);
 					if (timesClicked > 4) {
-						Main.LocalPlayer.ClearBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>());
+						player.ClearBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>());
 						timesClicked = 0;
 					}
 				}
@@ -114,6 +117,7 @@ namespace TheDestinyMod
 				releasedMouseLeft = true;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
+				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>(), 2);
 				/*bool result = Enter(TheDestinyMod.mySubworldID) ?? false;
 				if (!result)
 					Main.NewText("Something went wrong, not entering " + TheDestinyMod.mySubworldID);*/
@@ -154,16 +158,16 @@ namespace TheDestinyMod
 				{"engramsPurchased", engramsPurchased},
 				{"superChargeCurrent", superChargeCurrent},
 				{"superActiveTime", superActiveTime},
-				{"subclassTier", DestinyUI.selectedWhich}
+				{"subclassTier", SubclassUI.selectedWhich}
 			};
 		}
 
         public override bool ShiftClickSlot(Item[] inventory, int context, int slot) {
-			if ((Main.LocalPlayer.inventory[slot].type == ModContent.ItemType<CommonEngram>() || Main.LocalPlayer.inventory[slot].type == ModContent.ItemType<UncommonEngram>() || Main.LocalPlayer.inventory[slot].type == ModContent.ItemType<RareEngram>() || Main.LocalPlayer.inventory[slot].type == ModContent.ItemType<LegendaryEngram>() || Main.LocalPlayer.inventory[slot].type == ModContent.ItemType<ExoticEngram>()) && ModContent.GetInstance<TheDestinyMod>().CryptarchUserInterface.CurrentState != null) {
+			if ((player.inventory[slot].type == ModContent.ItemType<CommonEngram>() || player.inventory[slot].type == ModContent.ItemType<UncommonEngram>() || player.inventory[slot].type == ModContent.ItemType<RareEngram>() || player.inventory[slot].type == ModContent.ItemType<LegendaryEngram>() || player.inventory[slot].type == ModContent.ItemType<ExoticEngram>()) && ModContent.GetInstance<TheDestinyMod>().CryptarchUserInterface.CurrentState != null) {
 				if (CryptarchUI._vanillaItemSlot.Item.type == ItemID.None) {
-					Item clone = Main.LocalPlayer.inventory[slot].Clone();
+					Item clone = player.inventory[slot].Clone();
 					CryptarchUI._vanillaItemSlot.Item = clone;
-					Main.LocalPlayer.inventory[slot].TurnToAir();
+					player.inventory[slot].TurnToAir();
 					Main.PlaySound(SoundID.Grab);
 					return true;
 				}
@@ -183,7 +187,7 @@ namespace TheDestinyMod
 			superChargeCurrent = tag.GetInt("superChargeCurrent");
 			superActiveTime = tag.GetInt("superActiveTime");
 			if (tag.ContainsKey("subclassTier")) {
-				DestinyUI.selectedWhich = tag.GetInt("subclassTier");
+				SubclassUI.selectedWhich = tag.GetInt("subclassTier");
 			}
 		}
 
@@ -255,6 +259,12 @@ namespace TheDestinyMod
 					Main.mouseItem.TurnToAir();
 				}
 			}
-        }
+			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && !Filters.Scene["TheDestinyMod:Blackness"].IsActive()) {
+				Filters.Scene.Activate("TheDestinyMod:Blackness"); //stop the black from fading to clear
+			}
+			else if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Filters.Scene["TheDestinyMod:Blackness"].IsActive()) {
+				Filters.Scene["TheDestinyMod:Blackness"].GetShader().UseOpacity(markedByVoidTimer -= 0.001f);
+			}
+		}
     }
 }

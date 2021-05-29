@@ -33,11 +33,11 @@ namespace TheDestinyMod
         public static string mySubworldID = string.Empty;
 
         internal UserInterface CryptarchUserInterface;
-        internal DestinyUI DestinyUI;
+        internal SubclassUI SubclassUI;
         internal SuperChargeBar SuperResourceCharge;
 
         private UserInterface superChargeInterface;
-        private UserInterface destinyInterface;
+        private UserInterface subclassInterface;
 
         public override void Load() {
             activateSuper = RegisterHotKey("Activate Super", "U");
@@ -79,12 +79,15 @@ namespace TheDestinyMod
                 GameShaders.Armor.BindShader(ModContent.ItemType<Items.Dyes.GambitDye>(), new ArmorShaderData(new Ref<Effect>(GetEffect("Effects/Dyes/Gambit")), "GambitDyePass")).UseColor(0, 1f, 0);
                 GameShaders.Armor.BindShader(ModContent.ItemType<Items.Dyes.GuardianGamesDye>(), new ArmorShaderData(new Ref<Effect>(GetEffect("Effects/Dyes/GuardianGames")), "GuardianGamesDyePass")).UseColor(2f, 2f, 0f).UseSecondaryColor(2f, 0.25f, 0.35f);
                 Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/Shaders/ShockwaveEffect"));
-                Filters.Scene["Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), EffectPriority.VeryHigh);
-                Filters.Scene["Shockwave"].Load();
-                DestinyUI = new DestinyUI();
-                DestinyUI.Activate();
-                destinyInterface = new UserInterface();
-                destinyInterface.SetState(DestinyUI);
+                Filters.Scene["TheDestinyMod:Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), EffectPriority.VeryHigh);
+                Filters.Scene["TheDestinyMod:Shockwave"].Load();
+                screenRef = new Ref<Effect>(GetEffect("Effects/Shaders/Blackness"));
+                Filters.Scene["TheDestinyMod:Blackness"] = new Filter(new ScreenShaderData(screenRef, "BlacknessEffect"), EffectPriority.VeryHigh);
+                Filters.Scene["TheDestinyMod:Blackness"].Load();
+                SubclassUI = new SubclassUI();
+                SubclassUI.Activate();
+                subclassInterface = new UserInterface();
+                subclassInterface.SetState(SubclassUI);
                 CryptarchUserInterface = new UserInterface();
                 SuperResourceCharge = new SuperChargeBar();
 				superChargeInterface = new UserInterface();
@@ -275,7 +278,7 @@ namespace TheDestinyMod
         }
 
         public override void UpdateUI(GameTime gameTime) {
-            destinyInterface?.Update(gameTime);
+            subclassInterface?.Update(gameTime);
             superChargeInterface?.Update(gameTime);
             CryptarchUserInterface?.Update(gameTime);
         }
@@ -287,7 +290,7 @@ namespace TheDestinyMod
                     "TheDestinyMod: Subclass UI",
                     delegate {
                         if (Main.playerInventory) {
-                            destinyInterface.Draw(Main.spriteBatch, new GameTime());
+                            subclassInterface.Draw(Main.spriteBatch, new GameTime());
                         }
                         return true;
                     },

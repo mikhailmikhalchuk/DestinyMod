@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace TheDestinyMod.UI
 {
-    internal class DestinyUI : UIState
+    internal class SubclassUI : UIState
     {
 		public UIElement subclass;
 		public static bool over;
