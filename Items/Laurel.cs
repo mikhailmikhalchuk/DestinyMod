@@ -10,7 +10,7 @@ namespace TheDestinyMod.Items
 	public class Laurel : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Deposit this at the Podium to rep your class");
+			Tooltip.SetDefault("Deposit this at the Podium to rep your class and earn rewads");
 		}
 
 		public override void SetDefaults() {

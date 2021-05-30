@@ -26,8 +26,8 @@ namespace TheDestinyMod
 		public int monteMethod;
 		public int superChargeCurrent;
 		public int superActiveTime;
-
-		public float markedByVoidTimer = 1f;
+		public int markedByVoidTimer;
+		public int markedByVoidDelay;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -259,11 +259,13 @@ namespace TheDestinyMod
 					Main.mouseItem.TurnToAir();
 				}
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && !Filters.Scene["TheDestinyMod:Blackness"].IsActive()) {
-				Filters.Scene.Activate("TheDestinyMod:Blackness");
-			}
-			else if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Filters.Scene["TheDestinyMod:Blackness"].IsActive()) {
-				Filters.Scene["TheDestinyMod:Blackness"].GetShader().UseOpacity(markedByVoidTimer -= 0.001f);
+			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Main.BlackFadeIn < 255 && Main.LocalPlayer == player) {
+				Main.BlackFadeIn = markedByVoidTimer;
+				markedByVoidDelay--;
+				if (markedByVoidDelay <= 0) {
+					markedByVoidTimer++;
+					markedByVoidDelay = 2;
+				}
 			}
 		}
     }

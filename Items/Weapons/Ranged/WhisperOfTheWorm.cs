@@ -37,6 +37,9 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+			if (Main.rand.NextBool(4)) {
+				Dust.NewDust(position += Vector2.Normalize(new Vector2(speedX, speedY)) * 90f, 1, 1, 63);
+			}
 			return false;
 		}
 
@@ -46,7 +49,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(-10, 2);
+			return new Vector2(-10, -2);
 		}
 	}
 }

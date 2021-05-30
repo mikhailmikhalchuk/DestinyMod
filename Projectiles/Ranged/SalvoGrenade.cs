@@ -54,8 +54,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 				projectile.tileCollide = false;
 				projectile.alpha = 255;
 				projectile.position = projectile.Center;
-				projectile.width = 175;
-				projectile.height = 175;
+				projectile.width = projectile.height = 175;
 				projectile.Center = projectile.position;
 				projectile.damage = 150;
 				projectile.knockBack = 10f;
@@ -64,14 +63,14 @@ namespace TheDestinyMod.Projectiles.Ranged
 			else {
 				if (Main.rand.NextBool()) {
 					int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
-					Main.dust[dustIndex].scale = 0.1f + (float)Main.rand.Next(5) * 0.1f;
-					Main.dust[dustIndex].fadeIn = 1.5f + (float)Main.rand.Next(5) * 0.1f;
+					Main.dust[dustIndex].scale = 0.1f + Main.rand.Next(5) * 0.1f;
+					Main.dust[dustIndex].fadeIn = 1.5f + Main.rand.Next(5) * 0.1f;
 					Main.dust[dustIndex].noGravity = true;
-					Main.dust[dustIndex].position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2)).RotatedBy((double)projectile.rotation, default(Vector2)) * 1.1f;
+					Main.dust[dustIndex].position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2)).RotatedBy(projectile.rotation, default(Vector2)) * 1.1f;
 					dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
-					Main.dust[dustIndex].scale = 1f + (float)Main.rand.Next(5) * 0.1f;
+					Main.dust[dustIndex].scale = 1f + Main.rand.Next(5) * 0.1f;
 					Main.dust[dustIndex].noGravity = true;
-					Main.dust[dustIndex].position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2 - 6)).RotatedBy((double)projectile.rotation, default(Vector2)) * 1.1f;
+					Main.dust[dustIndex].position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2 - 6)).RotatedBy(projectile.rotation, default(Vector2)) * 1.1f;
 				}
 			}
 			projectile.ai[0] += 1f;
@@ -82,7 +81,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 					{
 						projectile.velocity.X = projectile.velocity.X * 0.99f;
 					}
-					if ((double)projectile.velocity.X > -0.01 && (double)projectile.velocity.X < 0.01) {
+					if (projectile.velocity.X > -0.01 && projectile.velocity.X < 0.01) {
 						projectile.velocity.X = 0f;
 						projectile.netUpdate = true;
 					}
@@ -106,29 +105,29 @@ namespace TheDestinyMod.Projectiles.Ranged
 				Main.dust[dustIndex].velocity *= 3f;
 			}
 			for (int g = 0; g < 2; g++) {
-				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
 				Main.gore[goreIndex].scale = 1.5f;
 				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
 				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
 			}
-			projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-			projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
+			projectile.position.X += projectile.width / 2;
+			projectile.position.Y += projectile.height / 2;
 			projectile.width = 10;
 			projectile.height = 10;
-			projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-			projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+			projectile.position.X -= projectile.width / 2;
+			projectile.position.Y -= projectile.height / 2;
 		}
 	}
 }

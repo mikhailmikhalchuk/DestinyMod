@@ -17,7 +17,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 		private bool notified = true;
 
         public override void SetStaticDefaults() {
-			Tooltip.SetDefault("A timelost relic, with the power to protect Guardians from being erased from existance\nLeft-click to summon a protective shield\nRight-click to fire a powerful blast");
+			Tooltip.SetDefault("A timelost relic, with the power to protect Guardians from being erased from existance\nLeft click to summon a protective shield\nRight click to fire a powerful blast");
 		}
 
 		public override void SetDefaults() {

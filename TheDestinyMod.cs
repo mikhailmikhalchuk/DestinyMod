@@ -81,9 +81,6 @@ namespace TheDestinyMod
                 Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/Shaders/ShockwaveEffect"));
                 Filters.Scene["TheDestinyMod:Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), EffectPriority.VeryHigh);
                 Filters.Scene["TheDestinyMod:Shockwave"].Load();
-                screenRef = new Ref<Effect>(GetEffect("Effects/Shaders/Blackness"));
-                Filters.Scene["TheDestinyMod:Blackness"] = new Filter(new ScreenShaderData(screenRef, "BlacknessEffect"), EffectPriority.VeryHigh);
-                Filters.Scene["TheDestinyMod:Blackness"].Load();
                 SubclassUI = new SubclassUI();
                 SubclassUI.Activate();
                 subclassInterface = new UserInterface();

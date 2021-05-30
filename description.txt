@@ -23,5 +23,7 @@ Fixed Trinary System's tooltip
 Scaled Bottom Dollar down
 Made the Cryptarch's head smaller on the map
 Added a tribute to the Cryptarch
+Added Divinity and Borealis, both unobtainable weapons
+Gave Whisper of the Worm a very subtle particle effect on fire
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

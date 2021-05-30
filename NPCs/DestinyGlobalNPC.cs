@@ -52,5 +52,27 @@ namespace TheDestinyMod.NPCs
             }
             return true;
         }
+
+        public override void DrawEffects(NPC npc, ref Color drawColor) {
+            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
+                drawColor = Color.Yellow;
+                if (Main.rand.NextBool(10)) {
+                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, 133);
+                    Main.dust[dust].noGravity = true;
+                }
+            }
+        }
+
+        public override void ModifyHitNPC(NPC npc, NPC target, ref int damage, ref float knockback, ref bool crit) {
+            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
+                damage -= damage / 10;
+            }
+        }
+
+        public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit) {
+            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
+                damage -= damage / 10;
+            }
+        }
     }
 }
