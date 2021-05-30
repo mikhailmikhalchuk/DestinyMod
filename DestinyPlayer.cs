@@ -260,7 +260,7 @@ namespace TheDestinyMod
 				}
 			}
 			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && !Filters.Scene["TheDestinyMod:Blackness"].IsActive()) {
-				Filters.Scene.Activate("TheDestinyMod:Blackness"); //stop the black from fading to clear
+				Filters.Scene.Activate("TheDestinyMod:Blackness");
 			}
 			else if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Filters.Scene["TheDestinyMod:Blackness"].IsActive()) {
 				Filters.Scene["TheDestinyMod:Blackness"].GetShader().UseOpacity(markedByVoidTimer -= 0.001f);
