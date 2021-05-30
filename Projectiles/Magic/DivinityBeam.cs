@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ModLoader;
@@ -73,6 +74,7 @@ namespace TheDestinyMod.Projectiles.Magic
 		}
 
 		public override void AI() {
+			projectile.localAI[1]++;
 			Player player = Main.player[projectile.owner];
 			projectile.position = player.Center + projectile.velocity * MOVE_DISTANCE;
 			projectile.timeLeft = 2;
@@ -118,9 +120,15 @@ namespace TheDestinyMod.Projectiles.Magic
 			player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir, projectile.velocity.X * dir);
 			for (Distance = MOVE_DISTANCE; Distance <= 2200f; Distance += 5f) {
 				var start = player.Center + projectile.velocity * Distance;
-				if (!Collision.CanHit(player.Center, 1, 1, start, 1, 1)) {
+				NPC checkPC = Main.npc.FirstOrDefault(npc => npc.Hitbox.Contains(new Rectangle((int)start.X, (int)start.Y, 1, 1)));
+				if (!Collision.CanHitLine(player.Center, 1, 1, start, 1, 1)) {
 					Distance -= 5f;
 					break;
+				}
+				else if (checkPC != null) {
+					if (checkPC.active && !checkPC.friendly && checkPC.lifeMax > 5 && checkPC.damage > 0 || checkPC.active && checkPC.type == Terraria.ID.NPCID.TargetDummy) {
+						break;
+					}
 				}
 			}
 			Vector2 unit = projectile.velocity * -1;
@@ -143,8 +151,10 @@ namespace TheDestinyMod.Projectiles.Magic
 				dust.noGravity = true;
 				dust.scale = 0.5f;
 			}
-			DelegateMethods.v3_1 = new Vector3(0.8f, 0.8f, 1f);
-			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - MOVE_DISTANCE), 26, DelegateMethods.CastLight);
+			if (projectile.localAI[1] > 1) {
+				DelegateMethods.v3_1 = new Vector3(0.8f, 0.8f, 1f);
+				Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - MOVE_DISTANCE), 26, DelegateMethods.CastLight);
+			}
 		}
 
 		public override bool ShouldUpdatePosition() => false;
