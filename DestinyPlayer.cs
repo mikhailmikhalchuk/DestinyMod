@@ -117,7 +117,7 @@ namespace TheDestinyMod
 				releasedMouseLeft = true;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
-				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>(), 2);
+				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.Detained>(), 600);
 				/*bool result = Enter(TheDestinyMod.mySubworldID) ?? false;
 				if (!result)
 					Main.NewText("Something went wrong, not entering " + TheDestinyMod.mySubworldID);*/
@@ -259,7 +259,7 @@ namespace TheDestinyMod
 					Main.mouseItem.TurnToAir();
 				}
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Main.BlackFadeIn < 255 && Main.LocalPlayer == player) {
+			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Main.BlackFadeIn < 255 && Main.LocalPlayer == player && !Main.dedServ) {
 				Main.BlackFadeIn = markedByVoidTimer;
 				markedByVoidDelay--;
 				if (markedByVoidDelay <= 0) {

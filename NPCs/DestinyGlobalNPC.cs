@@ -62,17 +62,5 @@ namespace TheDestinyMod.NPCs
                 }
             }
         }
-
-        public override void ModifyHitNPC(NPC npc, NPC target, ref int damage, ref float knockback, ref bool crit) {
-            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
-                damage -= damage / 10;
-            }
-        }
-
-        public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit) {
-            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
-                damage -= damage / 10;
-            }
-        }
     }
 }

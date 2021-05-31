@@ -15,6 +15,10 @@ namespace TheDestinyMod.Projectiles.Magic
 
 		private bool done;
 
+		private int counter;
+
+		private Vector2 collisionBox = new Vector2(0, 0);
+		
 		private static SoundEffectInstance fire;
 
 		private static SoundEffectInstance start;
@@ -57,6 +61,8 @@ namespace TheDestinyMod.Projectiles.Magic
 
 			spriteBatch.Draw(texture, start + (Distance + step) * unit - Main.screenPosition,
 				new Rectangle(0, 52, 28, 26), Color.White, r, new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
+
+			collisionBox = start + (Distance + step) * unit;
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
@@ -64,13 +70,16 @@ namespace TheDestinyMod.Projectiles.Magic
 			Vector2 unit = projectile.velocity;
 			float point = 0f;
 
-			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), player.Center,
-				player.Center + unit * Distance, 22, ref point);
+			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), collisionBox,
+				new Vector2(collisionBox.X + 28, collisionBox.Y + 26), 26, ref point);
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			target.immune[projectile.owner] = 5;
-			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>(), 120);
+			if (counter > 120) {
+				target.AddBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>(), 150);
+				counter = 0;
+			}
 		}
 
 		public override void AI() {
@@ -97,12 +106,8 @@ namespace TheDestinyMod.Projectiles.Magic
 			}
 			if (!player.channel || Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true)) {
 				projectile.Kill();
-				if (fire != null) {
-					fire.Stop(true);
-				}
-				if (start != null) {
-					start.Stop(true);
-				}
+				fire?.Stop(true);
+				start?.Stop(true);
 				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/DivinityStop"), projectile.Center);
 			}
 
@@ -116,19 +121,18 @@ namespace TheDestinyMod.Projectiles.Magic
 			int dir = projectile.direction;
 			player.ChangeDir(dir);
 			player.heldProj = projectile.whoAmI;
-			player.itemTime = player.itemAnimation = 2;
+			player.itemTime = player.itemAnimation = 4;
 			player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir, projectile.velocity.X * dir);
 			for (Distance = MOVE_DISTANCE; Distance <= 2200f; Distance += 5f) {
 				var start = player.Center + projectile.velocity * Distance;
-				NPC checkPC = Main.npc.FirstOrDefault(npc => npc.Hitbox.Contains(new Rectangle((int)start.X, (int)start.Y, 1, 1)));
 				if (!Collision.CanHitLine(player.Center, 1, 1, start, 1, 1)) {
 					Distance -= 5f;
+					counter = 0;
 					break;
 				}
-				else if (checkPC != null) {
-					if (checkPC.active && !checkPC.friendly && checkPC.lifeMax > 5 && checkPC.damage > 0 || checkPC.active && checkPC.type == Terraria.ID.NPCID.TargetDummy) {
-						break;
-					}
+				if (Main.npc.FirstOrDefault(npc => npc.Hitbox.Contains(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && npc.active && !npc.townNPC && !npc.dontTakeDamage) != null || Main.player.FirstOrDefault(playeR => playeR.Hitbox.Contains(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && playeR.team != player.team && playeR.hostile) != null) {
+					counter++;
+					break;
 				}
 			}
 			Vector2 unit = projectile.velocity * -1;

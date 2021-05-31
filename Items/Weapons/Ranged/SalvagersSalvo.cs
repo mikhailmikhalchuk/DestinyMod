@@ -29,7 +29,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Pink;
-			item.UseSound = SoundID.Item61;
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SalvagersSalvo");
 			item.shoot = ModContent.ProjectileType<Projectiles.Ranged.SalvoGrenade>();
 			item.shootSpeed = 8f;
 			item.useAmmo = ItemID.Grenade;

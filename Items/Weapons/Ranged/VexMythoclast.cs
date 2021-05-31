@@ -54,14 +54,5 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-3, -2);
 		}
-
-		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<Placeables.MicrophasicDatalattice>(), 50);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}
 	}
 }

@@ -96,7 +96,7 @@ namespace TheDestinyMod.UI
 		}
 
         public override void Update(GameTime gameTime) {
-            base.Update(gameTime);
+			base.Update(gameTime);
 
 			if (elementalBurnButton.IsMouseHovering || selectionOneButton.IsMouseHovering || selectionTwoButton.IsMouseHovering || selectionThreeButton.IsMouseHovering) {
 				Main.LocalPlayer.mouseInterface = true;
@@ -104,6 +104,9 @@ namespace TheDestinyMod.UI
         }
 
         private void SelectionOneClicked(UIMouseEvent evt, UIElement listeningElement) {
+			if (!Main.playerInventory) {
+				return;
+			}
 			switch (num) {
 				case 0:
 					selectedWhich = 1;
@@ -120,6 +123,9 @@ namespace TheDestinyMod.UI
 		}
 
 		private void SelectionTwoClicked(UIMouseEvent evt, UIElement listeningElement) {
+			if (!Main.playerInventory) {
+				return;
+			}
 			switch (num) {
 				case 0:
 					selectedWhich = 2;
@@ -136,6 +142,9 @@ namespace TheDestinyMod.UI
 		}
 
 		private void SelectionThreeClicked(UIMouseEvent evt, UIElement listeningElement) {
+			if (!Main.playerInventory) {
+				return;
+			}
 			switch (num) {
 				case 0:
 					selectedWhich = 3;
@@ -152,7 +161,10 @@ namespace TheDestinyMod.UI
 		}
 
 		private void ElementalBurnClicked(UIMouseEvent evt, UIElement listeningElement) {
-			if (NPC.AnyDanger()) {
+			if (!Main.playerInventory) {
+				return;
+			}
+			if (NPC.AnyDanger() && !Main.dedServ) {
 				Main.NewText("Cannot change subclass while a boss is alive!", new Color(255, 0, 0));
 				return;
 			}
@@ -186,7 +198,10 @@ namespace TheDestinyMod.UI
 		}
 
         private void ElementalBurnRightClicked(UIMouseEvent evt, UIElement listeningElement) {
-			if (NPC.AnyDanger()) {
+			if (!Main.playerInventory) {
+				return;
+			}
+			if (NPC.AnyDanger() && !Main.dedServ) {
 				Main.NewText("Cannot change subclass while a boss is alive!", new Color(255, 0, 0));
 				return;
 			}
@@ -281,5 +296,11 @@ namespace TheDestinyMod.UI
 				Main.hoverItemName = HoverText;
 			}
 		}
+
+        public override void MouseOver(UIMouseEvent evt) {
+			if (Main.playerInventory) {
+				base.MouseOver(evt);
+			}
+        }
     }
 }

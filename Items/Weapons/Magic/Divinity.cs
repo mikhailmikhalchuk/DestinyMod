@@ -11,11 +11,11 @@ namespace TheDestinyMod.Items.Weapons.Magic
 	public class Divinity : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Fires a solid beam\n\"Calibrate reality. Seek inevitability. Embody divinity.\"");
+			Tooltip.SetDefault("Fires a solid beam\nSustained damage with the beam cuts the target's defense by 20%\n\"Calibrate reality. Seek inevitability. Embody divinity.\"");
 		}
 
 		public override void SetDefaults() {
-			item.damage = 45;
+			item.damage = 40;
 			item.magic = true;
 			item.channel = true;
 			item.mana = 9;

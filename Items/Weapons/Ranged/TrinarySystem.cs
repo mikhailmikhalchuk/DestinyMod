@@ -14,26 +14,25 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		private int counter;
 
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Scales with world progression\n\"The mathematics are quite complicated.\"");
+			Tooltip.SetDefault("Scales with world progression\nHold down the trigger to fire\n\"The mathematics are quite complicated.\"");
 		}
 
 		public override void SetDefaults() {
-			item.damage = 10;
+			item.damage = 5;
 			if (Main.hardMode) {
-				item.damage = 40;
-				item.crit = 8;
+				item.damage = 25;
+				item.crit = 3;
 			}
 			if (NPC.downedMechBossAny) {
-				item.damage = 50;
-				item.crit = 10;
+				item.damage = 35;
+				item.crit = 5;
 			}
 			if (NPC.downedPlantBoss) {
-				item.damage = 60;
-				item.crit = 12;
+				item.damage = 45;
+				item.crit = 7;
 			}
 			item.ranged = true;
 			item.noMelee = true;
-			item.autoReuse = true;
 			item.channel = true;
 			item.rare = ItemRarityID.Green;
 			item.knockBack = 0;
@@ -55,7 +54,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
                 position += muzzleOffset;
             }
-            Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, ModContent.ProjectileType<Projectiles.Ranged.FusionShot>(), damage, knockBack, player.whoAmI);
             return false;
         }
 
