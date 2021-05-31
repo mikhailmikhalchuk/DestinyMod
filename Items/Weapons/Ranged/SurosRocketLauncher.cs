@@ -32,12 +32,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Riskrunner");
 			item.shoot = ProjectileID.RocketI;
 			item.shootSpeed = 16f;
-			item.useAmmo = AmmoID.Rocket;
+			item.useAmmo = ItemID.Grenade;
 			item.scale = .80f;
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile.NewProjectile(position.X, position.Y - 7, speedX, speedY, type, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y - 7, speedX, speedY, ProjectileID.RocketI, damage, knockBack, player.whoAmI);
             return false;
 		}
 

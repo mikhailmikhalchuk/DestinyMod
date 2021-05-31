@@ -30,7 +30,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Blue;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Hakke3");
 			item.autoReuse = false;
 			item.shoot = 10;
 			item.shootSpeed = 300f;
@@ -58,10 +57,15 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 				if (item.melee) {
 					Main.projectile[p].melee = true;
 					Main.projectile[p].ranged = false;
+					Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/BorealisMelee"), position);
 				}
 				else if (item.magic) {
 					Main.projectile[p].magic = true;
 					Main.projectile[p].ranged = false;
+					Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/BorealisMagic"), position);
+				}
+				else {
+					Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Borealis"), position);
 				}
 			}
 			return false;

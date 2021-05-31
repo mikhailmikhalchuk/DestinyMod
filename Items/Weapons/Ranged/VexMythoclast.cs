@@ -23,8 +23,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.autoReuse = true;
 			item.rare = ItemRarityID.Red;
 			item.knockBack = 0;
-			item.width = 70;
-			item.height = 30;
+			item.width = 104;
+			item.height = 46;
 			item.useTime = 15;
 			item.crit = 10;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/AceOfSpades");

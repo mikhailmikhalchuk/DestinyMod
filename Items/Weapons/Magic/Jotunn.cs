@@ -28,7 +28,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 			item.noMelee = true;
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Pink;
+			item.rare = ItemRarityID.Yellow;
 			item.shoot = ModContent.ProjectileType<Projectiles.Magic.JotunnShot>();
 			item.shootSpeed = 14f;
 			item.scale = 0.8f;

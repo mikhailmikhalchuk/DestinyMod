@@ -23,8 +23,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.autoReuse = true;
 			item.rare = ItemRarityID.Yellow;
 			item.knockBack = 0;
-			item.width = 40;
-			item.height = 20;
+			item.width = 54;
+			item.height = 30;
 			item.useTime = 4;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TheLastWord");
 			item.useStyle = ItemUseStyleID.HoldingOut;
