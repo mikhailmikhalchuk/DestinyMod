@@ -13,7 +13,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
     [AutoloadBossHead]
     public class SepiksPrime : ModNPC
     {
-        private int timesFiredThisCycle = 0;
+        private int timesFiredThisCycle;
 
         private int phase = 1;
         //phases:
@@ -205,6 +205,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                         npc.Center = teleportTo;
                         Main.PlaySound(SoundID.Item78, npc.position);
                         teleportSuccess = true;
+                        npc.netUpdate = true;
                     }
                     if (attempts >= 30000) {
                         return;

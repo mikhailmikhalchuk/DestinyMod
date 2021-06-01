@@ -118,6 +118,7 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
 				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.Detained>(), 600);
+				NPC.NewNPC((int)player.position.X, (int)player.position.Y, ModContent.NPCType<NPCs.Vex.VaultOfGlass.DetainmentBubble>(), 0, player.whoAmI);
 				/*bool result = Enter(TheDestinyMod.mySubworldID) ?? false;
 				if (!result)
 					Main.NewText("Something went wrong, not entering " + TheDestinyMod.mySubworldID);*/

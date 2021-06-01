@@ -11,13 +11,11 @@ namespace TheDestinyMod.Projectiles.Magic
 {
 	public class DivinityBeam : ModProjectile
 	{
-		private const float MOVE_DISTANCE = 60f;
-
 		private bool done;
 
 		private int counter;
 
-		private Vector2 collisionBox = new Vector2(0, 0);
+		private Vector2 collisionBox = Vector2.Zero;
 		
 		private static SoundEffectInstance fire;
 
@@ -41,7 +39,7 @@ namespace TheDestinyMod.Projectiles.Magic
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
 			DrawLaser(spriteBatch, Main.projectileTexture[projectile.type], new Vector2(Main.player[projectile.owner].Center.X, Main.player[projectile.owner].Center.Y - 4),
-				projectile.velocity, 10, projectile.damage, -1.57f, 1f, (int)MOVE_DISTANCE);
+				projectile.velocity, 10, projectile.damage, -1.57f, 1f, 60);
 			return false;
 		}
 
@@ -52,26 +50,30 @@ namespace TheDestinyMod.Projectiles.Magic
 				Color c = Color.White;
 				var origin = start + i * unit;
 				spriteBatch.Draw(texture, origin - Main.screenPosition,
-					new Rectangle(0, 26, 28, 26), i < transDist ? Color.Transparent : c, r,
-					new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
+					new Rectangle(0, 26, 20, 26), i < transDist ? Color.Transparent : c, r,
+					new Vector2(20 * .5f, 26 * .5f), scale, 0, 0);
 			}
 
 			spriteBatch.Draw(texture, start + unit * (transDist - step) - Main.screenPosition,
-				new Rectangle(0, 0, 28, 26), Color.White, r, new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
+				new Rectangle(0, 0, 20, 26), Color.White, r, new Vector2(20 * .5f, 26 * .5f), scale, 0, 0);
 
 			spriteBatch.Draw(texture, start + (Distance + step) * unit - Main.screenPosition,
-				new Rectangle(0, 52, 28, 26), Color.White, r, new Vector2(28 * .5f, 26 * .5f), scale, 0, 0);
+				new Rectangle(0, 52, 20, 26), Color.White, r, new Vector2(20 * .5f, 26 * .5f), scale, 0, 0);
 
 			collisionBox = start + (Distance + step) * unit;
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Player player = Main.player[projectile.owner];
-			Vector2 unit = projectile.velocity;
 			float point = 0f;
 
 			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), collisionBox,
-				new Vector2(collisionBox.X + 28, collisionBox.Y + 26), 26, ref point);
+				new Vector2(collisionBox.X + 22, collisionBox.Y + 26), 22, ref point);
+		}
+
+        public override void Kill(int timeLeft) {
+			fire?.Stop(true);
+			start?.Stop(true);
+			Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/DivinityStop"), projectile.Center);
 		}
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
@@ -85,8 +87,8 @@ namespace TheDestinyMod.Projectiles.Magic
 		public override void AI() {
 			projectile.localAI[1]++;
 			Player player = Main.player[projectile.owner];
-			projectile.position = player.Center + projectile.velocity * MOVE_DISTANCE;
-			projectile.timeLeft = 2;
+			projectile.position = player.Center + projectile.velocity * 60;
+			projectile.timeLeft = 4;
 			if (!done && start == null) {
 				start = mod.GetSound("Sounds/Item/DivinityStart").CreateInstance();
 				start.Play();
@@ -104,11 +106,8 @@ namespace TheDestinyMod.Projectiles.Magic
 			else if (fire != null && start.State != SoundState.Playing && fire.State == SoundState.Stopped) {
 				fire.Play();
 			}
-			if (!player.channel || Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true)) {
+			if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true) && player.whoAmI == Main.myPlayer) {
 				projectile.Kill();
-				fire?.Stop(true);
-				start?.Stop(true);
-				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/DivinityStop"), projectile.Center);
 			}
 
 			if (projectile.owner == Main.myPlayer) {
@@ -123,7 +122,7 @@ namespace TheDestinyMod.Projectiles.Magic
 			player.heldProj = projectile.whoAmI;
 			player.itemTime = player.itemAnimation = 4;
 			player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir, projectile.velocity.X * dir);
-			for (Distance = MOVE_DISTANCE; Distance <= 2200f; Distance += 5f) {
+			for (Distance = 60; Distance <= 2200f; Distance += 5f) {
 				var start = player.Center + projectile.velocity * Distance;
 				if (!Collision.CanHitLine(player.Center, 1, 1, start, 1, 1)) {
 					Distance -= 5f;
@@ -157,7 +156,7 @@ namespace TheDestinyMod.Projectiles.Magic
 			}
 			if (projectile.localAI[1] > 1) {
 				DelegateMethods.v3_1 = new Vector3(0.8f, 0.8f, 1f);
-				Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - MOVE_DISTANCE), 26, DelegateMethods.CastLight);
+				Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - 60), 26, DelegateMethods.CastLight);
 			}
 		}
 
@@ -165,7 +164,7 @@ namespace TheDestinyMod.Projectiles.Magic
 
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - MOVE_DISTANCE), (projectile.width + 16) * projectile.scale, DelegateMethods.CutTiles);
+			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (Distance - 60), (projectile.width + 16) * projectile.scale, DelegateMethods.CutTiles);
 		}
 	}
 }

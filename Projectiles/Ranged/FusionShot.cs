@@ -61,7 +61,7 @@ namespace TheDestinyMod.Projectiles.Ranged
                 if (charge.State == SoundState.Stopped && !fired) {
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/FusionRifleFire"), projectile.Center);
                     fired = true;
-                    charge.Stop();
+                    charge?.Stop();
                     charge = null;
                     player.channel = false;
                     Vector2 perturbedSpeed = (10 * projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
@@ -71,10 +71,6 @@ namespace TheDestinyMod.Projectiles.Ranged
                 }
                 else if (!player.channel && charge.State == SoundState.Playing && !fired) {
                     projectile.Kill();
-                    charge.Stop();
-                    charge = null;
-                    player.channel = false;
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/FusionRifleRelease"), projectile.Center);
                 }
             }
             if (countFires >= 1) {
@@ -89,6 +85,16 @@ namespace TheDestinyMod.Projectiles.Ranged
                     projectile.Kill();
                 }
             }
+        }
+
+        public override void Kill(int timeLeft) {
+            if (countFires < 7) {
+                charge?.Stop();
+                charge = null;
+                Main.player[projectile.owner].channel = false;
+                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/FusionRifleRelease"), projectile.Center);
+            }
+            countFires = delayFire = 0;
         }
 
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {

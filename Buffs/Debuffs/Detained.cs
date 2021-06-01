@@ -23,7 +23,7 @@ namespace TheDestinyMod.Buffs.Debuffs
             if (player.buffTime[buffIndex] <= 1) {
                 Terraria.DataStructures.PlayerDeathReason deathReason = new Terraria.DataStructures.PlayerDeathReason
                 {
-                    SourceCustomReason = player.name + " was negated." //, SourceNPCIndex = AtheonTypeHere - figure out death text
+                    SourceCustomReason = player.name + "'s death was correctly predicted." //, SourceNPCIndex = AtheonTypeHere
                 };
                 player.KillMe(deathReason, 0, 0);
             }

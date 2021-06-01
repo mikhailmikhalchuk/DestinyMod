@@ -47,10 +47,7 @@ namespace TheDestinyMod.NPCs.Town
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) {
-			if (NPC.downedSlimeKing) {
-				return true;
-			}
-			return false;
+			return NPC.downedSlimeKing;
 		}
 
 		public override string TownNPCName() {
