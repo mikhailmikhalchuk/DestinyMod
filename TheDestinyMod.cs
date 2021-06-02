@@ -508,9 +508,12 @@ namespace TheDestinyMod
 						prime.HandlePacket(reader);
 					}
 					break;
+                default:
+                    Logger.Error($"TheDestinyMod Packet Handler: Encountered unknown packet of type {type}");
+                    break;
             }
         }
-	}
+    }
 
     internal enum DestinyModMessageType : byte
     {

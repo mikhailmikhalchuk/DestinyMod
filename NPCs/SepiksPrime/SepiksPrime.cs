@@ -291,6 +291,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                 case SepiksBossMessageType.DontTakeDamage:
                     npc.dontTakeDamage = reader.ReadBoolean();
                     break;
+                default:
+                    TheDestinyMod.Logger.Error($"Sepiks Prime Packet Handler: Encountered unknown packet of type ${type}");
+                    break;
             }
         }
         

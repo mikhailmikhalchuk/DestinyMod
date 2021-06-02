@@ -69,7 +69,7 @@ namespace TheDestinyMod.Projectiles.Ranged
                     countFires = 1;
                     delayFire = 4;
                 }
-                else if (!player.channel && charge.State == SoundState.Playing && !fired) {
+                else if (!player.channel && charge.State == SoundState.Playing && !fired && player.whoAmI == Main.myPlayer) {
                     projectile.Kill();
                 }
             }
@@ -81,7 +81,7 @@ namespace TheDestinyMod.Projectiles.Ranged
                     countFires++;
                     delayFire = 4;
                 }
-                if (countFires >= 7) {
+                if (countFires >= 7 && player.whoAmI == Main.myPlayer) {
                     projectile.Kill();
                 }
             }

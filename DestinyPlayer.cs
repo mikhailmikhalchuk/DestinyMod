@@ -80,7 +80,7 @@ namespace TheDestinyMod
 			}
         }
 
-        public override void ProcessTriggers(TriggersSet triggersSet) {
+		public override void ProcessTriggers(TriggersSet triggersSet) {
 			var itemPos = 0;
             if (TheDestinyMod.activateSuper.JustPressed && superChargeCurrent == 100 && !player.dead) {
 				foreach (Item item in Main.LocalPlayer.inventory) {
@@ -117,18 +117,31 @@ namespace TheDestinyMod
 				releasedMouseLeft = true;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
-				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.Detained>(), 600);
-				NPC.NewNPC((int)player.position.X, (int)player.position.Y, ModContent.NPCType<NPCs.Vex.VaultOfGlass.DetainmentBubble>(), 0, player.whoAmI);
-				/*bool result = Enter(TheDestinyMod.mySubworldID) ?? false;
+				bool result = Enter(TheDestinyMod.mySubworldID) ?? false;
 				if (!result)
-					Main.NewText("Something went wrong, not entering " + TheDestinyMod.mySubworldID);*/
+					Main.NewText("Something went wrong, not entering " + TheDestinyMod.mySubworldID);
+			}
+			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
+				bool result = Exit() ?? false;
+				if (!result)
+					Main.NewText("Something went wrong, not exiting");
 			}
         }
 
-		public static bool? Enter(string id) {
+        public static bool? Enter(string id) {
+            Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
+            if (subworldLibrary != null) {
+                Main.mapEnabled = false;
+                return subworldLibrary.Call("Enter", id) as bool?;
+            }
+            return null;
+        }
+
+		public static bool? Exit() {
 			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
 			if (subworldLibrary != null) {
-				return subworldLibrary.Call("Enter", id) as bool?;
+				Main.mapEnabled = true;
+				return subworldLibrary.Call("Exit") as bool?;
 			}
 			return null;
 		}

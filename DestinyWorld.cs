@@ -134,7 +134,7 @@ namespace TheDestinyMod
                 attempts++;
                 if (attempts > 50000) {
                     success = true;
-                    TheDestinyMod.Logger.Info("Failed!");
+                    TheDestinyMod.Logger.Info("TheDestinyMod WorldGen: Failed to place the Vex portal");
                     continue;
                 }
                 int i = WorldGen.genRand.Next(300, Main.maxTilesX - 300);

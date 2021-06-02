@@ -71,7 +71,7 @@ namespace TheDestinyMod.Items
         }
 
         public override bool CanUseItem(Item item, Player player) {
-            return !player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>());
+            return !player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>()) && !player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Detained>());
         }
 
         public override bool NeedsSaving(Item item) {
