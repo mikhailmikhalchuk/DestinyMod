@@ -188,6 +188,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             }
         }
 
+        /// <summary>
+        /// Teleports Sepiks near a target
+        /// </summary>
         private void TeleportNearTarget() {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 Player target = Main.player[npc.target];
@@ -214,6 +217,10 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             }
         }
 
+        /// <summary>
+        /// Checks if Sepiks should have his shield up
+        /// </summary>
+        /// <returns>True if a Sepiks Servitor was found in the world. Otherwise returns false.</returns>
         private bool CheckShieldedPhase() {
             for (int k = 0; k < 200; k++) {
                 if (Main.npc[k].active && Main.npc[k].type == ModContent.NPCType<SepiksServitor>()) {
@@ -223,6 +230,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             return false;
         }
 
+        /// <summary>
+        /// Summons Sepiks' servitors
+        /// </summary>
         private void SummonServitors() {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 NPC.NewNPC((int)npc.Center.X + 150, (int)npc.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
@@ -233,6 +243,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             }
         }
 
+        /// <summary>
+        /// Fires an Eye Blast at the current target
+        /// </summary>
         private void FireBlastAtTarget() {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 Player target = Main.player[npc.target];
@@ -250,6 +263,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             }
         }
 
+        /// <summary>
+        /// Fires a Homing Eye Blast at the current target
+        /// </summary>
         private void FireHomingAtTarget() {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SepiksHoming>(), 0, npc.whoAmI);

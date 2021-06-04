@@ -62,5 +62,12 @@ namespace TheDestinyMod.NPCs
                 }
             }
         }
+
+        public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {
+            if (TheDestinyMod.currentSubworldID != string.Empty) {
+                spawnRate = 0;
+                maxSpawns = 0;
+            }
+        }
     }
 }

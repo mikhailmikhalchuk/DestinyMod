@@ -9,6 +9,13 @@ namespace TheDestinyMod
 {
     public static class DestinyHelper
     {
+        /// <summary>
+        /// Homes in on an NPC
+        /// </summary>
+        /// <param name="distance">The current distance from the NPC</param>
+        /// <param name="projectile">The projectile that is being operated on</param>
+        /// <param name="move">The projectile's current move position</param>
+        /// <returns>True if the projectile found a target to lock onto. Otherwise returns false.</returns>
         public static bool HomeInOnNPC(float distance, Projectile projectile, ref Vector2 move) {
             bool target = false;
             for (int k = 0; k < 200; k++) {
@@ -23,6 +30,15 @@ namespace TheDestinyMod
                 }
             }
             return target;
+        }
+
+        ///<summary>
+        ///Used to generate a structure using StructureHelper
+        ///</summary>
+        ///<param name="structure">The structure file name</param>
+        ///<remarks>You must check that the StructureHelper mod is installed or the game will crash!</remarks>
+        public static void StructureHelperGenerateStructure(string structure) {
+            StructureHelper.Generator.GenerateStructure($"Structures/{structure}", new Vector2(Main.spawnTileX, Main.spawnTileY).ToPoint16(), TheDestinyMod.Instance);
         }
     }
 }

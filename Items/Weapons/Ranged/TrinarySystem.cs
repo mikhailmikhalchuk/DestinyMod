@@ -9,10 +9,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 {
 	public class TrinarySystem : ModItem
 	{
-		public bool buffed;
-
-		private int counter;
-
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("Scales with world progression\nHold down the trigger to fire\n\"The mathematics are quite complicated.\"");
 		}

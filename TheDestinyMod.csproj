@@ -15,9 +15,12 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Localization\" />
+    <Reference Include="StructureHelper">
+      <HintPath>lib\StructureHelper.FNA.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Web" />
+    <Folder Include="Localization\" />
   </ItemGroup>
 </Project>

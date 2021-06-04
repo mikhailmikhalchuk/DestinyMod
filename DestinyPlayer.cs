@@ -80,7 +80,16 @@ namespace TheDestinyMod
 			}
         }
 
-		public override void ProcessTriggers(TriggersSet triggersSet) {
+        public override void PostUpdateRunSpeeds() {
+			if (player.channel && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>()) {
+				player.maxRunSpeed /= 2;
+				player.accRunSpeed /= 2;
+				player.dashDelay = 10;
+				player.controlJump = false;
+			}
+		}
+
+        public override void ProcessTriggers(TriggersSet triggersSet) {
 			var itemPos = 0;
             if (TheDestinyMod.activateSuper.JustPressed && superChargeCurrent == 100 && !player.dead) {
 				foreach (Item item in Main.LocalPlayer.inventory) {
@@ -117,38 +126,57 @@ namespace TheDestinyMod
 				releasedMouseLeft = true;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
-				bool result = Enter(TheDestinyMod.mySubworldID) ?? false;
-				if (!result)
-					Main.NewText("Something went wrong, not entering " + TheDestinyMod.mySubworldID);
+				bool result = Enter("TheDestinyMod_Vault of Glass") ?? false;
+				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
+					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", new Color(255, 0, 0));
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
 				bool result = Exit() ?? false;
 				if (!result)
-					Main.NewText("Something went wrong, not exiting");
+					Main.NewText($"Something went wrong while trying to exit the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", new Color(255, 0, 0));
 			}
         }
 
+		/// <summary>
+		/// Used to enter a subworld using SubworldLibrary
+		/// </summary>
+		/// <param name="id">The subworld ID</param>
+		/// <returns>True if the subworld was succesfully entered, otherwise false. Returns null by default.</returns>
         public static bool? Enter(string id) {
             Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-            if (subworldLibrary != null) {
+			if (ModLoader.GetMod("StructureHelper") == null || subworldLibrary == null) {
+				Main.NewText("You must have the Subworld Library and Structure Helper mods enabled to enter a raid.", Color.Red);
+			}
+            else {
                 Main.mapEnabled = false;
-                return subworldLibrary.Call("Enter", id) as bool?;
+				TheDestinyMod.currentSubworldID = id;
+				try {
+					subworldLibrary.Call("DrawUnderworldBackground", false);
+					return subworldLibrary.Call("Enter", id) as bool?;
+				}
+				catch (Exception e) {
+					TheDestinyMod.Logger.Error($"TheDestinyMod: Got exception of type {e} while trying to enter raid: {TheDestinyMod.currentSubworldID.Substring(14)}.");
+                }
             }
             return null;
         }
 
+		/// <summary>
+		/// Used to exit a subworld using SubworldLibrary
+		/// </summary>
+		/// <returns>True if the subworld was succesfully exited, otherwise false. Returns null by default.</returns>
 		public static bool? Exit() {
 			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
 			if (subworldLibrary != null) {
 				Main.mapEnabled = true;
+				TheDestinyMod.currentSubworldID = string.Empty;
 				return subworldLibrary.Call("Exit") as bool?;
 			}
 			return null;
 		}
 
         public override void PostUpdateEquips() {
-			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-			if (subworldLibrary != null && (bool)subworldLibrary.Call("IsActive", TheDestinyMod.mySubworldID)) {
+			if (TheDestinyMod.currentSubworldID != string.Empty) {
 				player.noBuilding = true;
 			}
 		}
@@ -240,6 +268,12 @@ namespace TheDestinyMod
 				boughtRare = false;
 			}
         }
+
+		public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo) {
+			if (player.channel && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>()) {
+				player.headRotation = 0.3f * player.direction;
+			}
+		}
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
 			if (superActiveTime > 0) {

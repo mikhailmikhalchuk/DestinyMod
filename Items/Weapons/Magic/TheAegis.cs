@@ -23,6 +23,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 		public override void SetDefaults() {
 			item.magic = true;
 			item.channel = true;
+			item.useTurn = true;
 			item.mana = 1;
 			item.width = 54;
 			item.height = 26;
