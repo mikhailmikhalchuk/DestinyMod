@@ -33,10 +33,16 @@ namespace TheDestinyMod
         }
 
         ///<summary>
-        ///Used to generate a structure using StructureHelper
+        ///Used to generate a structure using StructureHelper. You must check that the StructureHelper mod is installed or the game will crash!
         ///</summary>
         ///<param name="structure">The structure file name</param>
-        ///<remarks>You must check that the StructureHelper mod is installed or the game will crash!</remarks>
+        ///<example>
+        ///<code>
+        ///if (ModLoader.GetMod("StructureHelper") != null) {
+        ///    StructureHelperGenerateStructure("Example");
+        ///}
+        ///</code>
+        ///</example>
         public static void StructureHelperGenerateStructure(string structure) {
             StructureHelper.Generator.GenerateStructure($"Structures/{structure}", new Vector2(Main.spawnTileX, Main.spawnTileY).ToPoint16(), TheDestinyMod.Instance);
         }

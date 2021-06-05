@@ -8,7 +8,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
 {
     public class SepiksServitor : ModNPC
     {
-        private int randomFireTime = Main.rand.Next(90, 200);
+        private int randomFireTime;
 
         public override void SetDefaults() {
             npc.aiStyle = -1;
@@ -28,8 +28,8 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             npc.ai[0]++;
             npc.TargetClosest(true);
             Player target = Main.player[npc.target];
-            npc.rotation = (float)Math.Atan2(npc.position.Y + (float)npc.height - 59f - target.position.Y - (float)(target.height/2), npc.position.X + (float)(npc.width/2) - target.position.X - (float)(target.width/2)) + (float)Math.PI / 2f;
-            if (npc.ai[0] >= (float)randomFireTime) {
+            npc.rotation = (float)Math.Atan2(npc.position.Y + npc.height - 59f - target.position.Y - (target.height/2), npc.position.X + (npc.width/2) - target.position.X - (target.width/2)) + (float)Math.PI / 2f;
+            if (npc.ai[0] >= randomFireTime) {
                 Vector2 delta = target.Center - npc.Center;
                 float magnitude = (float)Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
                 if (magnitude > 0) {

@@ -6,26 +6,19 @@ using Terraria.ModLoader;
 
 namespace TheDestinyMod.Items.Armor
 {
-	[AutoloadEquip(EquipType.Body)]
-	public class Armamentarium : ModItem
+	[AutoloadEquip(EquipType.Head)]
+	public class ProdigalHelm : ModItem
 	{
-        public override void SetStaticDefaults() {
-			Tooltip.SetDefault("50% increased throwing damage when your Super bar is charged\n\"For this, there is one remedy\"");
+		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("");
 		}
 
-        public override void SetDefaults() {
-			item.width = 28;
-			item.height = 22;
+		public override void SetDefaults() {
+			item.width = 20;
+			item.height = 18;
 			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.Yellow;
-			item.defense = 22;
-		}
-
-		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<DestinyPlayer>().exoticEquipped = true;
-			if (player.GetModPlayer<DestinyPlayer>().superChargeCurrent >= 100) {
-				player.thrownDamage += 0.5f;
-			}
+			item.rare = ItemRarityID.LightPurple;
+			item.defense = 5;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
@@ -40,5 +33,5 @@ namespace TheDestinyMod.Items.Armor
 			}
 			return base.CanEquipAccessory(player, slot);
 		}
-    }
+	}
 }
