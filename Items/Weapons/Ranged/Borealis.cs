@@ -29,7 +29,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.noMelee = true;
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.Yellow;
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Borealis");
 			item.autoReuse = false;
 			item.shoot = 10;
 			item.shootSpeed = 300f;
@@ -57,15 +58,10 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 				if (item.melee) {
 					Main.projectile[p].melee = true;
 					Main.projectile[p].ranged = false;
-					Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/BorealisMelee"), position);
 				}
 				else if (item.magic) {
 					Main.projectile[p].magic = true;
 					Main.projectile[p].ranged = false;
-					Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/BorealisMagic"), position);
-				}
-				else {
-					Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Borealis"), position);
 				}
 			}
 			return false;
@@ -95,11 +91,14 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			Texture2D texture = mod.GetTexture("Items/Weapons/Ranged/Borealis");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Borealis");
 			if (item.melee) {
 				texture = mod.GetTexture("Items/Weapons/Ranged/BorealisMelee");
+				item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/BorealisMelee");
 			}
 			else if (item.magic) {
 				texture = mod.GetTexture("Items/Weapons/Ranged/BorealisMagic");
+				item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/BorealisMagic");
 			}
 			if (cooldown > 0) {
 				cooldown--;

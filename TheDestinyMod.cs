@@ -363,10 +363,8 @@ namespace TheDestinyMod
             int soundSlot = GetSoundSlot(SoundType.Music, "Sounds/Music/SepiksPrime");
             if (Main.music.IndexInRange(soundSlot)) {
                 var check = Main.music[soundSlot];
-                if (check != null) {
-                    if (check.IsPlaying) {
-                        Main.music[soundSlot].Stop(AudioStopOptions.Immediate);
-                    }
+                if (check != null && check.IsPlaying) {
+                    Main.music[soundSlot].Stop(AudioStopOptions.Immediate);
                 }
             }
             base.Close();

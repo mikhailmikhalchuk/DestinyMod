@@ -10,28 +10,28 @@ namespace TheDestinyMod.Items.Armor
 	public class ProdigalHelm : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("7% increase ranged critical strike chance"); //d
 		}
 
 		public override void SetDefaults() {
 			item.width = 20;
 			item.height = 18;
-			item.value = Item.sellPrice(0, 5, 0, 0);
-			item.rare = ItemRarityID.LightPurple;
-			item.defense = 5;
+			item.value = Item.sellPrice(0, 0, 90, 0);
+			item.rare = ItemRarityID.Orange;
+			item.defense = 8;
 		}
 
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			if (!Main.LocalPlayer.GetModPlayer<DestinyPlayer>().titan && DestinyConfig.Instance.restrictClassItems) {
-				tooltips.Add(new TooltipLine(mod, "HasClass", "You must be a Titan to equip this") { overrideColor = new Color(255, 0, 0) });
-			}
-		}
+        public override void UpdateEquip(Player player) {
+			player.rangedCrit += 7;
+        }
 
-		public override bool CanEquipAccessory(Player player, int slot) {
-			if (DestinyConfig.Instance.restrictClassItems) {
-				return player.GetModPlayer<DestinyPlayer>().titan;
-			}
-			return base.CanEquipAccessory(player, slot);
+        public override void AddRecipes() {
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Materials.RelicIron>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<Materials.PlasteelPlating>(), 10);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
-	}
+    }
 }

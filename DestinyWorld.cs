@@ -187,7 +187,7 @@ namespace TheDestinyMod
         }
 
         public override void PostUpdate() {
-            if (Main.rand.NextBool(25000)) {
+            if (Main.rand.NextBool(15000)) {
                 int attempts = 0;
                 Tile tile;
                 Tile tileBelow;
@@ -207,7 +207,7 @@ namespace TheDestinyMod
                     }
                 }
             }
-            if (Main.rand.NextBool(50000)) {
+            if (Main.rand.NextBool(35000)) {
                 int attempts = 0;
                 Tile tile;
                 Tile tileBelow;

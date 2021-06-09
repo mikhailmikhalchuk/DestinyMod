@@ -19,7 +19,7 @@ namespace TheDestinyMod.Items.Materials
 			item.height = 16;
 			item.width = 18;
 			item.maxStack = 999;
-			item.value = Item.buyPrice(0, 0, 10, 0);
+			item.value = Item.buyPrice(0, 0, 2, 0);
 			item.useTurn = true;
 			item.consumable = true;
 			item.autoReuse = true;

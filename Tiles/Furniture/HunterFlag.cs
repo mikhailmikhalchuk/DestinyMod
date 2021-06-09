@@ -26,7 +26,7 @@ namespace TheDestinyMod.Tiles.Furniture
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Hunter Flag");
-			AddMapEntry(new Color(0, 255, 0), name);
+			AddMapEntry(new Color(128, 221, 255), name);
 			dustType = 1;
 		}
 
