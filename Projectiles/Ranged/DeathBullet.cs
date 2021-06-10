@@ -21,7 +21,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 		}
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if (target.friendly == false && target.damage > 0 && target.life <= 0) {
+            if (!target.friendly && target.damage > 0 && target.life <= 0) {
                 Main.LocalPlayer.statLife += 5;
             }
         }

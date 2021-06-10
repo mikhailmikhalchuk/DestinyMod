@@ -75,20 +75,20 @@ namespace TheDestinyMod.Projectiles.Ranged
             }
             if (countFires >= 1) {
                 delayFire--;
-                if (delayFire <= 0 && countFires < 7) {
+                if (delayFire <= 0 && countFires < projectile.ai[0]) {
                     Vector2 perturbedSpeed = (10 * projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
                     Projectile.NewProjectile(new Vector2(projectile.position.X, projectile.position.Y - 5), perturbedSpeed, ProjectileID.Bullet, projectile.damage, projectile.knockBack, player.whoAmI);
                     countFires++;
                     delayFire = 4;
                 }
-                if (countFires >= 7 && player.whoAmI == Main.myPlayer) {
+                if (countFires >= projectile.ai[0] && player.whoAmI == Main.myPlayer) {
                     projectile.Kill();
                 }
             }
         }
 
         public override void Kill(int timeLeft) {
-            if (countFires < 7) {
+            if (countFires < projectile.ai[0]) {
                 charge?.Stop();
                 charge = null;
                 Main.player[projectile.owner].channel = false;

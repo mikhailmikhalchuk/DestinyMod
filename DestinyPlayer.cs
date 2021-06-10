@@ -28,6 +28,7 @@ namespace TheDestinyMod
 		public int superActiveTime;
 		public int markedByVoidTimer;
 		public int markedByVoidDelay;
+		public int overchargeStacks;
 		
 		public bool ancientShard;
 		public bool boughtCommon;

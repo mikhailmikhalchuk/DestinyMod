@@ -17,7 +17,7 @@ namespace TheDestinyMod.Projectiles.Magic
 
 		private Vector2 collisionBox = Vector2.Zero;
 		
-		private static SoundEffectInstance fire;
+		private static SoundEffectInstance fire; //thanks, solstice
 
 		private static SoundEffectInstance start;
 

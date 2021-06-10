@@ -23,17 +23,15 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
-                DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-                player.monteMethod = player.monteMethod + 60;
-                Main.LocalPlayer.AddBuff(ModContent.BuffType<MonteCarloMethod>(), player.monteMethod, true);
+                Main.LocalPlayer.GetModPlayer<DestinyPlayer>().monteMethod += 60;
+                Main.LocalPlayer.AddBuff(ModContent.BuffType<MonteCarloMethod>(), Main.LocalPlayer.GetModPlayer<DestinyPlayer>().monteMethod, true);
             }
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {
             if (target.statLife <= 0) {
-                DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-                player.monteMethod = player.monteMethod + 60;
-                Main.LocalPlayer.AddBuff(ModContent.BuffType<MonteCarloMethod>(), player.monteMethod, true);
+                Main.LocalPlayer.GetModPlayer<DestinyPlayer>().monteMethod += 60;
+                Main.LocalPlayer.AddBuff(ModContent.BuffType<MonteCarloMethod>(), Main.LocalPlayer.GetModPlayer<DestinyPlayer>().monteMethod, true);
             }
         }
     }

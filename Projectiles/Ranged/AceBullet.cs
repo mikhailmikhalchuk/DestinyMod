@@ -22,7 +22,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 		}
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if (target.friendly == false && target.damage > 0 && target.life <= 0) {
+            if (!target.friendly && target.damage > 0 && target.life <= 0) {
                 Projectile.NewProjectile(target.position.X, target.position.Y, 0, 0, ProjectileID.DD2ExplosiveTrapT3Explosion, damage/2, 0, projectile.owner);
                 Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, target.position);
             }

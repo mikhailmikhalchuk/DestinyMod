@@ -257,7 +257,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                 else {
                     delta = new Vector2(0f, 5f);
                 }
-                Projectile.NewProjectile(npc.Center, delta, ModContent.ProjectileType<SepiksBlast>(), 20, 5, Main.myPlayer, npc.whoAmI);
+                Projectile.NewProjectile(npc.Center, delta.RotatedByRandom(MathHelper.ToRadians(10)), ModContent.ProjectileType<SepiksBlast>(), 20, 5, Main.myPlayer, npc.whoAmI);
                 Main.PlaySound(SoundID.Item8, npc.Center);
                 npc.netUpdate = true;
             }

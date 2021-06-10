@@ -22,18 +22,16 @@ namespace TheDestinyMod.Projectiles.Ranged
 		}
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if (target.friendly == false && target.damage > 0 && target.life <= 0) {
-                DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-                player.pCharge = player.pCharge + 60;
-                Main.LocalPlayer.AddBuff(ModContent.BuffType<ParacausalCharge>(), player.pCharge, true);
+            if (!target.friendly && target.damage > 0 && target.life <= 0) {
+                Main.LocalPlayer.GetModPlayer<DestinyPlayer>().pCharge += 60;
+                Main.LocalPlayer.AddBuff(ModContent.BuffType<ParacausalCharge>(), Main.LocalPlayer.GetModPlayer<DestinyPlayer>().pCharge, true);
             }
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {
             if (target.statLife <= 0) {
-                DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-                player.pCharge = player.pCharge + 60;
-                Main.LocalPlayer.AddBuff(ModContent.BuffType<ParacausalCharge>(), player.pCharge, true);
+                Main.LocalPlayer.GetModPlayer<DestinyPlayer>().pCharge += 60;
+                Main.LocalPlayer.AddBuff(ModContent.BuffType<ParacausalCharge>(), Main.LocalPlayer.GetModPlayer<DestinyPlayer>().pCharge, true);
             }
         }
     }

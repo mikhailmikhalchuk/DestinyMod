@@ -15,6 +15,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
 
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.EnchantedBoomerang);
+            projectile.aiStyle = 0;
             projectile.hostile = true;
             projectile.friendly = false;
             projectile.penetrate = -1;
