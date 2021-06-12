@@ -59,13 +59,15 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			if (player.altFunctionUse == 2 && !alt && cooldown <= 0 && player.HasBuff(ModContent.BuffType<Buffs.Overcharge>())) {
 				alt = true;
                 item.autoReuse = false;
+                item.UseSound = null;
 				Main.PlaySound(SoundID.Item101);
 				cooldown = 15;
 			}
 			else if (player.altFunctionUse == 2 && alt && cooldown <= 0) {
 				alt = false;
                 item.autoReuse = true;
-				Main.PlaySound(SoundID.Item101);
+                item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclast");
+                Main.PlaySound(SoundID.Item101);
 				cooldown = 15;
 			}
 			return player.altFunctionUse != 2;
@@ -74,6 +76,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
             if ((Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overchargeStacks <= 0 || !Main.LocalPlayer.HasBuff(ModContent.BuffType<Buffs.Overcharge>())) && alt) {
                 alt = false;
+                item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclast");
                 Main.LocalPlayer.ClearBuff(ModContent.BuffType<Buffs.Overcharge>());
             }
             if (cooldown > 0)
@@ -129,7 +132,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override void AI() {
             if (charge == null && !fired) {
-                charge = mod.GetSound("Sounds/Item/FusionRifleCharge").CreateInstance();
+                charge = mod.GetSound("Sounds/Item/VexMythoclastStart").CreateInstance();
                 charge.Play();
             }
             Player player = Main.player[projectile.owner];
@@ -150,12 +153,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
             }
             if (charge != null) {
                 if (charge.State == SoundState.Stopped && !fired) {
-                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/FusionRifleFire"), projectile.Center);
+                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclastFire"), projectile.Center);
                     fired = true;
                     charge?.Stop();
                     charge = null;
                     Main.player[projectile.owner].channel = false;
-                    Vector2 perturbedSpeed = (10 * projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(3));
+                    Vector2 perturbedSpeed = (10 * projectile.velocity * 2f);
                     projectile.velocity = perturbedSpeed;
                     projectile.tileCollide = true;
                     projectile.hide = false;
@@ -176,7 +179,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
                 charge?.Stop();
                 charge = null;
                 Main.player[projectile.owner].channel = false;
-                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/FusionRifleRelease"), projectile.Center);
             }
         }
 

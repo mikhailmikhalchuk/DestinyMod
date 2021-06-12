@@ -33,5 +33,6 @@ Changed the firing sounds of certain weapons
 Removed the Vex Mythoclast crafting recipe
 Add Census Mod support for town NPCs
 Added Vex Mythoclast's Overcharge ability
+Reworded Graviton Lance's description slightly
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

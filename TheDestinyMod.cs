@@ -51,7 +51,7 @@ namespace TheDestinyMod
 
         public override void Load() {
             activateSuper = RegisterHotKey("Activate Super", "U");
-            CipherCustomCurrencyId = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.ExoticCipher>(), 1L));
+            CipherCustomCurrencyId = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.ExoticCipher>(), 30L));
             On.Terraria.Player.DropTombstone += Player_DropTombstone;
             if (!Main.dedServ) {
 
@@ -436,10 +436,7 @@ namespace TheDestinyMod
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
             if (subworldLibrary != null) {
-                string result = (string)subworldLibrary.Call(
-                    "Current"
-                );
-                if (result == "TheDestinyMod_Vault Of Glass") {
+                if (currentSubworldID == "TheDestinyMod_Vault Of Glass") {
                     music = GetSoundSlot(SoundType.Music, "Sounds/Music/VoGAmbience");
                     priority = MusicPriority.BossHigh;
                 }
@@ -465,7 +462,7 @@ namespace TheDestinyMod
                 {
                     progress.Message = "The start of time...";
                     if (ModLoader.GetMod("StructureHelper") != null) {
-                        DestinyHelper.StructureHelperGenerateStructure("VaultOfGlass");
+                        DestinyHelper.StructureHelperGenerateStructure(new Vector2(Main.spawnTileX, Main.spawnTileY), "VaultOfGlass");
                     }
                 },
                 1f)

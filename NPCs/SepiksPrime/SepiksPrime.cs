@@ -77,7 +77,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             if (npc.timeLeft <= 10) {
                 return;
             }
-            if (npc.dontTakeDamage == true) {
+            if (npc.dontTakeDamage) {
                 if ((phase == 2 || phase == 5) && !CheckShieldedPhase()) {
                     phase = phase == 2 ? 3 : 6;
                     npc.damage = Main.expertMode ? 20 : 10;
@@ -164,13 +164,13 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     TeleportNearTarget();
                 }
             }
-            if (shielded == true) {
+            if (shielded) {
                 if (npc.ai[0] > 80f || npc.ai[0] > 70f && Main.expertMode) {
                     FireBlastAtTarget();
                     npc.ai[0] = 0f;
                 }
             }
-            if ((target.Center - npc.Center).Length() < 100 && shielded == false) {
+            if ((target.Center - npc.Center).Length() < 100 && !shielded) {
                 TeleportNearTarget();
                 npc.ai[0] = 0f;
             }

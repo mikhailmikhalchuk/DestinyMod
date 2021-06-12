@@ -32,7 +32,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shoot = 10;
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Bullet;
-			item.scale = .80f;
+			item.scale = .70f;
 			item.reuseDelay = 10;
 		}
 
@@ -42,12 +42,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.8f;
+			scale *= 0.7f;
 			return true;
 		}
 
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(-17, 2);
+			return new Vector2(-22, 0);
 		}
 	}
 }

@@ -50,7 +50,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
                 position += muzzleOffset;
             }
-            Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, ModContent.ProjectileType<Projectiles.Ranged.FusionShot>(), damage, knockBack, player.whoAmI, 7);
+            Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, ModContent.ProjectileType<Projectiles.Ranged.FusionShot>(), damage, knockBack, player.whoAmI, 7, type);
             return false;
         }
 

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace TheDestinyMod.Projectiles.Ranged
 {
+    //If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
     public class FusionShot : ModProjectile
     {
         private  bool fired;
@@ -39,6 +40,9 @@ namespace TheDestinyMod.Projectiles.Ranged
         }
 
         public override void AI() {
+            if (projectile.ai[0] <= 0) {
+                projectile.ai[0] = 5;
+            } 
             if (charge == null && !fired) {
                 charge = mod.GetSound("Sounds/Item/FusionRifleCharge").CreateInstance();
                 charge.Play();
@@ -65,7 +69,7 @@ namespace TheDestinyMod.Projectiles.Ranged
                     charge = null;
                     player.channel = false;
                     Vector2 perturbedSpeed = (10 * projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
-                    Projectile.NewProjectile(new Vector2(projectile.position.X, projectile.position.Y - 5), perturbedSpeed, ProjectileID.Bullet, projectile.damage, projectile.knockBack, player.whoAmI);
+                    Projectile.NewProjectile(new Vector2(projectile.position.X, projectile.position.Y - 5), perturbedSpeed, (int)projectile.ai[1] > 0 ? (int)projectile.ai[1] : ProjectileID.Bullet, projectile.damage, projectile.knockBack, player.whoAmI);
                     countFires = 1;
                     delayFire = 4;
                 }
@@ -77,7 +81,7 @@ namespace TheDestinyMod.Projectiles.Ranged
                 delayFire--;
                 if (delayFire <= 0 && countFires < projectile.ai[0]) {
                     Vector2 perturbedSpeed = (10 * projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
-                    Projectile.NewProjectile(new Vector2(projectile.position.X, projectile.position.Y - 5), perturbedSpeed, ProjectileID.Bullet, projectile.damage, projectile.knockBack, player.whoAmI);
+                    Projectile.NewProjectile(new Vector2(projectile.position.X, projectile.position.Y - 5), perturbedSpeed, (int)projectile.ai[1] > 0 ? (int)projectile.ai[1] : ProjectileID.Bullet, projectile.damage, projectile.knockBack, player.whoAmI);
                     countFires++;
                     delayFire = 4;
                 }

@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		private int shot;
 
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Second shot of a burst deals double damage\nKills with this bullet summon a seeking projectile\n\"Think of space-time as a tapestry on a loom. This weapon is the needle.\"");
+			Tooltip.SetDefault("Second shot of a burst deals double damage\nKills with this shot summon a seeking projectile\n\"Think of space-time as a tapestry on a loom. This weapon is the needle.\"");
 		}
 
 		public override void SetDefaults() {

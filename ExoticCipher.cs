@@ -12,7 +12,7 @@ namespace TheDestinyMod
 		}
 
 		public override void GetPriceText(string[] lines, ref int currentLine, int price) {
-			Color color = Color.Goldenrod * ((float)Main.mouseTextColor / 255f);
+			Color color = Color.Goldenrod * (Main.mouseTextColor / 255f);
 			lines[currentLine++] = string.Format("[c/{0:X2}{1:X2}{2:X2}:{3} {4} {5}]", new object[]
 				{
 					color.R,

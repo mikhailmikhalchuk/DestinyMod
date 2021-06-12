@@ -35,16 +35,33 @@ namespace TheDestinyMod
         ///<summary>
         ///Used to generate a structure using StructureHelper. You must check that the StructureHelper mod is installed or the game will crash!
         ///</summary>
+        ///<param name="location">The location to place the structure</param>
         ///<param name="structure">The structure file name</param>
         ///<example>
         ///<code>
         ///if (ModLoader.GetMod("StructureHelper") != null) {
-        ///    StructureHelperGenerateStructure("Example");
+        ///    StructureHelperGenerateStructure(new Vector2(100, 150), "Example");
         ///}
         ///</code>
         ///</example>
-        public static void StructureHelperGenerateStructure(string structure) {
-            StructureHelper.Generator.GenerateStructure($"Structures/{structure}", new Vector2(Main.spawnTileX, Main.spawnTileY).ToPoint16(), TheDestinyMod.Instance);
+        public static void StructureHelperGenerateStructure(Vector2 location, string structure) {
+            StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location.ToPoint16(), TheDestinyMod.Instance);
+        }
+
+        ///<summary>
+        ///Used to generate a structure using StructureHelper. You must check that the StructureHelper mod is installed or the game will crash!
+        ///</summary>
+        ///<param name="location">The location to place the structure</param>
+        ///<param name="structure">The structure file name</param>
+        ///<example>
+        ///<code>
+        ///if (ModLoader.GetMod("StructureHelper") != null) {
+        ///    StructureHelperGenerateStructure(new Point16(100, 150), "Example");
+        ///}
+        ///</code>
+        ///</example>
+        public static void StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
+            StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
         }
     }
 }
