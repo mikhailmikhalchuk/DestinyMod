@@ -15,18 +15,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
 		public override void SetDefaults() {
 			item.damage = 5;
-			if (Main.hardMode) {
-				item.damage = 25;
-				item.crit = 3;
-			}
-			if (NPC.downedMechBossAny) {
-				item.damage = 35;
-				item.crit = 5;
-			}
-			if (NPC.downedPlantBoss) {
-				item.damage = 45;
-				item.crit = 7;
-			}
+			item.crit = 1;
 			item.ranged = true;
 			item.noMelee = true;
 			item.channel = true;
@@ -53,6 +42,31 @@ namespace TheDestinyMod.Items.Weapons.Ranged
             Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, ModContent.ProjectileType<Projectiles.Ranged.FusionShot>(), damage, knockBack, player.whoAmI, 7, type);
             return false;
         }
+
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+			if (Main.hardMode) {
+				flat += 20;
+			}
+			if (NPC.downedMechBossAny) {
+				flat += 10;
+			}
+			if (NPC.downedPlantBoss) {
+				flat += 10;
+			}
+        }
+
+        public override void GetWeaponCrit(Player player, ref int crit) {
+			crit = 1;
+			if (Main.hardMode) {
+				crit = 3;
+			}
+			if (NPC.downedMechBossAny) {
+				crit = 5;
+			}
+			if (NPC.downedPlantBoss) {
+				crit = 7;
+			}
+		}
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			scale *= 1.5f;

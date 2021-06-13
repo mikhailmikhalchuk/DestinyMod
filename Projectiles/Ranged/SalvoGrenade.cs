@@ -14,8 +14,6 @@ namespace TheDestinyMod.Projectiles.Ranged
 			projectile.CloneDefaults(ProjectileID.Grenade);
 			projectile.penetrate = -1;
 			projectile.timeLeft = 800;
-			drawOffsetX = 5;
-			drawOriginOffsetY = 5;
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
@@ -48,9 +46,8 @@ namespace TheDestinyMod.Projectiles.Ranged
         }
 
         public override void AI() {
-			DestinyPlayer player = Main.player[projectile.owner].GetModPlayer<DestinyPlayer>();
 			Main.player[projectile.owner].itemAnimation = Main.player[projectile.owner].itemTime = 10;
-			if (projectile.owner == Main.myPlayer && projectile.timeLeft <= 3 || player.releasedMouseLeft && projectile.timeLeft <= 770) {
+			if (projectile.owner == Main.myPlayer && projectile.timeLeft <= 3 || Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().releasedMouseLeft && projectile.timeLeft <= 770) {
 				projectile.tileCollide = false;
 				projectile.alpha = 255;
 				projectile.position = projectile.Center;
@@ -77,16 +74,16 @@ namespace TheDestinyMod.Projectiles.Ranged
 			if (projectile.ai[0] > 5f) {
 				projectile.ai[0] = 10f;
 				if (projectile.velocity.Y == 0f && projectile.velocity.X != 0f) {
-					projectile.velocity.X = projectile.velocity.X * 0.97f;
+					projectile.velocity.X *= 0.97f;
 					{
-						projectile.velocity.X = projectile.velocity.X * 0.99f;
+						projectile.velocity.X *= 0.99f;
 					}
 					if (projectile.velocity.X > -0.01 && projectile.velocity.X < 0.01) {
 						projectile.velocity.X = 0f;
 						projectile.netUpdate = true;
 					}
 				}
-				projectile.velocity.Y = projectile.velocity.Y + 0.2f;
+				projectile.velocity.Y += 0.2f;
 			}
 			return;
 		}

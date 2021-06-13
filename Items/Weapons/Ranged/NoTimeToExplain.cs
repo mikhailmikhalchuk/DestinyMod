@@ -14,7 +14,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("No Time to Explain");
-			Tooltip.SetDefault("\"A single word etched onto the inside of the weapon's casing: Now.\"");
+			Tooltip.SetDefault("Three round burst\n\"A single word etched onto the inside of the weapon's casing: Now.\"");
 		}
 		public override void SetDefaults() {
 			item.damage = 50;

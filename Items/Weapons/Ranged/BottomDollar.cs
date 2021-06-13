@@ -15,10 +15,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged {
 
 		public override void SetDefaults() {
 			item.damage = 15;
-			if (Main.hardMode) {
-				item.damage = 40;
-				item.crit = 12;
-			}
+			item.crit = 5;
 			item.ranged = true;
 			item.noMelee = true;
 			item.rare = ItemRarityID.Green;
@@ -40,6 +37,19 @@ namespace TheDestinyMod.Items.Weapons.Ranged {
 			Projectile.NewProjectile(position.X, position.Y - 5, speedX, speedY, type, damage, knockBack, player.whoAmI);
 			return false;
 		}
+
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+			if (Main.hardMode) {
+				flat += 25;
+			}
+        }
+
+        public override void GetWeaponCrit(Player player, ref int crit) {
+			crit = 5;
+			if (Main.hardMode) {
+				crit = 8;
+			}
+        }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			scale *= 0.8f;

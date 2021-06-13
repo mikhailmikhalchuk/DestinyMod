@@ -14,8 +14,6 @@ namespace TheDestinyMod.NPCs.Town
 	[AutoloadHead]
 	public class AgentOfNine : ModNPC
 	{
-		public const double despawnTime = 32400.0;
-
 		public static double spawnTime = double.MaxValue;
 		
 		public static List<Item> shopItems = new List<Item>();
@@ -28,7 +26,7 @@ namespace TheDestinyMod.NPCs.Town
 
 		public static void UpdateTravelingMerchant() {
 			NPC agentOfNine = FindNPC(ModContent.NPCType<AgentOfNine>());
-			if (agentOfNine != null && (Main.dayTime || Main.time >= despawnTime) && !IsNpcOnscreen(agentOfNine.Center)) {
+			if (agentOfNine != null && (Main.dayTime || Main.time >= 32400) && !IsNpcOnscreen(agentOfNine.Center)) {
 				if (Main.netMode == NetmodeID.SinglePlayer) Main.NewText(agentOfNine.FullName + " has departed!", 50, 125, 255);
 				else NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(agentOfNine.FullName + " has departed!"), new Color(50, 125, 255));
 				agentOfNine.active = false;
@@ -61,7 +59,7 @@ namespace TheDestinyMod.NPCs.Town
 			if (Main.eclipse || Main.fastForwardTime || !Main.hardMode || Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0)
 				return false;
 
-			return !Main.dayTime && Main.time >= spawnTime && Main.time < despawnTime;
+			return !Main.dayTime && Main.time >= spawnTime && Main.time < 32400;
 		}
 
 		private static bool IsNpcOnscreen(Vector2 center) {

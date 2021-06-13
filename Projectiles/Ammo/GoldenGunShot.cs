@@ -22,8 +22,8 @@ namespace TheDestinyMod.Projectiles.Ammo
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if (target.friendly == false && target.damage > 0 && target.life <= 0) {
-                Item.NewItem(target.Hitbox, ModContent.ItemType<Items.OrbOfPower>());
+            if (!target.friendly && target.damage > 0 && target.life <= 0) {
+                Item.NewItem(Main.player[projectile.owner].Hitbox, ModContent.ItemType<Items.OrbOfPower>());
             }
         }
     }
