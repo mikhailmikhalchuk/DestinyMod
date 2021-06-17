@@ -23,6 +23,33 @@ namespace TheDestinyMod.Projectiles.Magic
             projectile.friendly = true;
             projectile.magic = true;
             projectile.penetrate = -1;
+            projectile.timeLeft = 200;
+        }
+
+        public override bool PreAI() {
+            Player player = Main.player[projectile.owner];
+            DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+            if (dPlayer.aegisCharge < 30 && dPlayer.aegisCharge >= 1) {
+                projectile.hide = true;
+                projectile.tileCollide = false;
+                projectile.position = player.Center;
+                dPlayer.aegisCharge++;
+                player.itemTime = player.itemAnimation = 2;
+                player.channel = true;
+                return false;
+            }
+            foreach (Projectile projectileIterate in Main.projectile) {
+                if (projectileIterate.type == projectile.type && projectileIterate.whoAmI != projectile.whoAmI && projectileIterate.active) {
+                    projectileIterate.Kill();
+                }
+            }
+            projectile.hide = false;
+            projectile.tileCollide = true;
+            if (dPlayer.aegisCharge != 0) {
+                player.velocity.X -= player.direction == 1 ? 5 : -5;
+            }
+            dPlayer.aegisCharge = 0;
+            return base.PreAI();
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -30,6 +57,12 @@ namespace TheDestinyMod.Projectiles.Magic
             Main.PlaySound(SoundID.Item10, projectile.position);
             projectile.Kill();
             return true;
+        }
+
+        public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+            if (Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().aegisCharge < 30 && Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().aegisCharge >= 1) {
+                hitbox = Rectangle.Empty;
+            }
         }
     }
 }

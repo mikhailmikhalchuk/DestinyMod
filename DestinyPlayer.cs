@@ -29,6 +29,7 @@ namespace TheDestinyMod
 		public int markedByVoidTimer;
 		public int markedByVoidDelay;
 		public int overchargeStacks;
+		public int aegisCharge;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -276,6 +277,31 @@ namespace TheDestinyMod
 			}
 		}
 
+        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+			Action<PlayerDrawInfo> layerTarget = s => DrawAegis(s);
+			PlayerLayer layer = new PlayerLayer("TheDestinyMod", "Aegis Shield", layerTarget);
+			layers.Insert(layers.IndexOf(layers.FirstOrDefault(n => n.Name == "Arms")) + 1, layer);
+		}
+
+		private void DrawAegis(PlayerDrawInfo info) {
+			Microsoft.Xna.Framework.Graphics.Texture2D tex = ModContent.GetTexture("TheDestinyMod/Items/Weapons/Magic/TheAegis_Shield");
+
+			if (info.drawPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && (info.drawPlayer.channel || info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0)) {
+				Main.playerDrawData.Add(
+				new DrawData(
+					tex,
+					info.itemLocation - Main.screenPosition + (player.direction == 1 ? new Vector2(4, 20) : new Vector2(-4, 20)),
+					tex.Frame(),
+					Lighting.GetColor((int)info.drawPlayer.Center.X / 16, (int)info.drawPlayer.Center.Y / 16),
+					info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0 ? 0f : info.drawPlayer.headRotation - (player.direction == 1 ? 0.1f : -0.1f),
+					new Vector2(player.direction == 1 ? 0 : tex.Frame().Width, tex.Frame().Height),
+					info.drawPlayer.HeldItem.scale * 0.8f,
+					info.spriteEffects,
+					0
+				));
+			}
+		}
+
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
 			if (superActiveTime > 0) {
 				damage /= 4;
@@ -315,6 +341,14 @@ namespace TheDestinyMod
 					markedByVoidTimer++;
 					markedByVoidDelay = 2;
 				}
+			}
+			if (aegisCharge >= 1 && aegisCharge < 30) {
+				player.controlLeft = false;
+				player.controlRight = false;
+				player.controlUp = false;
+				player.controlDown = false;
+				player.controlHook = false;
+				player.controlJump = false;
 			}
 		}
     }

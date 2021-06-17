@@ -10,8 +10,6 @@ namespace TheDestinyMod.Items.Weapons.Magic
 {
 	public class TheAegis : ModItem
 	{
-		public override string Texture => "Terraria/Item_" + ItemID.CobaltShield;
-
 		private int cooldown;
 
 		private bool notified = true;
@@ -24,9 +22,9 @@ namespace TheDestinyMod.Items.Weapons.Magic
 			item.magic = true;
 			item.channel = true;
 			item.useTurn = true;
-			item.mana = 1;
-			item.width = 54;
-			item.height = 26;
+			item.mana = 7;
+			item.width = 68;
+			item.height = 56;
 			item.useTime = 25;
 			item.useAnimation = 25;
 			item.useStyle = ItemUseStyleID.Stabbing;
@@ -36,13 +34,22 @@ namespace TheDestinyMod.Items.Weapons.Magic
 			item.shoot = ModContent.ProjectileType<Projectiles.Magic.AegisBubble>();
 			item.shootSpeed = 14f;
 			item.scale = 0.8f;
+			item.noUseGraphic = true;
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+			player.itemLocation = player.Center;
 			if (player.altFunctionUse == 2) {
 				Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<Projectiles.Magic.AegisBlast>(), 20, 0, player.whoAmI);
 				cooldown = 300;
 				notified = false;
+				player.GetModPlayer<DestinyPlayer>().aegisCharge = 1;
+				player.controlLeft = false;
+				player.controlRight = false;
+				player.controlUp = false;
+				player.controlDown = false;
+				player.controlHook = false;
+				player.controlJump = false;
 			}
             return true;
         }
@@ -73,9 +80,5 @@ namespace TheDestinyMod.Items.Weapons.Magic
 			}
             return base.CanUseItem(player);
         }
-
-        public override Vector2? HoldoutOffset() {
-			return new Vector2(-10, 5);
-		}
 	}
 }

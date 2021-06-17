@@ -36,5 +36,6 @@ Added Vex Mythoclast's Overcharge ability
 Reworded Graviton Lance's description slightly
 Fixed an issue where Trinary System and Bottom Dollar would not scale damage or would scale damage incorrectly
 Increased the initial velocity of Salvager's Salvo's grenade
+Added many Spanish translations
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
