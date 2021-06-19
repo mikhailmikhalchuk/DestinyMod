@@ -12,7 +12,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Salvager's Salvo");
-			DisplayName.AddTranslation(GameCulture.Spanish, "Salva del Salvador");
 			Tooltip.SetDefault("Grenades fired will explode when the fire button is released\n\"The only way out is through.\"");
 		}
 

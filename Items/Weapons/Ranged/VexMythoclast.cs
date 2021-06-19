@@ -18,7 +18,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		private bool alt;
 
         public override void SetStaticDefaults() {
-			DisplayName.AddTranslation(GameCulture.Spanish, "Mitocrasta Vex");
 			Tooltip.SetDefault("Kills with this weapon grant stacks of Overcharge\nRight-click with Overcharge to switch firing modes\nHold down the trigger in the alternative firing mode to fire a more powerful shot\n\"...a causal loop within the weapon's mechanism, suggesting that the firing process somehow binds space and time into...\"");
         }
 

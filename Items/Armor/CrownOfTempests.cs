@@ -1,25 +1,25 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 
-namespace TheDestinyMod.Items.Accessories
+namespace TheDestinyMod.Items.Armor
 {
-	[AutoloadEquip(EquipType.Face)]
-	public class SaintXIV : ExoticAccessory
+	[AutoloadEquip(EquipType.Head)]
+	public class CrownOfTempests : ExoticArmor
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Helm of Saint-14");
-			Tooltip.SetDefault("\"He walked out into the demon light. But at the end he was brighter\"");
+			DisplayName.SetDefault("Crown of Tempests");
+			Tooltip.SetDefault("\"Mighty are they of the stormcloud thrones, and quick to anger\"");
 		}
 
 		public override void SetDefaults() {
-			item.width = 32;
-			item.height = 28;
+			item.width = 22;
+			item.height = 22;
 			item.rare = ItemRarityID.Yellow;
 			item.value = Item.sellPrice(gold: 1);
-			item.accessory = true;
+			item.defense = 20;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {
@@ -29,14 +29,14 @@ namespace TheDestinyMod.Items.Accessories
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			if (!Main.LocalPlayer.GetModPlayer<DestinyPlayer>().titan && DestinyConfig.Instance.restrictClassItems) {
-				tooltips.Add(new TooltipLine(mod, "HasClass", "You must be a Titan to equip this") { overrideColor = new Color(255, 0, 0) });
+			if (!Main.LocalPlayer.GetModPlayer<DestinyPlayer>().warlock && DestinyConfig.Instance.restrictClassItems) {
+				tooltips.Add(new TooltipLine(mod, "HasClass", "You must be a Warlock to equip this") { overrideColor = new Color(255, 0, 0) });
 			}
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot) {
 			if (DestinyConfig.Instance.restrictClassItems) {
-				return Main.LocalPlayer.GetModPlayer<DestinyPlayer>().titan;
+				return Main.LocalPlayer.GetModPlayer<DestinyPlayer>().warlock;
 			}
 			return base.CanEquipAccessory(player, slot);
 		}

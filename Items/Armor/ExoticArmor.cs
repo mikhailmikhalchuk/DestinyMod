@@ -2,9 +2,9 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TheDestinyMod.Items.Accessories
+namespace TheDestinyMod.Items.Armor
 {
-    public abstract class ExoticAccessory : ModItem
+    public abstract class ExoticArmor : ModItem
     {
         public override bool CanEquipAccessory(Player player, int slot) {
             if (player.GetModPlayer<DestinyPlayer>().exoticEquipped) {

@@ -11,9 +11,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
     public class OutbreakPerfected : ModItem 
     {
         public override void SetStaticDefaults() {
-			DisplayName.AddTranslation(GameCulture.Spanish, "Brote Perfeccionado");
             Tooltip.SetDefault("Three round burst\nCreates nanite swarms on critical kills\n\"~directive = KILL while enemies = PRESENT: execute(directive)~\"");
-			Tooltip.AddTranslation(GameCulture.Spanish, "Disparo de tres ráfagas\nCrea un enjambre de nanitos en eliminaciones criticas\n~directiva = MATAR mientras enemigos = PRESENTE: ejecutar(directiva)~");
         }
 
 		public override void SetDefaults() {

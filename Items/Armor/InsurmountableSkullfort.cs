@@ -4,10 +4,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TheDestinyMod.Items.Accessories
+namespace TheDestinyMod.Items.Armor
 {
-	[AutoloadEquip(EquipType.Face)]
-	public class InsurmountableSkullfort : ExoticAccessory
+	[AutoloadEquip(EquipType.Head)]
+	public class InsurmountableSkullfort : ExoticArmor
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("An Insurmountable Skullfort");
@@ -19,7 +19,7 @@ namespace TheDestinyMod.Items.Accessories
 			item.height = 28;
 			item.rare = ItemRarityID.Yellow;
 			item.value = Item.sellPrice(gold: 1);
-			item.accessory = true;
+			item.defense = 20;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {

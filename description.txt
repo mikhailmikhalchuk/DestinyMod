@@ -18,5 +18,7 @@ Added Laurels, which drop from enemies during the Games with a 1/25 chance while
 Added Titan, Warlock, and Hunter-themed decor
 --
 Implemented some balancing changes for the Hakke and Omolon weapons
+Switched exotic armor from accessories to actual armor items
+Fixed a graphical bug that would occur with the Helm of Saint-14
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
