@@ -17,25 +17,6 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance while you have any class mark equipped
 Added Titan, Warlock, and Hunter-themed decor
 --
-Significantly decreased the spawn rate of Microphasic Datalattice and Spinmetal
-Relic Iron can now be placed
-Removed Trinary System's use time buff
-Fixed Trinary System's tooltip
-Scaled Bottom Dollar's sprite down
-Made the Cryptarch's head smaller on the map
-Added a tribute to the Cryptarch
-Added Divinity and Borealis, both unobtainable weapons
-Gave Whisper of the Worm a very subtle particle effect on fire
-Resprited the Last Word and Vex Mythoclast
-Hakke, Omolon and SUROS rocket launchers now use grenades as ammo
-Made Trinary System an actual fusion rifle
-Changed the firing sounds of certain weapons
-Removed the Vex Mythoclast crafting recipe
-Add Census Mod support for town NPCs
-Added Vex Mythoclast's Overcharge ability
-Reworded Graviton Lance's description slightly
-Fixed an issue where Trinary System and Bottom Dollar would not scale damage or would scale damage incorrectly
-Increased the initial velocity of Salvager's Salvo's grenade
-Added many Spanish translations
+Implemented some balancing changes for the Hakke and Omolon weapons
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

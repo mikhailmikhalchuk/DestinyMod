@@ -17,7 +17,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Tooltip.SetDefault("Standard Omolon Handcannon");
 		}
 		public override void SetDefaults() {
-			item.damage = 30;
+			item.damage = 40;
 			item.ranged = true;
 			item.width = 60;
 			item.height = 30;

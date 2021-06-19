@@ -18,7 +18,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Tooltip.AddTranslation(GameCulture.Polish, "Ma szansę zapewnić buff \"Rzemiosło Hakke\" po użyciu");
 		}
 		public override void SetDefaults() {
-			item.damage = 14;
+			item.damage = 16;
 			item.ranged = true;
 			item.width = 60;
 			item.height = 30;

@@ -33,8 +33,9 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shootSpeed = 16f;
 			item.useAmmo = ItemID.Grenade;
 			item.scale = .80f;
+			item.reuseDelay = 30;
 		}
-
+	
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Projectile.NewProjectile(position.X, position.Y - 7, speedX, speedY, ProjectileID.RocketI, damage, knockBack, player.whoAmI);
             return false;
