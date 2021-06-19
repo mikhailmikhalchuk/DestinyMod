@@ -34,7 +34,8 @@ namespace TheDestinyMod.Projectiles.Magic
                 projectile.tileCollide = false;
                 projectile.position = player.Center;
                 dPlayer.aegisCharge++;
-                player.itemTime = player.itemAnimation = 2;
+                player.itemTime = player.itemAnimation = 3;
+                player.itemLocation = player.Center;
                 player.channel = true;
                 return false;
             }

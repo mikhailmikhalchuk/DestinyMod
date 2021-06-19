@@ -355,8 +355,8 @@ namespace TheDestinyMod
                     }
                     slot++;
                 }
-                CryptarchUI._vanillaItemSlot?.Item.TurnToAir();
             }
+            CryptarchUI._vanillaItemSlot?.Item.TurnToAir();
         }
 
         public override void Close() {
@@ -445,29 +445,26 @@ namespace TheDestinyMod
 
         public static List<GenPass> VaultOfGlassGenPass() {
                 List<GenPass> list = new List<GenPass>
-            {
-			    //First pass
-			    new PassLegacy("Adjusting",
-                delegate (GenerationProgress progress)
                 {
-                    progress.Message = "Adjusting world levels";
-				    Main.worldSurface = Main.maxTilesY - 42;
-				    Main.rockLayer = Main.maxTilesY;
-                    Main.spawnTileX = 100;
-			    },
-                1f),
-			    //Second pass
-			    new PassLegacy("AddingIntro",
-                delegate (GenerationProgress progress)
-                {
-                    progress.Message = "The start of time...";
-                    if (ModLoader.GetMod("StructureHelper") != null) {
-                        DestinyHelper.StructureHelperGenerateStructure(new Vector2(Main.spawnTileX, Main.spawnTileY), "VaultOfGlass");
-                    }
-                },
-                1f)
-			    //Add more passes here
-		    };
+			        new PassLegacy("Adjusting",
+                    delegate (GenerationProgress progress)
+                    {
+                        progress.Message = "Adjusting world levels";
+				        Main.worldSurface = Main.maxTilesY - 42;
+				        Main.rockLayer = Main.maxTilesY;
+                        Main.spawnTileX = 100;
+			        },
+                    1f),
+			        new PassLegacy("AddingIntro",
+                    delegate (GenerationProgress progress)
+                    {
+                        progress.Message = "The start of time...";
+                        if (ModLoader.GetMod("StructureHelper") != null) {
+                            DestinyHelper.StructureHelperGenerateStructure(new Vector2(Main.spawnTileX, Main.spawnTileY), "VaultOfGlass");
+                        }
+                    },
+                    1f)
+		        };
                 return list;
         }
 

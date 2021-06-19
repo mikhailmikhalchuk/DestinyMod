@@ -50,8 +50,12 @@ namespace TheDestinyMod.Items.Weapons.Magic
 				player.controlDown = false;
 				player.controlHook = false;
 				player.controlJump = false;
+				return false;
 			}
-            return true;
+			if (player.GetModPlayer<DestinyPlayer>().aegisCharge > 0) {
+				return false;
+			}
+			return true;
         }
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
