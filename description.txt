@@ -20,5 +20,10 @@ Added Titan, Warlock, and Hunter-themed decor
 Implemented some balancing changes for the Hakke and Omolon weapons
 Switched exotic armor from accessories to actual armor items
 Fixed a graphical bug that would occur with the Helm of Saint-14
+Fixed flickering issues that would occur on use of certain weapons
+Changed the holdout positions of some weapons
+Fixed an issue where Trinary System was still using Ace of Spades' firing sound
+Made Hakke Fusion Rifle into an actual fusion
+Removed all bullet offsets (bullets will now fire from the player's body as opposed to the barrel)
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

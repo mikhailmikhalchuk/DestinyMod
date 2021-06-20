@@ -32,11 +32,11 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Bullet;
 			item.scale = .80f;
-			item.reuseDelay = 5;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			shot++;
+			player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 5;
 			if (shot == 2) {
 				Projectile.NewProjectile(position.X, position.Y - 5, speedX, speedY, ModContent.ProjectileType<GravitonBullet>(), damage * 3, knockBack, player.whoAmI);
 			}
@@ -47,6 +47,13 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 				shot = 0;
 			}
 			return false;
+		}
+
+		public override bool CanUseItem(Player player) {
+			if (player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay > 0) {
+				return false;
+			}
+			return base.CanUseItem(player);
 		}
 
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

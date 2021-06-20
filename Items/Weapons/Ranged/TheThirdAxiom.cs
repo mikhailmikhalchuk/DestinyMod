@@ -44,7 +44,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(5, 2);
+			return new Vector2(-15, -1);
 		}
 	}
 }

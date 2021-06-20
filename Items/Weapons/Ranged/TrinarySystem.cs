@@ -24,7 +24,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.width = 37;
 			item.height = 21;
 			item.useTime = 15;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/AceOfSpades");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 10f;
 			item.useAnimation = 15;
@@ -35,10 +34,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 30f;
-            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
-                position += muzzleOffset;
-            }
             Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, ModContent.ProjectileType<Projectiles.Ranged.FusionShot>(), damage, knockBack, player.whoAmI, 7, type);
             return false;
         }

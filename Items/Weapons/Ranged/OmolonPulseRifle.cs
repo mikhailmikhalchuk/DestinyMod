@@ -23,7 +23,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.width = 40;
 			item.height = 20;
 			item.useTime = 4;
-			item.useAnimation = 13;
+			item.useAnimation = 12;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 4;
@@ -34,15 +34,22 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Bullet;
 			item.scale = .85f;
-			item.reuseDelay = 14;
 
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
+			player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 14;
 			Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, type, damage, knockBack, player.whoAmI);
             return false;
+		}
+
+		public override bool CanUseItem(Player player) {
+			if (player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay > 0) {
+				return false;
+			}
+			return base.CanUseItem(player);
 		}
 
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

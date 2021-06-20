@@ -23,7 +23,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged {
 			item.width = 58;
 			item.height = 28;
 			item.useTime = 20;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/BottomDollar");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HandCannon120");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 10f;
 			item.useAnimation = 20;

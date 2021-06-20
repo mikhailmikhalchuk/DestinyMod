@@ -30,6 +30,7 @@ namespace TheDestinyMod
 		public int markedByVoidDelay;
 		public int overchargeStacks;
 		public int aegisCharge;
+		public int destinyWeaponDelay;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -79,6 +80,12 @@ namespace TheDestinyMod
 			if (gorgonsHaveSpotted) {
 				Main.screenPosition.X += Main.rand.NextFloat(0, spottedIntensity / 300);
 				spottedIntensity++;
+			}
+        }
+
+        public override void PostUpdate() {
+			if (destinyWeaponDelay > 0) {
+				destinyWeaponDelay--;
 			}
         }
 

@@ -32,17 +32,24 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Bullet;
 			item.scale = .80f;
-			item.reuseDelay = 10;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			if (Main.rand.NextBool(4)) {
 				Dust.NewDust(position += Vector2.Normalize(new Vector2(speedX, speedY)) * 90f, 1, 1, 63);
+				player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 15;
 			}
 			return true;
 		}
 
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+        public override bool CanUseItem(Player player) {
+			if (player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay > 0) {
+				return false;
+			}
+            return base.CanUseItem(player);
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			scale *= 0.8f;
 			return true;
 		}

@@ -47,10 +47,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(3));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
-            Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 25f;
-			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
-				position += muzzleOffset;
-			}
 			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, ModContent.ProjectileType<MonteBullet>(), damage, knockBack, player.whoAmI);
             return false;
 		}
