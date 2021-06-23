@@ -25,5 +25,6 @@ Changed the holdout positions of some weapons
 Fixed an issue where Trinary System was still using Ace of Spades' firing sound
 Made Hakke Fusion Rifle into an actual fusion
 Removed all bullet offsets (bullets will now fire from the player's body as opposed to the barrel)
+Added Thunderlord
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

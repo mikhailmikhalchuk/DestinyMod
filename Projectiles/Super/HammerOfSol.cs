@@ -52,7 +52,7 @@ namespace TheDestinyMod.Projectiles.Super
 
     public class Sunspot : ModProjectile
     {
-        public override string Texture => "TheDestinyMod/Projectiles/Ammo/SunspotSummon";
+        public override string Texture => "TheDestinyMod/Projectiles/Super/SunspotSummon";
 
         private int turnProgress = 1;
 
@@ -80,7 +80,7 @@ namespace TheDestinyMod.Projectiles.Super
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Texture2D texture = ModContent.GetTexture("TheDestinyMod/Projectiles/Ammo/SunspotSummon");
+            Texture2D texture = ModContent.GetTexture("TheDestinyMod/Projectiles/Super/SunspotSummon");
             if (frameSkip >= 2 && turnProgress <= 11 || frameSkip >= 5 && turnProgress == 12) {
                 frameSkip = -1;
                 turnProgress++;

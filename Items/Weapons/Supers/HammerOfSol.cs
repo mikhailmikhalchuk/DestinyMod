@@ -11,8 +11,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
             DisplayName.SetDefault("Hammer of Sol");
         }
 
-        public override void SetDefaults() {
-            base.SetDefaults();
+        public override void SetSuperDefaults() {
             item.width = 48;
             item.height = 46;
             item.useStyle = ItemUseStyleID.SwingThrow;

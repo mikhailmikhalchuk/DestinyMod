@@ -9,8 +9,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
     {
 		public static int timesShot = 0;
 
-        public override void SetDefaults() {
-			base.SetDefaults();
+        public override void SetSuperDefaults() {
             item.damage = 100;
 			item.ranged = true;
 			item.noMelee = true;

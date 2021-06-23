@@ -8,8 +8,13 @@ namespace TheDestinyMod.Items.Weapons.Supers
 {
     public abstract class SuperClass : ModItem
     {
-        public virtual override void SetDefaults() {
+        public sealed override void SetDefaults() {
             item.rare = ItemRarityID.Expert;
+            SetSuperDefaults();
+        }
+
+        public virtual void SetSuperDefaults() {
+        
         }
 
         public override bool CanUseItem(Player player) {
