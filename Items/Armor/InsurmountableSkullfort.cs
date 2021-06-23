@@ -22,7 +22,7 @@ namespace TheDestinyMod.Items.Armor
 			item.defense = 20;
 		}
 
-		public override void UpdateAccessory(Player player, bool hideVisual) {
+		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<DestinyPlayer>().exoticEquipped = true;
 			player.accRunSpeed = 6f; // The player's maximum run speed with accessories
 			player.moveSpeed += 0.05f; // The acceleration multiplier of the player's movement speed

@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using TheDestinyMod.Projectiles.Ammo;
 using TheDestinyMod.Items.Materials;
 
 namespace TheDestinyMod.Items.Weapons.Ranged

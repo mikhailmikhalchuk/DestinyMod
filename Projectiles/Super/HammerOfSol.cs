@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TheDestinyMod.Projectiles.Ammo
+namespace TheDestinyMod.Projectiles.Super
 {
     public class HammerOfSol : ModProjectile
     {

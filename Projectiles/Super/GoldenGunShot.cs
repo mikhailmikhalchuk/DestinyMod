@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 
-namespace TheDestinyMod.Projectiles.Ammo
+namespace TheDestinyMod.Projectiles.Super
 {
     public class GoldenGunShot : ModProjectile
     {

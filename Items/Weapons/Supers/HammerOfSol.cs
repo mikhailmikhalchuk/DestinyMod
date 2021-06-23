@@ -11,7 +11,8 @@ namespace TheDestinyMod.Items.Weapons.Supers
             DisplayName.SetDefault("Hammer of Sol");
         }
 
-        public override void SetSuperDefaults() {
+        public override void SetDefaults() {
+            base.SetDefaults();
             item.width = 48;
             item.height = 46;
             item.useStyle = ItemUseStyleID.SwingThrow;
@@ -20,7 +21,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
             item.noUseGraphic = true;
             item.noMelee = true;
             item.melee = true;
-            item.shoot = ModContent.ProjectileType<Projectiles.Ammo.HammerOfSol>();
+            item.shoot = ModContent.ProjectileType<Projectiles.Super.HammerOfSol>();
             item.shootSpeed = 20;
             item.UseSound = SoundID.Item1;
         }

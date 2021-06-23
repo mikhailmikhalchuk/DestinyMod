@@ -15,14 +15,14 @@ namespace TheDestinyMod.Tiles.Furniture
 			Main.tileFrameImportant[Type] = true;
 			disableSmartCursor = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-			TileObjectData.newTile.Height = 8;
-			TileObjectData.newTile.Origin = new Point16(3, 7);
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16, 16, 16, 16 };
-			TileObjectData.newTile.Width = 6;
+			TileObjectData.newTile.Height = 9;
+			TileObjectData.newTile.Origin = new Point16(3, 8);
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16, 16, 16, 16, 16 };
+			TileObjectData.newTile.Width = 7;
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
-			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, 1, 3);
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Titan Flag");
@@ -31,7 +31,7 @@ namespace TheDestinyMod.Tiles.Furniture
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(i * 16, j * 16, 108, 144, ModContent.ItemType<Items.Placeables.Furniture.TitanFlag>());
+			Item.NewItem(i * 16, j * 16, 124, 160, ModContent.ItemType<Items.Placeables.Furniture.TitanFlag>());
 		}
 	}
 }

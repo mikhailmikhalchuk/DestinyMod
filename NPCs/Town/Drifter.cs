@@ -11,7 +11,6 @@ using TheDestinyMod.Items.Materials;
 using TheDestinyMod.Items.Dyes;
 using TheDestinyMod.Items.Pets;
 using TheDestinyMod.Items.Weapons.Ranged;
-using TheDestinyMod.Projectiles.Ammo;
 using TheDestinyMod.Items.Potions;
 
 namespace TheDestinyMod.NPCs.Town

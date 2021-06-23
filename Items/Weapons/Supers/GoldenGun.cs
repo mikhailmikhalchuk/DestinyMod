@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheDestinyMod.Projectiles.Ammo;
 
 namespace TheDestinyMod.Items.Weapons.Supers
 {
@@ -10,7 +9,8 @@ namespace TheDestinyMod.Items.Weapons.Supers
     {
 		public static int timesShot = 0;
 
-        public override void SetSuperDefaults() {
+        public override void SetDefaults() {
+			base.SetDefaults();
             item.damage = 100;
 			item.ranged = true;
 			item.noMelee = true;
@@ -24,7 +24,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
 			item.value = Item.buyPrice(0, 0, 0, 0);
 			item.rare = ItemRarityID.Yellow;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/MidaMultiTool");
-			item.shoot = ModContent.ProjectileType<GoldenGunShot>();
+			item.shoot = ModContent.ProjectileType<Projectiles.Super.GoldenGunShot>();
 			item.shootSpeed = 30f;
 			item.scale = .8f;
         }

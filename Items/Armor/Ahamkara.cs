@@ -22,7 +22,7 @@ namespace TheDestinyMod.Items.Armor
 			item.defense = 20;
 		}
 
-        public override void UpdateAccessory(Player player, bool hideVisual) {
+        public override void UpdateEquip(Player player) {
 			player.GetModPlayer<DestinyPlayer>().exoticEquipped = true;
 			player.moveSpeed += 0.1f;
 		}
