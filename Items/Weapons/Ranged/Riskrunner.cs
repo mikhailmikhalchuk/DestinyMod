@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.AddTranslation(GameCulture.Polish, "Ryzykant");
-			Tooltip.SetDefault("33% chance to not consume ammo\nReplaces regular bullets with nano bullets\n\"Charge your soul and let the electrons sing.\"");
+			Tooltip.SetDefault("33% chance to not consume ammo\nFires bullets which have a chance to shock enemies on hit\n\"Charge your soul and let the electrons sing.\"");
 			Tooltip.AddTranslation(GameCulture.Polish, "33% na nie zużycie ammunicji\nZmienia zwykłe naboje na nano pociski\n\"Napełnia twoją duszę i pozwala elektroną śpiewać\"");
 		}
 
@@ -40,7 +40,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
-			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, ProjectileID.NanoBullet, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, ModContent.ProjectileType<Projectiles.Ranged.RiskrunnerBullet>(), damage, knockBack, player.whoAmI);
             return false;
 		}
 

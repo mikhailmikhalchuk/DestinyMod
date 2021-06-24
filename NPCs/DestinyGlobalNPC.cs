@@ -69,5 +69,15 @@ namespace TheDestinyMod.NPCs
                 maxSpawns = 0;
             }
         }
+
+        public override void UpdateLifeRegen(NPC npc, ref int damage) {
+            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Conducted>())) {
+                if (npc.lifeRegen > 0) {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 15;
+                damage = 2;
+            }
+        }
     }
 }

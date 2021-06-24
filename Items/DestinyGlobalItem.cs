@@ -19,16 +19,7 @@ namespace TheDestinyMod.Items
         public override GlobalItem Clone(Item item, Item itemClone) {
             DestinyGlobalItem myClone = (DestinyGlobalItem)base.Clone(item, itemClone);
             myClone.catalyst = catalyst;
-            if (item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>() && catalyst && !Main.LocalPlayer.channel) {
-                item.useTime = item.useAnimation = 15;
-            }
             return myClone;
-        }
-
-        public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            if (item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>() && catalyst && !Main.LocalPlayer.channel) {
-                item.useTime = item.useAnimation = 15;
-            }
         }
 
         public override void OpenVanillaBag(string context, Player player, int arg) {
@@ -41,6 +32,19 @@ namespace TheDestinyMod.Items
             if (item.type == ItemID.Grenade) {
                 item.ammo = item.type;
             }
+        }
+
+        public override bool Shoot(Item item, Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            if (item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>() && catalyst) {
+                if (player.GetModPlayer<DestinyPlayer>().businessReduceUse < 1.3f) {
+                    player.GetModPlayer<DestinyPlayer>().businessReduceUse += 0.075f;
+                }
+                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
+                speedX = perturbedSpeed.X;
+                speedY = perturbedSpeed.Y;
+                position.Y -= 5;
+            }
+            return base.Shoot(item, player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
