@@ -57,9 +57,9 @@ namespace TheDestinyMod.NPCs.Fallen
                     else {
                         delta = new Vector2(0f, 5f);
                     }
-                    int p = Projectile.NewProjectile(npc.Center, delta, ProjectileID.Bullet, 5, 0);
-                    Main.projectile[p].friendly = false;
-                    Main.projectile[p].hostile = true;
+                    Projectile p = Projectile.NewProjectileDirect(npc.Center, delta, ProjectileID.Bullet, 5, 0);
+                    p.friendly = false;
+                    p.hostile = true;
                     waiting = 0;
                 }
             }

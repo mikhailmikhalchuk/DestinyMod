@@ -54,34 +54,38 @@ namespace TheDestinyMod
             CipherCustomCurrencyId = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.ExoticCipher>(), 30L));
             On.Terraria.Player.DropTombstone += Player_DropTombstone;
             if (!Main.dedServ) {
+                if (DestinyConfig.Instance.guardianGamesConfig) {
+                    try {
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://DestinyModServer.mikhailmcraft.repl.co");
+                        request.Method = "GET";
+                        request.Headers["VERIFY-MOD"] = "a7rg53F435h4Ff2fhjWa33gH6j54ag2G";
+                        request.Headers["DUPLICATE-CHECK"] = Steamworks.SteamUser.GetSteamID().ToString();
+                        request.Timeout = 1500;
 
-                try {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://DestinyModServer.mikhailmcraft.repl.co");
-                    request.Method = "GET";
-                    request.Headers["VERIFY-MOD"] = "a7rg53F435h4Ff2fhjWa33gH6j54ag2G";
-                    request.Headers["DUPLICATE-CHECK"] = Steamworks.SteamUser.GetSteamID().ToString();
-                    request.Timeout = 1500;
-
-                    using (Stream s = request.GetResponse().GetResponseStream()) {
-                        using (StreamReader sr = new StreamReader(s)) {
-                            var jsonResponse = sr.ReadToEnd();
-                            if (jsonResponse.Remove(2) == "ON") {
-                                guardianGames = true;
-                            }
-                            if (jsonResponse.Contains("T")) {
-                                guardianWinner = 1;
-                            }
-                            else if (jsonResponse.Contains("H")) {
-                                guardianWinner = 2;
-                            }
-                            else if (jsonResponse.Contains("W")) {
-                                guardianWinner = 3;
+                        using (Stream s = request.GetResponse().GetResponseStream()) {
+                            using (StreamReader sr = new StreamReader(s)) {
+                                var jsonResponse = sr.ReadToEnd();
+                                if (jsonResponse.Remove(2) == "ON") {
+                                    guardianGames = true;
+                                }
+                                if (jsonResponse.Contains("T")) {
+                                    guardianWinner = 1;
+                                }
+                                else if (jsonResponse.Contains("H")) {
+                                    guardianWinner = 2;
+                                }
+                                else if (jsonResponse.Contains("W")) {
+                                    guardianWinner = 3;
+                                }
                             }
                         }
                     }
+                    catch (Exception e) {
+                        Logger.Error($"Failed to receive a response from the server: {e.Message}");
+                        guardianGameError = true;
+                    }
                 }
-                catch (Exception e) {
-                    Logger.Error($"Failed to receive a response from the server: {e.Message}");
+                else {
                     guardianGameError = true;
                 }
 

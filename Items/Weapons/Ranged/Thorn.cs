@@ -37,8 +37,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(6));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
-			int p = Projectile.NewProjectile(position.X, position.Y - 1, speedX, speedY, type, damage, knockBack, player.whoAmI);
-			Main.projectile[p].penetrate = -1;
+			Projectile p = Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 1), new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+			p.penetrate = -1;
 			return false;
 		}
 

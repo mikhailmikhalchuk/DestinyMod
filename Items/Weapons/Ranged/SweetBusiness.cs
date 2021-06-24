@@ -10,8 +10,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 {
 	public class SweetBusiness : ModItem
 	{
-		public static bool isUsing = false;
-
 		public override void SetStaticDefaults() {
 			DisplayName.AddTranslation(GameCulture.Polish, "Słodki Biznes");
 			Tooltip.SetDefault("10% chance to not consume ammo\nFires faster the longer this weapon is used\n\"...I love my job.\"");
@@ -53,10 +51,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			isUsing = true;
-			if (item.useTime > 5) {
-				item.useTime--;
-				item.useAnimation--;
+			if (player.GetModPlayer<DestinyPlayer>().businessReduceUse < 1.3f) {
+				player.GetModPlayer<DestinyPlayer>().businessReduceUse += 0.05f;
 			}
             Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
 			speedX = perturbedSpeed.X;
@@ -65,10 +61,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			return true;
         }
 
-		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            if (!isUsing) {
-				item.useTime = item.useAnimation = 20;
-			}
+        public override float UseTimeMultiplier(Player player) {
+            return player.GetModPlayer<DestinyPlayer>().businessReduceUse;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

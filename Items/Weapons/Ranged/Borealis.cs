@@ -54,14 +54,14 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			if (player.altFunctionUse != 2) {
-				int p = Projectile.NewProjectile(position.X, position.Y - 5, speedX, speedY, type, damage, knockBack, player.whoAmI);
+				Projectile p = Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 5), new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
 				if (item.melee) {
-					Main.projectile[p].melee = true;
-					Main.projectile[p].ranged = false;
+					p.melee = true;
+					p.ranged = false;
 				}
 				else if (item.magic) {
-					Main.projectile[p].magic = true;
-					Main.projectile[p].ranged = false;
+					p.magic = true;
+					p.ranged = false;
 				}
 			}
 			return false;

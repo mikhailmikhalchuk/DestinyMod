@@ -31,6 +31,9 @@ namespace TheDestinyMod
 		public int overchargeStacks;
 		public int aegisCharge;
 		public int destinyWeaponDelay;
+
+		public float businessReduceUse = 0.2f;
+		public float thunderlordReduceUse = 1f;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -50,6 +53,7 @@ namespace TheDestinyMod
 		private int superRegenTimer = 0;
 		private int timesClicked = 0;
 		private int spottedIntensity = 60;
+		private int countThunderlord = 0;
 
 		public override void ResetEffects() {
             ghostPet = false;
@@ -60,9 +64,6 @@ namespace TheDestinyMod
 			titan = false;
 			warlock = false;
 			exoticEquipped = false;
-			if (!player.channel) {
-				Items.Weapons.Ranged.SweetBusiness.isUsing = false;
-			}
         }
 
 		public override void clientClone(ModPlayer clientClone) {
@@ -84,6 +85,11 @@ namespace TheDestinyMod
         }
 
         public override void PostUpdate() {
+			countThunderlord++;
+			if (countThunderlord >= 30 && player.channel && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Ranged.Thunderlord>() && thunderlordReduceUse < 1.5f) {
+				countThunderlord = 0;
+				thunderlordReduceUse += 0.05f;
+			}
 			if (destinyWeaponDelay > 0) {
 				destinyWeaponDelay--;
 			}
@@ -121,6 +127,7 @@ namespace TheDestinyMod
 				}
 			}
 			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
+				countThunderlord = 0;
 				releasedMouseLeft = false;
 				if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>())) {
 					timesClicked++;
@@ -133,6 +140,8 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustReleased.MouseLeft) {
 				releasedMouseLeft = true;
+				businessReduceUse = 0.2f;
+				thunderlordReduceUse = 1f;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
 				bool result = Enter("TheDestinyMod_Vault of Glass") ?? false;
@@ -295,17 +304,18 @@ namespace TheDestinyMod
 
 			if (info.drawPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && info.drawPlayer.channel || info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0) {
 				Main.playerDrawData.Add(
-				new DrawData(
-					tex,
-					info.itemLocation - Main.screenPosition + (info.drawPlayer.direction == 1 ? new Vector2(4, 20) : new Vector2(-4, 20)),
-					tex.Frame(),
-					Lighting.GetColor((int)info.drawPlayer.Center.X / 16, (int)info.drawPlayer.Center.Y / 16),
-					info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0 ? 0f : info.drawPlayer.headRotation - (info.drawPlayer.direction == 1 ? 0.1f : -0.1f),
-					new Vector2(info.drawPlayer.direction == 1 ? 0 : tex.Frame().Width, tex.Frame().Height),
-					info.drawPlayer.HeldItem.scale * 0.8f,
-					info.spriteEffects,
-					0
-				));
+					new DrawData(
+						tex,
+						info.itemLocation - Main.screenPosition + (info.drawPlayer.direction == 1 ? new Vector2(4, 20) : new Vector2(-4, 20)),
+						tex.Frame(),
+						Lighting.GetColor((int)info.drawPlayer.Center.X / 16, (int)info.drawPlayer.Center.Y / 16),
+						info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0 ? 0f : info.drawPlayer.headRotation - (info.drawPlayer.direction == 1 ? 0.1f : -0.1f),
+						new Vector2(info.drawPlayer.direction == 1 ? 0 : tex.Frame().Width, tex.Frame().Height),
+						info.drawPlayer.HeldItem.scale * 0.8f,
+						info.spriteEffects,
+						0
+					)
+				);
 			}
 		}
 

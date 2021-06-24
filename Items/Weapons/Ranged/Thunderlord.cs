@@ -11,13 +11,14 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	public class Thunderlord : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Fires bullets which create lightning on kills\n\"They return from fields afar. The eye has passed, the end nears.\"");
+			Tooltip.SetDefault("Fires bullets which create lightning on kills\nFires faster the longer this weapon is used\n\"They return from fields afar. The eye has passed, the end nears.\"");
 		}
 
 		public override void SetDefaults() {
 			item.damage = 45;
 			item.ranged = true;
 			item.autoReuse = true;
+			item.channel = true;
 			item.width = 124;
 			item.height = 40;
 			item.useTime = 11;
@@ -47,7 +48,11 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			return true;
 		}
 
-		public override Vector2? HoldoutOffset() {
+        public override float UseTimeMultiplier(Player player) {
+            return player.GetModPlayer<DestinyPlayer>().thunderlordReduceUse;
+        }
+
+        public override Vector2? HoldoutOffset() {
 			return new Vector2(-15, -3);
 		}
 

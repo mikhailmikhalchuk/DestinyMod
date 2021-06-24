@@ -22,10 +22,9 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (!target.friendly && target.life <= 0 && target.damage > 0) {
-                int p = Projectile.NewProjectile(target.position - new Vector2(0, 1000), new Vector2(0, 25), ProjectileID.CultistBossLightningOrbArc, 30, 0, Main.player[projectile.owner].whoAmI, new Vector2(0, 10).ToRotation(), Main.rand.Next(100));
-                Projectile proj = Main.projectile[p];
-                proj.friendly = true;
-                proj.hostile = false;
+                Projectile p = Projectile.NewProjectileDirect(target.position - new Vector2(0, 1000), new Vector2(0, 25), ProjectileID.CultistBossLightningOrbArc, 30, 0, Main.player[projectile.owner].whoAmI, new Vector2(0, 10).ToRotation(), Main.rand.Next(100));
+                p.friendly = true;
+                p.hostile = false;
                 Main.PlaySound(SoundID.Item122, target.position);
             }
         }
