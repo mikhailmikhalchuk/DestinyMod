@@ -4,14 +4,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using TheDestinyMod.Items.Materials;
 
 namespace TheDestinyMod.Items.Weapons.Ranged
 {
 	public class Thunderlord : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Fires bullets which create lightning on kills\nFires faster the longer this weapon is used\n\"They return from fields afar. The eye has passed, the end nears.\"");
+			Tooltip.SetDefault("Fires bullets which create lightning on kills\nFires faster the longer this weapon is used\n\"They rest quiet on fields afar...for this is no ending, but the eye.\"");
 		}
 
 		public override void SetDefaults() {
@@ -56,12 +55,14 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			return new Vector2(-15, -3);
 		}
 
-		/*public override void AddRecipes() {
+		public override void AddRecipes() {
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Ectoplasm, 20);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddIngredient(ItemID.Megashark);
+			recipe.AddIngredient(ModContent.ItemType<Materials.GunsmithMaterials>(), 20);
+			recipe.AddIngredient(ItemID.SoulofMight, 15);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-        }*/
+        }
 	}
 }

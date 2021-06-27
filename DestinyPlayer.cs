@@ -144,6 +144,7 @@ namespace TheDestinyMod
 				thunderlordReduceUse = 1f;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
+				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.Conducted>(), 120);
 				bool result = Enter("TheDestinyMod_Vault of Glass") ?? false;
 				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
 					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", new Color(255, 0, 0));
@@ -155,11 +156,21 @@ namespace TheDestinyMod
 			}
         }
 
-		/// <summary>
-		/// Used to enter a subworld using SubworldLibrary
-		/// </summary>
-		/// <param name="id">The subworld ID</param>
-		/// <returns>True if the subworld was succesfully entered, otherwise false. Returns null by default.</returns>
+        public override void UpdateBadLifeRegen() {
+			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Conducted>())) {
+				if (player.lifeRegen > 0) {
+					player.lifeRegen = 0;
+				}
+				player.lifeRegenTime = 0;
+				player.lifeRegen -= 15;
+			}
+		}
+
+        /// <summary>
+        /// Used to enter a subworld using SubworldLibrary
+        /// </summary>
+        /// <param name="id">The subworld ID</param>
+        /// <returns>True if the subworld was succesfully entered, otherwise false. Returns null by default.</returns>
         public static bool? Enter(string id) {
             Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
 			if (ModLoader.GetMod("StructureHelper") == null || subworldLibrary == null) {
@@ -293,10 +304,13 @@ namespace TheDestinyMod
 			}
 		}
 
-        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+		public override void ModifyDrawLayers(List<PlayerLayer> layers) {
 			Action<PlayerDrawInfo> layerTarget = s => DrawAegis(s);
 			PlayerLayer layer = new PlayerLayer("TheDestinyMod", "Aegis Shield", layerTarget);
 			layers.Insert(layers.IndexOf(layers.FirstOrDefault(n => n.Name == "Arms")) + 1, layer);
+			if (!Main.gameMenu && (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && Main.LocalPlayer.channel || Main.LocalPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0)) {
+				layers.RemoveAt(layers.IndexOf(layers.FirstOrDefault(n => n.Name == "ShieldAcc")));
+			}
 		}
 
 		private void DrawAegis(PlayerDrawInfo info) {

@@ -28,5 +28,6 @@ Removed all bullet offsets (bullets will now fire from the player's body as oppo
 Added Thunderlord
 Internally changed Sweet Business' ramp-up method (should fix any issues that may arise in MP)
 Changed Riskrunner's exotic perk
+Removed Thorn's offset
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

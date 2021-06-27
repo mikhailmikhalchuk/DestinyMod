@@ -7,8 +7,6 @@ namespace TheDestinyMod.Buffs.Debuffs
 {
     public class Conducted : ModBuff
     {
-        private int timer;
-
         public override void SetDefaults() {
             DisplayName.SetDefault("Conducted");
             Description.SetDefault("You are shocked");
@@ -21,11 +19,6 @@ namespace TheDestinyMod.Buffs.Debuffs
             Main.dust[num33].velocity *= 1.6f;
             Main.dust[num33].velocity.Y -= 1f;
             Main.dust[num33].position = Vector2.Lerp(Main.dust[num33].position, player.Center, 0.5f);
-            timer++;
-            if (timer > 10) {
-                timer = 0;
-                player.Hurt(Terraria.DataStructures.PlayerDeathReason.ByOther(10), 2, 0);
-            }
         }
 
         public override void Update(NPC npc, ref int buffIndex) {

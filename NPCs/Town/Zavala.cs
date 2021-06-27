@@ -139,7 +139,7 @@ namespace TheDestinyMod.NPCs.Town
 					player.zavalaEnemies = 0;
                 }
 				else if (player.zavalaBounty == 2) {
-					Main.npcChatText = "I've got another bounty for you, Guardian. The Dungeon is an evil place, filled with servants of the Darkness.\nI need you to slay 50 Skeletons to purge this outbreak.";
+					Main.npcChatText = "I've got another bounty for you, Guardian. The Dungeon is an evil place, filled with servants of the Darkness.\nI need you to slay 50 Skeletons to purge this infestation.";
 					player.zavalaBounty = 3;
 				}
 				else if (player.zavalaBounty == 3 && player.zavalaEnemies == 50) {

@@ -17,7 +17,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override void SetDefaults() {
-			item.damage = 45;
+			item.damage = 6;
 			item.ranged = true;
 			item.width = 76;
 			item.height = 40;

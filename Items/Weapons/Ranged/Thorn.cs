@@ -34,9 +34,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(6));
-			speedX = perturbedSpeed.X;
-			speedY = perturbedSpeed.Y;
 			Projectile p = Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 1), new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
 			p.penetrate = -1;
 			return false;

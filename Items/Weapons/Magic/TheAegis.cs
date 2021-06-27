@@ -38,12 +38,13 @@ namespace TheDestinyMod.Items.Weapons.Magic
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+			DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
 			player.itemLocation = player.Center;
 			if (player.altFunctionUse == 2) {
 				Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<Projectiles.Magic.AegisBlast>(), 20, 0, player.whoAmI);
 				cooldown = 300;
 				notified = false;
-				player.GetModPlayer<DestinyPlayer>().aegisCharge = 1;
+				dPlayer.aegisCharge = 1;
 				player.controlLeft = false;
 				player.controlRight = false;
 				player.controlUp = false;
@@ -52,7 +53,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 				player.controlJump = false;
 				return false;
 			}
-			if (player.GetModPlayer<DestinyPlayer>().aegisCharge > 0) {
+			if (dPlayer.aegisCharge > 0) {
 				return false;
 			}
 			return true;
