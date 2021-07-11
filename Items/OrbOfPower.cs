@@ -28,7 +28,7 @@ namespace TheDestinyMod.Items
 
         public override bool OnPickup(Player player) {
             var modPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-            modPlayer.superChargeCurrent += 10;
+            modPlayer.superChargeCurrent += 4;
             Main.PlaySound(SoundID.Grab, Main.LocalPlayer.position);
             return false;
         }

@@ -26,7 +26,7 @@ namespace TheDestinyMod
         public TheDestinyMod() {
             Instance = this;
         }
-
+ 
         public static ModHotKey activateSuper;
         public static int CipherCustomCurrencyId;
         public static bool guardianGames = false;

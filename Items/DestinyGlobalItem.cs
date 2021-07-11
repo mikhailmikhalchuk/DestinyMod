@@ -7,12 +7,23 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
+using TheDestinyMod.Items.Weapons.Ranged;
 
 namespace TheDestinyMod.Items
 {
     public class DestinyGlobalItem : GlobalItem
     {
         public bool catalyst = false;
+
+        private readonly List<int> weaponsWithCatalysts = new List<int>()
+        {
+            ModContent.ItemType<SweetBusiness>()
+        };
+
+        private readonly List<string> catalystTooltips = new List<string>()
+        {
+            "This weapon takes less time to spin up"
+        };
 
         public override bool InstancePerEntity => true;
 
@@ -35,7 +46,7 @@ namespace TheDestinyMod.Items
         }
 
         public override bool Shoot(Item item, Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if (item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>() && catalyst) {
+            if (item.type == ModContent.ItemType<SweetBusiness>() && catalyst) {
                 if (player.GetModPlayer<DestinyPlayer>().businessReduceUse < 1.3f) {
                     player.GetModPlayer<DestinyPlayer>().businessReduceUse += 0.075f;
                 }
@@ -48,13 +59,13 @@ namespace TheDestinyMod.Items
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
-            if (item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>() && catalyst) {
-                tooltips.Add(new TooltipLine(mod, "Catalyst", "This weapon takes less time to spin up")
+            if (catalyst && weaponsWithCatalysts.Contains(item.type)) {
+                tooltips.Add(new TooltipLine(mod, "Catalyst", catalystTooltips[weaponsWithCatalysts.IndexOf(item.type)])
                 {
                     overrideColor = Color.Yellow
                 });
             }
-            else if (!catalyst && item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>()) {
+            else if (!catalyst && weaponsWithCatalysts.Contains(item.type)) {
                 tooltips.Add(new TooltipLine(mod, "Catalyst", $"Right click with a {item.Name} catalyst to apply it")
                 {
                     overrideColor = Color.Khaki
@@ -63,11 +74,11 @@ namespace TheDestinyMod.Items
         }
 
         public override bool CanRightClick(Item item) {
-            return item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>() && Main.mouseItem.type == ModContent.ItemType<SweetBusinessCatalyst>() && !catalyst;
+            return item.type == ModContent.ItemType<SweetBusiness>() && Main.mouseItem.type == ModContent.ItemType<SweetBusinessCatalyst>() && !catalyst;
         }
 
         public override void RightClick(Item item, Player player) {
-            if (item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>()) {
+            if (item.type == ModContent.ItemType<SweetBusiness>()) {
                 catalyst = true;
                 Main.mouseItem.TurnToAir();
                 player.QuickSpawnClonedItem(item);
@@ -79,7 +90,7 @@ namespace TheDestinyMod.Items
         }
 
         public override bool NeedsSaving(Item item) {
-            return item.type == ModContent.ItemType<Weapons.Ranged.SweetBusiness>();
+            return weaponsWithCatalysts.Contains(item.type);
         }
 
         public override void Load(Item item, TagCompound tag) {

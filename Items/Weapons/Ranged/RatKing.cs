@@ -29,7 +29,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.height = 30;
 			item.useTime = 15;
 			item.crit = 10;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/AceOfSpades");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/RatKing");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 10f;
 			item.useAnimation = 15;
@@ -47,11 +47,11 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
 			own = player;
-			flat += Main.player.Count(p => player.Distance(p.position) < 200 && p.team == player.team && p.HeldItem.type == ModContent.ItemType<RatKing>() && p.active && p != player) * 12;
+			flat += Main.player.Count(p => player.Distance(p.position) < 1600 && p.team == player.team && p.HeldItem.type == ModContent.ItemType<RatKing>() && p.active && p != player) * 12;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			int num = Main.player.Count(p => own.Distance(p.position) < 200 && p.team == own.team && p.HeldItem.type == ModContent.ItemType<RatKing>() && p.active && p != own);
+			int num = Main.player.Count(p => own.Distance(p.position) < 1600 && p.team == own.team && p.HeldItem.type == ModContent.ItemType<RatKing>() && p.active && p != own);
 			if (num > 0) {
 				tooltips.Add(new TooltipLine(mod, "KingBonus", $"This weapon deals {num * 12} increased damage ({num} nearby {(num > 1 ? "players" : "player")})") { overrideColor = Color.Gold });
 			}

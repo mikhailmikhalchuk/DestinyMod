@@ -29,5 +29,6 @@ Added Thunderlord and Rat King
 Internally changed Sweet Business' ramp-up method (should fix any issues that may arise in MP)
 Changed Riskrunner's exotic perk
 Removed Thorn's offset
+Decreased amount of super energy Orbs of Power grant
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
