@@ -291,6 +291,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             }
             if (!DestinyWorld.downedPrime) {
                 DestinyWorld.downedPrime = true;
+                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Items.ExoticCipher>());
                 if (Main.netMode == NetmodeID.Server) {
                     NetMessage.SendData(MessageID.WorldData);
                 }

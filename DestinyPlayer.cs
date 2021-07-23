@@ -31,9 +31,13 @@ namespace TheDestinyMod
 		public int overchargeStacks;
 		public int aegisCharge;
 		public int destinyWeaponDelay;
+		public int superCrit;
 
 		public float businessReduceUse = 0.2f;
 		public float thunderlordReduceUse = 1f;
+		public float superDamageAdd;
+		public float superDamageMult = 1f;
+		public float superKnockback;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -56,7 +60,15 @@ namespace TheDestinyMod
 		private int countThunderlord = 0;
 
 		public override void ResetEffects() {
-            ghostPet = false;
+			ResetVariables();
+        }
+
+        public override void UpdateDead() {
+			ResetVariables();
+        }
+
+        private void ResetVariables() {
+			ghostPet = false;
 			ancientShard = false;
 			servitorMinion = false;
 			boughtCommon = false;
@@ -64,7 +76,11 @@ namespace TheDestinyMod
 			titan = false;
 			warlock = false;
 			exoticEquipped = false;
-        }
+			superDamageAdd = 0f;
+			superDamageMult = 1f;
+			superCrit = 0;
+			superKnockback = 0;
+		}
 
 		public override void clientClone(ModPlayer clientClone) {
 			DestinyPlayer clone = clientClone as DestinyPlayer;

@@ -6,6 +6,10 @@ namespace TheDestinyMod.Items
 {
     public class ExoticCipher : ModItem
     {
+        public override void SetStaticDefaults() {
+            Tooltip.SetDefault("Historial data preserved as luminous matter\nA certain agent might like this item");
+        }
+
         public override void SetDefaults() {
 			item.height = 32;
 			item.width = 32;

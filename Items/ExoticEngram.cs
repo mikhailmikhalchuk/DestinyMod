@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.AddTranslation(GameCulture.Polish, "Egzotyczny Engram");
-			Tooltip.SetDefault("A highly advanced, encrypted storage unit. A cryptarch could probably break its encryption for you.");
+			Tooltip.SetDefault("A highly advanced, encrypted storage unit\nA cryptarch could probably break its encryption for you");
 			Tooltip.AddTranslation(GameCulture.Polish, "Wysoce zaawansowana zaszyfrowana jednostka przechowywania. Dekoder może prawdopodobnie złamać szyfrowania dla Ciebie");
 			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 12));
 		}

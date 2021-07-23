@@ -39,9 +39,9 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
 		public override void AddRecipes() {
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ModContent.ItemType<GunsmithMaterials>(), 50);
+			recipe.AddIngredient(ItemID.Megashark);
 			recipe.AddIngredient(ItemID.FragmentVortex, 15);
-			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}

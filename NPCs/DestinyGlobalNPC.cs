@@ -7,6 +7,7 @@ using TheDestinyMod.Items;
 using TheDestinyMod.Items.Materials;
 using TheDestinyMod.Tiles;
 using TheDestinyMod.NPCs;
+using System;
 
 namespace TheDestinyMod.NPCs
 {
@@ -33,6 +34,28 @@ namespace TheDestinyMod.NPCs
         }
 
         public override bool PreNPCLoot(NPC npc) {
+            switch (npc.type) {
+                case NPCID.KingSlime when !NPC.downedSlimeKing:
+                case NPCID.EyeofCthulhu when !NPC.downedBoss1:
+                case NPCID.EaterofWorldsBody when !NPC.downedBoss2:
+                case NPCID.EaterofWorldsHead when !NPC.downedBoss2:
+                case NPCID.EaterofWorldsTail when !NPC.downedBoss2:
+                case NPCID.BrainofCthulhu when !NPC.downedBoss2:
+                case NPCID.QueenBee when !NPC.downedQueenBee:
+                case NPCID.SkeletronHead when !NPC.downedBoss3:
+                case NPCID.WallofFlesh when !Main.hardMode:
+                case NPCID.Retinazer when !NPC.downedMechBoss2:
+                case NPCID.Spazmatism when !NPC.downedMechBoss2:
+                case NPCID.TheDestroyer when !NPC.downedMechBoss1:
+                case NPCID.SkeletronPrime when !NPC.downedMechBoss3:
+                case NPCID.Plantera when !NPC.downedPlantBoss:
+                case NPCID.Golem when !NPC.downedGolemBoss:
+                case NPCID.DukeFishron when !NPC.downedFishron:
+                case NPCID.CultistBoss when !NPC.downedAncientCultist:
+                case NPCID.MoonLordCore when !NPC.downedMoonlord:
+                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Items.ExoticCipher>());
+                    break;
+            }
             if (npc.type == NPCID.EyeofCthulhu && !NPC.downedBoss1) {
                 if (Main.netMode != NetmodeID.Server) {
                     Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.RelicShard"), new Color(200, 200, 55), false);
@@ -46,9 +69,6 @@ namespace TheDestinyMod.NPCs
                     int y = WorldGen.genRand.Next((int)WorldGen.rockLayer, Main.maxTilesY);
                     WorldGen.OreRunner(x, y, WorldGen.genRand.Next(3, 8), WorldGen.genRand.Next(3, 8), (ushort)ModContent.TileType<RelicShard>());
                 }
-            }
-            if (npc.TypeName == "Wall of Flesh" && !Main.hardMode) {
-                Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Items.ExoticCipher>());
             }
             return true;
         }
@@ -65,8 +85,7 @@ namespace TheDestinyMod.NPCs
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {
             if (TheDestinyMod.currentSubworldID != string.Empty) {
-                spawnRate = 0;
-                maxSpawns = 0;
+                spawnRate = maxSpawns = 0;
             }
         }
 

@@ -11,7 +11,6 @@ namespace TheDestinyMod.Items.Weapons.Supers
 
         public override void SetSuperDefaults() {
             item.damage = 100;
-			item.ranged = true;
 			item.noMelee = true;
 			item.autoReuse = false;
 			item.width = 54;

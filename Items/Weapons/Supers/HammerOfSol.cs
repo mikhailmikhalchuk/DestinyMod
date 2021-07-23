@@ -19,7 +19,6 @@ namespace TheDestinyMod.Items.Weapons.Supers
             item.useAnimation = 35;
             item.noUseGraphic = true;
             item.noMelee = true;
-            item.melee = true;
             item.shoot = ModContent.ProjectileType<Projectiles.Super.HammerOfSol>();
             item.shootSpeed = 20;
             item.UseSound = SoundID.Item1;

@@ -82,9 +82,9 @@ namespace TheDestinyMod.NPCs.Town
 			itemPrices.Clear();
 			switch (Main.rand.Next(2)) {
 				case 0:
-					itemIds.Add(ModContent.ItemType<GunsmithMaterials>());
-                    itemPrices.Add(10000);
-					itemCurrency.Add(CustomCurrencyID.None);
+					itemIds.Add(ModContent.ItemType<Borealis>());
+                    itemPrices.Add(3);
+					itemCurrency.Add(TheDestinyMod.CipherCustomCurrencyId);
 					break;
 				case 1:
 					itemIds.Add(ItemID.MythrilAnvil);
@@ -97,9 +97,6 @@ namespace TheDestinyMod.NPCs.Town
 					itemCurrency.Add(TheDestinyMod.CipherCustomCurrencyId);
 					break;
 			}
-            itemIds.Add(ItemID.Wood);
-            itemPrices.Add(100000);
-			itemCurrency.Add(CustomCurrencyID.None);
 			var items = new List<Item>();
 			foreach (int itemId in itemIds) {
 				Item item = new Item();
@@ -194,7 +191,6 @@ namespace TheDestinyMod.NPCs.Town
 				if (item == null || item.type == ItemID.None) {
 					continue;
                 }
-				Main.NewText(itemCurrency[nextSlot]);
 				shop.item[nextSlot].SetDefaults(item.type);
                 shop.item[nextSlot].shopCustomPrice = itemPrices[nextSlot];
 				shop.item[nextSlot].shopSpecialCurrency = itemCurrency[nextSlot];
