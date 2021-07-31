@@ -35,7 +35,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 			}
 			Vector2 move = Vector2.Zero;
 			float distance = 400f;
-			target = DestinyHelper.HomeInOnNPC(distance, projectile, ref move);
+			target = projectile.HomeInOnNPC(distance, ref move);
 			if (target) {
 				AdjustMagnitude(ref move);
 				projectile.velocity = (10 * projectile.velocity + move) / 11f;

@@ -18,7 +18,6 @@ namespace TheDestinyMod.Items.Accessories
 			item.width = 34;
 			item.height = 20;
 			item.rare = ItemRarityID.Yellow;
-			item.value = Item.sellPrice(gold: 1);
 			item.accessory = true;
 		}
 

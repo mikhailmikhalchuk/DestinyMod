@@ -173,7 +173,7 @@ namespace TheDestinyMod.NPCs.Town
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.AgentOfNine8"));
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.AgentOfNine9"));
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.AgentOfNine10"));
-			return dialogue[Main.rand.Next(dialogue.Count)];
+			return Main.rand.Next(dialogue);
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2) {

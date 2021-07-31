@@ -46,6 +46,7 @@ namespace TheDestinyMod.Projectiles.Magic
             }
             projectile.hide = false;
             projectile.tileCollide = true;
+            projectile.damage = 100;
             if (dPlayer.aegisCharge != 0) {
                 player.velocity.X -= player.direction == 1 ? 5 : -5;
             }
@@ -64,6 +65,10 @@ namespace TheDestinyMod.Projectiles.Magic
             if (Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().aegisCharge < 30 && Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().aegisCharge >= 1) {
                 hitbox = Rectangle.Empty;
             }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+            Dust.NewDust(target.position, target.width, target.height, DustID.BlueCrystalShard);
         }
     }
 }

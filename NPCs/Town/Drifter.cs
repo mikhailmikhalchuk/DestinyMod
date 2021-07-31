@@ -103,7 +103,7 @@ namespace TheDestinyMod.NPCs.Town
 			dialogue.Add("Motes of Light have always been a thing. Motes of Dark? I had to make 'em. One day, I may have to answer for that.");
 			dialogue.Add("I see you lookin' at me like I'm nuts. You think all this is for nothing? That I do this cause I like it? You don't know the half of it.");
 			dialogue.Add("Ah, all the stars in heaven! I am so... hungry.");
-			return dialogue[Main.rand.Next(dialogue.Count)];
+			return Main.rand.Next(dialogue);
 		}
 
         public override void SetChatButtons(ref string button, ref string button2) {

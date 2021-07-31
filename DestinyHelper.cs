@@ -13,10 +13,9 @@ namespace TheDestinyMod
         /// Homes in on an NPC
         /// </summary>
         /// <param name="distance">The current distance from the NPC</param>
-        /// <param name="projectile">The projectile that is being operated on</param>
         /// <param name="move">The projectile's current move position</param>
         /// <returns>True if the projectile found a target to lock onto. Otherwise returns false.</returns>
-        public static bool HomeInOnNPC(float distance, Projectile projectile, ref Vector2 move) {
+        public static bool HomeInOnNPC(this Projectile projectile, float distance, ref Vector2 move) {
             bool target = false;
             for (int k = 0; k < 200; k++) {
                 if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5 && Main.npc[k].damage > 0 && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, Main.npc[k].position, Main.npc[k].width, Main.npc[k].height)) {
