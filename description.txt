@@ -32,5 +32,6 @@ Decreased amount of super energy Orbs of Power grant
 Reclassed supers into their own damage type, with the goal of creating super-oriented builds in the future
 Began balancing exotic weapons for playthroughs (if you have any feedback at all on their placement, please let us know in the Discord server!)
 Class marks now sell for nothing
+Split Borealis into 3 separate items, which should fix any desyncing issues that could arise in multiplayer
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

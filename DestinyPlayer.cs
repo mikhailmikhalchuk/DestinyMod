@@ -32,6 +32,7 @@ namespace TheDestinyMod
 		public int aegisCharge;
 		public int destinyWeaponDelay;
 		public int superCrit;
+		public int borealisCooldown;
 
 		public float businessReduceUse = 0.2f;
 		public float thunderlordReduceUse = 1f;
@@ -108,6 +109,9 @@ namespace TheDestinyMod
 			}
 			if (destinyWeaponDelay > 0) {
 				destinyWeaponDelay--;
+			}
+			if (borealisCooldown > 0) {
+				borealisCooldown--;
 			}
         }
 

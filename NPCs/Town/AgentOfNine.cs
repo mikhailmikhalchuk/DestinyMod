@@ -82,7 +82,7 @@ namespace TheDestinyMod.NPCs.Town
 			itemPrices.Clear();
 			switch (Main.rand.Next(2)) {
 				case 0:
-					itemIds.Add(ModContent.ItemType<Borealis>());
+					itemIds.Add(ModContent.ItemType<BorealisRanged>());
                     itemPrices.Add(3);
 					itemCurrency.Add(TheDestinyMod.CipherCustomCurrencyId);
 					break;
