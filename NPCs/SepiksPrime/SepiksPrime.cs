@@ -26,6 +26,8 @@ namespace TheDestinyMod.NPCs.SepiksPrime
 
         private bool shielded = false;
 
+        private Vector2 NewCenter;
+
         public override void SetStaticDefaults() {
             Main.npcFrameCount[npc.type] = 4;
         }
@@ -74,6 +76,34 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     }
                 }
             }
+            if (NewCenter != Vector2.Zero && npc.ai[3] < 40) {
+                if (npc.ai[3] < 20) {
+                    npc.alpha += 13;
+                    //npc.scale -= 0.01f;
+                }
+                npc.ai[3]++;
+                return;
+            }
+            if (npc.ai[3] >= 40) {
+                if (NewCenter != Vector2.Zero) {
+                    npc.Center = NewCenter;
+                }
+                NewCenter = Vector2.Zero;
+                if (npc.alpha > 0) {
+                    npc.alpha -= 13;
+                    //npc.scale += 0.01f;
+                }
+                else {
+                    npc.ai[0] = 0;
+                    npc.alpha = 0;
+                    npc.ai[3] = 0;
+                    npc.defense /= 3;
+                    if (npc.dontTakeDamage) {
+                        SummonServitors();
+                    }
+                }
+                return;
+            }
             if (npc.timeLeft <= 10) {
                 return;
             }
@@ -97,10 +127,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                 shielded = true;
                 npc.damage = Main.expertMode ? 40 : 20;
                 npc.dontTakeDamage = true;
-                npc.position = new Vector2(target.position.X + Main.rand.Next(-50, 50), target.position.Y - 350);
+                TeleportNearTarget(target.position.X + Main.rand.Next(-50, 50), target.position.Y - 350);
                 Main.PlaySound(SoundID.Item78, npc.position);
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, $"Sounds/NPC/SepiksGroan{(Main.rand.NextBool() ? "1" : "2")}"), npc.position);
-                SummonServitors();
                 if (Main.netMode == NetmodeID.Server) {
                     ModPacket netMessage = GetPacket(SepiksBossMessageType.DontTakeDamage);
                     netMessage.Write(true);
@@ -149,7 +178,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     timesFiredThisCycle++;
                 }
                 else if (npc.ai[0] > 90f && timesFiredThisCycle >= 3 || npc.ai[0] > 70f && timesFiredThisCycle >= 3 && Main.expertMode) {
-                    npc.position = new Vector2(target.position.X + Main.rand.Next(-50, 50), target.position.Y - 250);
+                    TeleportNearTarget(target.position.X + Main.rand.Next(-50, 50), target.position.Y - 250);
                     Main.PlaySound(SoundID.Item78, npc.position);
                     npc.ai[0] = 0f;
                     timesFiredThisCycle = 0;
@@ -188,10 +217,18 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             }
         }
 
+        public override void DrawEffects(ref Color drawColor) {
+            if (NewCenter != Vector2.Zero) {
+                drawColor = Color.White;
+            }
+        }
+
         /// <summary>
         /// Teleports Sepiks near a target
         /// </summary>
-        private void TeleportNearTarget() {
+        /// <param name="x">The X value of where to force Sepiks in world coordinates</param>
+        /// <param name="y">The Y value of where to force Sepiks in world coordinates</param>
+        private void TeleportNearTarget(float x = 0, float y = 0) {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 Player target = Main.player[npc.target];
                 bool teleportSuccess = false;
@@ -202,11 +239,15 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     if (phase == 3 || phase == 6) { //because it's so spontaneous this gives the player more breathing room so sepiks isn't so close as he is normally
                         teleportTo = new Vector2(target.position.X + Main.rand.Next(-300, 300), target.position.Y - Main.rand.Next(0, 400));
                     }
-                    var tileToGoTo = teleportTo.ToTileCoordinates();
+                    if (x > 0 && y > 0) {
+                        teleportTo = new Vector2(x, y);
+                    }
+                    Point tileToGoTo = teleportTo.ToTileCoordinates();
                     //ensures that sepiks won't spawn in tiles, and that he'll spawn a moderate distance from the ground
-                    if (WorldGen.EmptyTileCheck((int)(tileToGoTo.X - 3.125), (int)(tileToGoTo.X + 3.125), (int)(tileToGoTo.Y - 3.125), (int)(tileToGoTo.Y + 3.125)) && WorldGen.EmptyTileCheck(tileToGoTo.X, tileToGoTo.X, tileToGoTo.Y, tileToGoTo.Y + 20)) {
-                        npc.Center = teleportTo;
+                    if (WorldGen.EmptyTileCheck((int)(tileToGoTo.X - 3.125), (int)(tileToGoTo.X + 3.125), (int)(tileToGoTo.Y - 3.125), (int)(tileToGoTo.Y + 3.125)) && WorldGen.EmptyTileCheck(tileToGoTo.X, tileToGoTo.X, tileToGoTo.Y, tileToGoTo.Y + 20) || x > 0 && y > 0) {
+                        NewCenter = teleportTo;
                         Main.PlaySound(SoundID.Item78, npc.position);
+                        npc.defense *= 3;
                         teleportSuccess = true;
                         npc.netUpdate = true;
                     }

@@ -23,10 +23,6 @@ namespace TheDestinyMod
 {
 	public class TheDestinyMod : Mod
 	{
-        public TheDestinyMod() {
-            Instance = this;
-        }
- 
         public static ModHotKey activateSuper;
         public static int CipherCustomCurrencyId;
         public static bool guardianGames = false;
@@ -43,10 +39,10 @@ namespace TheDestinyMod
         private UserInterface superChargeInterface;
         private UserInterface subclassInterface;
 
-        public static Mod Instance
-        {
-            get;
-            set;
+        public static TheDestinyMod Instance;
+
+        public TheDestinyMod() {
+            Instance = this;
         }
 
         public override void Load() {
@@ -463,9 +459,7 @@ namespace TheDestinyMod
                     delegate (GenerationProgress progress)
                     {
                         progress.Message = "The start of time...";
-                        if (ModLoader.GetMod("StructureHelper") != null) {
-                            DestinyHelper.StructureHelperGenerateStructure(new Vector2(Main.spawnTileX, Main.spawnTileY), "VaultOfGlass");
-                        }
+                        DestinyHelper.StructureHelperGenerateStructure(new Vector2(Main.spawnTileX, Main.spawnTileY), "VaultOfGlass");
                     },
                     1f)
 		        };

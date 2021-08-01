@@ -16,22 +16,6 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance while you have any class mark equipped
 Added Titan, Warlock, and Hunter-themed decor
 --
-Implemented some balancing changes for the Hakke and Omolon weapons
-Switched exotic armor from accessories to actual armor items
-Fixed a graphical bug that would occur with the Helm of Saint-14
-Fixed flickering issues that would occur on use of certain weapons
-Changed the holdout positions of some weapons
-Fixed an issue where Trinary System was still using Ace of Spades' firing sound
-Made Hakke Fusion Rifle into an actual fusion
-Removed all bullet offsets (bullets will now fire from the player's body as opposed to the barrel)
-Added Thunderlord and Rat King
-Internally changed Sweet Business' ramp-up method (should fix any issues that may arise in multiplayer)
-Changed Riskrunner's exotic perk
-Removed Thorn's offset
-Decreased amount of super energy Orbs of Power grant
-Reclassed supers into their own damage type, with the goal of creating super-oriented builds in the future
-Began balancing exotic weapons for playthroughs (if you have any feedback at all on their placement, please let us know in the Discord server!)
-Class marks now sell for nothing
-Split Borealis into 3 separate items, which should fix any desyncing issues that could arise in multiplayer
+
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

@@ -9,6 +9,8 @@ namespace TheDestinyMod
 {
     public static class DestinyHelper
     {
+        private static Mod structureHelper = ModLoader.GetMod("StructureHelper");
+
         /// <summary>
         /// Homes in on an NPC
         /// </summary>
@@ -32,35 +34,35 @@ namespace TheDestinyMod
         }
 
         ///<summary>
-        ///Used to generate a structure using StructureHelper. You must check that the StructureHelper mod is installed or the game will crash!
+        ///Used to generate a structure using StructureHelper.
         ///</summary>
         ///<param name="location">The location to place the structure</param>
         ///<param name="structure">The structure file name</param>
         ///<example>
         ///<code>
-        ///if (ModLoader.GetMod("StructureHelper") != null) {
-        ///    StructureHelperGenerateStructure(new Vector2(100, 150), "Example");
-        ///}
+        ///StructureHelperGenerateStructure(new Vector2(100, 150), "Example");
         ///</code>
         ///</example>
         public static void StructureHelperGenerateStructure(Vector2 location, string structure) {
-            StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location.ToPoint16(), TheDestinyMod.Instance);
+            if (structureHelper != null) {
+                StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location.ToPoint16(), TheDestinyMod.Instance);
+            }
         }
 
         ///<summary>
-        ///Used to generate a structure using StructureHelper. You must check that the StructureHelper mod is installed or the game will crash!
+        ///Used to generate a structure using StructureHelper.
         ///</summary>
         ///<param name="location">The location to place the structure</param>
         ///<param name="structure">The structure file name</param>
         ///<example>
         ///<code>
-        ///if (ModLoader.GetMod("StructureHelper") != null) {
-        ///    StructureHelperGenerateStructure(new Point16(100, 150), "Example");
-        ///}
+        ///StructureHelperGenerateStructure(new Point16(100, 150), "Example");
         ///</code>
         ///</example>
         public static void StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
-            StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
+            if (structureHelper != null) {
+                StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
+            }
         }
     }
 }
