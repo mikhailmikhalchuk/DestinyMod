@@ -97,6 +97,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     npc.ai[0] = 0;
                     npc.alpha = 0;
                     npc.ai[3] = 0;
+                    timesFiredThisCycle = 0;
                     npc.defense /= 3;
                     if (npc.dontTakeDamage) {
                         SummonServitors();
@@ -156,6 +157,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     TeleportNearTarget();
                     timesFiredThisCycle = 0;
                     npc.ai[0] = 0f;
+                    Main.LocalPlayer.AddBuff(195, 3);
                 }
             }
             else if (phase == 3) {
@@ -317,6 +319,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
             scale = 1.5f;
+            if (NewCenter != Vector2.Zero) {
+                scale = 0f;
+            }
             return null;
         }
 

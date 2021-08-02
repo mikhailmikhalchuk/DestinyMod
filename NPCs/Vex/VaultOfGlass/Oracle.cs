@@ -26,7 +26,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
             if (npc.life <= 0 && player.active) {
                 Main.NewText($"[c/3EAD5C:{player.name}] has destroyed an Oracle");
-                if (DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 8 && DestinyWorld.oraclesTimesRefrained == 1 || DestinyWorld.oraclesKilledOrder == 10 && DestinyWorld.oraclesTimesRefrained == 2) {
+                if (DestinyWorld.oraclesKilledOrder == 4 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 1 || DestinyWorld.oraclesKilledOrder == 8 && DestinyWorld.oraclesTimesRefrained == 2) {
                     Main.NewText("The Oracles recognize their refrain");
                 }
             }
@@ -35,7 +35,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
             if (npc.life <= 0 && Main.player[projectile.owner].active) {
                 Main.NewText($"[c/3EAD5C:{Main.player[projectile.owner].name}] has destroyed an Oracle");
-                if (DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 8 && DestinyWorld.oraclesTimesRefrained == 1 || DestinyWorld.oraclesKilledOrder == 10 && DestinyWorld.oraclesTimesRefrained == 2) {
+                if (DestinyWorld.oraclesKilledOrder == 4 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 1 || DestinyWorld.oraclesKilledOrder == 8 && DestinyWorld.oraclesTimesRefrained == 2) {
                     Main.NewText("The Oracles recognize their refrain");
                 }
             }
