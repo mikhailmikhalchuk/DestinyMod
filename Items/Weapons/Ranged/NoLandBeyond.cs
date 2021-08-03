@@ -28,7 +28,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 16f;
 			item.useAnimation = 100;
-            item.reuseDelay = 20;
 			item.shoot = 10;
 			item.useAmmo = AmmoID.Bullet;
 			item.value = Item.buyPrice(0, 1, 0, 0);
@@ -36,8 +35,16 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			position.Y -= 2;
-            return true;
+			player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 20;
+			return true;
         }
+
+		public override bool CanUseItem(Player player) {
+			if (player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay > 0) {
+				return false;
+			}
+			return base.CanUseItem(player);
+		}
 
 		public override void AddRecipes() {
 			ModRecipe recipe = new ModRecipe(mod);

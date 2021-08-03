@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.Enums;
 using Terraria.ModLoader;
 
@@ -141,7 +142,7 @@ namespace TheDestinyMod.Projectiles.Magic
 				float num1 = projectile.velocity.ToRotation() + (Main.rand.Next(2) == 1 ? -1.0f : 1.0f) * 1.57f;
 				float num2 = (float)(Main.rand.NextDouble() * 0.8f + 1.0f);
 				Vector2 dustVel = new Vector2((float)Math.Cos(num1) * num2, (float)Math.Sin(num1) * num2);
-				Dust dust = Main.dust[Dust.NewDust(dustPos, 0, 0, 226, dustVel.X, dustVel.Y)];
+				Dust dust = Main.dust[Dust.NewDust(dustPos, 0, 0, DustID.Electric, dustVel.X, dustVel.Y)];
 				dust.noGravity = true;
 				dust.scale = 1.2f;
 			}
@@ -150,7 +151,7 @@ namespace TheDestinyMod.Projectiles.Magic
 				Vector2 offset = projectile.velocity.RotatedBy(1.57f) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
 				unit = dustPos - Main.player[projectile.owner].Center;
 				unit.Normalize();
-				Dust dust = Main.dust[Dust.NewDust(Main.player[projectile.owner].Center + 55 * unit, 8, 8, 226, 0.0f, 0.0f, 100, new Color(), 1.5f)];
+				Dust dust = Main.dust[Dust.NewDust(Main.player[projectile.owner].Center + 55 * unit, 8, 8, DustID.Electric, 0.0f, 0.0f, 100, new Color(), 1.5f)];
 				dust.noGravity = true;
 				dust.scale = 0.5f;
 			}

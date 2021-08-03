@@ -32,7 +32,7 @@ namespace TheDestinyMod.Buffs.Debuffs
                 player.velocity.Y = player.maxFallSpeed;
             }
             player.sandStorm = false;
-            Dust.NewDust(player.Center, player.width, player.height, 113);
+            Dust.NewDust(player.Center, player.width, player.height, DustID.Clentaminator_Blue);
         }
     }
 }

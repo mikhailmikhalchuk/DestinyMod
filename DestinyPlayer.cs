@@ -164,7 +164,6 @@ namespace TheDestinyMod
 				thunderlordReduceUse = 1f;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
-				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.Conducted>(), 120);
 				bool result = Enter("TheDestinyMod_Vault of Glass") ?? false;
 				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
 					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", new Color(255, 0, 0));

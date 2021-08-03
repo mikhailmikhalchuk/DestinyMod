@@ -77,7 +77,7 @@ namespace TheDestinyMod.NPCs
             if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
                 drawColor = Color.Yellow;
                 if (Main.rand.NextBool(10)) {
-                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, 133);
+                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Firework_Yellow);
                     Main.dust[dust].noGravity = true;
                 }
             }

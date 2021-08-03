@@ -35,7 +35,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			if (Main.rand.NextBool(4)) {
-				Dust.NewDust(position += Vector2.Normalize(new Vector2(speedX, speedY)) * 90f, 1, 1, 63);
+				Dust.NewDust(position += Vector2.Normalize(new Vector2(speedX, speedY)) * 90f, 1, 1, DustID.WhiteTorch);
 				player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 15;
 			}
 			return true;

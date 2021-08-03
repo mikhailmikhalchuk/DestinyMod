@@ -16,6 +16,6 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance while you have any class mark equipped
 Added Titan, Warlock, and Hunter-themed decor
 --
-
+Fixed flickering that would occur when using No Land Beyond
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

@@ -41,6 +41,12 @@ namespace TheDestinyMod
         [Tooltip("Allows you to participate in the Guardian Games\n-This will make a request to a server every time the mod is reloaded\n-Your public IP address WILL be exposed, but we do not collect or identify it\n-Enables laurel dropping from enemies")]
         public bool guardianGamesConfig;
 
+        [Label("Sepiks Death Animation")]
+        [BackgroundColor(26, 70, 143, 192)]
+        [DefaultValue(false)]
+        [Tooltip("Enables Sepiks Prime's unique death animation")]
+        public bool sepiksDeathAnimation;
+
         public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref string message) => true;
     }
 }

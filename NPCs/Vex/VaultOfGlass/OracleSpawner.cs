@@ -26,7 +26,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DemonEye);
             aiType = 0;
-            npc.aiStyle = 0;
+            npc.aiStyle = -1;
             npc.dontTakeDamage = true;
             npc.noGravity = true;
             npc.knockBackResist = 0f;
@@ -47,16 +47,17 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
             if (!alreadySummoned && Main.netMode != NetmodeID.MultiplayerClient && counter > 0) {
                 Main.NewText("The Oracles prepare to sing their refrain");
                 DestinyWorld.oraclesKilledOrder = 1;
-                int localAdd = 100;
+                List<int> localPositions = new List<int>{ 150, 100, 50, 0, -50, -100, -150 };
                 for (int i = 0; i < (DestinyWorld.oraclesTimesRefrained == 1 ? 5 : DestinyWorld.oraclesTimesRefrained == 2 ? 7 : 3); i++) {
-                    int one = NPC.NewNPC((int)(npc.position.X + localAdd), (int)npc.position.Y, ModContent.NPCType<Oracle>(), 0, i);
+                    int rand = Main.rand.Next(localPositions.Count);
+                    int one = NPC.NewNPC((int)(npc.Center.X + localPositions[rand]), (int)npc.Center.Y - 50, ModContent.NPCType<Oracle>(), 0, i);
                     Main.npc[one].hide = true;
                     oraclePositions.Add(one);
-                    localAdd -= 50;
+                    localPositions.RemoveAt(rand);
                 }
                 alreadySummoned = true;
             }
-            else if (alreadySummoned && counter > 90 && (alreadyCalled.Count < 3 && DestinyWorld.oraclesTimesRefrained == 0 || alreadyCalled.Count < 5 && DestinyWorld.oraclesTimesRefrained == 1 || alreadyCalled.Count < 7 && DestinyWorld.oraclesTimesRefrained == 2) && timesShown == 0) {
+            else if (alreadySummoned && counter > 90 && (alreadyCalled.Count < 3 && DestinyWorld.oraclesTimesRefrained == 0 || alreadyCalled.Count < 5 && DestinyWorld.oraclesTimesRefrained == 1 || alreadyCalled.Count < 7 && DestinyWorld.oraclesTimesRefrained == 2) && timesShown == 0) { //show oracles randomly
                 int randCheck = Main.rand.Next(0, DestinyWorld.oraclesTimesRefrained == 0 ? 3 : DestinyWorld.oraclesTimesRefrained == 1 ? 5 : 7);
                 while (alreadyCalled.Contains(randCheck)) {
                     randCheck = Main.rand.Next(0, DestinyWorld.oraclesTimesRefrained == 0 ? 3 : DestinyWorld.oraclesTimesRefrained == 1 ? 5 : 7);
@@ -67,7 +68,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, $"Sounds/NPC/Oracle{randCheck + 1}"), Main.npc[oraclePositions[randCheck]].position);
                 counter = 0;
             }
-            else if (alreadySummoned && counter > 90 && (alreadyCalled.Count <= 3 && DestinyWorld.oraclesTimesRefrained == 0 || alreadyCalled.Count <= 5 && DestinyWorld.oraclesTimesRefrained == 1 || alreadyCalled.Count <= 7 && DestinyWorld.oraclesTimesRefrained == 2) && alreadyCalled.Count > 0 && timesShown == 1) {
+            else if (alreadySummoned && counter > 90 && (alreadyCalled.Count <= 3 && DestinyWorld.oraclesTimesRefrained == 0 || alreadyCalled.Count <= 5 && DestinyWorld.oraclesTimesRefrained == 1 || alreadyCalled.Count <= 7 && DestinyWorld.oraclesTimesRefrained == 2) && alreadyCalled.Count > 0 && timesShown == 1) { //reshow oracles
                 oracleOrder++;
                 foreach (NPC npc in Main.npc) {
                     if (npc.ai[0] == oracleOrder && npc.type == ModContent.NPCType<Oracle>() && npc.active) {
@@ -79,21 +80,21 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
                 alreadyCalled.RemoveAt(0);
                 counter = 0;
             }
-            else if (alreadySummoned && counter > 90 && (alreadyCalled.Count == 3 && DestinyWorld.oraclesTimesRefrained == 0 || alreadyCalled.Count == 5 && DestinyWorld.oraclesTimesRefrained == 1 || alreadyCalled.Count == 7 && DestinyWorld.oraclesTimesRefrained == 2) && timesShown == 0 || alreadySummoned && counter > 120 && alreadyCalled.Count == 0 && timesShown == 1) {
+            else if (alreadySummoned && counter > 90 && (alreadyCalled.Count == 3 && DestinyWorld.oraclesTimesRefrained == 0 || alreadyCalled.Count == 5 && DestinyWorld.oraclesTimesRefrained == 1 || alreadyCalled.Count == 7 && DestinyWorld.oraclesTimesRefrained == 2) && timesShown == 0 || alreadySummoned && counter > 120 && alreadyCalled.Count == 0 && timesShown == 1) { //hide them after first and second show
                 timesShown++;
                 foreach (int oracle in oraclePositions) {
                     Main.npc[oracle].hide = true;
                 }
                 counter = 0;
             }
-            else if (alreadySummoned && counter == 120 && alreadyCalled.Count == 0 && timesShown == 2) {
+            else if (alreadySummoned && counter == 120 && alreadyCalled.Count == 0 && timesShown == 2) { //summon and show oracles
                 Main.NewText("The Templar summons the Oracles");
                 foreach (int oracle in oraclePositions) {
                     Main.npc[oracle].hide = false;
                     Main.npc[oracle].dontTakeDamage = false;
                 }
             }
-            else if (alreadySummoned && counter > 600 && alreadyCalled.Count == 0 && timesShown == 2) {
+            else if (alreadySummoned && counter > 600 && alreadyCalled.Count == 0 && timesShown == 2) { //debuff players if they failed
                 Main.NewText("MARKED BY AN ORACLE!");
                 foreach (Player player in Main.player) {
                     if (player.active && !player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedForNegation>())) {

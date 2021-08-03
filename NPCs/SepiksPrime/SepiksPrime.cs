@@ -5,8 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Terraria.Graphics.Shaders;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TheDestinyMod.NPCs.SepiksPrime
 {
@@ -61,10 +62,35 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             npc.damage = 20;
         }
 
+        public override bool? CanBeHitByProjectile(Projectile projectile) {
+            if (projectile.damage > npc.life && DestinyConfig.Instance.sepiksDeathAnimation) {
+                npc.life = 49;
+                return false;
+            }
+            return base.CanBeHitByProjectile(projectile);
+        }
+
         public override void AI() {
             npc.ai[0]++;
             Player target = Main.player[npc.target];
-            npc.rotation = (float)Math.Atan2(npc.position.Y + npc.height - 80f - target.position.Y - (target.height / 2), npc.position.X + (npc.width / 2) - target.position.X - (target.width / 2)) + (float)Math.PI / 2f;
+            if (npc.life > 50 && DestinyConfig.Instance.sepiksDeathAnimation || !DestinyConfig.Instance.sepiksDeathAnimation) {
+                npc.rotation = (float)Math.Atan2(npc.position.Y + npc.height - 80f - target.position.Y - (target.height / 2), npc.position.X + (npc.width / 2) - target.position.X - (target.width / 2)) + (float)Math.PI / 2f;
+            }
+            else if (npc.life < 50 && !npc.dontTakeDamage && DestinyConfig.Instance.sepiksDeathAnimation) {
+                npc.dontTakeDamage = true;
+                npc.rotation += 1;
+                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/NPC/SepiksDie"), npc.Center);
+                npc.ai[0] = 0;
+                npc.alpha = 0;
+                return;
+            }
+            else if (npc.life < 50 && npc.dontTakeDamage && DestinyConfig.Instance.sepiksDeathAnimation) {
+                npc.rotation += 1;
+                if (npc.ai[0] > 192) {
+                    npc.StrikeNPC(9999, 0, 0); //has to be 9999 damage because...terraria
+                }
+                return;
+            }
             if (!target.active || target.dead) {
                 npc.TargetClosest(true);
                 target = Main.player[npc.target];
@@ -99,7 +125,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     npc.ai[3] = 0;
                     timesFiredThisCycle = 0;
                     npc.defense /= 3;
-                    if (npc.dontTakeDamage) {
+                    if (npc.dontTakeDamage && npc.life > 50) {
                         SummonServitors();
                     }
                 }
@@ -108,7 +134,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             if (npc.timeLeft <= 10) {
                 return;
             }
-            if (npc.dontTakeDamage) {
+            if (npc.dontTakeDamage && npc.life > 50) {
                 if ((phase == 2 || phase == 5) && !CheckShieldedPhase()) {
                     phase = phase == 2 ? 3 : 6;
                     npc.damage = Main.expertMode ? 20 : 10;
@@ -355,7 +381,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     npc.dontTakeDamage = reader.ReadBoolean();
                     break;
                 default:
-                    TheDestinyMod.Logger.Error($"Sepiks Prime Packet Handler: Encountered unknown packet of type ${type}");
+                    TheDestinyMod.Logger.Error($"Sepiks Prime Packet Handler: Encountered unknown packet of type {type}");
                     break;
             }
         }
