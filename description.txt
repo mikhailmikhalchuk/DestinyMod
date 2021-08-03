@@ -17,5 +17,12 @@ Added Laurels, which drop from enemies during the Games with a 1/25 chance while
 Added Titan, Warlock, and Hunter-themed decor
 --
 Fixed flickering that would occur when using No Land Beyond
+Fixed an exploit that could be used to get free modifier rolls from Zavala
+Fixed an issue where class marks could be reforged for 1 copper
+Made Rat King an automatic gun (from semi-automatic)
+Lowered Sweet Business' chance to consume ammo to 25% (from 10%)
+Fixed an issue which would allow players to place class-restricted armor in armor slots when they were not allowed to
+Fixed an issue where Borealis would not sync projectile types in multiplayer
+...other multiplayer fixes here!
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
-	public class CrownOfTempests : ExoticArmor
+	public class CrownOfTempests : ExoticArmor, IClassArmor
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crown of Tempests");
@@ -34,11 +34,8 @@ namespace TheDestinyMod.Items.Armor
 			}
 		}
 
-		public override bool CanEquipAccessory(Player player, int slot) {
-			if (DestinyConfig.Instance.restrictClassItems) {
-				return Main.LocalPlayer.GetModPlayer<DestinyPlayer>().warlock;
-			}
-			return base.CanEquipAccessory(player, slot);
+		public int ArmorType() {
+			return 2;
 		}
 	}
 }

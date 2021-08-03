@@ -76,7 +76,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             if (npc.life > 50 && DestinyConfig.Instance.sepiksDeathAnimation || !DestinyConfig.Instance.sepiksDeathAnimation) {
                 npc.rotation = (float)Math.Atan2(npc.position.Y + npc.height - 80f - target.position.Y - (target.height / 2), npc.position.X + (npc.width / 2) - target.position.X - (target.width / 2)) + (float)Math.PI / 2f;
             }
-            else if (npc.life < 50 && !npc.dontTakeDamage && DestinyConfig.Instance.sepiksDeathAnimation) {
+            else if (npc.life < 50 && !npc.dontTakeDamage && DestinyConfig.Instance.sepiksDeathAnimation) { //doesnt work with others
                 npc.dontTakeDamage = true;
                 npc.rotation += 1;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/NPC/SepiksDie"), npc.Center);
@@ -257,15 +257,16 @@ namespace TheDestinyMod.NPCs.SepiksPrime
         /// <param name="x">The X value of where to force Sepiks in world coordinates</param>
         /// <param name="y">The Y value of where to force Sepiks in world coordinates</param>
         private void TeleportNearTarget(float x = 0, float y = 0) {
+            Vector2 global = Vector2.Zero;
             if (Main.netMode != NetmodeID.MultiplayerClient) {
                 Player target = Main.player[npc.target];
                 bool teleportSuccess = false;
                 int attempts = 0;
                 while (!teleportSuccess) {
                     attempts++;
-                    Vector2 teleportTo = new Vector2(target.position.X + Main.rand.Next(-200, 200), target.position.Y - Main.rand.Next(0, 300));
+                    Vector2 teleportTo = new Vector2(target.position.X + Main.rand.Next(-200, 200), target.position.Y - Main.rand.Next(50, 300));
                     if (phase == 3 || phase == 6) { //because it's so spontaneous this gives the player more breathing room so sepiks isn't so close as he is normally
-                        teleportTo = new Vector2(target.position.X + Main.rand.Next(-300, 300), target.position.Y - Main.rand.Next(0, 400));
+                        teleportTo = new Vector2(target.position.X + Main.rand.Next(-300, 300), target.position.Y - Main.rand.Next(50, 400));
                     }
                     if (x > 0 && y > 0) {
                         teleportTo = new Vector2(x, y);
@@ -273,7 +274,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     Point tileToGoTo = teleportTo.ToTileCoordinates();
                     //ensures that sepiks won't spawn in tiles, and that he'll spawn a moderate distance from the ground
                     if (WorldGen.EmptyTileCheck((int)(tileToGoTo.X - 3.125), (int)(tileToGoTo.X + 3.125), (int)(tileToGoTo.Y - 3.125), (int)(tileToGoTo.Y + 3.125)) && WorldGen.EmptyTileCheck(tileToGoTo.X, tileToGoTo.X, tileToGoTo.Y, tileToGoTo.Y + 20) || x > 0 && y > 0) {
-                        NewCenter = teleportTo;
+                        global = teleportTo;
                         Main.PlaySound(SoundID.Item78, npc.position);
                         npc.defense *= 3;
                         teleportSuccess = true;
@@ -283,6 +284,13 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                         return;
                     }
                 }
+            }
+            NewCenter = global;
+        }
+
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor) {
+            if (NewCenter == Vector2.Zero) {
+                spriteBatch.Draw(mod.GetTexture("NPCs/SepiksPrime/SepiksPrime_Glow"), npc.Center - Main.screenPosition + new Vector2(0, 4), npc.frame, Color.LightYellow, npc.rotation, npc.frame.Size() / 2, npc.scale, SpriteEffects.None, 0);
             }
         }
 
@@ -337,7 +345,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
         /// </summary>
         private void FireHomingAtTarget() {
             if (Main.netMode != NetmodeID.MultiplayerClient) {
-                NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SepiksHoming>(), 0, npc.whoAmI);
+                NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SepiksHoming>(), ai0: npc.whoAmI);
                 Main.PlaySound(SoundID.Item8, npc.Center);
                 npc.netUpdate = true;
             }

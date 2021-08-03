@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Body)]
-	public class ProdigalCuirass : ModItem
+	public class ProdigalCuirass : ModItem, IClassArmor
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("7% increased ranged damage");
@@ -32,6 +32,10 @@ namespace TheDestinyMod.Items.Armor
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
+		}
+
+		public int ArmorType() {
+			return 0;
 		}
 	}
 }

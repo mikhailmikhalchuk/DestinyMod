@@ -65,4 +65,9 @@ namespace TheDestinyMod
             }
         }
     }
+
+    public interface IClassArmor
+    {
+        int ArmorType();
+    }
 }

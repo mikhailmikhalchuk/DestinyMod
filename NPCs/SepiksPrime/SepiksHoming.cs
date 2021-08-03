@@ -34,7 +34,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
 
         public override void AI() {
             NPC source = Main.npc[(int)npc.ai[0]];
-            npc.localAI[1] += 1f;
+            npc.localAI[1]++;
             if (npc.localAI[1] > 500f) {
                 Dust.NewDust(npc.position, 2, 2, DustID.PurpleCrystalShard, npc.velocity.X, npc.velocity.Y);
                 npc.life = 0;

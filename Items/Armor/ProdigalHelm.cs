@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
-	public class ProdigalHelm : ModItem
+	public class ProdigalHelm : ModItem, IClassArmor
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("7% increase ranged critical strike chance"); //d
@@ -42,5 +42,9 @@ namespace TheDestinyMod.Items.Armor
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
-    }
+
+		public int ArmorType() {
+			return 0;
+		}
+	}
 }

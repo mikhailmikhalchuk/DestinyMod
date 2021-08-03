@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
-	public class InsurmountableSkullfort : ExoticArmor
+	public class InsurmountableSkullfort : ExoticArmor, IClassArmor
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("An Insurmountable Skullfort");
@@ -34,11 +34,8 @@ namespace TheDestinyMod.Items.Armor
 			}
 		}
 
-		public override bool CanEquipAccessory(Player player, int slot) {
-			if (DestinyConfig.Instance.restrictClassItems) {
-				return Main.LocalPlayer.GetModPlayer<DestinyPlayer>().titan;
-			}
-			return base.CanEquipAccessory(player, slot);
+		public int ArmorType() {
+			return 0;
 		}
 	}
 }

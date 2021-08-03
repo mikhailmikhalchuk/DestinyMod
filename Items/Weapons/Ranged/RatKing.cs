@@ -23,6 +23,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.damage = 84;
 			item.ranged = true;
 			item.noMelee = true;
+			item.autoReuse = true;
 			item.rare = ItemRarityID.Red;
 			item.knockBack = 0;
 			item.width = 42;

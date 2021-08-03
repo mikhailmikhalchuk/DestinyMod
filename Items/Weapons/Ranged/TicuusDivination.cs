@@ -37,6 +37,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+			//clientsided sounds
 			if (player.altFunctionUse == 2) {
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<CausalityArrow>(), damage, knockBack, player.whoAmI);
 				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/CausalityShot"), position);

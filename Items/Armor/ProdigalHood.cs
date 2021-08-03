@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
-	public class ProdigalHood : ModItem
+	public class ProdigalHood : ModItem, IClassArmor
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("7% increased magic critical strike chance");
@@ -37,6 +37,10 @@ namespace TheDestinyMod.Items.Armor
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
+		}
+
+		public int ArmorType() {
+			return 2;
 		}
 	}
 }

@@ -38,9 +38,7 @@ namespace TheDestinyMod.Items.Weapons.Melee
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile p = Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 5), new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
-			p.ranged = false;
-			p.melee = true;
+			Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 5), new Vector2(speedX, speedY), ModContent.ProjectileType<Projectiles.BorealisProjectile>(), damage, knockBack, player.whoAmI, 0, type);
 			return false;
         }
 

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Legs)]
-	public class ProdigalGreaves : ModItem
+	public class ProdigalGreaves : ModItem, IClassArmor
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("5% increased ranged damage");
@@ -32,6 +32,10 @@ namespace TheDestinyMod.Items.Armor
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
+		}
+
+		public int ArmorType() {
+			return 0;
 		}
 	}
 }

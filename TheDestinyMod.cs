@@ -49,6 +49,8 @@ namespace TheDestinyMod
             activateSuper = RegisterHotKey("Activate Super", "U");
             CipherCustomCurrencyId = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.ExoticCipher>(), 30L));
             On.Terraria.Player.DropTombstone += Player_DropTombstone;
+            On.Terraria.UI.ItemSlot.ArmorSwap += ItemSlot_ArmorSwap;
+            On.Terraria.UI.ItemSlot.LeftClick_ItemArray_int_int += ItemSlot_LeftClick_ItemArray_int_int;
             if (!Main.dedServ) {
                 if (DestinyConfig.Instance.guardianGamesConfig) {
                     try {
@@ -277,6 +279,27 @@ namespace TheDestinyMod
             text.AddTranslation(GameCulture.Spanish, "Debes tener un espacio del inventario vacio para activar tu súper.");
             AddTranslation(text);
             #endregion
+        }
+
+        private void ItemSlot_LeftClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
+            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            if (Main.mouseItem.modItem is IClassArmor armor) {
+                if ((armor.ArmorType() == 0 && !player.titan || armor.ArmorType() == 1 && !player.hunter || armor.ArmorType() == 2 && !player.warlock) && DestinyConfig.Instance.restrictClassItems && context == 8) {
+                    return;
+                }
+            }
+            orig.Invoke(inv, context, slot);
+        }
+
+        private Item ItemSlot_ArmorSwap(On.Terraria.UI.ItemSlot.orig_ArmorSwap orig, Item item, out bool success) {
+            success = false;
+            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            if (item.modItem is IClassArmor armor) {
+                if ((armor.ArmorType() == 0 && !player.titan || armor.ArmorType() == 1 && !player.hunter || armor.ArmorType() == 2 && !player.warlock) && DestinyConfig.Instance.restrictClassItems) {
+                    return item;
+                }
+            }
+            return orig.Invoke(item, out success);
         }
 
         public override void Unload() {

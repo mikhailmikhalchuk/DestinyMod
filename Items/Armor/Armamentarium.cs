@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Body)]
-	public class Armamentarium : ModItem
+	public class Armamentarium : ExoticArmor, IClassArmor
 	{
         public override void SetStaticDefaults() {
 			Tooltip.SetDefault("50% increased throwing damage when your Super bar is charged\n\"For this, there is one remedy\"");
@@ -34,11 +34,8 @@ namespace TheDestinyMod.Items.Armor
 			}
 		}
 
-		public override bool CanEquipAccessory(Player player, int slot) {
-			if (DestinyConfig.Instance.restrictClassItems) {
-				return player.GetModPlayer<DestinyPlayer>().titan;
-			}
-			return base.CanEquipAccessory(player, slot);
+		public int ArmorType() {
+			return 0;
 		}
     }
 }

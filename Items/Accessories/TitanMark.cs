@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.Utilities;
 
 namespace TheDestinyMod.Items.Accessories
 {
@@ -34,8 +35,16 @@ namespace TheDestinyMod.Items.Accessories
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual) {
-			DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
-			dPlayer.titan = true;
+			player.GetModPlayer<DestinyPlayer>().titan = true;
+		}
+
+		public override bool? PrefixChance(int pre, UnifiedRandom rand) {
+			return pre != -1;
+		}
+
+		public override bool ReforgePrice(ref int reforgePrice, ref bool canApplyDiscount) {
+			reforgePrice = Item.buyPrice(0, 6, 0, 0);
+			return base.ReforgePrice(ref reforgePrice, ref canApplyDiscount);
 		}
 	}
 }
