@@ -37,6 +37,10 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 10f;
+			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
+				position += muzzleOffset;
+			}
 			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, ModContent.ProjectileType<HakkeBullet>(), damage, knockBack, player.whoAmI);
 			if (Main.rand.NextBool(10) && !player.HasBuff(ModContent.BuffType<HakkeBuff>())) {
 				player.AddBuff(ModContent.BuffType<HakkeBuff>(), 90);
