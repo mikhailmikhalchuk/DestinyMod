@@ -34,8 +34,6 @@ namespace TheDestinyMod.Items.Armor
 			}
 		}
 
-		public int ArmorType() {
-			return 0;
-		}
+		public DestinyClassType ArmorClassType() => DestinyClassType.Titan;
 	}
 }

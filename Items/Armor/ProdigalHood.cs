@@ -39,8 +39,6 @@ namespace TheDestinyMod.Items.Armor
 			recipe.AddRecipe();
 		}
 
-		public int ArmorType() {
-			return 2;
-		}
+		public DestinyClassType ArmorClassType() => DestinyClassType.Warlock;
 	}
 }

@@ -6,6 +6,8 @@ namespace TheDestinyMod.Items.Armor
 {
     public abstract class ExoticArmor : ModItem
     {
+        public int armorClassType;
+
         public override bool CanEquipAccessory(Player player, int slot) {
             if (player.GetModPlayer<DestinyPlayer>().exoticEquipped) {
                 return false;

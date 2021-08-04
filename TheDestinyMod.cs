@@ -7,6 +7,7 @@ using Terraria.Localization;
 using Terraria.Graphics.Shaders;
 using Terraria.Graphics.Effects;
 using Terraria.World.Generation;
+using ReLogic.Graphics;
 using Terraria.GameContent.Generation;
 using TheDestinyMod.NPCs.SepiksPrime;
 using TheDestinyMod.UI;
@@ -281,10 +282,17 @@ namespace TheDestinyMod
             #endregion
         }
 
+        public override void Unload() {
+            activateSuper = null;
+            Instance = null;
+            NPCs.Town.AgentOfNine.shopItems.Clear();
+            NPCs.Town.AgentOfNine.itemPrices.Clear();
+        }
+
         private void ItemSlot_LeftClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (Main.mouseItem.modItem is IClassArmor armor) {
-                if ((armor.ArmorType() == 0 && !player.titan || armor.ArmorType() == 1 && !player.hunter || armor.ArmorType() == 2 && !player.warlock) && DestinyConfig.Instance.restrictClassItems && context == 8) {
+                if ((armor.ArmorClassType() == DestinyClassType.Titan && !player.titan || armor.ArmorClassType() == DestinyClassType.Hunter && !player.hunter || armor.ArmorClassType() == DestinyClassType.Warlock && !player.warlock) && DestinyConfig.Instance.restrictClassItems && context == 8) {
                     return;
                 }
             }
@@ -295,18 +303,11 @@ namespace TheDestinyMod
             success = false;
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (item.modItem is IClassArmor armor) {
-                if ((armor.ArmorType() == 0 && !player.titan || armor.ArmorType() == 1 && !player.hunter || armor.ArmorType() == 2 && !player.warlock) && DestinyConfig.Instance.restrictClassItems) {
+                if ((armor.ArmorClassType() == DestinyClassType.Titan && !player.titan || armor.ArmorClassType() == DestinyClassType.Hunter && !player.hunter || armor.ArmorClassType() == DestinyClassType.Warlock && !player.warlock) && DestinyConfig.Instance.restrictClassItems) {
                     return item;
                 }
             }
             return orig.Invoke(item, out success);
-        }
-
-        public override void Unload() {
-            activateSuper = null;
-            Instance = null;
-            NPCs.Town.AgentOfNine.shopItems.Clear();
-			NPCs.Town.AgentOfNine.itemPrices.Clear();
         }
 
         private void Player_DropTombstone(On.Terraria.Player.orig_DropTombstone orig, Player self, int coinsOwned, NetworkText deathText, int hitDirection) {

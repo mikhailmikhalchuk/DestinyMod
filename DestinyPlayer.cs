@@ -339,7 +339,7 @@ namespace TheDestinyMod
 				Main.playerDrawData.Add(
 					new DrawData(
 						tex,
-						info.itemLocation - Main.screenPosition + (info.drawPlayer.direction == 1 ? new Vector2(4, 20) : new Vector2(-4, 20)),
+						info.itemLocation - Main.screenPosition + new Vector2(info.drawPlayer.direction == 1 ? 4 : -4, 20),
 						tex.Frame(),
 						Lighting.GetColor((int)info.drawPlayer.Center.X / 16, (int)info.drawPlayer.Center.Y / 16),
 						info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0 ? 0f : info.drawPlayer.headRotation - (info.drawPlayer.direction == 1 ? 0.1f : -0.1f),

@@ -43,7 +43,7 @@ namespace TheDestinyMod.Items.Accessories
 		}
 
 		public override bool ReforgePrice(ref int reforgePrice, ref bool canApplyDiscount) {
-			reforgePrice = Item.buyPrice(0, 6, 0, 0);
+			reforgePrice = Item.buyPrice(gold: 6);
 			return base.ReforgePrice(ref reforgePrice, ref canApplyDiscount);
 		}
 	}

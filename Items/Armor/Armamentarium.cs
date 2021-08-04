@@ -9,7 +9,7 @@ namespace TheDestinyMod.Items.Armor
 	[AutoloadEquip(EquipType.Body)]
 	public class Armamentarium : ExoticArmor, IClassArmor
 	{
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("50% increased throwing damage when your Super bar is charged\n\"For this, there is one remedy\"");
 		}
 
@@ -34,8 +34,6 @@ namespace TheDestinyMod.Items.Armor
 			}
 		}
 
-		public int ArmorType() {
-			return 0;
-		}
-    }
+		public DestinyClassType ArmorClassType() => DestinyClassType.Titan;
+	}
 }

@@ -43,10 +43,11 @@ namespace TheDestinyMod
         ///StructureHelperGenerateStructure(new Vector2(100, 150), "Example");
         ///</code>
         ///</example>
-        public static void StructureHelperGenerateStructure(Vector2 location, string structure) {
-            if (structureHelper != null) {
-                StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location.ToPoint16(), TheDestinyMod.Instance);
-            }
+        ///<returns>
+        ///True if successful, otherwise false
+        ///</returns>
+        public static bool StructureHelperGenerateStructure(Vector2 location, string structure) {
+            return StructureHelperGenerateStructure(location.ToPoint16(), structure);
         }
 
         ///<summary>
@@ -59,15 +60,27 @@ namespace TheDestinyMod
         ///StructureHelperGenerateStructure(new Point16(100, 150), "Example");
         ///</code>
         ///</example>
-        public static void StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
+        ///<returns>
+        ///True if successful, otherwise false
+        ///</returns>
+        public static bool StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
             if (structureHelper != null) {
                 StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
+                return true;
             }
+            return false;
         }
     }
 
     public interface IClassArmor
     {
-        int ArmorType();
+        DestinyClassType ArmorClassType();
+    }
+
+    public enum DestinyClassType : byte
+    {
+        Titan,
+        Hunter,
+        Warlock
     }
 }

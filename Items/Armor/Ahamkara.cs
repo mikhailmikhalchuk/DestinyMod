@@ -33,8 +33,6 @@ namespace TheDestinyMod.Items.Armor
 			}
 		}
 
-		public int ArmorType() {
-			return 2;
-		}
+		public DestinyClassType ArmorClassType() => DestinyClassType.Warlock;
 	}
 }

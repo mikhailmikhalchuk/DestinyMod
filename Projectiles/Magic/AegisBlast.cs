@@ -67,8 +67,23 @@ namespace TheDestinyMod.Projectiles.Magic
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            Dust.NewDust(target.position, target.width, target.height, DustID.BlueCrystalShard);
+        public override void Kill(int timeLeft) {
+            for (int i = 0; i < 100; i++) {
+                Dust dust = Dust.NewDustDirect(projectile.Center, 6, 6, 132, Alpha: 100, Scale: 1.3f);
+                float dustX = dust.velocity.X;
+                float dustY = dust.velocity.Y;
+                if (dustX == 0f && dustY == 0f) {
+                    dustX = 1f;
+                }
+                float num = (float)Math.Sqrt(dustX * dustX + dustY * dustY);
+                num = 13f / num;
+                dustX *= num;
+                dustY *= num;
+                dust.velocity *= 0.3f;
+                dust.velocity.X += dustX / 1.2f;
+                dust.velocity.Y += dustY / 1.2f;
+                dust.noGravity = true;
+            }
         }
     }
 }
