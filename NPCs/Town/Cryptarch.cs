@@ -51,10 +51,8 @@ namespace TheDestinyMod.NPCs.Town
 				if (!player.active) {
 					continue;
 				}
-				foreach (Item item in player.inventory) {
-					if (item.type == ModContent.ItemType<CommonEngram>()) {
-						return true;
-					}
+				if (player.CountItem(ModContent.ItemType<CommonEngram>()) >= 5) {
+					return true;
 				}
 			}
 			return false;

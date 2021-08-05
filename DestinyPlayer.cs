@@ -113,6 +113,16 @@ namespace TheDestinyMod
 			if (borealisCooldown > 0) {
 				borealisCooldown--;
 			}
+			if (ModContent.GetInstance<TheDestinyMod>().CryptarchUserInterface.CurrentState == null && CryptarchUI._vanillaItemSlot?.Item.type > 0) {
+				CryptarchUI._vanillaItemSlot.Item.position = player.Center;
+				Item item = player.GetItem(player.whoAmI, CryptarchUI._vanillaItemSlot.Item, noText: true);
+				if (item.stack > 0) {
+					int placed = Item.NewItem((int)player.position.X, (int)player.position.Y, player.width, player.height, item.type, item.stack, false, CryptarchUI._vanillaItemSlot.Item.prefix, true);
+					Main.item[placed] = item.Clone();
+					Main.item[placed].newAndShiny = false;
+				}
+				CryptarchUI._vanillaItemSlot.Item = new Item();
+			}
         }
 
         public override void PostUpdateRunSpeeds() {
@@ -252,20 +262,7 @@ namespace TheDestinyMod
 			};
 		}
 
-        public override bool ShiftClickSlot(Item[] inventory, int context, int slot) {
-			if ((player.inventory[slot].type == ModContent.ItemType<CommonEngram>() || player.inventory[slot].type == ModContent.ItemType<UncommonEngram>() || player.inventory[slot].type == ModContent.ItemType<RareEngram>() || player.inventory[slot].type == ModContent.ItemType<LegendaryEngram>() || player.inventory[slot].type == ModContent.ItemType<ExoticEngram>()) && ModContent.GetInstance<TheDestinyMod>().CryptarchUserInterface.CurrentState != null) {
-				if (CryptarchUI._vanillaItemSlot.Item.type == ItemID.None) {
-					Item clone = player.inventory[slot].Clone();
-					CryptarchUI._vanillaItemSlot.Item = clone;
-					player.inventory[slot].TurnToAir();
-					Main.PlaySound(SoundID.Grab);
-					return true;
-				}
-			}
-            return false;
-        }
-
-        public override void Load(TagCompound tag) {
+		public override void Load(TagCompound tag) {
 			var engrams = tag.GetList<string>("engramsPurchased");
 			boughtCommon = engrams.Contains("common");
 			boughtUncommon = engrams.Contains("uncommon");
@@ -280,6 +277,19 @@ namespace TheDestinyMod
 				SubclassUI.selectedWhich = tag.GetInt("subclassTier");
 			}
 		}
+
+		public override bool ShiftClickSlot(Item[] inventory, int context, int slot) {
+			if ((player.inventory[slot].type == ModContent.ItemType<CommonEngram>() || player.inventory[slot].type == ModContent.ItemType<UncommonEngram>() || player.inventory[slot].type == ModContent.ItemType<RareEngram>() || player.inventory[slot].type == ModContent.ItemType<LegendaryEngram>() || player.inventory[slot].type == ModContent.ItemType<ExoticEngram>()) && ModContent.GetInstance<TheDestinyMod>().CryptarchUserInterface.CurrentState != null) {
+				if (CryptarchUI._vanillaItemSlot.Item.type == ItemID.None) {
+					Item clone = player.inventory[slot].Clone();
+					CryptarchUI._vanillaItemSlot.Item = clone;
+					player.inventory[slot].TurnToAir();
+					Main.PlaySound(SoundID.Grab);
+					return true;
+				}
+			}
+            return false;
+        }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
 			if (target.TypeName == "Zombie" && zavalaBounty == 1 && zavalaEnemies < 100 && target.life <= 1) {

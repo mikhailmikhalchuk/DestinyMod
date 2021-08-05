@@ -53,10 +53,8 @@ namespace TheDestinyMod.NPCs.Town
 				if (!player.active) {
 					continue;
 				}
-				foreach (Item item in player.inventory) {
-					if (item.type == ModContent.ItemType<MoteOfDark>() && item.stack >= 5) {
-						return true;
-					}
+				if (player.CountItem(ModContent.ItemType<MoteOfDark>()) >= 5) {
+					return true;
 				}
 			}
 			return false;
@@ -69,40 +67,40 @@ namespace TheDestinyMod.NPCs.Town
 		public override string GetChat() {
 			int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
 			int xur = NPC.FindFirstNPC(ModContent.NPCType<AgentOfNine>());
-			string gender = Main.LocalPlayer.Male ? "brother" : "sister";
+			string gender = Main.LocalPlayer.Male ? Language.GetTextValue("Mods.TheDestinyMod.Brother") : Language.GetTextValue("Mods.TheDestinyMod.Sister");
 			List<string> dialogue = new List<string>();
 			if (taxCollector >= 0) {
 				int zavala = NPC.FindFirstNPC(ModContent.NPCType<Zavala>());
 				if (zavala >= 0) {
-					dialogue.Add($"Gah, what's with {Main.npc[taxCollector].GivenName}, {gender}? He reminds me of ol' Zavala back at the Tower...what do you mean Zavala is here?!");
+					dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter16", Main.npc[taxCollector].GivenName, gender));
 				}
 				else {
-					dialogue.Add($"Gah, what's with {Main.npc[taxCollector].GivenName}, {gender}? He reminds me of ol' Zavala back at the Tower, always killing all the fun...");
+					dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter17", Main.npc[taxCollector].GivenName, gender));
 				}
 			}
 			if (xur >= 0) {
-				dialogue.Add($"Oh, no, no, no, that CREEP is here again. When will him and these...\"Nine\" stop botherin' us, {gender}?");
+				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter15", gender));
 			}
 			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(6)) {
-				dialogue.Add($"Hey, {gender}, wanna top off this party with some Gambit?");
+				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter14", gender));
 			}
 			if (Main.eclipse) {
-				dialogue.Add("What happened? Did the Taken Take the sun or somethin'?!");
+				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter13"));
 			}
 			if (Main.hardMode) {
-				dialogue.Add("You think 'cause you released some fancy spirits, you're too good for me? Come on. Drifter needs his Motes.");
-				dialogue.Add("Light isn’t the only source of power out here.");
-				dialogue.Add("Light, Dark... Let me tell you, the only thing that matters is the hand holding the gun.");
+				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter10"));
+				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter11"));
+				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter12"));
 			}
-			dialogue.Add("How you livin'?");
-			dialogue.Add($"Get me those Motes and I'll make you rich, {gender}, I promise.");
-			dialogue.Add("Call me Drifter.");
-			dialogue.Add("Ready to bang knuckles?");
-			dialogue.Add("Transmat firing!");
-			dialogue.Add("Let's be bad guys.");
-			dialogue.Add("Motes of Light have always been a thing. Motes of Dark? I had to make 'em. One day, I may have to answer for that.");
-			dialogue.Add("I see you lookin' at me like I'm nuts. You think all this is for nothing? That I do this cause I like it? You don't know the half of it.");
-			dialogue.Add("Ah, all the stars in heaven! I am so... hungry.");
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter1"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter2", gender));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter3"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter4"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter5"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter6"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter7"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter8"));
+			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter9"));
 			return Main.rand.Next(dialogue);
 		}
 
@@ -113,25 +111,25 @@ namespace TheDestinyMod.NPCs.Town
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-			string gender = Main.LocalPlayer.Male ? "brother" : "sister";
+			string gender = Main.LocalPlayer.Male ? Language.GetTextValue("Mods.TheDestinyMod.Brother") : Language.GetTextValue("Mods.TheDestinyMod.Sister");
 			if (firstButton) {
 				if (Main.LocalPlayer.HasItem(ModContent.ItemType<MoteOfDark>())) {
 					if (Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>()) < 25) {
-						Main.npcChatText = $"Thank you, {gender}. I'll do something real special with these Motes, trust.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes1", gender);
 					}
 					else if (Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>()) > 25 && Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>()) < 50) {
-						Main.npcChatText = "Ooh, that's quite the haul you have there, thank you very much. I'ma do something real special with these Motes, somethin' that'll make you shiver.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes2");
 					}
 					else {
 						switch (Main.rand.Next(3)) {
 							case 1:
-								Main.npcChatText = $"Thanks for the Motes, {gender}.";
+								Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes3", gender);
 								break;
 							case 2:
-								Main.npcChatText = "Nice work. The line between Light and Dark's gettin' thinner every day. Keep walking it.";
+								Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes4");
 								break;
 							default:
-								Main.npcChatText = "Keep choosing the winning side, kid, and you'll keep on winning. Simple as that.";
+								Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes5");
 								break;
 						}
 					}
@@ -145,66 +143,66 @@ namespace TheDestinyMod.NPCs.Town
 					if (player.motesGiven > 10 && player.drifterRewards == 0) {
 						player.drifterRewards = 1;
 						Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, 5);
-						Main.npcChatText = $"Hey {(Main.LocalPlayer.Male ? "brother" : "sister")}, thanks for the Motes. I said I'd make you rich, and I intend to keep that promise, unlike some others... Here, take this.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes6", gender);
 					}
 					if (player.motesGiven > 20 && player.drifterRewards < 2) {
 						player.drifterRewards = 2;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<ImpactShard>());
-						Main.npcChatText = $"Motes? Motes! Speaking of Motes, I've gotta way for you to get more, faster. This is for you, {gender}.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes7", gender);
 					}
 					if (player.motesGiven > 30 && player.drifterRewards < 3) {
 						player.drifterRewards = 3;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<BottomDollar>());
-						Main.npcChatText = $"I'll never get sick of Motes. Never. Anyways, here's your reward.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes8");
 					}
 					if (player.motesGiven > 40 && player.drifterRewards < 4) {
 						player.drifterRewards = 4;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<GambitDye>(), 3);
-						Main.npcChatText = $"Mmm, Motes...ooh, I think you're gonna like this, {gender}. Free merchandise, on the house!";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes9", gender);
 					}
 					if (player.motesGiven > 50 && player.drifterRewards < 5) {
 						player.drifterRewards = 5;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<GunsmithMaterials>(), 100);
-						Main.npcChatText = $"Thanks for the Motes! By the way, I found these parts lying around. Maybe you could put 'em to good use, {gender}?";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes10", gender);
 					}
 					if (player.motesGiven > 60 && player.drifterRewards < 6) {
 						player.drifterRewards = 6;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Ghost>());
-						Main.npcChatText = $"These are some nice Motes...oh yeah, I found this...thing, on the ground. Not sure what it is, but it's yours now, {gender}.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes11", gender);
 					}
 					if (player.motesGiven > 70 && player.drifterRewards < 7) {
 						player.drifterRewards = 7;
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TrinarySystem>());
-						Main.npcChatText = $"Motes, {gender}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes12", gender);
 					}
 					return;
 				}
                 else {
 					switch (Main.rand.Next(3)) {
 						case 1:
-							Main.npcChatText = $"{gender}, you gotta have those Motes on you! Come back when you got some.";
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes13", char.ToUpper(gender[0]) + gender.Substring(1));
 							return;
 						case 2:
-							Main.npcChatText = "Thanks for the...huh? You don't have any Motes for me to unload off 'ya!";
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes14");
 							return;
 						default:
-							Main.npcChatText = $"Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {gender}.";
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes15", gender);
 							return;
 					}
                 }
 			}
             else {
 				if (player.motesGiven == 0) {
-					Main.npcChatText = $"Aw man, {gender}, you haven't deposited any Motes yet!";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes16", gender);
 				}
 				else if (player.motesGiven > 200) {
-					Main.npcChatText = $"Woo, you've deposited {player.motesGiven} Motes! This is one heckuva collection, {gender}.";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes17", player.motesGiven, gender);
 				}
                 else if (player.motesGiven > 100) {
-					Main.npcChatText = $"You've deposited {player.motesGiven} Motes so far, {gender}. Not bad.";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes18", player.motesGiven, gender);
 				}
 				else {
-					Main.npcChatText = $"You've deposited a total of {player.motesGiven} Motes, {gender}.";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes19", player.motesGiven, gender);
 				}
 				return;
             }

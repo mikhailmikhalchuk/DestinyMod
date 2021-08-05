@@ -9,6 +9,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using TheDestinyMod.Items;
+using TheDestinyMod.Items.Weapons.Ranged;
+using System.Collections.Generic;
 
 namespace TheDestinyMod.UI
 {
@@ -23,13 +25,6 @@ namespace TheDestinyMod.UI
 				ValidItemFunc = item => item.IsAir || !item.IsAir && (item.type == ModContent.ItemType<RareEngram>() || item.type == ModContent.ItemType<CommonEngram>() || item.type == ModContent.ItemType<LegendaryEngram>() || item.type == ModContent.ItemType<ExoticEngram>() || item.type == ModContent.ItemType<UncommonEngram>())
 			};
 			Append(_vanillaItemSlot);
-		}
-
-		public override void OnDeactivate() {
-			if (!_vanillaItemSlot.Item.IsAir) {
-				Main.LocalPlayer.QuickSpawnClonedItem(_vanillaItemSlot.Item, _vanillaItemSlot.Item.stack);
-				_vanillaItemSlot.Item.TurnToAir();
-			}
 		}
 		
 		public override void Update(GameTime gameTime) {
@@ -48,7 +43,7 @@ namespace TheDestinyMod.UI
 			const int slotX = 50;
 			const int slotY = 270;
 			if (!_vanillaItemSlot.Item.IsAir) {
-				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Decrypt {_vanillaItemSlot.Item.Name}", new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, (byte)Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One, -1f, 2f);
+				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Decrypt {_vanillaItemSlot.Item.Name}", new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One, -1f, 2f);
 				int decryptX = slotX + 70;
 				int decryptY = slotY + 40;
 				bool hoveringOverDecryptButton = Main.mouseX > decryptX - 15 && Main.mouseX < decryptX + 15 && Main.mouseY > decryptY - 15 && Main.mouseY < decryptY + 15 && !PlayerInput.IgnoreMouseInterface;
@@ -64,105 +59,68 @@ namespace TheDestinyMod.UI
 					if (Main.mouseLeftRelease && Main.mouseLeft) {
 						while (_vanillaItemSlot.Item.stack > 0) {
 							if (_vanillaItemSlot.Item.type == ModContent.ItemType<CommonEngram>()) {
+								List<int> commonLoot = new List<int>
+								{
+									ModContent.ItemType<HakkeAutoRifle>(),
+									ModContent.ItemType<HakkePulseRifle>(),
+									ModContent.ItemType<HakkeScoutRifle>(),
+									ModContent.ItemType<HakkeShotgun>(),
+									ModContent.ItemType<HakkeSidearm>(),
+									ModContent.ItemType<HakkeSniper>(),
+									ModContent.ItemType<HakkeRocketLauncher>(),
+									ModContent.ItemType<HakkeGrenadeLauncher>(),
+									ModContent.ItemType<HakkeHandcannon>()
+								};
+								if (Main.rand.Next(20) > commonLoot.Count) {
+									Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(1, 10));
+								}
+								else {
+									Main.LocalPlayer.QuickSpawnItem(Main.rand.Next(commonLoot));
+								}
 								switch (Main.rand.Next(20)) {
-									case 0:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeAutoRifle>());
-										break;
-									case 1:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkePulseRifle>());
-										break;
-									case 2:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeScoutRifle>());
-										break;
-									case 3:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeShotgun>());
-										break;
-									case 4:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeSidearm>());
-										break;
-									case 5:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeSniper>());
-										break;
-									case 6:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeRocketLauncher>());
-										break;
-									case 7:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeGrenadeLauncher>());
-										break;
-									case 8:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.HakkeHandcannon>());
-										break;
 									default:
-										Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(1, 10));
+										
 										break;
 								}
 							}
 							else if (_vanillaItemSlot.Item.type == ModContent.ItemType<UncommonEngram>()) {
-								switch (Main.rand.Next(20)) {
-									case 0:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonAutoRifle>());
-										break;
-									case 1:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonPulseRifle>());
-										break;
-									case 2:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonScoutRifle>());
-										break;
-									case 3:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonShotgun>());
-										break;
-									case 4:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonSidearm>());
-										break;
-									case 5:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonSniper>());
-										break;
-									case 6:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonRocketLauncher>());
-										break;
-									case 7:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonGrenadeLauncher>());
-										break;
-									case 8:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.OmolonHandcannon>());
-										break;
-									default:
-										Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(10, 50));
-										break;
+								List<int> uncommonLoot = new List<int>
+								{
+									ModContent.ItemType<OmolonAutoRifle>(),
+									ModContent.ItemType<OmolonPulseRifle>(),
+									ModContent.ItemType<OmolonScoutRifle>(),
+									ModContent.ItemType<OmolonShotgun>(),
+									ModContent.ItemType<OmolonSidearm>(),
+									ModContent.ItemType<OmolonSniper>(),
+									ModContent.ItemType<OmolonRocketLauncher>(),
+									ModContent.ItemType<OmolonGrenadeLauncher>(),
+									ModContent.ItemType<OmolonHandcannon>()
+								};
+								if (Main.rand.Next(20) > uncommonLoot.Count) {
+									Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(10, 50));
+								}
+								else {
+									Main.LocalPlayer.QuickSpawnItem(Main.rand.Next(uncommonLoot));
 								}
 							}
 							else if (_vanillaItemSlot.Item.type == ModContent.ItemType<RareEngram>()) {
-								switch (Main.rand.Next(20)) {
-									case 0:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosAutoRifle>());
-										break;
-									case 1:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosPulseRifle>());
-										break;
-									case 2:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosScoutRifle>());
-										break;
-									case 3:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosShotgun>());
-										break;
-									case 4:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosSidearm>());
-										break;
-									case 5:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosSniper>());
-										break;
-									case 6:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosRocketLauncher>());
-										break;
-									case 7:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosGrenadeLauncher>());
-										break;
-									case 8:
-										Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Ranged.SurosHandcannon>());
-										break;
-									default:
-										Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(1, 3));
-										break;
+								List<int> rareLoot = new List<int>
+								{
+									ModContent.ItemType<SurosAutoRifle>(),
+									ModContent.ItemType<SurosPulseRifle>(),
+									ModContent.ItemType<SurosScoutRifle>(),
+									ModContent.ItemType<SurosShotgun>(),
+									ModContent.ItemType<SurosSidearm>(),
+									ModContent.ItemType<SurosSniper>(),
+									ModContent.ItemType<SurosRocketLauncher>(),
+									ModContent.ItemType<SurosGrenadeLauncher>(),
+									ModContent.ItemType<SurosHandcannon>()
+								};
+								if (Main.rand.Next(20) > rareLoot.Count) {
+									Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(1, 3));
+								}
+								else {
+									Main.LocalPlayer.QuickSpawnItem(Main.rand.Next(rareLoot));
 								}
 							}
 							_vanillaItemSlot.Item.stack--;

@@ -55,25 +55,23 @@ namespace TheDestinyMod.NPCs.Town
 		}
 
 		public override string GetChat() {
+			DestinyWorld.claimedItemsGG = hasClosedCeremony = true;
 			if (TheDestinyMod.guardianWinner == 1 && !hasClosedCeremony) {
 				if (!DestinyWorld.claimedItemsGG) {
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.TitanFlag>());
 				}
-				DestinyWorld.claimedItemsGG = hasClosedCeremony = true;
 				return "Through a fierce competition and defying all odds, my Titans have punched their way to victory in this year's Guardian Games. Make no mistake; the determination of both the Warlocks and Hunters were admirable. To commemorate, here is some Titan-themed decor. Stay strong, Guardian.";
 			}
 			else if (TheDestinyMod.guardianWinner == 2 && !hasClosedCeremony) {
 				if (!DestinyWorld.claimedItemsGG) {
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.HunterFlag>());
 				}
-				DestinyWorld.claimedItemsGG = hasClosedCeremony = true;
 				return "Through a fierce competition and defying all odds, the Hunters have stealthily taken the win in this year's Guardian Games. Make no mistake; the determination of the Hunters was admirable, but us Titans will achieve victory next year. To commemorate, here is some Hunter-themed decor. Stay strong, Guardian.";
 			}
 			else if (TheDestinyMod.guardianWinner == 3 && !hasClosedCeremony) {
 				if (!DestinyWorld.claimedItemsGG) {
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.WarlockFlag>());
 				}
-				DestinyWorld.claimedItemsGG = hasClosedCeremony = true;
 				return "Through a fierce competition and defying all odds, the Warlocks have outsmarted every other class in this year's Guardian Games. Make no mistake; the determination of the Warlocks was admirable, but us Titans will achieve victory next year. To commemorate, here is some Warlock-themed decor. Stay strong, Guardian.";
 			}
 			if (Main.rand.NextBool(100)) {
@@ -128,16 +126,16 @@ namespace TheDestinyMod.NPCs.Town
             }
             else {
                 DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-                if (player.zavalaBounty == 0) {
-                    Main.npcChatText = "I'm still setting up shop, Guardian, but you're eager to get out there, aren't you? Alright, let's see what I can find...\nI need you to kill 100 Zombies, then report back to me for further orders.";
-                    player.zavalaBounty = 1;
-                }
-                else if (player.zavalaBounty == 1 && player.zavalaEnemies == 100) {
-                    Main.npcChatText = "Excellent work, Guardian! Take this as my appreciation for your hard work.";
-                    Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TheThirdAxiom>());
-                    player.zavalaBounty = 2;
+				if (player.zavalaBounty == 0) {
+					Main.npcChatText = "I'm still setting up shop, Guardian, but you're eager to get out there, aren't you? Alright, let's see what I can find...\nI need you to kill 100 Zombies, then report back to me for further orders.";
+					player.zavalaBounty = 1;
+				}
+				else if (player.zavalaBounty == 1 && player.zavalaEnemies == 100) {
+					Main.npcChatText = "Excellent work, Guardian! Take this as my appreciation for your hard work.";
+					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TheThirdAxiom>());
+					player.zavalaBounty = 2;
 					player.zavalaEnemies = 0;
-                }
+				}
 				else if (player.zavalaBounty == 2) {
 					Main.npcChatText = "I've got another bounty for you, Guardian. The Dungeon is an evil place, filled with servants of the Darkness.\nI need you to slay 50 Skeletons to purge this infestation.";
 					player.zavalaBounty = 3;
@@ -146,6 +144,10 @@ namespace TheDestinyMod.NPCs.Town
 					Main.npcChatText = "I can feel the settling of the Darkness from here. You've done well, Guardian.";
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<LastWord>());
 					player.zavalaBounty = 4;
+					player.zavalaEnemies = 0;
+				}
+				else if (player.zavalaBounty == 4) {
+					Main.npcChatText = "I've got nothing for you right now, Guardian.";
 				}
 				else {
 					if (player.zavalaBounty == 1) {
