@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 
@@ -19,7 +20,7 @@ namespace TheDestinyMod.Tiles.MusicBoxes
 			TileObjectData.addTile(Type);
 			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Music Box");
+			name.SetDefault(Language.GetTextValue("ItemName.MusicBox"));
 			AddMapEntry(new Color(200, 200, 200), name);
 			dustType = -1;
         }

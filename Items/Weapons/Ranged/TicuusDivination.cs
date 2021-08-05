@@ -36,17 +36,25 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			return true;
         }
 
+		//test this
+        public override bool UseItem(Player player) {
+			if (player.altFunctionUse == 2 && !Main.dedServ) {
+				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/CausalityShot"), player.position);
+			}
+			else if (player.altFunctionUse != 2 && !Main.dedServ) {
+				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SacredShot"), player.position);
+			}
+			return base.UseItem(player);
+        }
+
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			//clientsided sounds
 			if (player.altFunctionUse == 2) {
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<CausalityArrow>(), damage, knockBack, player.whoAmI);
-				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/CausalityShot"), position);
 				return false;
 			}
 			for (int i = 0; i < 3; i++) {
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<SacredFlame>(), damage / 2, knockBack, player.whoAmI);
-				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SacredShot"), position);
 			}
 			return false;
 		}

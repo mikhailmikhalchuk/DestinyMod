@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Localization;
 
 namespace TheDestinyMod.Tiles
 {
@@ -20,7 +21,7 @@ namespace TheDestinyMod.Tiles
 			dustType = 7;
 			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Trophy");
+			name.SetDefault(Language.GetTextValue("MapObject.Trophy"));
 			AddMapEntry(new Color(120, 85, 60), name);
 		}
 

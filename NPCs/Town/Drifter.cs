@@ -133,10 +133,10 @@ namespace TheDestinyMod.NPCs.Town
 								break;
 						}
 					}
+					player.motesGiven += Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>());
 					foreach (Item item in Main.LocalPlayer.inventory) {
 						if (item.type == ModContent.ItemType<MoteOfDark>()) {
-							player.motesGiven += Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>());
-							Main.LocalPlayer.inventory[Main.LocalPlayer.FindItem(ModContent.ItemType<MoteOfDark>())].TurnToAir();
+							item.TurnToAir();
 						}
 					}
 					Main.PlaySound(SoundID.Grab);

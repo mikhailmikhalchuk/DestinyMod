@@ -83,10 +83,6 @@ namespace TheDestinyMod
 			superKnockback = 0;
 		}
 
-		public override void clientClone(ModPlayer clientClone) {
-			DestinyPlayer clone = clientClone as DestinyPlayer;
-		}
-
         public override float UseTimeMultiplier(Item item) {
 			if (item.type == ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>() && player.HasBuff(ModContent.BuffType<Buffs.SunWarrior>())) {
 				return 2f;

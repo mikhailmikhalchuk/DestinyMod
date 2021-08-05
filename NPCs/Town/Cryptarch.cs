@@ -81,8 +81,8 @@ namespace TheDestinyMod.NPCs.Town
 
         public override void SetChatButtons(ref string button, ref string button2) {
             button = Language.GetTextValue("LegacyInterface.28");
-            button2 = "Decrypt";
-        }
+            button2 = Language.GetTextValue("Mods.TheDestinyMod.Decrypt");
+		}
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop) {
 			if (firstButton) {

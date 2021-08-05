@@ -127,11 +127,11 @@ namespace TheDestinyMod.NPCs.Town
             else {
                 DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 				if (player.zavalaBounty == 0) {
-					Main.npcChatText = "I'm still setting up shop, Guardian, but you're eager to get out there, aren't you? Alright, let's see what I can find...\nI need you to kill 100 Zombies, then report back to me for further orders.";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaBounty1");
 					player.zavalaBounty = 1;
 				}
 				else if (player.zavalaBounty == 1 && player.zavalaEnemies == 100) {
-					Main.npcChatText = "Excellent work, Guardian! Take this as my appreciation for your hard work.";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaBounty2");
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TheThirdAxiom>());
 					player.zavalaBounty = 2;
 					player.zavalaEnemies = 0;
@@ -151,7 +151,7 @@ namespace TheDestinyMod.NPCs.Town
 				}
 				else {
 					if (player.zavalaBounty == 1) {
-						Main.npcChatText = $"Let's see here, Guardian. You've killed {player.zavalaEnemies}/100 Zombies.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaKilled1", player.zavalaEnemies);
 					}
 					else if (player.zavalaBounty == 3) {
 						Main.npcChatText = $"Let's see here, Guardian. You've killed {player.zavalaEnemies}/50 Skeletons.";

@@ -17,6 +17,7 @@ namespace TheDestinyMod.Projectiles
         }
 
         public override void AI() {
+            Main.NewText(projectile.ai[0]);
             Projectile p = Projectile.NewProjectileDirect(projectile.position, projectile.velocity, (int)projectile.ai[1], projectile.damage, projectile.knockBack, projectile.owner);
             p.ranged = false;
             if (projectile.ai[0] == 0f) {

@@ -23,6 +23,7 @@ Made Rat King an automatic gun (from semi-automatic)
 Lowered Sweet Business' chance to consume ammo to 25% (from 10%)
 Fixed an issue which would allow players to place class-restricted armor in armor slots when they were not allowed to
 Fixed an issue where Borealis would not sync projectile types in multiplayer
-...other multiplayer fixes here!
+Fixed an issue where Ticuu's Divination's firing sounds would only play to the owner of the weapon
+Added a lot more Polish and Spanish translations
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

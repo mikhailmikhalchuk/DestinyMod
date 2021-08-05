@@ -22,10 +22,36 @@ namespace TheDestinyMod.NPCs.Town
 		
 		public static List<int> itemCurrency = new List<int>();
 
-		public static NPC FindNPC(int npcType) => Main.npc.FirstOrDefault(npc => npc.type == npcType && npc.active);
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Agent of the Nine");
+			DisplayName.AddTranslation(GameCulture.Polish, "Agent Dziewiątki");
+			Main.npcFrameCount[npc.type] = 26;
+			NPCID.Sets.AttackFrameCount[npc.type] = 4;
+			NPCID.Sets.ExtraFramesCount[npc.type] = 10;
+			NPCID.Sets.DangerDetectRange[npc.type] = 700;
+			NPCID.Sets.AttackType[npc.type] = 1;
+			NPCID.Sets.AttackTime[npc.type] = 30;
+			NPCID.Sets.AttackAverageChance[npc.type] = 30;
+			NPCID.Sets.HatOffsetY[npc.type] = 8;
+		}
+
+		public override void SetDefaults() {
+			npc.townNPC = true;
+			npc.friendly = true;
+			npc.width = 20;
+			npc.height = 46;
+			npc.aiStyle = 7;
+			npc.damage = 10;
+			npc.defense = 15;
+			npc.lifeMax = 250;
+			npc.HitSound = SoundID.NPCHit1;
+			npc.DeathSound = SoundID.NPCDeath1;
+			npc.knockBackResist = 0.5f;
+			animationType = NPCID.Guide;
+		}
 
 		public static void UpdateTravelingMerchant() {
-			NPC agentOfNine = FindNPC(ModContent.NPCType<AgentOfNine>());
+			NPC agentOfNine = Main.npc.FirstOrDefault(npc => npc.type == ModContent.NPCType<AgentOfNine>() && npc.active);
 			if (agentOfNine != null && (Main.dayTime || Main.time >= 32400) && !IsNpcOnscreen(agentOfNine.Center)) {
 				if (Main.netMode == NetmodeID.SinglePlayer) Main.NewText(agentOfNine.FullName + " has departed!", 50, 125, 255);
 				else NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(agentOfNine.FullName + " has departed!"), new Color(50, 125, 255));
@@ -104,34 +130,6 @@ namespace TheDestinyMod.NPCs.Town
 				items.Add(item);
 			}
 			return items;
-		}
-
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Agent of the Nine");
-			DisplayName.AddTranslation(GameCulture.Polish, "Agent Dziewiątki");
-			Main.npcFrameCount[npc.type] = 26;
-			NPCID.Sets.AttackFrameCount[npc.type] = 4;
-			NPCID.Sets.ExtraFramesCount[npc.type] = 10;
-			NPCID.Sets.DangerDetectRange[npc.type] = 700;
-			NPCID.Sets.AttackType[npc.type] = 1;
-			NPCID.Sets.AttackTime[npc.type] = 30;
-			NPCID.Sets.AttackAverageChance[npc.type] = 30;
-			NPCID.Sets.HatOffsetY[npc.type] = 8;
-		}
-
-		public override void SetDefaults() {
-			npc.townNPC = true;
-			npc.friendly = true;
-			npc.width = 20;
-			npc.height = 46;
-			npc.aiStyle = 7;
-			npc.damage = 10;
-			npc.defense = 15;
-			npc.lifeMax = 250;
-			npc.HitSound = SoundID.NPCHit1;
-			npc.DeathSound = SoundID.NPCDeath1;
-			npc.knockBackResist = 0.5f;
-			animationType = NPCID.Guide;
 		}
 
 		public static TagCompound Save() {
