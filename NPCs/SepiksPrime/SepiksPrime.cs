@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,6 +29,10 @@ namespace TheDestinyMod.NPCs.SepiksPrime
         private bool shielded = false;
 
         private Vector2 NewCenter;
+
+        private List<Dust> velocityChanger = new List<Dust>();
+
+        private int rad = 120;
 
         public override void SetStaticDefaults() {
             Main.npcFrameCount[npc.type] = 4;
@@ -95,7 +100,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                 npc.TargetClosest(true);
                 target = Main.player[npc.target];
                 if (!target.active || target.dead) {
-                    Main.PlaySound(SoundID.Item78, npc.position);
+                    Main.PlaySound(SoundID.Item78, npc.Center);
                     npc.position = new Vector2(npc.position.X + 1000, npc.position.Y);
                     if (npc.timeLeft > 10) {
                         npc.timeLeft = 10;
@@ -105,7 +110,26 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             if (NewCenter != Vector2.Zero && npc.ai[3] < 40) {
                 if (npc.ai[3] < 20) {
                     npc.alpha += 13;
+                    float num = NewCenter.X + (npc.width / 2) - (npc.Center.X + npc.width / 2);
+                    float num2 = NewCenter.Y + (npc.height / 2) - (npc.Center.Y + npc.height / 2);
+                    float numFinal = (float)Math.Sqrt(num * num + num2 * num2);
+                    num *= 5f / numFinal;
+                    num2 *= 5f / numFinal;
+                    for (int i = 0; i < 50; i++) {
+                        double radius = Math.Sqrt(Main.rand.NextDouble());
+                        double rand = Main.rand.NextDouble() * (Math.PI * 2);
+                        Vector2 vector = npc.Center + new Vector2((float)(radius * Math.Cos(rand)), (float)(radius * Math.Sin(rand))) * ((npc.width - rad) / 2);
+                        Dust dust = Dust.NewDustDirect(vector, 1, 1, DustID.WhiteTorch, Scale: 1.4f);
+                        velocityChanger.Add(dust);
+                        dust.noGravity = true;
+                        dust.velocity.X = num;
+                        dust.velocity.Y = num2;
+                    }
+                    rad -= 4;
                     //npc.scale -= 0.01f;
+                }
+                foreach (Dust dust in velocityChanger) {
+                    dust.velocity *= 1.05f;
                 }
                 npc.ai[3]++;
                 return;
@@ -113,6 +137,8 @@ namespace TheDestinyMod.NPCs.SepiksPrime
             if (npc.ai[3] >= 40) {
                 if (NewCenter != Vector2.Zero) {
                     npc.Center = NewCenter;
+                    velocityChanger.Clear();
+                    rad = 120;
                 }
                 NewCenter = Vector2.Zero;
                 if (npc.alpha > 0) {
@@ -154,9 +180,9 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                 shielded = true;
                 npc.damage = Main.expertMode ? 40 : 20;
                 npc.dontTakeDamage = true;
-                TeleportNearTarget(target.position.X + Main.rand.Next(-50, 50), target.position.Y - 350);
-                Main.PlaySound(SoundID.Item78, npc.position);
-                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, $"Sounds/NPC/SepiksGroan{(Main.rand.NextBool() ? "1" : "2")}"), npc.position);
+                TeleportNearTarget(target.Center.X + Main.rand.Next(-50, 50), target.Center.Y - 350);
+                Main.PlaySound(SoundID.Item78, npc.Center);
+                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, $"Sounds/NPC/SepiksGroan{(Main.rand.NextBool() ? "1" : "2")}"), npc.Center);
                 if (Main.netMode == NetmodeID.Server) {
                     ModPacket netMessage = GetPacket(SepiksBossMessageType.DontTakeDamage);
                     netMessage.Write(true);
@@ -206,7 +232,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                     timesFiredThisCycle++;
                 }
                 else if (npc.ai[0] > 90f && timesFiredThisCycle >= 3 || npc.ai[0] > 70f && timesFiredThisCycle >= 3 && Main.expertMode) {
-                    TeleportNearTarget(target.position.X + Main.rand.Next(-50, 50), target.position.Y - 250);
+                    TeleportNearTarget(target.Center.X + Main.rand.Next(-50, 50), target.Center.Y - 250);
                     Main.PlaySound(SoundID.Item78, npc.position);
                     npc.ai[0] = 0f;
                     timesFiredThisCycle = 0;
@@ -264,18 +290,18 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                 int attempts = 0;
                 while (!teleportSuccess) {
                     attempts++;
-                    Vector2 teleportTo = new Vector2(target.position.X + Main.rand.Next(-200, 200), target.position.Y - Main.rand.Next(50, 300));
+                    Vector2 teleportTo = new Vector2(target.Center.X + Main.rand.Next(-200, 200), target.Center.Y - Main.rand.Next(50, 300));
                     if (phase == 3 || phase == 6) { //because it's so spontaneous this gives the player more breathing room so sepiks isn't so close as he is normally
-                        teleportTo = new Vector2(target.position.X + Main.rand.Next(-300, 300), target.position.Y - Main.rand.Next(50, 400));
+                        teleportTo = new Vector2(target.Center.X + Main.rand.Next(-300, 300), target.Center.Y - Main.rand.Next(50, 400));
                     }
                     if (x > 0 && y > 0) {
                         teleportTo = new Vector2(x, y);
                     }
                     Point tileToGoTo = teleportTo.ToTileCoordinates();
                     //ensures that sepiks won't spawn in tiles, and that he'll spawn a moderate distance from the ground
-                    if (WorldGen.EmptyTileCheck((int)(tileToGoTo.X - 3.125), (int)(tileToGoTo.X + 3.125), (int)(tileToGoTo.Y - 3.125), (int)(tileToGoTo.Y + 3.125)) && WorldGen.EmptyTileCheck(tileToGoTo.X, tileToGoTo.X, tileToGoTo.Y, tileToGoTo.Y + 20) || x > 0 && y > 0) {
+                    if (WorldGen.EmptyTileCheck((int)(tileToGoTo.X - 3.125), (int)(tileToGoTo.X + 3.125), (int)(tileToGoTo.Y - 3.125), (int)(tileToGoTo.Y + 3.125)) && WorldGen.EmptyTileCheck(tileToGoTo.X, tileToGoTo.X, tileToGoTo.Y, tileToGoTo.Y + 20) && WorldGen.InWorld(tileToGoTo.X, tileToGoTo.Y) || x > 0 && y > 0) { // && (target.Center - teleportTo).Length() > 200
                         global = teleportTo;
-                        Main.PlaySound(SoundID.Item78, npc.position);
+                        Main.PlaySound(SoundID.Item78, npc.Center);
                         npc.defense *= 3;
                         teleportSuccess = true;
                         npc.netUpdate = true;
