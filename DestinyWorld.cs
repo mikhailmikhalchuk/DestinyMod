@@ -78,7 +78,7 @@ namespace TheDestinyMod
 
         private void PlaceSpinmetal(GenerationProgress progress) {
             progress.Message = "Rusting the ice";
-            for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 1E-06); k++) {
+            for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 1E-06); k++) {
                 int attempts = 0;
                 Tile tile;
                 Tile tileBelow;
@@ -137,6 +137,7 @@ namespace TheDestinyMod
                     TheDestinyMod.Logger.Info("TheDestinyMod WorldGen: Failed to place the Vex portal");
                     continue;
                 }
+                progress.Set(attempts / 50000);
                 int i = WorldGen.genRand.Next(300, Main.maxTilesX - 300);
                 int j = WorldGen.genRand.Next((int)Main.worldSurface + 100, Main.maxTilesY - 250);
                 if (i <= Main.maxTilesX / 2 - 50 || i >= Main.maxTilesX / 2 + 50) {
@@ -152,34 +153,19 @@ namespace TheDestinyMod
                         }
                     }
                     if (placementOK) {
-                        if (!WorldGen.SolidTile(i, j + 1) || Main.tile[i, j].active() || Main.tile[i, j].type != TileID.JungleGrass) {
+                        if (!WorldGen.SolidTile(i, j + 1) || !Main.tile[i, j].active() || Main.tile[i, j].type != TileID.JungleGrass) {
                             placementOK = false;
                         }
                         if (placementOK) {
-                            for (int y = 0; y < _VoGPortalSchem.GetLength(0); y++) {
-                                for (int x = 0; x < _VoGPortalSchem.GetLength(1); x++) {
-                                    int k = i - 3 + x;
-                                    int l = j - 6 + y;
-                                    if (WorldGen.InWorld(k, l, 30)) {
-                                        Tile tile = Framing.GetTileSafely(k, l);
-                                        switch (_VoGPortalSchem[y, x]) {
-                                            case 0:
-                                                WorldGen.KillTile(k, l);
-                                                break;
-                                            case 1:
-                                                tile.type = TileID.TeamBlockGreen;
-                                                tile.active(true);
-                                                break;
-                                            case 2:
-                                                tile.type = TileID.Grass;
-                                                tile.active(true);
-                                                break;
-                                        }
-                                        TheDestinyMod.Logger.Info($"X: {k * 16} | Y: {l * 16}");
-                                        success = true;
-                                    }
+                            TheDestinyMod.Logger.Info($"X: {i * 16} | Y: {j * 16}");
+                            Terraria.DataStructures.Point16 pos = new Terraria.DataStructures.Point16(0, 0);
+                            StructureHelper.Generator.GetDimensions("Structures/VoGPortal", TheDestinyMod.Instance, ref pos);
+                            for (int l = i; l < pos.X; l++) {
+                                for (int m = j; j < pos.Y; j++) {
+                                    WorldGen.KillTile(l, m);
                                 }
                             }
+                            success = DestinyHelper.StructureHelperGenerateStructure(new Microsoft.Xna.Framework.Vector2(i, j), "VoGPortal"); //point16
                         }
                     }
                 }

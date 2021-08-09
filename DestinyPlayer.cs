@@ -39,6 +39,7 @@ namespace TheDestinyMod
 		public float superDamageAdd;
 		public float superDamageMult = 1f;
 		public float superKnockback;
+		public float originalUIScale;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -119,7 +120,16 @@ namespace TheDestinyMod
 				}
 				CryptarchUI._vanillaItemSlot.Item = new Item();
 			}
-        }
+			if (TheDestinyMod.currentSubworldID == string.Empty && originalUIScale != 0) { //ensures that the change actually went through
+				Main.UIScale = originalUIScale;
+			}
+		}
+
+        public override void PreUpdate() {
+			if (TheDestinyMod.currentSubworldID == string.Empty && Main.UIScale == originalUIScale) { //fixes the UIScale change caused by SL
+				originalUIScale = 0;
+			}
+		}
 
         public override void PostUpdateRunSpeeds() {
 			if (player.channel && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>()) {
@@ -174,11 +184,6 @@ namespace TheDestinyMod
 				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
 					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", new Color(255, 0, 0));
 			}
-			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
-				bool result = Exit() ?? false;
-				if (!result)
-					Main.NewText($"Something went wrong while trying to exit the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", new Color(255, 0, 0));
-			}
         }
 
         public override void UpdateBadLifeRegen() {
@@ -202,7 +207,6 @@ namespace TheDestinyMod
 				Main.NewText("You must have the Subworld Library and Structure Helper mods enabled to enter a raid.", Color.Red);
 			}
             else {
-				Main.mapEnabled = false;
 				TheDestinyMod.currentSubworldID = id;
 				try {
 					subworldLibrary.Call("DrawUnderworldBackground", false);
@@ -222,8 +226,6 @@ namespace TheDestinyMod
 		public static bool? Exit() {
 			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
 			if (subworldLibrary != null) {
-				Main.mapEnabled = true;
-				TheDestinyMod.currentSubworldID = string.Empty;
 				return subworldLibrary.Call("Exit") as bool?;
 			}
 			return null;
@@ -232,8 +234,9 @@ namespace TheDestinyMod
         public override void PostUpdateEquips() {
 			if (TheDestinyMod.currentSubworldID != string.Empty) {
 				player.noBuilding = true;
-				player.wings = 0;
-				player.wingsLogic = 0; //figure out wings | player.armor.wingSlot
+				if (player.mount.Active) {
+					player.mount.Dismount(player);
+				}
 			}
 		}
 
@@ -367,6 +370,13 @@ namespace TheDestinyMod
 			return true;
         }
 
+        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff) {
+			if (TheDestinyMod.currentSubworldID != string.Empty) {
+				player.wings = 0;
+				player.wingsLogic = 0; //figure out wings | player.armor.wingSlot
+			}
+        }
+
         public override void PostUpdateMiscEffects() {
 			if (!notifiedThatSuperIsReady && superChargeCurrent == 100 && !Main.dedServ && DestinyConfig.Instance.notifyOnSuper && superActiveTime == 0 && !player.dead) {
 				Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperCharge"), new Color(255, 255, 0));
@@ -407,6 +417,12 @@ namespace TheDestinyMod
 				player.controlDown = false;
 				player.controlHook = false;
 				player.controlJump = false;
+			}
+			if (TheDestinyMod.currentSubworldID != string.Empty) {
+				player.controlHook = false;
+				if (originalUIScale == 0) {
+					originalUIScale = Main.UIScale;
+				}
 			}
 		}
     }

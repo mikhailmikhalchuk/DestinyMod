@@ -619,7 +619,7 @@ namespace TheDestinyMod
                     700,
                     VaultOfGlassGenPass(),
                     (Action)VaultOfGlassLoad,
-                    null,
+                    (Action)VaultOfGlassUnload,
                     null,
                     false
                 );
@@ -688,6 +688,12 @@ namespace TheDestinyMod
             Main.LocalPlayer.noBuilding = true;
             Main.dayTime = true;
             Main.time = 10000;
+            Main.mapEnabled = false;
+        }
+
+        public static void VaultOfGlassUnload() {
+            currentSubworldID = string.Empty;
+            Main.mapEnabled = true;
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) {

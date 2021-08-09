@@ -65,8 +65,7 @@ namespace TheDestinyMod
         ///</returns>
         public static bool StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
             if (structureHelper != null) {
-                StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
-                return true;
+                return StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
             }
             return false;
         }

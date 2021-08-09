@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace TheDestinyMod.Tiles
 {
-    public class DestinyGlobalTile : GlobalTile
+    public class DestinyGlobalWall : GlobalWall
     {
         public override bool CanExplode(int i, int j, int type) {
             if (TheDestinyMod.currentSubworldID != string.Empty) {
