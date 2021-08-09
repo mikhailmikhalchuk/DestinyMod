@@ -35,7 +35,9 @@ namespace TheDestinyMod
 
         internal UserInterface CryptarchUserInterface;
         internal SubclassUI SubclassUI;
+        internal RaidSelectionUI RaidSelectionUI;
         internal SuperChargeBar SuperResourceCharge;
+        internal UserInterface raidInterface;
 
         private UserInterface superChargeInterface;
         private UserInterface subclassInterface;
@@ -97,12 +99,15 @@ namespace TheDestinyMod
                 Filters.Scene["TheDestinyMod:Shockwave"].Load();
                 SubclassUI = new SubclassUI();
                 SubclassUI.Activate();
+                RaidSelectionUI = new RaidSelectionUI();
+                RaidSelectionUI.Activate();
                 subclassInterface = new UserInterface();
                 subclassInterface.SetState(SubclassUI);
                 CryptarchUserInterface = new UserInterface();
                 SuperResourceCharge = new SuperChargeBar();
 				superChargeInterface = new UserInterface();
 				superChargeInterface.SetState(SuperResourceCharge);
+                raidInterface = new UserInterface();
             }
             #region Translations
             int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
@@ -530,6 +535,7 @@ namespace TheDestinyMod
             subclassInterface?.Update(gameTime);
             superChargeInterface?.Update(gameTime);
             CryptarchUserInterface?.Update(gameTime);
+            raidInterface?.Update(gameTime);
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
@@ -567,6 +573,17 @@ namespace TheDestinyMod
 					InterfaceScaleType.UI)
 				);
 			}
+            int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (mouseTextIndex != -1) {
+                layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
+                    "TheDestinyMod: Raid Selection UI",
+                    delegate {
+                        raidInterface.Draw(Main.spriteBatch, new GameTime());
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+            }
         }
 
         public override void PreSaveAndQuit() {

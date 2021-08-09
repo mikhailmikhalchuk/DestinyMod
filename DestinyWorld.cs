@@ -158,14 +158,7 @@ namespace TheDestinyMod
                         }
                         if (placementOK) {
                             TheDestinyMod.Logger.Info($"X: {i * 16} | Y: {j * 16}");
-                            Terraria.DataStructures.Point16 pos = new Terraria.DataStructures.Point16(0, 0);
-                            StructureHelper.Generator.GetDimensions("Structures/VoGPortal", TheDestinyMod.Instance, ref pos);
-                            for (int l = i; l < pos.X; l++) {
-                                for (int m = j; j < pos.Y; j++) {
-                                    WorldGen.KillTile(l, m);
-                                }
-                            }
-                            success = DestinyHelper.StructureHelperGenerateStructure(new Microsoft.Xna.Framework.Vector2(i, j), "VoGPortal"); //point16
+                            success = DestinyHelper.StructureHelperGenerateStructure(new Terraria.DataStructures.Point16(i / 16, j / 16), "VoGPortal");
                         }
                     }
                 }

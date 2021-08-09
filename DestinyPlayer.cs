@@ -179,11 +179,6 @@ namespace TheDestinyMod
 				businessReduceUse = 0.2f;
 				thunderlordReduceUse = 1f;
 			}
-			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
-				bool result = Enter("TheDestinyMod_Vault of Glass") ?? false;
-				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
-					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", new Color(255, 0, 0));
-			}
         }
 
         public override void UpdateBadLifeRegen() {
@@ -208,6 +203,7 @@ namespace TheDestinyMod
 			}
             else {
 				TheDestinyMod.currentSubworldID = id;
+				ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
 				try {
 					subworldLibrary.Call("DrawUnderworldBackground", false);
 					return subworldLibrary.Call("Enter", id) as bool?;
