@@ -15,6 +15,17 @@ namespace TheDestinyMod.Items
     {
         public bool catalyst = false;
 
+        private readonly List<int> raidProhibitedItems = new List<int>
+            {
+                ItemID.RodofDiscord,
+                ItemID.CellPhone,
+                ItemID.MagicMirror,
+                ItemID.IceMirror,
+                ItemID.RecallPotion,
+                ItemID.TeleportationPotion,
+                ItemID.WormholePotion
+            };
+
         private readonly List<int> weaponsWithCatalysts = new List<int>()
         {
             ModContent.ItemType<SweetBusiness>()
@@ -71,6 +82,12 @@ namespace TheDestinyMod.Items
                     overrideColor = Color.Khaki
                 });
             }
+            if ((raidProhibitedItems.Contains(item.type) || item.mountType != -1) && TheDestinyMod.currentSubworldID != string.Empty) {
+                tooltips.Add(new TooltipLine(mod, "RaidUse", "Cannot use this item here")
+                {
+                    overrideColor = Color.Red
+                });
+            }
         }
 
         public override bool CanRightClick(Item item) {
@@ -86,7 +103,13 @@ namespace TheDestinyMod.Items
         }
 
         public override bool CanUseItem(Item item, Player player) {
-            return !player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>()) && !player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Detained>());
+            if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>()) || player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Detained>())) {
+                return false;
+            }
+            if ((raidProhibitedItems.Contains(item.type) || item.mountType != -1) && TheDestinyMod.currentSubworldID != string.Empty) {
+                return false;
+            }
+            return base.CanUseItem(item, player);
         }
 
         public override bool NeedsSaving(Item item) {

@@ -202,7 +202,7 @@ namespace TheDestinyMod
 				Main.NewText("You must have the Subworld Library and Structure Helper mods enabled to enter a raid.", Color.Red);
 			}
             else {
-                Main.mapEnabled = false;
+				Main.mapEnabled = false;
 				TheDestinyMod.currentSubworldID = id;
 				try {
 					subworldLibrary.Call("DrawUnderworldBackground", false);
@@ -232,6 +232,8 @@ namespace TheDestinyMod
         public override void PostUpdateEquips() {
 			if (TheDestinyMod.currentSubworldID != string.Empty) {
 				player.noBuilding = true;
+				player.wings = 0;
+				player.wingsLogic = 0; //figure out wings | player.armor.wingSlot
 			}
 		}
 

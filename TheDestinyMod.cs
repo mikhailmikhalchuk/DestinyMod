@@ -616,12 +616,12 @@ namespace TheDestinyMod
                     ModContent.GetInstance<TheDestinyMod>(),
                     "Vault of Glass",
                     600,
-                    400,
+                    700,
                     VaultOfGlassGenPass(),
                     (Action)VaultOfGlassLoad,
                     null,
                     null,
-                    true
+                    false
                 );
             }
             if (census != null) {
@@ -659,26 +659,29 @@ namespace TheDestinyMod
         }
 
         public static List<GenPass> VaultOfGlassGenPass() {
-                List<GenPass> list = new List<GenPass>
+            Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
+            List<GenPass> list = new List<GenPass>
+            {
+			    new PassLegacy("Adjusting",
+                delegate (GenerationProgress progress)
                 {
-			        new PassLegacy("Adjusting",
-                    delegate (GenerationProgress progress)
-                    {
-                        progress.Message = "Adjusting world levels";
-				        Main.worldSurface = Main.maxTilesY - 42;
-				        Main.rockLayer = Main.maxTilesY;
-                        Main.spawnTileX = 100;
-			        },
-                    1f),
-			        new PassLegacy("AddingIntro",
-                    delegate (GenerationProgress progress)
-                    {
-                        progress.Message = "The start of time...";
-                        DestinyHelper.StructureHelperGenerateStructure(new Vector2(Main.spawnTileX, Main.spawnTileY), "VaultOfGlass");
-                    },
-                    1f)
-		        };
-                return list;
+                    progress.Message = "Adjusting world levels";
+				    Main.worldSurface = 50;
+				    Main.rockLayer = 150;
+                    Main.spawnTileX = 273;
+                    Main.spawnTileY = 273;
+                },
+                1f),
+			    new PassLegacy("TemplarWell",
+                delegate (GenerationProgress progress)
+                {
+                    progress.Message = "Templar's Well";
+                    DestinyHelper.StructureHelperGenerateStructure(new Vector2(100, 200), "TemplarsWell");
+                },
+                1f)
+		    };
+            subworldLibrary.Call("DrawUnderworldBackground", false);
+            return list;
         }
 
         public static void VaultOfGlassLoad() {
