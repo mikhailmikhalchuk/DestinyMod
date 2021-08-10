@@ -11,18 +11,25 @@ using TheDestinyMod.Tiles;
 using TheDestinyMod.Tiles.Herbs;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework;
 
 namespace TheDestinyMod
 {
     public class DestinyWorld : ModWorld
     {
         public static bool downedPrime = false;
+
         public static bool claimedItemsGG = false;
         public static int oraclesKilledOrder = 1;
         public static int oraclesTimesRefrained = 0;
+        public static Vector2 vogPosition;
+
+        public static int vaultOfGlassClears;
 
         public override void Initialize() {
             AgentOfNine.spawnTime = double.MaxValue;
+            downedPrime = false;
+            vaultOfGlassClears = 0;
         }
 
         public override TagCompound Save() {
@@ -33,7 +40,8 @@ namespace TheDestinyMod
             return new TagCompound {
                 {"agentOfNine", AgentOfNine.Save()},
                 {"downed", bossesKilled},
-                {"claimedItemsGG", claimedItemsGG}
+                {"claimedItemsGG", claimedItemsGG},
+                {"vaultOfGlassClears", vaultOfGlassClears}
             };
         }
 
@@ -42,6 +50,7 @@ namespace TheDestinyMod
             var bossesKilled = tag.GetList<string>("downed");
             downedPrime = bossesKilled.Contains("downedPrime");
             claimedItemsGG = tag.GetBool("claimedItemsGG");
+            vaultOfGlassClears = tag.GetInt("vaultOfGlassClears");
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {

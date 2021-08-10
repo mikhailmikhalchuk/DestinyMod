@@ -26,7 +26,7 @@ namespace TheDestinyMod
 		public int monteMethod;
 		public int superChargeCurrent;
 		public int superActiveTime;
-		public int markedByVoidTimer;
+		public int blackFadeInTimer;
 		public int markedByVoidDelay;
 		public int overchargeStacks;
 		public int aegisCharge;
@@ -39,7 +39,6 @@ namespace TheDestinyMod
 		public float superDamageAdd;
 		public float superDamageMult = 1f;
 		public float superKnockback;
-		public float originalUIScale;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -60,6 +59,36 @@ namespace TheDestinyMod
 		private int timesClicked = 0;
 		private int spottedIntensity = 60;
 		private int countThunderlord = 0;
+		
+		public Vector2 ScreenFocusPosition
+		{
+			get;
+			private set;
+		}
+
+		public Vector2 CurrentScreenFocusPosition
+		{
+			get;
+			private set;
+		}
+
+		public Vector2 Lerp
+		{
+			get;
+			private set;
+		}
+
+		public int Duration
+		{
+			get;
+			private set;
+		}
+
+		public int Timer
+		{
+			get;
+			private set;
+		}
 
 		public override void ResetEffects() {
 			ResetVariables();
@@ -84,6 +113,14 @@ namespace TheDestinyMod
 			superKnockback = 0;
 		}
 
+		public void FocusScreenPosition(int duration, Vector2 positionTo, float lerp) {
+			Duration = duration;
+			Timer = 0;
+			ScreenFocusPosition = positionTo;
+			CurrentScreenFocusPosition = Main.screenPosition;
+			Lerp = (positionTo - Main.screenPosition) * lerp;
+		}
+
         public override float UseTimeMultiplier(Item item) {
 			if (item.type == ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>() && player.HasBuff(ModContent.BuffType<Buffs.SunWarrior>())) {
 				return 2f;
@@ -96,7 +133,38 @@ namespace TheDestinyMod
 				Main.screenPosition.X += Main.rand.NextFloat(0, spottedIntensity / 300);
 				spottedIntensity++;
 			}
-        }
+			if (Duration > 0 && Main.hasFocus) {
+				Timer++;
+
+				if (Timer > Duration && !Main.dedServ) {
+					Main.BlackFadeIn = blackFadeInTimer;
+					blackFadeInTimer++;
+					if (blackFadeInTimer > 255) {
+						Duration = 0;
+						bool result = Enter("TheDestinyMod_Vault of Glass") ?? false;
+						if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
+							Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", Color.Red);
+						Main.BlackFadeIn = 0;
+						blackFadeInTimer = 0;
+						return;
+					}
+				}
+
+				if (CurrentScreenFocusPosition == ScreenFocusPosition) {
+					Main.screenPosition = ScreenFocusPosition;
+					return;
+				}
+
+				if (Vector2.DistanceSquared(ScreenFocusPosition, CurrentScreenFocusPosition) < Math.Pow(Lerp.X + Lerp.Y, 2)) {
+					CurrentScreenFocusPosition = ScreenFocusPosition;
+				}
+				else {
+					CurrentScreenFocusPosition += Lerp;
+				}
+
+				Main.screenPosition = CurrentScreenFocusPosition;
+			}
+		}
 
         public override void PostUpdate() {
 			countThunderlord++;
@@ -119,15 +187,6 @@ namespace TheDestinyMod
 					Main.item[placed].newAndShiny = false;
 				}
 				CryptarchUI._vanillaItemSlot.Item = new Item();
-			}
-			if (TheDestinyMod.currentSubworldID == string.Empty && originalUIScale != 0) { //ensures that the change actually went through
-				Main.UIScale = originalUIScale;
-			}
-		}
-
-        public override void PreUpdate() {
-			if (TheDestinyMod.currentSubworldID == string.Empty && Main.UIScale == originalUIScale) { //fixes the UIScale change caused by SL
-				originalUIScale = 0;
 			}
 		}
 
@@ -399,10 +458,10 @@ namespace TheDestinyMod
 				}
 			}
 			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Main.BlackFadeIn < 255 && Main.LocalPlayer == player && !Main.dedServ) {
-				Main.BlackFadeIn = markedByVoidTimer;
+				Main.BlackFadeIn = blackFadeInTimer;
 				markedByVoidDelay--;
 				if (markedByVoidDelay <= 0) {
-					markedByVoidTimer++;
+					blackFadeInTimer++;
 					markedByVoidDelay = 2;
 				}
 			}
@@ -416,9 +475,10 @@ namespace TheDestinyMod
 			}
 			if (TheDestinyMod.currentSubworldID != string.Empty) {
 				player.controlHook = false;
-				if (originalUIScale == 0) {
-					originalUIScale = Main.UIScale;
-				}
+			}
+			if (player.Distance(DestinyWorld.vogPosition.ToWorldCoordinates()) > 150 && ModContent.GetInstance<TheDestinyMod>().raidInterface.CurrentState != null) {
+				ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
+				Main.PlaySound(SoundID.MenuClose);
 			}
 		}
     }

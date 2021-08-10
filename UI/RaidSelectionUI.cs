@@ -83,6 +83,20 @@ namespace TheDestinyMod.UI
 			raidName.Height.Set(30, 0);
 			raidDragable.Append(raidName);
 
+			UIText clearCount = new UIText($"Times cleared: {DestinyWorld.vaultOfGlassClears}");
+			clearCount.Left.Set(20, 0);
+			clearCount.Top.Set(70, 0);
+			clearCount.Width.Set(50, 0);
+			clearCount.Height.Set(30, 0);
+			raidDragable.Append(clearCount);
+
+			UIText recommendedLevel = new UIText($"Recommended: {(NPC.downedPlantBoss ? "[c/00FF00:Plantera]" : "[c/FF0000:Plantera]")}");
+			recommendedLevel.Left.Set(20, 0);
+			recommendedLevel.Top.Set(100, 0);
+			recommendedLevel.Width.Set(50, 0);
+			recommendedLevel.Height.Set(30, 0);
+			raidDragable.Append(recommendedLevel);
+
 			Texture2D buttonDeleteTexture = ModContent.GetTexture("TheDestinyMod/UI/ButtonCancel");
 			UIImageButton closeButton = new UIImageButton(buttonDeleteTexture);
 			closeButton.Left.Set(370, 0f);
@@ -105,6 +119,7 @@ namespace TheDestinyMod.UI
 
 		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
 			ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
+			Main.PlaySound(SoundID.MenuClose);
 		}
 
 		private void StartButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
@@ -121,9 +136,14 @@ namespace TheDestinyMod.UI
 				}
 			}
 			if (canStart) {
-				bool result = DestinyPlayer.Enter("TheDestinyMod_Vault of Glass") ?? false;
-				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
-					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", Color.Red);
+				for (int i = 0; i < Main.maxPlayers; i++) {
+					Player player = Main.player[i];
+					if (!player.active) {
+						return;
+					}
+					player.GetModPlayer<DestinyPlayer>().FocusScreenPosition(100, DestinyWorld.vogPosition.ToWorldCoordinates() - new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2), 1f / 60f);
+				}
+				
 			}
 			else {
 				Main.NewText("All players must be near the portal to begin the raid", Color.Red);

@@ -22,9 +22,12 @@ namespace TheDestinyMod.Tiles
         public override bool NewRightClick(int i, int j) {
             if (ModContent.GetInstance<TheDestinyMod>().raidInterface.CurrentState == null) {
                 ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(new UI.RaidSelectionUI());
+                Main.PlaySound(SoundID.MenuOpen);
+                DestinyWorld.vogPosition = new Vector2(i, j);
             }
             else {
                 ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
+                Main.PlaySound(SoundID.MenuClose);
             }
 
             return base.NewRightClick(i, j);
