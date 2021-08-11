@@ -67,6 +67,8 @@ namespace TheDestinyMod.UI
 	{
 		internal RaidDragableUI raidDragable;
 
+		internal UIText currentCheckpoint;
+
 		public override void OnInitialize() {
 			raidDragable = new RaidDragableUI();
 			raidDragable.SetPadding(0);
@@ -90,14 +92,14 @@ namespace TheDestinyMod.UI
 			clearCount.Height.Set(30, 0);
 			raidDragable.Append(clearCount);
 
-			UIText recommendedLevel = new UIText($"Recommended: {(NPC.downedPlantBoss ? "[c/00FF00:Plantera]" : "[c/FF0000:Plantera]")}");
+			UIText recommendedLevel = new UIText($"Recommended: {(NPC.downedBoss3 ? "[c/00FF00:Skeletron]" : "[c/FF0000:Skeletron]")}"); // || Main.hardMode
 			recommendedLevel.Left.Set(20, 0);
 			recommendedLevel.Top.Set(100, 0);
 			recommendedLevel.Width.Set(50, 0);
 			recommendedLevel.Height.Set(30, 0);
 			raidDragable.Append(recommendedLevel);
 
-			UIText currentCheckpoint = new UIText($"Current checkpoint: {GetVoGCheckpointString(DestinyWorld.checkpointVOG)}");
+			currentCheckpoint = new UIText($"Current checkpoint: {GetVoGCheckpointString(DestinyWorld.checkpointVOG)}");
 			currentCheckpoint.Left.Set(20, 0);
 			currentCheckpoint.Top.Set(140, 0);
 			currentCheckpoint.Width.Set(50, 0);
@@ -199,6 +201,7 @@ namespace TheDestinyMod.UI
 		private void ConfirmButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
 			DestinyWorld.checkpointVOG = 0;
 			raidDragable.RemoveChild(listeningElement);
+			raidDragable.RemoveChild(currentCheckpoint);
 
 			UITextPanelButton<string> clearCheckpoint = new UITextPanelButton<string>("Clear");
 			clearCheckpoint.Left.Set(220, 0);
@@ -206,10 +209,15 @@ namespace TheDestinyMod.UI
 			clearCheckpoint.Width.Set(50, 0);
 			clearCheckpoint.Height.Set(30, 0);
 			clearCheckpoint.OnClick += new MouseEvent(ClearButtonClicked);
-
 			raidDragable.Append(clearCheckpoint);
 
-			raidDragable.RecalculateChildren();
+			currentCheckpoint = new UIText($"Current checkpoint: {GetVoGCheckpointString(DestinyWorld.checkpointVOG)}");
+			currentCheckpoint.Left.Set(20, 0);
+			currentCheckpoint.Top.Set(140, 0);
+			currentCheckpoint.Width.Set(50, 0);
+			currentCheckpoint.Height.Set(30, 0);
+			raidDragable.Append(currentCheckpoint);
+
 			raidDragable.DragEnd(evt);
 		}
 	}
