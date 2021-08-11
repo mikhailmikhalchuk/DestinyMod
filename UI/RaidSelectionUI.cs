@@ -30,7 +30,7 @@ namespace TheDestinyMod.UI
 			dragging = true;
 		}
 
-		private void DragEnd(UIMouseEvent evt) {
+		public void DragEnd(UIMouseEvent evt) {
 			Vector2 end = evt.MousePosition;
 			dragging = false;
 
@@ -67,7 +67,7 @@ namespace TheDestinyMod.UI
 	{
 		internal RaidDragableUI raidDragable;
 
-        public override void OnInitialize() {
+		public override void OnInitialize() {
 			raidDragable = new RaidDragableUI();
 			raidDragable.SetPadding(0);
 			raidDragable.Left.Set(400f, 0f);
@@ -83,7 +83,7 @@ namespace TheDestinyMod.UI
 			raidName.Height.Set(30, 0);
 			raidDragable.Append(raidName);
 
-			UIText clearCount = new UIText($"Times cleared: {DestinyWorld.vaultOfGlassClears}");
+			UIText clearCount = new UIText($"Times cleared: {DestinyWorld.clearsVOG}");
 			clearCount.Left.Set(20, 0);
 			clearCount.Top.Set(70, 0);
 			clearCount.Width.Set(50, 0);
@@ -97,6 +97,21 @@ namespace TheDestinyMod.UI
 			recommendedLevel.Height.Set(30, 0);
 			raidDragable.Append(recommendedLevel);
 
+			UIText currentCheckpoint = new UIText($"Current checkpoint: {GetVoGCheckpointString(DestinyWorld.checkpointVOG)}");
+			currentCheckpoint.Left.Set(20, 0);
+			currentCheckpoint.Top.Set(140, 0);
+			currentCheckpoint.Width.Set(50, 0);
+			currentCheckpoint.Height.Set(30, 0);
+			raidDragable.Append(currentCheckpoint);
+
+			UITextPanelButton<string> clearCheckpoint = new UITextPanelButton<string>("Clear");
+			clearCheckpoint.Left.Set(220, 0);
+			clearCheckpoint.Top.Set(130, 0);
+			clearCheckpoint.Width.Set(50, 0);
+			clearCheckpoint.Height.Set(30, 0);
+			clearCheckpoint.OnClick += new MouseEvent(ClearButtonClicked);
+			raidDragable.Append(clearCheckpoint);
+
 			Texture2D buttonDeleteTexture = ModContent.GetTexture("TheDestinyMod/UI/ButtonCancel");
 			UIImageButton closeButton = new UIImageButton(buttonDeleteTexture);
 			closeButton.Left.Set(370, 0f);
@@ -107,7 +122,7 @@ namespace TheDestinyMod.UI
 			raidDragable.Append(closeButton);
 
 			UITextPanelButton<string> startRaid = new UITextPanelButton<string>("Begin", 1.2f);
-			startRaid.Left.Set(50, 0);
+			startRaid.Left.Set(40, 0);
 			startRaid.Top.Set(225, 0);
 			startRaid.Width.Set(50, 0);
 			startRaid.Height.Set(30, 0);
@@ -115,6 +130,27 @@ namespace TheDestinyMod.UI
 			raidDragable.Append(startRaid);
 
 			Append(raidDragable);
+		}
+
+		private string GetVoGCheckpointString(int checkpoint) {
+			switch (checkpoint) {
+				case 0:
+					return "None";
+				case 1:
+					return "Confluxes";
+				case 2:
+					return "Oracles";
+				case 3:
+					return "Templar";
+				case 4:
+					return "Labyrinth";
+				case 5:
+					return "Gatekeepers";
+				case 6:
+					return "Atheon";
+				default:
+					return "Unknown";
+			}
 		}
 
 		private void CloseButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
@@ -136,20 +172,47 @@ namespace TheDestinyMod.UI
 				}
 			}
 			if (canStart) {
-				for (int i = 0; i < Main.maxPlayers; i++) {
-					Player player = Main.player[i];
-					if (!player.active) {
-						return;
-					}
-					player.GetModPlayer<DestinyPlayer>().FocusScreenPosition(100, DestinyWorld.vogPosition.ToWorldCoordinates() - new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2), 1f / 60f);
-				}
-				
+				ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
+				bool result = DestinyPlayer.Enter("TheDestinyMod_Vault of Glass") ?? false;
+				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
+					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", Color.Red);
 			}
 			else {
 				Main.NewText("All players must be near the portal to begin the raid", Color.Red);
 			}
 		}
-    }
+
+		private void ClearButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
+			raidDragable.RemoveChild(listeningElement);
+
+			UITextPanelButton<string> clearCheckpoint = new UITextPanelButton<string>("Sure?");
+			clearCheckpoint.Left.Set(220, 0);
+			clearCheckpoint.Top.Set(130, 0);
+			clearCheckpoint.Width.Set(50, 0);
+			clearCheckpoint.Height.Set(30, 0);
+			clearCheckpoint.OnClick += new MouseEvent(ConfirmButtonClicked);
+			
+			raidDragable.Append(clearCheckpoint);
+			raidDragable.DragEnd(evt);
+		}
+
+		private void ConfirmButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
+			DestinyWorld.checkpointVOG = 0;
+			raidDragable.RemoveChild(listeningElement);
+
+			UITextPanelButton<string> clearCheckpoint = new UITextPanelButton<string>("Clear");
+			clearCheckpoint.Left.Set(220, 0);
+			clearCheckpoint.Top.Set(130, 0);
+			clearCheckpoint.Width.Set(50, 0);
+			clearCheckpoint.Height.Set(30, 0);
+			clearCheckpoint.OnClick += new MouseEvent(ClearButtonClicked);
+
+			raidDragable.Append(clearCheckpoint);
+
+			raidDragable.RecalculateChildren();
+			raidDragable.DragEnd(evt);
+		}
+	}
 
 	internal class UITextPanelButton<T> : UITextPanel<T>
 	{

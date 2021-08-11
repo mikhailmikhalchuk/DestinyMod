@@ -24,12 +24,14 @@ namespace TheDestinyMod
         public static int oraclesTimesRefrained = 0;
         public static Vector2 vogPosition;
 
-        public static int vaultOfGlassClears;
+        public static int clearsVOG;
+        public static int checkpointVOG;
 
         public override void Initialize() {
             AgentOfNine.spawnTime = double.MaxValue;
             downedPrime = false;
-            vaultOfGlassClears = 0;
+            clearsVOG = 0;
+            checkpointVOG = 0;
         }
 
         public override TagCompound Save() {
@@ -41,7 +43,8 @@ namespace TheDestinyMod
                 {"agentOfNine", AgentOfNine.Save()},
                 {"downed", bossesKilled},
                 {"claimedItemsGG", claimedItemsGG},
-                {"vaultOfGlassClears", vaultOfGlassClears}
+                {"clearsVOG", clearsVOG},
+                {"checkpointVOG", checkpointVOG}
             };
         }
 
@@ -50,7 +53,8 @@ namespace TheDestinyMod
             var bossesKilled = tag.GetList<string>("downed");
             downedPrime = bossesKilled.Contains("downedPrime");
             claimedItemsGG = tag.GetBool("claimedItemsGG");
-            vaultOfGlassClears = tag.GetInt("vaultOfGlassClears");
+            clearsVOG = tag.GetInt("clearsVOG");
+            checkpointVOG = tag.GetInt("checkpointVOG");
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {

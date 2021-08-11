@@ -59,36 +59,6 @@ namespace TheDestinyMod
 		private int timesClicked = 0;
 		private int spottedIntensity = 60;
 		private int countThunderlord = 0;
-		
-		public Vector2 ScreenFocusPosition
-		{
-			get;
-			private set;
-		}
-
-		public Vector2 CurrentScreenFocusPosition
-		{
-			get;
-			private set;
-		}
-
-		public Vector2 Lerp
-		{
-			get;
-			private set;
-		}
-
-		public int Duration
-		{
-			get;
-			private set;
-		}
-
-		public int Timer
-		{
-			get;
-			private set;
-		}
 
 		public override void ResetEffects() {
 			ResetVariables();
@@ -113,14 +83,6 @@ namespace TheDestinyMod
 			superKnockback = 0;
 		}
 
-		public void FocusScreenPosition(int duration, Vector2 positionTo, float lerp) {
-			Duration = duration;
-			Timer = 0;
-			ScreenFocusPosition = positionTo;
-			CurrentScreenFocusPosition = Main.screenPosition;
-			Lerp = (positionTo - Main.screenPosition) * lerp;
-		}
-
         public override float UseTimeMultiplier(Item item) {
 			if (item.type == ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>() && player.HasBuff(ModContent.BuffType<Buffs.SunWarrior>())) {
 				return 2f;
@@ -132,37 +94,6 @@ namespace TheDestinyMod
 			if (gorgonsHaveSpotted) {
 				Main.screenPosition.X += Main.rand.NextFloat(0, spottedIntensity / 300);
 				spottedIntensity++;
-			}
-			if (Duration > 0 && Main.hasFocus) {
-				Timer++;
-
-				if (Timer > Duration && !Main.dedServ) {
-					Main.BlackFadeIn = blackFadeInTimer;
-					blackFadeInTimer++;
-					if (blackFadeInTimer > 255) {
-						Duration = 0;
-						bool result = Enter("TheDestinyMod_Vault of Glass") ?? false;
-						if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
-							Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", Color.Red);
-						Main.BlackFadeIn = 0;
-						blackFadeInTimer = 0;
-						return;
-					}
-				}
-
-				if (CurrentScreenFocusPosition == ScreenFocusPosition) {
-					Main.screenPosition = ScreenFocusPosition;
-					return;
-				}
-
-				if (Vector2.DistanceSquared(ScreenFocusPosition, CurrentScreenFocusPosition) < Math.Pow(Lerp.X + Lerp.Y, 2)) {
-					CurrentScreenFocusPosition = ScreenFocusPosition;
-				}
-				else {
-					CurrentScreenFocusPosition += Lerp;
-				}
-
-				Main.screenPosition = CurrentScreenFocusPosition;
 			}
 		}
 
