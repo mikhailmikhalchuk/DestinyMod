@@ -67,7 +67,9 @@ namespace TheDestinyMod.UI
 	{
 		internal RaidDragableUI raidDragable;
 
-		internal UIText currentCheckpoint;
+		private UIText currentCheckpoint;
+
+		private UITextPanel<string> clearCheckpoint;
 
 		public override void OnInitialize() {
 			raidDragable = new RaidDragableUI();
@@ -106,12 +108,14 @@ namespace TheDestinyMod.UI
 			currentCheckpoint.Height.Set(30, 0);
 			raidDragable.Append(currentCheckpoint);
 
-			UITextPanelButton<string> clearCheckpoint = new UITextPanelButton<string>("Clear");
+			UITextPanel<string> clearCheckpoint = new UITextPanel<string>("Clear");
 			clearCheckpoint.Left.Set(220, 0);
 			clearCheckpoint.Top.Set(130, 0);
 			clearCheckpoint.Width.Set(50, 0);
 			clearCheckpoint.Height.Set(30, 0);
 			clearCheckpoint.OnClick += new MouseEvent(ClearButtonClicked);
+            clearCheckpoint.OnMouseOver += MouseOverPanel;
+			clearCheckpoint.OnMouseOut += MouseOutPanel;
 			raidDragable.Append(clearCheckpoint);
 
 			Texture2D buttonDeleteTexture = ModContent.GetTexture("TheDestinyMod/UI/ButtonCancel");
@@ -123,15 +127,26 @@ namespace TheDestinyMod.UI
 			closeButton.OnClick += new MouseEvent(CloseButtonClicked);
 			raidDragable.Append(closeButton);
 
-			UITextPanelButton<string> startRaid = new UITextPanelButton<string>("Begin", 1.2f);
+			UITextPanel<string> startRaid = new UITextPanel<string>("Begin", 1.2f);
 			startRaid.Left.Set(40, 0);
 			startRaid.Top.Set(225, 0);
 			startRaid.Width.Set(50, 0);
 			startRaid.Height.Set(30, 0);
 			startRaid.OnClick += new MouseEvent(StartButtonClicked);
+			startRaid.OnMouseOver += MouseOverPanel;
+			startRaid.OnMouseOut += MouseOutPanel;
 			raidDragable.Append(startRaid);
 
 			Append(raidDragable);
+		}
+
+        private void MouseOverPanel(UIMouseEvent evt, UIElement listeningElement) {
+			Main.PlaySound(SoundID.MenuTick);
+			((UITextPanel<string>)evt.Target).BackgroundColor.A = 100;
+        }
+
+		private void MouseOutPanel(UIMouseEvent evt, UIElement listeningElement) {
+			((UITextPanel<string>)evt.Target).BackgroundColor.A = 178;
 		}
 
 		private string GetVoGCheckpointString(int checkpoint) {
@@ -187,63 +202,24 @@ namespace TheDestinyMod.UI
 		private void ClearButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
 			raidDragable.RemoveChild(listeningElement);
 
-			UITextPanelButton<string> clearCheckpoint = new UITextPanelButton<string>("Sure?");
-			clearCheckpoint.Left.Set(220, 0);
-			clearCheckpoint.Top.Set(130, 0);
-			clearCheckpoint.Width.Set(50, 0);
-			clearCheckpoint.Height.Set(30, 0);
-			clearCheckpoint.OnClick += new MouseEvent(ConfirmButtonClicked);
-			
-			raidDragable.Append(clearCheckpoint);
+			clearCheckpoint.SetText("Sure?");
+			clearCheckpoint.OnClick -= ClearButtonClicked;
+			clearCheckpoint.OnClick += ConfirmButtonClicked;
+
 			raidDragable.DragEnd(evt);
 		}
 
 		private void ConfirmButtonClicked(UIMouseEvent evt, UIElement listeningElement) {
 			DestinyWorld.checkpointVOG = 0;
 			raidDragable.RemoveChild(listeningElement);
-			raidDragable.RemoveChild(currentCheckpoint);
 
-			UITextPanelButton<string> clearCheckpoint = new UITextPanelButton<string>("Clear");
-			clearCheckpoint.Left.Set(220, 0);
-			clearCheckpoint.Top.Set(130, 0);
-			clearCheckpoint.Width.Set(50, 0);
-			clearCheckpoint.Height.Set(30, 0);
-			clearCheckpoint.OnClick += new MouseEvent(ClearButtonClicked);
-			raidDragable.Append(clearCheckpoint);
+			clearCheckpoint.SetText("Clear");
+			clearCheckpoint.OnClick -= ConfirmButtonClicked;
+			clearCheckpoint.OnClick += ClearButtonClicked;
 
-			currentCheckpoint = new UIText($"Current checkpoint: {GetVoGCheckpointString(DestinyWorld.checkpointVOG)}");
-			currentCheckpoint.Left.Set(20, 0);
-			currentCheckpoint.Top.Set(140, 0);
-			currentCheckpoint.Width.Set(50, 0);
-			currentCheckpoint.Height.Set(30, 0);
-			raidDragable.Append(currentCheckpoint);
+			currentCheckpoint.SetText($"Current checkpoint: {GetVoGCheckpointString(DestinyWorld.checkpointVOG)}");
 
 			raidDragable.DragEnd(evt);
-		}
-	}
-
-	internal class UITextPanelButton<T> : UITextPanel<T>
-	{
-		internal bool tickPlayed;
-
-		public UITextPanelButton(T text, float textScale = 1f, bool large = false) : base(text, textScale, large) {
-			SetText(text, textScale, large);
-		}
-
-		protected override void DrawSelf(SpriteBatch spriteBatch) {
-			base.DrawSelf(spriteBatch);
-
-			if (IsMouseHovering) {
-				BackgroundColor.A = 100;
-				if (!tickPlayed) {
-					Main.PlaySound(SoundID.MenuTick);
-					tickPlayed = true;
-				}
-			}
-			else {
-				BackgroundColor.A = 178;
-				tickPlayed = false;
-			}
 		}
 	}
 }

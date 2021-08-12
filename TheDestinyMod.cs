@@ -36,13 +36,17 @@ namespace TheDestinyMod
         internal UserInterface CryptarchUserInterface;
         internal SubclassUI SubclassUI;
         internal RaidSelectionUI RaidSelectionUI;
+        internal ClassSelectionUI ClassSelectionUI;
         internal SuperChargeBar SuperResourceCharge;
         internal UserInterface raidInterface;
 
         private UserInterface superChargeInterface;
         private UserInterface subclassInterface;
+        private UserInterface classSelectionInterface;
 
         public static TheDestinyMod Instance;
+
+        private bool classSelecting;
 
         public TheDestinyMod() {
             Instance = this;
@@ -90,6 +94,8 @@ namespace TheDestinyMod
                     guardianGameError = true;
                 }
 
+                Main.OnTick += Main_OnTick;
+
                 AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SepiksPrime"), ModContent.ItemType<Items.Placeables.MusicBoxes.SepiksPrimeBox>(), ModContent.TileType<Tiles.MusicBoxes.SepiksPrimeBox>());
 
                 GameShaders.Armor.BindShader(ModContent.ItemType<Items.Dyes.GambitDye>(), new ArmorShaderData(new Ref<Effect>(GetEffect("Effects/Dyes/Gambit")), "GambitDyePass")).UseColor(0, 1f, 0);
@@ -101,6 +107,8 @@ namespace TheDestinyMod
                 SubclassUI.Activate();
                 RaidSelectionUI = new RaidSelectionUI();
                 RaidSelectionUI.Activate();
+                ClassSelectionUI = new ClassSelectionUI();
+                ClassSelectionUI.Activate();
                 subclassInterface = new UserInterface();
                 subclassInterface.SetState(SubclassUI);
                 CryptarchUserInterface = new UserInterface();
@@ -108,6 +116,8 @@ namespace TheDestinyMod
 				superChargeInterface = new UserInterface();
 				superChargeInterface.SetState(SuperResourceCharge);
                 raidInterface = new UserInterface();
+                classSelectionInterface = new UserInterface();
+                classSelectionInterface.SetState(ClassSelectionUI);
             }
             #region Translations
             int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
@@ -497,11 +507,28 @@ namespace TheDestinyMod
             #endregion
         }
 
+        private void Main_OnTick() {
+            if (Main.menuMode == 1) {
+                classSelecting = false;
+            }
+            if (Main.menuMode == 2 && !classSelecting) {
+                SetUIState(ClassSelectionUI);
+                classSelecting = true;
+            }
+        }
+
+        private static void SetUIState(UIState uistate) {
+            Main.menuMode = 888;
+            Main.MenuUI.SetState(uistate);
+        }
+
         public override void Unload() {
             activateSuper = null;
             Instance = null;
             NPCs.Town.AgentOfNine.shopItems.Clear();
             NPCs.Town.AgentOfNine.itemPrices.Clear();
+            if (!Main.dedServ)
+                Main.OnTick -= Main_OnTick;
         }
 
         private void ItemSlot_LeftClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
@@ -536,6 +563,7 @@ namespace TheDestinyMod
             superChargeInterface?.Update(gameTime);
             CryptarchUserInterface?.Update(gameTime);
             raidInterface?.Update(gameTime);
+            classSelectionInterface?.Update(gameTime);
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {

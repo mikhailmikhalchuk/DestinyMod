@@ -78,6 +78,7 @@ namespace TheDestinyMod
 
     public enum DestinyClassType : byte
     {
+        None,
         Titan,
         Hunter,
         Warlock

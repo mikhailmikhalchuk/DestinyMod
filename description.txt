@@ -25,5 +25,7 @@ Fixed an issue which would allow players to place class-restricted armor in armo
 Fixed an issue where Borealis would not sync projectile types in multiplayer
 Fixed an issue where Ticuu's Divination's firing sounds would only play to the owner of the weapon
 Added a lot more Polish and Spanish translations
+Completely overhauled class selection
+Classes are chosen on character creation
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

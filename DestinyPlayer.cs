@@ -51,9 +51,11 @@ namespace TheDestinyMod
 		public bool titan;
 		public bool warlock;
 		public bool hunter;
+		public DestinyClassType classType;
 		public bool exoticEquipped;
 
 		public static bool gorgonsHaveSpotted;
+		public static DestinyClassType classAwaitingAssign;
 
 		private int superRegenTimer = 0;
 		private int timesClicked = 0;
@@ -66,6 +68,10 @@ namespace TheDestinyMod
 
         public override void UpdateDead() {
 			ResetVariables();
+        }
+
+        public override void Initialize() {
+			classType = DestinyClassType.None;
         }
 
         private void ResetVariables() {
@@ -245,7 +251,8 @@ namespace TheDestinyMod
 				{"engramsPurchased", engramsPurchased},
 				{"superChargeCurrent", superChargeCurrent},
 				{"superActiveTime", superActiveTime},
-				{"subclassTier", SubclassUI.selectedWhich}
+				{"subclassTier", SubclassUI.selectedWhich},
+				{"classType", classType}
 			};
 		}
 
@@ -260,6 +267,9 @@ namespace TheDestinyMod
 			zavalaEnemies = tag.GetInt("zavalaEnemies");
 			superChargeCurrent = tag.GetInt("superChargeCurrent");
 			superActiveTime = tag.GetInt("superActiveTime");
+			if (tag.ContainsKey("classType")) {
+				classType = tag.Get<DestinyClassType>("classType");
+			}
 			if (tag.ContainsKey("subclassTier")) {
 				SubclassUI.selectedWhich = tag.GetInt("subclassTier");
 			}
@@ -317,6 +327,9 @@ namespace TheDestinyMod
 		public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo) {
 			if (player.channel && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>()) {
 				player.headRotation = 0.3f * player.direction;
+			}
+			if (Main.menuMode == 2) {
+				classType = classAwaitingAssign;
 			}
 		}
 
