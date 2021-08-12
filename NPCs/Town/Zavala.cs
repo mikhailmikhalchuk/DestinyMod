@@ -164,15 +164,6 @@ namespace TheDestinyMod.NPCs.Town
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AceOfSpades>());
             shop.item[nextSlot].shopCustomPrice = 1000000;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Accessories.TitanMark>());
-			shop.item[nextSlot].shopCustomPrice = 0;
-			nextSlot++;
-			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Accessories.WarlockMark>());
-			shop.item[nextSlot].shopCustomPrice = 0;
-			nextSlot++;
-			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Accessories.HunterMark>());
-			shop.item[nextSlot].shopCustomPrice = 0;
-			nextSlot++;
 			if (TheDestinyMod.guardianGames) {
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeables.Podium>());
 				shop.item[nextSlot].shopCustomPrice = 50000;

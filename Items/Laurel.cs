@@ -23,10 +23,10 @@ namespace TheDestinyMod.Items
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 			Texture2D texture = mod.GetTexture("Items/Laurel");
-			if (dPlayer.warlock) {
+			if (dPlayer.classType == DestinyClassType.Warlock) {
 				texture = mod.GetTexture("Items/WarlockLaurel");
 			}
-			else if (dPlayer.hunter) {
+			else if (dPlayer.classType == DestinyClassType.Hunter) {
 				texture = mod.GetTexture("Items/HunterLaurel");
 			}
 			Vector2 position = item.position - Main.screenPosition + new Vector2(item.width / 2, item.height - texture.Height * 0.5f + 2f);
@@ -37,10 +37,10 @@ namespace TheDestinyMod.Items
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 			Texture2D texture = mod.GetTexture("Items/Laurel");
-			if (dPlayer.warlock) {
+			if (dPlayer.classType == DestinyClassType.Warlock) {
 				texture = mod.GetTexture("Items/WarlockLaurel");
 			}
-			else if (dPlayer.hunter) {
+			else if (dPlayer.classType == DestinyClassType.Hunter) {
 				texture = mod.GetTexture("Items/HunterLaurel");
 			}
 			spriteBatch.Draw(texture, position, null, drawColor, 0, origin, scale, SpriteEffects.None, 0f);

@@ -48,9 +48,6 @@ namespace TheDestinyMod
 		public bool servitorMinion;
 		public bool releasedMouseLeft;
 		public bool notifiedThatSuperIsReady;
-		public bool titan;
-		public bool warlock;
-		public bool hunter;
 		public DestinyClassType classType;
 		public bool exoticEquipped;
 
@@ -79,9 +76,6 @@ namespace TheDestinyMod
 			ancientShard = false;
 			servitorMinion = false;
 			boughtCommon = false;
-			hunter = false;
-			titan = false;
-			warlock = false;
 			exoticEquipped = false;
 			superDamageAdd = 0f;
 			superDamageMult = 1f;
@@ -252,7 +246,7 @@ namespace TheDestinyMod
 				{"superChargeCurrent", superChargeCurrent},
 				{"superActiveTime", superActiveTime},
 				{"subclassTier", SubclassUI.selectedWhich},
-				{"classType", classType}
+				{"classType", (byte)classType}
 			};
 		}
 
@@ -268,7 +262,7 @@ namespace TheDestinyMod
 			superChargeCurrent = tag.GetInt("superChargeCurrent");
 			superActiveTime = tag.GetInt("superActiveTime");
 			if (tag.ContainsKey("classType")) {
-				classType = tag.Get<DestinyClassType>("classType");
+				classType = (DestinyClassType)tag.GetByte("classType");
 			}
 			if (tag.ContainsKey("subclassTier")) {
 				SubclassUI.selectedWhich = tag.GetInt("subclassTier");

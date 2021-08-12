@@ -27,5 +27,6 @@ Fixed an issue where Ticuu's Divination's firing sounds would only play to the o
 Added a lot more Polish and Spanish translations
 Completely overhauled class selection
 Classes are chosen on character creation
+Removed class marks
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

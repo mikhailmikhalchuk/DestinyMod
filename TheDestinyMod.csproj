@@ -21,6 +21,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Items\Accessories\" />
     <Folder Include="Localization\" />
   </ItemGroup>
 </Project>

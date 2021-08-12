@@ -55,13 +55,13 @@ namespace TheDestinyMod.Tiles
 
 		public void FireRocket() {
 			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-			if (dPlayer.warlock) {
+			if (dPlayer.classType == DestinyClassType.Warlock) {
 				Projectile.NewProjectile(Main.LocalPlayer.position, new Vector2(0, -Main.rand.Next(5, 8)), ProjectileID.RocketFireworkYellow, 0, 0, Main.LocalPlayer.whoAmI);
 			}
-			else if (dPlayer.hunter) {
+			else if (dPlayer.classType == DestinyClassType.Hunter) {
 				Projectile.NewProjectile(Main.LocalPlayer.position, new Vector2(0, -Main.rand.Next(5, 8)), ProjectileID.RocketFireworkBlue, 0, 0, Main.LocalPlayer.whoAmI);
 			}
-			else if (dPlayer.titan) {
+			else if (dPlayer.classType == DestinyClassType.Titan) {
 				Projectile.NewProjectile(Main.LocalPlayer.position, new Vector2(0, -Main.rand.Next(5, 8)), ProjectileID.RocketFireworkRed, 0, 0, Main.LocalPlayer.whoAmI);
 			}
 		}
@@ -114,8 +114,8 @@ namespace TheDestinyMod.Tiles
 				Main.NewText("Couldn't connect to the internet to deposit Laurels.", new Color(255, 0, 0));
 				Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Laurel>(), toDeposit);
 			}
-			else if (!dPlayer.warlock && !dPlayer.hunter && !dPlayer.titan) {
-				Main.NewText("Equip a class item to deposit Laurels!", new Color(255, 0, 0));
+			else if (dPlayer.classType == DestinyClassType.None) {
+				Main.NewText("You must create a new character and select a class to participate in the Games.", new Color(255, 0, 0));
 				Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Laurel>(), toDeposit);
 			}
 			else if (cooldown > 0) {
@@ -128,13 +128,13 @@ namespace TheDestinyMod.Tiles
 			}
 			else {
 				try {
-					if (dPlayer.warlock) {
+					if (dPlayer.classType == DestinyClassType.Warlock) {
 						gameClass = "WARLOCK";
 					}
-					else if (dPlayer.titan) {
+					else if (dPlayer.classType == DestinyClassType.Titan) {
 						gameClass = "TITAN";
 					}
-					else if (dPlayer.hunter) {
+					else if (dPlayer.classType == DestinyClassType.Hunter) {
 						gameClass = "HUNTER";
 					}
 					var request = (HttpWebRequest)WebRequest.Create("https://DestinyModServer.mikhailmcraft.repl.co");

@@ -42,7 +42,7 @@ namespace TheDestinyMod
 
         private UserInterface superChargeInterface;
         private UserInterface subclassInterface;
-        private UserInterface classSelectionInterface;
+        internal UserInterface classSelectionInterface;
 
         public static TheDestinyMod Instance;
 
@@ -105,7 +105,7 @@ namespace TheDestinyMod
                 Filters.Scene["TheDestinyMod:Shockwave"].Load();
                 SubclassUI = new SubclassUI();
                 SubclassUI.Activate();
-                RaidSelectionUI = new RaidSelectionUI();
+                RaidSelectionUI = new RaidSelectionUI("Vault of Glass", DestinyWorld.clearsVOG, NPC.downedBoss3, "Skeletron", "checkpointVOG");
                 RaidSelectionUI.Activate();
                 ClassSelectionUI = new ClassSelectionUI();
                 ClassSelectionUI.Activate();
@@ -117,7 +117,6 @@ namespace TheDestinyMod
 				superChargeInterface.SetState(SuperResourceCharge);
                 raidInterface = new UserInterface();
                 classSelectionInterface = new UserInterface();
-                classSelectionInterface.SetState(ClassSelectionUI);
             }
             #region Translations
             int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
@@ -504,6 +503,10 @@ namespace TheDestinyMod
             text.SetDefault("You must have an inventory slot free to activate your super.");
             text.AddTranslation(GameCulture.Spanish, "Debes tener un espacio del inventario vacio para activar tu súper.");
             AddTranslation(text);
+            text = CreateTranslation("VaultOfGlass");
+            text.SetDefault("Vault of Glass");
+            text.AddTranslation(GameCulture.Spanish, "Vault of Glass");
+            AddTranslation(text);
             #endregion
         }
 
@@ -512,14 +515,11 @@ namespace TheDestinyMod
                 classSelecting = false;
             }
             if (Main.menuMode == 2 && !classSelecting) {
-                SetUIState(ClassSelectionUI);
+                classSelectionInterface.SetState(ClassSelectionUI);
+                Main.menuMode = 888;
+                Main.MenuUI.SetState(ClassSelectionUI);
                 classSelecting = true;
             }
-        }
-
-        private static void SetUIState(UIState uistate) {
-            Main.menuMode = 888;
-            Main.MenuUI.SetState(uistate);
         }
 
         public override void Unload() {
@@ -534,7 +534,7 @@ namespace TheDestinyMod
         private void ItemSlot_LeftClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (Main.mouseItem.modItem is IClassArmor armor) {
-                if ((armor.ArmorClassType() == DestinyClassType.Titan && !player.titan || armor.ArmorClassType() == DestinyClassType.Hunter && !player.hunter || armor.ArmorClassType() == DestinyClassType.Warlock && !player.warlock) && DestinyConfig.Instance.restrictClassItems && context == 8) {
+                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.restrictClassItems && context == 8) {
                     return;
                 }
             }
@@ -545,7 +545,7 @@ namespace TheDestinyMod
             success = false;
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (item.modItem is IClassArmor armor) {
-                if ((armor.ArmorClassType() == DestinyClassType.Titan && !player.titan || armor.ArmorClassType() == DestinyClassType.Hunter && !player.hunter || armor.ArmorClassType() == DestinyClassType.Warlock && !player.warlock) && DestinyConfig.Instance.restrictClassItems) {
+                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.restrictClassItems) {
                     return item;
                 }
             }

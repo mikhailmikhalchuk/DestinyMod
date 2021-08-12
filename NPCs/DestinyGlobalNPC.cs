@@ -27,7 +27,7 @@ namespace TheDestinyMod.NPCs
                 if (Main.rand.NextBool(65)) {
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<CommonEngram>());
                 }
-                if (Main.rand.NextBool(25) && TheDestinyMod.guardianGames && (player.titan || player.warlock || player.hunter)) {
+                if (Main.rand.NextBool(25) && TheDestinyMod.guardianGames && player.classType != DestinyClassType.None) {
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Laurel>());
                 }
             }

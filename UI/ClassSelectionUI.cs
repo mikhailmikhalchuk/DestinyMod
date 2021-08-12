@@ -149,23 +149,27 @@ namespace TheDestinyMod.UI
 			Main.PlaySound(SoundID.MenuOpen);
 			Main.menuMode = 2;
 			DestinyPlayer.classAwaitingAssign = DestinyClassType.Titan;
+			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);
         }
 
 		private void WarlockSelect(UIMouseEvent evt, UIElement listeningElement) {
 			Main.PlaySound(SoundID.MenuOpen);
 			Main.menuMode = 2;
 			DestinyPlayer.classAwaitingAssign = DestinyClassType.Warlock;
+			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);
 		}
 
 		private void HunterSelect(UIMouseEvent evt, UIElement listeningElement) {
 			Main.PlaySound(SoundID.MenuOpen);
 			Main.menuMode = 2;
 			DestinyPlayer.classAwaitingAssign = DestinyClassType.Hunter;
+			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);
 		}
 
 		private void ReturnToMenu(UIMouseEvent evt, UIElement listeningElement) {
 			Main.PlaySound(SoundID.MenuClose);
 			Main.menuMode = 1;
-        }
+			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);
+		}
     }
 }

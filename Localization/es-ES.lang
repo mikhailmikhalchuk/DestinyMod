@@ -142,11 +142,11 @@ ItemTooltip.Ghost=Invoca un Espectro, nacido del Viajero y fiel compañero de un
 ItemTooltip.ImpactShard=Te permite encontrar Motas de enemigos mas fácil
 ItemTooltip.GuardianSkull=Una ofrenda al Gran Sirviente de la Casa de los Demonios\nInvoca a Sepiks Prime
 ItemTooltip.ServitorStaff=Invoca un pequeño sirviente para protegerte\npor cada 3 pequeños sirvientes, un sirviente grande aparecerá
-ItemTooltip.CommonEngram=Una muy avanzada, unidad de almacenamiento encriptada. Un criptica podría romper su encriptación por ti
-ItemTooltip.UncommonEngram=Una muy avanzada, unidad de almacenamiento encriptada. Un criptica podría romper su encriptación por ti
-ItemTooltip.RareEngram=Una muy avanzada, unidad de almacenamiento encriptada. Un criptica podría romper su encriptación por ti
-ItemTooltip.LegendaryEngram=Una muy avanzada, unidad de almacenamiento encriptada. Un criptica podría romper su encriptación por ti
-ItemTooltip.ExoticEngram=Una muy avanzada, unidad de almacenamiento encriptada. Un criptica podría romper su encriptación por ti
+ItemTooltip.CommonEngram=Una muy avanzada, unidad de almacenamiento encriptada\nUn criptica podría romper su encriptación por ti
+ItemTooltip.UncommonEngram=Una muy avanzada, unidad de almacenamiento encriptada\nUn criptica podría romper su encriptación por ti
+ItemTooltip.RareEngram=Una muy avanzada, unidad de almacenamiento encriptada\nUn criptica podría romper su encriptación por ti
+ItemTooltip.LegendaryEngram=Una muy avanzada, unidad de almacenamiento encriptada\nUn criptica podría romper su encriptación por ti
+ItemTooltip.ExoticEngram=Una muy avanzada, unidad de almacenamiento encriptada\nUn criptica podría romper su encriptación por ti
 
 BuffName.AncientShard=Fragmento Antiguo
 BuffName.HakkeBuff=Artesanía Hakke
