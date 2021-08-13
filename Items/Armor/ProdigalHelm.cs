@@ -10,7 +10,7 @@ namespace TheDestinyMod.Items.Armor
 	public class ProdigalHelm : ModItem, IClassArmor
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("7% increase ranged critical strike chance"); //d
+			Tooltip.SetDefault("7% increased ranged critical strike chance");
 		}
 
 		public override void SetDefaults() {
@@ -41,6 +41,12 @@ namespace TheDestinyMod.Items.Armor
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
+		}
+
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != DestinyClassType.Titan && DestinyConfig.Instance.restrictClassItems) {
+				tooltips.Add(new TooltipLine(mod, "HasClass", "You must be a Titan to equip this") { overrideColor = new Color(255, 0, 0) });
+			}
 		}
 
 		public DestinyClassType ArmorClassType() => DestinyClassType.Titan;

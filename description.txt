@@ -4,6 +4,12 @@ Developers
 ---------
 Cuno - Programmer
 Brent dya - Spriter
+Aeterna - Trial Spriter
+
+Special Thanks
+---------
+Fillinek - Building
+
 [c/FF1919:We are currently looking for spriters,] if you are one and would like to help in the making of this mod please join the Discord and contact Cuno#9958
 This mod is not finished! Do not expect weapons or armor to be balanced if you decide to use it in a playthrough
 
@@ -16,17 +22,20 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance while you have any class mark equipped
 Added Titan, Warlock, and Hunter-themed decor
 --
+Completely overhauled class selection
+Classes are now chosen on character creation and cannot currently be changed afterwards
+Classes are shown on the player's character bar on the character select screen
+Removed class marks
 Fixed flickering that would occur when using No Land Beyond
-Fixed an exploit that could be used to get free modifier rolls from Zavala
-Fixed an issue where class marks could be reforged for 1 copper
 Made Rat King an automatic gun (from semi-automatic)
 Lowered Sweet Business' chance to consume ammo to 25% (from 10%)
 Fixed an issue which would allow players to place class-restricted armor in armor slots when they were not allowed to
 Fixed an issue where Borealis would not sync projectile types in multiplayer
 Fixed an issue where Ticuu's Divination's firing sounds would only play to the owner of the weapon
 Added a lot more Polish and Spanish translations
-Completely overhauled class selection
-Classes are chosen on character creation
-Removed class marks
+Titan Prodigal set now has tooltips if the player is not a Titan and has the "strict-class" config enabled
+Fixed a typo in the Prodigal Helm's description
+Fixed an issue which would allow users to place a class-restricted item in their vanity slot and then right-click to equip it
+Decreased the volume of Divinity and all fusion rifles
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

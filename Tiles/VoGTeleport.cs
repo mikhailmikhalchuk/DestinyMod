@@ -21,7 +21,7 @@ namespace TheDestinyMod.Tiles
 
         public override bool NewRightClick(int i, int j) {
             if (ModContent.GetInstance<TheDestinyMod>().raidInterface.CurrentState == null) {
-                ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(new UI.RaidSelectionUI(Language.GetTextValue("Mods.TheDestinyMod.VaultOfGlass"), DestinyWorld.clearsVOG, NPC.downedBoss3, Language.GetTextValue("NPCName.SkeletronHead"), "checkpointVOG"));
+                ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(new UI.RaidSelectionUI(Language.GetTextValue("Mods.TheDestinyMod.VaultOfGlass"), DestinyWorld.clearsVOG, NPC.downedBoss3, Language.GetTextValue("NPCName.SkeletronHead")));
                 Main.PlaySound(SoundID.MenuOpen);
                 DestinyWorld.vogPosition = new Vector2(i, j);
             }

@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Net;
 using log4net;
+using System.Reflection;
 
 namespace TheDestinyMod
 {
@@ -58,6 +59,8 @@ namespace TheDestinyMod
             On.Terraria.Player.DropTombstone += Player_DropTombstone;
             On.Terraria.UI.ItemSlot.ArmorSwap += ItemSlot_ArmorSwap;
             On.Terraria.UI.ItemSlot.LeftClick_ItemArray_int_int += ItemSlot_LeftClick_ItemArray_int_int;
+            On.Terraria.UI.ItemSlot.RightClick_ItemArray_int_int += ItemSlot_RightClick_ItemArray_int_int;
+            On.Terraria.GameContent.UI.Elements.UICharacterListItem.DrawSelf += UICharacterListItem_DrawSelf;
             if (!Main.dedServ) {
                 if (DestinyConfig.Instance.guardianGamesConfig) {
                     try {
@@ -105,7 +108,7 @@ namespace TheDestinyMod
                 Filters.Scene["TheDestinyMod:Shockwave"].Load();
                 SubclassUI = new SubclassUI();
                 SubclassUI.Activate();
-                RaidSelectionUI = new RaidSelectionUI("Vault of Glass", DestinyWorld.clearsVOG, NPC.downedBoss3, "Skeletron", "checkpointVOG");
+                RaidSelectionUI = new RaidSelectionUI("Vault of Glass", DestinyWorld.clearsVOG, NPC.downedBoss3, "Skeletron");
                 RaidSelectionUI.Activate();
                 ClassSelectionUI = new ClassSelectionUI();
                 ClassSelectionUI.Activate();
@@ -508,6 +511,43 @@ namespace TheDestinyMod
             text.AddTranslation(GameCulture.Spanish, "Vault of Glass");
             AddTranslation(text);
             #endregion
+        }
+
+        private void UICharacterListItem_DrawSelf(On.Terraria.GameContent.UI.Elements.UICharacterListItem.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UICharacterListItem self, SpriteBatch spriteBatch) {
+            orig.Invoke(self, spriteBatch);
+            float width = self.GetInnerDimensions().X + self.GetInnerDimensions().Width;
+            Vector2 vector4 = new Vector2(self.GetDimensions().X + 85f, self.GetInnerDimensions().Y + 59f);
+            Texture2D texture = ModContent.GetTexture("Terraria/UI/InnerPanelBackground");
+            float num = width - vector4.X - 400f;
+            spriteBatch.Draw(texture, vector4, new Rectangle(0, 0, 8, texture.Height), Color.White);
+            spriteBatch.Draw(texture, new Vector2(vector4.X + 8f, vector4.Y), new Rectangle(8, 0, 8, texture.Height), Color.White, 0f, Vector2.Zero, new Vector2((num - 16f) / 8f, 1f), SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, new Vector2(vector4.X + num - 8f, vector4.Y), new Rectangle(16, 0, 8, texture.Height), Color.White);
+            string classType = "None";
+            switch (((Terraria.IO.PlayerFileData)self.GetType().GetField("_data", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(self)).Player.GetModPlayer<DestinyPlayer>().classType) {
+                case DestinyClassType.Titan:
+                    classType = "Titan";
+                    break;
+                case DestinyClassType.Hunter:
+                    classType = "Hunter";
+                    break;
+                case DestinyClassType.Warlock:
+                    classType = "Warlock";
+                    break;
+            }
+            vector4 += new Vector2(num * 0.5f - Main.fontMouseText.MeasureString(classType).X * 0.5f, 3f);
+            Utils.DrawBorderString(spriteBatch, classType, vector4, Color.White);
+        }
+
+        private void ItemSlot_RightClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_RightClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
+            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            if (!Main.LocalPlayer.armor.IndexInRange(slot))
+                return;
+            if (Main.LocalPlayer.armor[slot].modItem is IClassArmor armor) {
+                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.restrictClassItems && context == 9) {
+                    return;
+                }
+            }
+            orig.Invoke(inv, context, slot);
         }
 
         private void Main_OnTick() {
