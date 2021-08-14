@@ -516,9 +516,9 @@ namespace TheDestinyMod
         private void UICharacterListItem_DrawSelf(On.Terraria.GameContent.UI.Elements.UICharacterListItem.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UICharacterListItem self, SpriteBatch spriteBatch) {
             orig.Invoke(self, spriteBatch);
             float width = self.GetInnerDimensions().X + self.GetInnerDimensions().Width;
-            Vector2 vector4 = new Vector2(self.GetDimensions().X + 85f, self.GetInnerDimensions().Y + 59f);
+            Vector2 vector4 = new Vector2(self.GetDimensions().X + 100f, self.GetInnerDimensions().Y + 59f);
             Texture2D texture = ModContent.GetTexture("Terraria/UI/InnerPanelBackground");
-            float num = width - vector4.X - 400f;
+            float num = width - vector4.X - 380f;
             spriteBatch.Draw(texture, vector4, new Rectangle(0, 0, 8, texture.Height), Color.White);
             spriteBatch.Draw(texture, new Vector2(vector4.X + 8f, vector4.Y), new Rectangle(8, 0, 8, texture.Height), Color.White, 0f, Vector2.Zero, new Vector2((num - 16f) / 8f, 1f), SpriteEffects.None, 0f);
             spriteBatch.Draw(texture, new Vector2(vector4.X + num - 8f, vector4.Y), new Rectangle(16, 0, 8, texture.Height), Color.White);

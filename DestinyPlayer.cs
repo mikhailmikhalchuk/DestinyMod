@@ -58,6 +58,8 @@ namespace TheDestinyMod
 		private int timesClicked = 0;
 		private int spottedIntensity = 60;
 		private int countThunderlord = 0;
+		public bool isThundercrash = false;
+		private bool shouldBeThundercrashed = false;
 
 		public override void ResetEffects() {
 			ResetVariables();
@@ -145,6 +147,7 @@ namespace TheDestinyMod
 						player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>(), 1);
 						superActiveTime = 600;
 						notifiedThatSuperIsReady = false;
+						isThundercrash = true;
 						break;
 					}
 				}
@@ -168,6 +171,9 @@ namespace TheDestinyMod
 				releasedMouseLeft = true;
 				businessReduceUse = 0.2f;
 				thunderlordReduceUse = 1f;
+			}
+			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
+				superChargeCurrent = 100;
 			}
         }
 
@@ -325,6 +331,25 @@ namespace TheDestinyMod
 			if (Main.menuMode == 2) {
 				classType = classAwaitingAssign;
 			}
+			player.fullRotationOrigin = player.Hitbox.Size() / 2;
+			if (isThundercrash) {
+                player.fullRotation = player.fullRotation.AngleLerp(player.velocity.ToRotation() + MathHelper.PiOver2, 0.25f);
+				player.bodyFrame.Y = 280;
+				player.legFrame.Y = 280;
+				player.direction = 0;
+				if (player.fullRotation > 0) {
+					player.direction = 1;
+				}
+			}
+			if (!isThundercrash && shouldBeThundercrashed) {
+				player.fullRotation = player.fullRotation.AngleLerp(0f, 0.5f);
+			}
+			if (!isThundercrash && shouldBeThundercrashed && player.fullRotation != 0f) {
+				shouldBeThundercrashed = true;
+			}
+			else {
+				shouldBeThundercrashed = isThundercrash;
+			}
 		}
 
 		public override void ModifyDrawLayers(List<PlayerLayer> layers) {
@@ -369,6 +394,13 @@ namespace TheDestinyMod
 				player.wingsLogic = 0; //figure out wings | player.armor.wingSlot
 			}
         }
+
+		private float GetSuperDamage(float damage) {
+			if (Main.rand.Next(1, 101) <= superCrit) {
+				return Math.Max(0, damage * 2 * superDamageMult + superDamageAdd);
+			}
+			return Math.Max(0, damage * superDamageMult + superDamageAdd);
+		}
 
         public override void PostUpdateMiscEffects() {
 			if (!notifiedThatSuperIsReady && superChargeCurrent == 100 && !Main.dedServ && DestinyConfig.Instance.notifyOnSuper && superActiveTime == 0 && !player.dead) {
@@ -417,6 +449,32 @@ namespace TheDestinyMod
 			if (player.Distance(DestinyWorld.vogPosition.ToWorldCoordinates()) > 150 && ModContent.GetInstance<TheDestinyMod>().raidInterface.CurrentState != null) {
 				ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
 				Main.PlaySound(SoundID.MenuClose);
+			}
+			if (isThundercrash) {
+				player.velocity += (Main.MouseWorld - player.Center) / 300;
+				if (superActiveTime <= 20) {
+					player.velocity.X = MathHelper.Clamp(player.velocity.X, superActiveTime * -1f, superActiveTime);
+					player.velocity.Y = MathHelper.Clamp(player.velocity.Y, superActiveTime * -1f, superActiveTime);
+				}
+				else {
+					player.velocity.X = MathHelper.Clamp(player.velocity.X, -20, 20);
+					player.velocity.Y = MathHelper.Clamp(player.velocity.Y, -20, 20);
+				}
+			}
+			if (isThundercrash && (player.TouchedTiles.Count > 0 || Main.npc.Any(n => n.Hitbox.Contains(player.Hitbox) && n.active && !n.dontTakeDamage) || superActiveTime <= 0) && superActiveTime < 98) {
+				isThundercrash = false;
+				if (superActiveTime <= 0)
+					return;
+
+				Projectile p = Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, (int)GetSuperDamage(500), 5f + superKnockback, player.whoAmI);
+				p.scale = 1.5f;
+				p.GetAlpha(Color.Blue);
+				Projectile p2 = Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, (int)GetSuperDamage(500), 5f + superKnockback, player.whoAmI);
+				p2.scale = 1.5f;
+				p2.rotation = 135;
+				p2.GetAlpha(Color.Blue);
+				player.velocity *= 0;
+				Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, player.Center);
 			}
 		}
     }

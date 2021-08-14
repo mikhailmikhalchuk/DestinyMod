@@ -102,7 +102,7 @@ namespace TheDestinyMod.Items
         }
 
         public override bool CanUseItem(Item item, Player player) {
-            if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>()) || player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Detained>())) {
+            if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>()) || player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Detained>()) || player.GetModPlayer<DestinyPlayer>().isThundercrash) {
                 return false;
             }
             if ((raidProhibitedItems.Contains(item.type) || item.mountType != -1) && TheDestinyMod.currentSubworldID != string.Empty) {
