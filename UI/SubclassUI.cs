@@ -14,6 +14,13 @@ namespace TheDestinyMod.UI
 		public UIElement subclass;
 		public static bool over;
 		public static int num;
+
+		/// <summary>
+		/// From top, bottom, right:<br></br>
+		/// 1-3: Arc subclasses<br></br>
+		/// 4-6: Solar subclasses<br></br>
+		/// 7-9: Void subclasses
+		/// </summary>
 		public static int selectedWhich;
 
 		public Texture2D selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");

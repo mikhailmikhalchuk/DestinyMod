@@ -31,7 +31,7 @@ namespace TheDestinyMod
 		public int overchargeStacks;
 		public int aegisCharge;
 		public int destinyWeaponDelay;
-		public int superCrit;
+		public int superCrit = 4;
 		public int borealisCooldown;
 
 		public float businessReduceUse = 0.2f;
@@ -133,26 +133,48 @@ namespace TheDestinyMod
 		}
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
-			var itemPos = 0;
             if (TheDestinyMod.activateSuper.JustPressed && superChargeCurrent == 100 && !player.dead) {
-				foreach (Item item in Main.LocalPlayer.inventory) {
-					itemPos++;
-					if (itemPos >= 50) {
-						break;
+				superActiveTime = 600;
+				notifiedThatSuperIsReady = false;
+				bool PlaceSuperInventory(int superItem) {
+					var itemPos = 0;
+					foreach (Item item in player.inventory) {
+						itemPos++;
+						if (itemPos >= 50) {
+							return false;
+						}
+						if (item.IsAir) {
+							//Main.PlaySound(SoundID.Item74, Main.LocalPlayer.position);
+							Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
+							Projectile.NewProjectile(player.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, player.whoAmI);
+							player.QuickSpawnItem(superItem, 1);
+							return true;
+						}
 					}
-					if (item.IsAir) {
-						//Main.PlaySound(SoundID.Item74, Main.LocalPlayer.position);
+					return false;
+				}
+				switch (SubclassUI.selectedWhich) {
+					case 1:
 						Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
-						Projectile.NewProjectile(Main.LocalPlayer.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, Main.LocalPlayer.whoAmI);
-						player.QuickSpawnItem(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>(), 1);
-						superActiveTime = 600;
-						notifiedThatSuperIsReady = false;
+						Projectile.NewProjectile(player.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, player.whoAmI);
+						if (player.mount.Active) {
+							player.mount.Dismount(player);
+						}
 						isThundercrash = true;
 						break;
-					}
-				}
-				if (superActiveTime != 600 && !Main.dedServ) {
-					Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
+					case 4:
+						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>())) {
+							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
+						}
+						break;
+					case 5:
+						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>())) {
+							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
+						}
+						break;
+					default:
+						Main.NewText("Either a valid subclass is not equipped or something went wrong on our end! Let a developer know of your plight", Color.Red);
+						break;
 				}
 			}
 			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
@@ -333,13 +355,14 @@ namespace TheDestinyMod
 			}
 			player.fullRotationOrigin = player.Hitbox.Size() / 2;
 			if (isThundercrash) {
-                player.fullRotation = player.fullRotation.AngleLerp(player.velocity.ToRotation() + MathHelper.PiOver2, 0.25f);
+                player.fullRotation = player.fullRotation.AngleLerp(player.velocity.ToRotation() + MathHelper.PiOver2, 0.1f);
 				player.bodyFrame.Y = 280;
 				player.legFrame.Y = 280;
-				player.direction = 0;
+				player.direction = -1;
 				if (player.fullRotation > 0) {
 					player.direction = 1;
 				}
+				player.headRotation = -0.5f * player.direction;
 			}
 			if (!isThundercrash && shouldBeThundercrashed) {
 				player.fullRotation = player.fullRotation.AngleLerp(0f, 0.5f);
@@ -395,7 +418,20 @@ namespace TheDestinyMod
 			}
         }
 
-		private float GetSuperDamage(float damage) {
+        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
+			if (isThundercrash) {
+				r = 0.1f;
+				g = 0.9f;
+				b = 0.9f;
+				Dust dust = Dust.NewDustDirect(new Vector2(player.position.X - 2f, player.position.Y - 2f), player.width + 4, player.height + 4, DustID.Electric, 0f, 0f, 100, default, 0.5f);
+				dust.velocity *= 1.6f;
+				dust.velocity.Y -= 1f;
+				dust.position = Vector2.Lerp(dust.position, player.Center, 0.5f);
+				drawInfo.drawArms = false;
+			}
+        }
+
+        private float GetSuperDamage(float damage) {
 			if (Main.rand.Next(1, 101) <= superCrit) {
 				return Math.Max(0, damage * 2 * superDamageMult + superDamageAdd);
 			}
@@ -435,7 +471,7 @@ namespace TheDestinyMod
 					markedByVoidDelay = 2;
 				}
 			}
-			if (aegisCharge >= 1 && aegisCharge < 30) {
+			if (aegisCharge >= 1 && aegisCharge < 30 || isThundercrash) {
 				player.controlLeft = false;
 				player.controlRight = false;
 				player.controlUp = false;
@@ -451,30 +487,40 @@ namespace TheDestinyMod
 				Main.PlaySound(SoundID.MenuClose);
 			}
 			if (isThundercrash) {
-				player.velocity += (Main.MouseWorld - player.Center) / 300;
-				if (superActiveTime <= 20) {
-					player.velocity.X = MathHelper.Clamp(player.velocity.X, superActiveTime * -1f, superActiveTime);
-					player.velocity.Y = MathHelper.Clamp(player.velocity.Y, superActiveTime * -1f, superActiveTime);
+				if (superActiveTime > 580) {
+					player.velocity += (Main.MouseWorld - player.Center) / 300;
 				}
 				else {
-					player.velocity.X = MathHelper.Clamp(player.velocity.X, -20, 20);
-					player.velocity.Y = MathHelper.Clamp(player.velocity.Y, -20, 20);
+					player.velocity = (Main.MouseWorld - player.Center) / 20;
+				}
+				player.bodyFrame.Y = 0;
+				if (superActiveTime <= 20) {
+					player.velocity.X = Utils.Clamp(player.velocity.X, superActiveTime * -1f, superActiveTime);
+					player.velocity.Y = Utils.Clamp(player.velocity.Y, superActiveTime * -1f, superActiveTime);
+				}
+				else {
+					player.velocity.X = Utils.Clamp(player.velocity.X, -20f, 20f);
+					player.velocity.Y = Utils.Clamp(player.velocity.Y, -30f, 40f);
+					if (player.velocity.Length() < 20 && superActiveTime < 580) {
+						player.velocity.Normalize();
+						player.velocity *= 20;
+					}
 				}
 			}
-			if (isThundercrash && (player.TouchedTiles.Count > 0 || Main.npc.Any(n => n.Hitbox.Contains(player.Hitbox) && n.active && !n.dontTakeDamage) || superActiveTime <= 0) && superActiveTime < 98) {
+			if (isThundercrash && superActiveTime < 590 && (player.TouchedTiles.Count > 0 || Main.npc.Any(npc => npc.active && npc.Hitbox.Intersects(player.Hitbox) && !npc.dontTakeDamage && !npc.townNPC) || Main.player.Any(playeR => player.active && playeR.Hitbox.Intersects(player.Hitbox) && playeR.team != player.team && player.hostile) || superActiveTime <= 0)) {
 				isThundercrash = false;
 				if (superActiveTime <= 0)
 					return;
 
 				Projectile p = Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, (int)GetSuperDamage(500), 5f + superKnockback, player.whoAmI);
 				p.scale = 1.5f;
-				p.GetAlpha(Color.Blue);
 				Projectile p2 = Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, (int)GetSuperDamage(500), 5f + superKnockback, player.whoAmI);
 				p2.scale = 1.5f;
 				p2.rotation = 135;
-				p2.GetAlpha(Color.Blue);
 				player.velocity *= 0;
-				Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, player.Center);
+                Main.PlaySound(SoundID.Item122, player.Center);
+				superActiveTime = 0;
+				superChargeCurrent = 0;
 			}
 		}
     }

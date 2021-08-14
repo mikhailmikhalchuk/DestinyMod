@@ -34,7 +34,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
 
         public override void AI() {
             counter++;
-            if (DestinyWorld.oraclesKilledOrder == 4 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 1 || !Main.npc.Any(n => n.type == ModContent.NPCType<Oracle>() && n.active) && alreadySummoned) {
+            if (DestinyWorld.oraclesKilledOrder == 4 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 1 || Main.npc.Any(n => n.type == ModContent.NPCType<Oracle>() && n.active) && alreadySummoned) {
                 if (DestinyWorld.oraclesKilledOrder == 4 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 1) DestinyWorld.oraclesTimesRefrained++;
                 counter = -200;
                 timesShown = 0;

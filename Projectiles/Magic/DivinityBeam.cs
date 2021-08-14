@@ -130,7 +130,7 @@ namespace TheDestinyMod.Projectiles.Magic
 					counter = 0;
 					break;
 				}
-				if (Main.npc.FirstOrDefault(npc => npc.Hitbox.Contains(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && npc.active && !npc.townNPC && !npc.dontTakeDamage) != null || Main.player.FirstOrDefault(playeR => playeR.Hitbox.Contains(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && playeR.team != player.team && playeR.hostile) != null) {
+				if (Main.npc.Any(npc => npc.active && npc.Hitbox.Intersects(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && !npc.townNPC && !npc.dontTakeDamage) || Main.player.Any(playeR => playeR.active && playeR.Hitbox.Intersects(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && playeR.team != player.team && playeR.hostile)) {
 					counter++;
 					break;
 				}

@@ -22,7 +22,7 @@ Support us on Patreon: https://patreon.com/destinymod
 
 The Guardian Games are on! :party:
 Added the Podium, purchasable from Zavala for the duration of the Games
-Added Laurels, which drop from enemies during the Games with a 1/25 chance while you have any class mark equipped
+Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
 Completely overhauled class selection
