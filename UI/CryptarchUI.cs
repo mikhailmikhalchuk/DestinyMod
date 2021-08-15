@@ -19,7 +19,7 @@ namespace TheDestinyMod.UI
 		public static VanillaItemSlotWrapper _vanillaItemSlot;
 
 		public override void OnInitialize() {
-			_vanillaItemSlot = new VanillaItemSlotWrapper(ItemSlot.Context.BankItem, 0.85f) {
+			_vanillaItemSlot = new VanillaItemSlotWrapper(ItemSlot.Context.PrefixItem, ItemSlot.Context.BankItem, 0.85f) {
 				Left = { Pixels = 50 },
 				Top = { Pixels = 270 },
 				ValidItemFunc = item => item.IsAir || !item.IsAir && (item.type == ModContent.ItemType<RareEngram>() || item.type == ModContent.ItemType<CommonEngram>() || item.type == ModContent.ItemType<LegendaryEngram>() || item.type == ModContent.ItemType<ExoticEngram>() || item.type == ModContent.ItemType<UncommonEngram>())

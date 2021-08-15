@@ -13,8 +13,9 @@ namespace TheDestinyMod.UI
 		internal Func<Item, bool> ValidItemFunc;
 		private readonly int _context;
 		private readonly float _scale;
+		private readonly int _handlerContext;
 
-		public VanillaItemSlotWrapper(int context = ItemSlot.Context.BankItem, float scale = 1f) {
+		public VanillaItemSlotWrapper(int context = ItemSlot.Context.BankItem, int handlerContext = ItemSlot.Context.BankItem, float scale = 1f) {
 			_context = context;
 			_scale = scale;
 			Item = new Item();
@@ -32,7 +33,7 @@ namespace TheDestinyMod.UI
 			if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 				Main.LocalPlayer.mouseInterface = true;
 				if (ValidItemFunc == null || ValidItemFunc(Main.mouseItem)) {
-					ItemSlot.Handle(ref Item, _context);
+					ItemSlot.Handle(ref Item, _handlerContext);
 				}
 			}
 			ItemSlot.Draw(spriteBatch, ref Item, _context, rectangle.TopLeft());

@@ -29,6 +29,10 @@ namespace TheDestinyMod.Projectiles
             projectile.Kill();
         }
 
+        public override void Kill(int timeLeft) {
+            Main.PlaySound(SoundID.Item10, projectile.position);
+        }
+
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {
             hitbox = Rectangle.Empty;
         }

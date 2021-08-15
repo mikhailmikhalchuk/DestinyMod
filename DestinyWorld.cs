@@ -26,12 +26,14 @@ namespace TheDestinyMod
 
         public static int clearsVOG;
         public static int checkpointVOG;
+        public static int daysPassed;
 
         public override void Initialize() {
             AgentOfNine.spawnTime = double.MaxValue;
             downedPrime = false;
             clearsVOG = 0;
             checkpointVOG = 0;
+            daysPassed = 0;
         }
 
         public override TagCompound Save() {
@@ -44,7 +46,8 @@ namespace TheDestinyMod
                 {"downed", bossesKilled},
                 {"claimedItemsGG", claimedItemsGG},
                 {"clearsVOG", clearsVOG},
-                {"checkpointVOG", checkpointVOG}
+                {"checkpointVOG", checkpointVOG},
+                {"daysPassed", daysPassed}
             };
         }
 
@@ -55,6 +58,7 @@ namespace TheDestinyMod
             claimedItemsGG = tag.GetBool("claimedItemsGG");
             clearsVOG = tag.GetInt("clearsVOG");
             checkpointVOG = tag.GetInt("checkpointVOG");
+            daysPassed = tag.GetInt("daysPassed");
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
@@ -226,6 +230,15 @@ namespace TheDestinyMod
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (Main.dayTime && Main.time == 0) {
                 player.boughtCommon = false;
+                daysPassed++;
+            }
+            if (daysPassed == 2) {
+                player.boughtUncommon = false;
+                daysPassed = 0;
+            }
+            if (daysPassed == 4) {
+                player.boughtRare = false;
+                daysPassed = 0;
             }
         }
 

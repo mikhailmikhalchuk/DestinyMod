@@ -67,6 +67,7 @@ namespace TheDestinyMod.Projectiles
             projectile.timeLeft = 1000000;
             projectile.tileCollide = false;
             dye = true;
+            Main.PlaySound(SoundID.Item14, projectile.position);
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
                 Projectile.NewProjectile(target.position, new Vector2(0, 0), ModContent.ProjectileType<VoidSeeker>(), damage, knockback, Main.LocalPlayer.whoAmI);
             }

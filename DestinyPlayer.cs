@@ -60,6 +60,7 @@ namespace TheDestinyMod
 		private int countThunderlord = 0;
 		public bool isThundercrash = false;
 		private bool shouldBeThundercrashed = false;
+		private Vector2 subclassAwaitingAssign;
 
 		public override void ResetEffects() {
 			ResetVariables();
@@ -153,8 +154,8 @@ namespace TheDestinyMod
 					}
 					return false;
 				}
-				switch (SubclassUI.selectedWhich) {
-					case 1:
+				switch (TheDestinyMod.Instance.SubclassUI.selectedSubclass) {
+					case 3 when classType == DestinyClassType.Titan:
 						Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
 						Projectile.NewProjectile(player.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, player.whoAmI);
 						if (player.mount.Active) {
@@ -162,18 +163,21 @@ namespace TheDestinyMod
 						}
 						isThundercrash = true;
 						break;
-					case 4:
+					case 4 when classType == DestinyClassType.Hunter:
+					case 5 when classType == DestinyClassType.Hunter:
 						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>())) {
 							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
 						}
 						break;
-					case 5:
+					case 4 when classType == DestinyClassType.Titan:
 						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>())) {
 							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
 						}
 						break;
 					default:
 						Main.NewText("Either a valid subclass is not equipped or something went wrong on our end! Let a developer know of your plight", Color.Red);
+						superActiveTime = 0;
+						notifiedThatSuperIsReady = true;
 						break;
 				}
 			}
@@ -273,7 +277,7 @@ namespace TheDestinyMod
 				{"engramsPurchased", engramsPurchased},
 				{"superChargeCurrent", superChargeCurrent},
 				{"superActiveTime", superActiveTime},
-				{"subclassTier", SubclassUI.selectedWhich},
+				{"subclassSelected", new Vector2(TheDestinyMod.Instance.SubclassUI.selectedSubclass, TheDestinyMod.Instance.SubclassUI.element)},
 				{"classType", (byte)classType}
 			};
 		}
@@ -292,22 +296,38 @@ namespace TheDestinyMod
 			if (tag.ContainsKey("classType")) {
 				classType = (DestinyClassType)tag.GetByte("classType");
 			}
-			if (tag.ContainsKey("subclassTier")) {
-				SubclassUI.selectedWhich = tag.GetInt("subclassTier");
+			if (tag.ContainsKey("subclassSelected")) {
+				subclassAwaitingAssign = tag.Get<Vector2>("subclassSelected");
 			}
 		}
 
-		public override bool ShiftClickSlot(Item[] inventory, int context, int slot) {
-			if ((player.inventory[slot].type == ModContent.ItemType<CommonEngram>() || player.inventory[slot].type == ModContent.ItemType<UncommonEngram>() || player.inventory[slot].type == ModContent.ItemType<RareEngram>() || player.inventory[slot].type == ModContent.ItemType<LegendaryEngram>() || player.inventory[slot].type == ModContent.ItemType<ExoticEngram>()) && ModContent.GetInstance<TheDestinyMod>().CryptarchUserInterface.CurrentState != null) {
-				if (CryptarchUI._vanillaItemSlot.Item.type == ItemID.None) {
-					Item clone = player.inventory[slot].Clone();
-					CryptarchUI._vanillaItemSlot.Item = clone;
-					player.inventory[slot].TurnToAir();
-					Main.PlaySound(SoundID.Grab);
-					return true;
-				}
+        public override void OnEnterWorld(Player player) {
+			TheDestinyMod.Instance.SubclassUI.selectedSubclass = (int)subclassAwaitingAssign.X;
+			TheDestinyMod.Instance.SubclassUI.element = (int)subclassAwaitingAssign.Y;
+			switch ((int)subclassAwaitingAssign.Y) {
+				case 0:
+					TheDestinyMod.Instance.SubclassUI.selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
+					TheDestinyMod.Instance.SubclassUI.selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
+					TheDestinyMod.Instance.SubclassUI.selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIArc");
+					TheDestinyMod.Instance.SubclassUI.elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArc");
+					TheDestinyMod.Instance.SubclassUI.borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArcBorder");
+					break;
+				case 1:
+					TheDestinyMod.Instance.SubclassUI.selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionISolar");
+					TheDestinyMod.Instance.SubclassUI.selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIISolar");
+					TheDestinyMod.Instance.SubclassUI.selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIISolar");
+					TheDestinyMod.Instance.SubclassUI.elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolar");
+					TheDestinyMod.Instance.SubclassUI.borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolarBorder");
+					break;
+				case 2:
+					
+					TheDestinyMod.Instance.SubclassUI.selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIVoid");
+					TheDestinyMod.Instance.SubclassUI.selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIVoid");
+					TheDestinyMod.Instance.SubclassUI.selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIVoid");
+					TheDestinyMod.Instance.SubclassUI.elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnVoid");
+					break;
 			}
-            return false;
+			TheDestinyMod.Instance.SubclassUI.ChangeTextures();
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
@@ -325,12 +345,14 @@ namespace TheDestinyMod
 				boughtCommon = true;
 			}
 			else if (vendor.type == ModContent.NPCType<Cryptarch>() && item.type == ModContent.ItemType<UncommonEngram>()) {
-				shopInventory[1].TurnToAir();
+				shopInventory.FirstOrDefault(i => i.type == item.type)?.TurnToAir();
 				boughtUncommon = true;
+				DestinyWorld.daysPassed = 0;
 			}
 			else if (vendor.type == ModContent.NPCType<Cryptarch>() && item.type == ModContent.ItemType<RareEngram>()) {
-				shopInventory[2].TurnToAir();
+				shopInventory.FirstOrDefault(i => i.type == item.type)?.TurnToAir();
 				boughtRare = true;
+				DestinyWorld.daysPassed = 0;
 			}
         }
 

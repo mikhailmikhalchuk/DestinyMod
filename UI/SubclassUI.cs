@@ -12,8 +12,13 @@ namespace TheDestinyMod.UI
     internal class SubclassUI : UIState
     {
 		public UIElement subclass;
-		public static bool over;
-		public static int num;
+
+		/// <summary>
+		/// 0: Arc<br></br>
+		/// 1: Solar<br></br>
+		/// 2: Void
+		/// </summary>
+		public int element;
 
 		/// <summary>
 		/// From top, bottom, right:<br></br>
@@ -21,7 +26,7 @@ namespace TheDestinyMod.UI
 		/// 4-6: Solar subclasses<br></br>
 		/// 7-9: Void subclasses
 		/// </summary>
-		public static int selectedWhich;
+		public int selectedSubclass;
 
 		public Texture2D selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
 		public Texture2D selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
@@ -29,13 +34,13 @@ namespace TheDestinyMod.UI
 		public Texture2D elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArc");
 		public Texture2D borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArcBorder");
 
-		public UIHoverImageButton selectionOneButton;
-		public UIHoverImageButton selectionTwoButton;
-		public UIHoverImageButton selectionThreeButton;
-		public UIHoverImageButton elementalBurnButton;
-		public UIImage border;
-		public UIImage selected;
-		public UIImage selectedSub;
+		private UIHoverImageButton selectionOneButton;
+		private UIHoverImageButton selectionTwoButton;
+		private UIHoverImageButton selectionThreeButton;
+		private UIHoverImageButton elementalBurnButton;
+		private UIImage border;
+		private UIImage selected;
+		private UIImage selectedSub;
 
         public override void OnInitialize() {
 			subclass = new UIElement();
@@ -114,15 +119,15 @@ namespace TheDestinyMod.UI
 			if (!Main.playerInventory) {
 				return;
 			}
-			switch (num) {
+			switch (element) {
 				case 0:
-					selectedWhich = 1;
+					selectedSubclass = 1;
 					break;
 				case 1:
-					selectedWhich = 4;
+					selectedSubclass = 4;
 					break;
 				case 2:
-					selectedWhich = 7;
+					selectedSubclass = 7;
 					break;
 			}
 			ChangeTextures();
@@ -133,15 +138,15 @@ namespace TheDestinyMod.UI
 			if (!Main.playerInventory) {
 				return;
 			}
-			switch (num) {
+			switch (element) {
 				case 0:
-					selectedWhich = 2;
+					selectedSubclass = 2;
 					break;
 				case 1:
-					selectedWhich = 5;
+					selectedSubclass = 5;
 					break;
 				case 2:
-					selectedWhich = 8;
+					selectedSubclass = 8;
 					break;
 			}
 			ChangeTextures();
@@ -152,15 +157,15 @@ namespace TheDestinyMod.UI
 			if (!Main.playerInventory) {
 				return;
 			}
-			switch (num) {
+			switch (element) {
 				case 0:
-					selectedWhich = 3;
+					selectedSubclass = 3;
 					break;
 				case 1:
-					selectedWhich = 6;
+					selectedSubclass = 6;
 					break;
 				case 2:
-					selectedWhich = 9;
+					selectedSubclass = 9;
 					break;
 			}
 			ChangeTextures();
@@ -175,9 +180,9 @@ namespace TheDestinyMod.UI
 				Main.NewText("Cannot change subclass while a boss is alive!", new Color(255, 0, 0));
 				return;
 			}
-			switch (num) {
+			switch (element) {
 				case 0:
-					num++;
+					element++;
 					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionISolar");
 					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIISolar");
 					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIISolar");
@@ -185,14 +190,14 @@ namespace TheDestinyMod.UI
 					borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolarBorder");
 					break;
 				case 1:
-					num++;
+					element++;
 					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIVoid");
 					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIVoid");
 					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIVoid");
 					elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnVoid");
 					break;
 				case 2:
-					num = 0;
+					element = 0;
 					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
 					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
 					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIArc");
@@ -212,16 +217,16 @@ namespace TheDestinyMod.UI
 				Main.NewText("Cannot change subclass while a boss is alive!", new Color(255, 0, 0));
 				return;
 			}
-			switch (num) {
+			switch (element) {
 				case 0:
-					num = 2;
+					element = 2;
 					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIVoid");
 					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIVoid");
 					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIVoid");
 					elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnVoid");
 					break;
 				case 1:
-                    num--;
+					element--;
                     selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
                     selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
                     selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIArc");
@@ -229,7 +234,7 @@ namespace TheDestinyMod.UI
 					borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArcBorder");
 					break;
 				case 2:
-					num--;
+					element--;
 					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionISolar");
 					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIISolar");
 					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIISolar");
@@ -248,7 +253,7 @@ namespace TheDestinyMod.UI
 			selected.Top.Set(57, 0f);
 			selected.Width.Set(48, 0f);
 			selected.Height.Set(48, 0f);
-			if (selectedWhich == 1 && num == 0 || selectedWhich == 4 && num == 1 || selectedWhich == 7 && num == 2) {
+			if (selectedSubclass == 1 && element == 0 || selectedSubclass == 4 && element == 1 || selectedSubclass == 7 && element == 2) {
 				selectedSub.Left.Set(280, 0f);
 				selectedSub.Top.Set(29, 0f);
 				selectedSub.Width.Set(48, 0f);
@@ -256,7 +261,7 @@ namespace TheDestinyMod.UI
 				subclass.Append(selectedSub);
 				subclass.Append(selected);
 			}
-			else if (selectedWhich == 2 && num == 0 || selectedWhich == 5 && num == 1 || selectedWhich == 8 && num == 2) {
+			else if (selectedSubclass == 2 && element == 0 || selectedSubclass == 5 && element == 1 || selectedSubclass == 8 && element == 2) {
 				selectedSub.Left.Set(280, 0f);
 				selectedSub.Top.Set(86, 0f);
 				selectedSub.Width.Set(48, 0f);
@@ -264,7 +269,7 @@ namespace TheDestinyMod.UI
 				subclass.Append(selectedSub);
 				subclass.Append(selected);
 			}
-			else if (selectedWhich == 3 && num == 0 || selectedWhich == 6 && num == 1 || selectedWhich == 9 && num == 2) {
+			else if (selectedSubclass == 3 && element == 0 || selectedSubclass == 6 && element == 1 || selectedSubclass == 9 && element == 2) {
 				selectedSub.Left.Set(308, 0f);
 				selectedSub.Top.Set(57, 0f);
 				selectedSub.Width.Set(48, 0f);

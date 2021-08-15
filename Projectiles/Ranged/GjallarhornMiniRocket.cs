@@ -16,21 +16,22 @@ namespace TheDestinyMod.Projectiles.Ranged
 			projectile.timeLeft = 200;
 			projectile.friendly = true;
 			projectile.ranged = true;
+			projectile.tileCollide = true;
 			projectile.scale = 0.5f;
+			projectile.penetrate = 1;
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity) {
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-            Main.PlaySound(SoundID.Item10, projectile.position);
-            projectile.Kill();
+        public override void Kill(int timeLeft) {
+			Main.PlaySound(SoundID.Item14, projectile.position);
+		}
+
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
+			projectile.Kill();
 			return true;
 		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			projectile.timeLeft = 1;
-        }
-
-        public override void AI() {
+		public override void AI() {
 			if (projectile.localAI[0] == 0f) {
 				AdjustMagnitude(ref projectile.velocity);
 				projectile.localAI[0] = 1f;

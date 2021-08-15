@@ -27,10 +27,9 @@ namespace TheDestinyMod.Projectiles.Ranged
 			projectile.extraUpdates = 1;
 			aiType = ProjectileID.Bullet;
 		}
-		
+
 		public override void Kill(int timeLeft) {
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-            Main.PlaySound(SoundID.Item10, projectile.position);
-        }
+			Main.PlaySound(SoundID.Item10, projectile.position);
+		}
 	}
 }

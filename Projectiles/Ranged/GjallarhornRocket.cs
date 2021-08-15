@@ -20,14 +20,17 @@ namespace TheDestinyMod.Projectiles.Ranged
 			projectile.ranged = true;
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity) {
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-            Main.PlaySound(SoundID.Item10, projectile.position);
-            projectile.Kill();
+		public override void Kill(int timeLeft) {
+			Main.PlaySound(SoundID.Item14, projectile.position);
+		}
+
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
+			projectile.Kill();
 			return true;
 		}
 
-        public override void AI() {
+		public override void AI() {
 			target = false;
 			if (projectile.localAI[0] == 0f) {
 				AdjustMagnitude(ref projectile.velocity);
@@ -43,7 +46,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 			}
 		}
 
-        public override void OnHitNPC(NPC uselessUnusedVariableThatIDontCareAboutButVisualStudioComplainsThatItConflictsWithTheOtherPreviousVariableThatWasDefinedSoIHaveToChangeItToThisUnusuallyLongName, int damage, float knockback, bool crit) {
+        public override void OnHitNPC(NPC npc, int damage, float knockback, bool crit) {
 			if (target) {
 				for (int i = 0; i < 5; i++) {
 					Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);

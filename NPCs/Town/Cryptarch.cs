@@ -99,17 +99,17 @@ namespace TheDestinyMod.NPCs.Town
 			DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 			if (!player.boughtCommon) {
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<CommonEngram>());
-            	shop.item[nextSlot].shopCustomPrice = 1000000;
+            	shop.item[nextSlot].shopCustomPrice = Item.buyPrice(gold: 5);
 			}
 			if (!player.boughtUncommon && NPC.downedBoss2) {
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<UncommonEngram>());
-				shop.item[nextSlot].shopCustomPrice = 1000000;
+				shop.item[nextSlot].shopCustomPrice = Item.buyPrice(gold: 20);
 			}
-			if (!player.boughtUncommon && NPC.downedMechBossAny) {
+			if (!player.boughtRare && NPC.downedMechBossAny) {
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<RareEngram>());
-				shop.item[nextSlot].shopCustomPrice = 1000000;
+				shop.item[nextSlot].shopCustomPrice = Item.buyPrice(platinum: 1);
 			}
 			nextSlot++;
 		}

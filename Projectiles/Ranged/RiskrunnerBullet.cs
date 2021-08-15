@@ -15,10 +15,8 @@ namespace TheDestinyMod.Projectiles.Ranged
             aiType = ProjectileID.Bullet;
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity) {
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
+        public override void Kill(int timeLeft) {
             Main.PlaySound(SoundID.Item10, projectile.position);
-            return true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {

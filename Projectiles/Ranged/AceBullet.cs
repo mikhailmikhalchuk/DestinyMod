@@ -15,17 +15,15 @@ namespace TheDestinyMod.Projectiles.Ranged
             aiType = ProjectileID.Bullet;
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity) {
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-            Main.PlaySound(SoundID.Item10, projectile.position);
-			return true;
-		}
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
                 Projectile.NewProjectile(target.position.X, target.position.Y, 0, 0, ProjectileID.DD2ExplosiveTrapT3Explosion, damage/2, 0, projectile.owner);
                 Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, target.position);
             }
+        }
+
+        public override void Kill(int timeLeft) {
+            Main.PlaySound(SoundID.Item10, projectile.position);
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {

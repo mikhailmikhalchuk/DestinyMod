@@ -19,19 +19,11 @@ namespace TheDestinyMod.Projectiles.Ranged
 			projectile.ranged = true;
 		}
 
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
+        public override void Kill(int timeLeft) {
 			Main.PlaySound(SoundID.Item10, projectile.position);
 			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
 			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
-			projectile.Kill();
-			return true;
 		}
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
-			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
-        }
 
         public override void AI() {
 			if (projectile.localAI[0] == 0f) {
