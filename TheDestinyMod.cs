@@ -377,6 +377,9 @@ namespace TheDestinyMod
             text.SetDefault("Gah, what's with {0}, {1}? He reminds me of ol' Zavala back at the Tower, always killing all the fun...");
             text.AddTranslation(GameCulture.Spanish, "Gah, ¿que pasa con {0}, {1}? Me recuerda al viejo Zavala allá en la Torre, siempre matando la diversión...");
             AddTranslation(text);
+            text = CreateTranslation("Drifter18");
+            text.SetDefault("We're being invaded! Find them before they find us.");
+            AddTranslation(text);
             text = CreateTranslation("DrifterMotes1");
             text.SetDefault("Thank you, {0}. I'll do something real special with these Motes, trust.");
             text.AddTranslation(GameCulture.Spanish, "Gracias, {0}. Haré algo realmente especial con estas motas, créeme.");
@@ -567,6 +570,7 @@ namespace TheDestinyMod
             Instance = null;
             NPCs.Town.AgentOfNine.shopItems.Clear();
             NPCs.Town.AgentOfNine.itemPrices.Clear();
+            NPCs.Town.AgentOfNine.itemCurrency.Clear();
             if (!Main.dedServ)
                 Main.OnTick -= Main_OnTick;
         }

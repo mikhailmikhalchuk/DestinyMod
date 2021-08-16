@@ -29,9 +29,12 @@ namespace TheDestinyMod.Projectiles.Super
             Lighting.AddLight(projectile.Center, Color.OrangeRed.ToVector3());
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity) {
+        public override void Kill(int timeLeft) {
             Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
             Main.PlaySound(SoundID.Item10, projectile.position);
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity) {
             Point checkTile = projectile.Center.ToTileCoordinates();
             bool youFailed = false;
             if (!WorldGen.EmptyTileCheck(checkTile.X, checkTile.X, checkTile.Y, checkTile.Y + 2)) {

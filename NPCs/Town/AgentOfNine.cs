@@ -123,11 +123,13 @@ namespace TheDestinyMod.NPCs.Town
 					itemCurrency.Add(TheDestinyMod.CipherCustomCurrencyId);
 					break;
 			}
+			TheDestinyMod.Logger.Debug($"Selected Weapon: {itemIds[0]}");
 			var items = new List<Item>();
 			foreach (int itemId in itemIds) {
 				Item item = new Item();
 				item.SetDefaults(itemId);
 				items.Add(item);
+				TheDestinyMod.Logger.Debug($"Item ID: {itemId}");
 			}
 			return items;
 		}
@@ -187,11 +189,13 @@ namespace TheDestinyMod.NPCs.Town
 		public override void SetupShop(Chest shop, ref int nextSlot) {
 			foreach (Item item in shopItems) {
 				if (item == null || item.type == ItemID.None) {
+					TheDestinyMod.Logger.Debug("The item just checked in SetupShop was either null or had type 0");
 					continue;
                 }
 				shop.item[nextSlot].SetDefaults(item.type);
                 shop.item[nextSlot].shopCustomPrice = itemPrices[nextSlot];
 				shop.item[nextSlot].shopSpecialCurrency = itemCurrency[nextSlot];
+				TheDestinyMod.Logger.Debug($"The item just checked in SetupShop was just added: {shop.item[nextSlot].Name}");
 				nextSlot++;
 			}
 		}

@@ -93,7 +93,7 @@ namespace TheDestinyMod.Projectiles.Magic
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/JotunnCharge5"), projectile.Center);
                 }
                 fired = true;
-                projectile.velocity = (10 * projectile.velocity * 2f) / 11f;
+                projectile.velocity = 10 * projectile.velocity * 2f / 11f;
                 AdjustMagnitude(ref projectile.velocity);
                 if (projectile.alpha > 70) {
                     projectile.alpha -= 15;
@@ -106,9 +106,7 @@ namespace TheDestinyMod.Projectiles.Magic
                     projectile.localAI[0] = 1f;
                 }
                 Vector2 move = Vector2.Zero;
-                float distance = 400f;
-                bool target = projectile.HomeInOnNPC(distance, ref move);
-                if (target) {
+                if (projectile.HomeInOnNPC(400f, ref move)) {
                     AdjustMagnitude(ref move);
                     projectile.velocity = (10 * projectile.velocity + move) / 11f;
                     AdjustMagnitude(ref projectile.velocity);

@@ -20,7 +20,7 @@ namespace TheDestinyMod
         public static bool HomeInOnNPC(this Projectile projectile, float distance, ref Vector2 move) {
             bool target = false;
             for (int k = 0; k < 200; k++) {
-                if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5 && Main.npc[k].damage > 0 && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, Main.npc[k].position, Main.npc[k].width, Main.npc[k].height)) {
+                if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5 && Main.npc[k].damage > 0 && Collision.CanHitLine(projectile.Center, 1, 1, Main.npc[k].Center, 1, 1) && Main.npc[k].CanBeChasedBy(projectile)) {
                     Vector2 newMove = Main.npc[k].Center - projectile.Center;
                     float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                     if (distanceTo < distance) {

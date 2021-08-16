@@ -92,6 +92,9 @@ namespace TheDestinyMod.NPCs.Town
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter11"));
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter12"));
 			}
+			if (Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0) {
+				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter18"));
+			}
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter1"));
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter2", gender));
 			dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter3"));

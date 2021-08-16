@@ -40,9 +40,7 @@ namespace TheDestinyMod.Projectiles
                     projectile.localAI[0] = 1f;
                 }
                 Vector2 move = Vector2.Zero;
-                float distance = 200f;
-                bool target = projectile.HomeInOnNPC(distance, ref move);
-                if (target) {
+                if (projectile.HomeInOnNPC(200f, ref move)) {
                     AdjustMagnitude(ref move);
                     projectile.velocity = (10 * projectile.velocity + move) / 11f;
                     AdjustMagnitude(ref projectile.velocity);

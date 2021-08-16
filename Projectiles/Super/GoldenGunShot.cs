@@ -15,10 +15,9 @@ namespace TheDestinyMod.Projectiles.Super
             aiType = ProjectileID.DD2FlameBurstTowerT1Shot;
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity) {
+        public override void Kill(int timeLeft) {
             Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
             Main.PlaySound(SoundID.Item10, projectile.position);
-            return true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
