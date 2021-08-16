@@ -47,5 +47,6 @@ Decreased the prices of the common and uncommon engrams
 The Cryptarch's decryption slot is now colored blue instead of red
 All bullets now play impact sounds when they hit anything as opposed to on hitting tiles
 Changed a few projectile sound effects
+Gjallarhorn's mini rockets now don't home or collide with any NPCs for the first 10 ticks they are alive
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

@@ -59,15 +59,15 @@ namespace TheDestinyMod.Projectiles.Ranged
 			}
 			else {
 				if (Main.rand.NextBool()) {
-					int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1f);
-					Main.dust[dustIndex].scale = 0.1f + Main.rand.Next(5) * 0.1f;
-					Main.dust[dustIndex].fadeIn = 1.5f + Main.rand.Next(5) * 0.1f;
-					Main.dust[dustIndex].noGravity = true;
-					Main.dust[dustIndex].position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2)).RotatedBy(projectile.rotation, default(Vector2)) * 1.1f;
-					dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 1f);
-					Main.dust[dustIndex].scale = 1f + Main.rand.Next(5) * 0.1f;
-					Main.dust[dustIndex].noGravity = true;
-					Main.dust[dustIndex].position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2 - 6)).RotatedBy(projectile.rotation, default(Vector2)) * 1.1f;
+					Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+					dust.scale = 0.1f + Main.rand.Next(5) * 0.1f;
+					dust.fadeIn = 1.5f + Main.rand.Next(5) * 0.1f;
+					dust.noGravity = true;
+					dust.position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2)).RotatedBy(projectile.rotation, default) * 1.1f;
+					dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 1f);
+					dust.scale = 1f + Main.rand.Next(5) * 0.1f;
+					dust.noGravity = true;
+					dust.position = projectile.Center + new Vector2(0f, (float)(-(float)projectile.height / 2 - 6)).RotatedBy(projectile.rotation, default) * 1.1f;
 				}
 			}
 			projectile.ai[0] += 1f;
@@ -91,33 +91,33 @@ namespace TheDestinyMod.Projectiles.Ranged
 		public override void Kill(int timeLeft) {
 			Main.PlaySound(SoundID.Item14, projectile.position);
 			for (int i = 0; i < 50; i++) {
-				int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[dustIndex].velocity *= 1.4f;
+				Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, default, 2f);
+				dust.velocity *= 1.4f;
 			}
 			for (int i = 0; i < 80; i++) {
-				int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 3f);
-				Main.dust[dustIndex].noGravity = true;
-				Main.dust[dustIndex].velocity *= 5f;
-				dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[dustIndex].velocity *= 3f;
+				Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 3f);
+				dust.noGravity = true;
+				dust.velocity *= 5f;
+				dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 2f);
+				dust.velocity *= 3f;
 			}
 			for (int g = 0; g < 2; g++) {
-				int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[goreIndex].scale = 1.5f;
-				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
-				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[goreIndex].scale = 1.5f;
-				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
-				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[goreIndex].scale = 1.5f;
-				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
-				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
-				goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[goreIndex].scale = 1.5f;
-				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
-				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
+				Gore gore = Gore.NewGoreDirect(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
+				gore.scale = 1.5f;
+				gore.velocity.X = gore.velocity.X + 1.5f;
+				gore.velocity.Y = gore.velocity.Y + 1.5f;
+				gore = Gore.NewGoreDirect(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
+				gore.scale = 1.5f;
+				gore.velocity.X = gore.velocity.X - 1.5f;
+				gore.velocity.Y = gore.velocity.Y + 1.5f;
+				gore = Gore.NewGoreDirect(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
+				gore.scale = 1.5f;
+				gore.velocity.X = gore.velocity.X + 1.5f;
+				gore.velocity.Y = gore.velocity.Y - 1.5f;
+				gore = Gore.NewGoreDirect(new Vector2(projectile.position.X + (projectile.width / 2) - 24f, projectile.position.Y + (projectile.height / 2) - 24f), default, Main.rand.Next(61, 64), 1f);
+				gore.scale = 1.5f;
+				gore.velocity.X = gore.velocity.X - 1.5f;
+				gore.velocity.Y = gore.velocity.Y - 1.5f;
 			}
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;

@@ -30,21 +30,21 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shootSpeed = 16f;
 			item.scale = 0.65f;
 			item.useAmmo = AmmoID.Arrow;
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SacredShot");
 		}
 
         public override bool AltFunctionUse(Player player) {
 			return true;
         }
 
-		//test this
-        public override bool UseItem(Player player) {
-			if (player.altFunctionUse == 2 && !Main.dedServ) {
-				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/CausalityShot"), player.position);
+        public override bool CanUseItem(Player player) {
+			if (player.altFunctionUse == 2) {
+				item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/CausalityShot");
 			}
-			else if (player.altFunctionUse != 2 && !Main.dedServ) {
-				Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SacredShot"), player.position);
+			else {
+				item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/SacredShot");
 			}
-			return base.UseItem(player);
+			return base.CanUseItem(player);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {

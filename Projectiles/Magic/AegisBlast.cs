@@ -69,7 +69,7 @@ namespace TheDestinyMod.Projectiles.Magic
         public override void Kill(int timeLeft) {
             Main.PlaySound(SoundID.Item14, projectile.position);
             for (int i = 0; i < 100; i++) {
-                Dust dust = Dust.NewDustDirect(projectile.Center, 6, 6, 132, Alpha: 100, Scale: 1.3f);
+                Dust dust = Dust.NewDustDirect(projectile.Center, 6, 6, DustID.Firework_Blue, Alpha: 100, Scale: 1.3f);
                 float dustX = dust.velocity.X;
                 float dustY = dust.velocity.Y;
                 if (dustX == 0f && dustY == 0f) {

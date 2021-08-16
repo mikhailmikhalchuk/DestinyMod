@@ -20,6 +20,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 		}
 
         public override void Kill(int timeLeft) {
+			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
 			Main.PlaySound(SoundID.Item10, projectile.position);
 			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
 			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);

@@ -23,6 +23,18 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void Kill(int timeLeft) {
 			Main.PlaySound(SoundID.Item14, projectile.position);
+			projectile.position = projectile.Center;
+			projectile.width = 11;
+			projectile.height = 11;
+			projectile.position.X -= projectile.width / 2;
+			projectile.position.Y -= projectile.height / 2;
+			for (int i = 0; i < 20; i++) {
+				Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 3.5f);
+				dust.noGravity = true;
+				dust.velocity *= 7f;
+				dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 1.5f);
+				dust.velocity *= 3f;
+			}
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -31,7 +43,14 @@ namespace TheDestinyMod.Projectiles.Ranged
 			return true;
 		}
 
-		public override void AI() {
+        public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			if (projectile.timeLeft > 190)
+				hitbox = Rectangle.Empty;
+        }
+
+        public override void AI() {
+			if (projectile.timeLeft > 190)
+				return;
 			if (projectile.localAI[0] == 0f) {
 				AdjustMagnitude(ref projectile.velocity);
 				projectile.localAI[0] = 1f;
