@@ -10,7 +10,6 @@ namespace TheDestinyMod.Projectiles
 {
     public class SIVANanite : ModProjectile
     {
-
         public override string Texture => "Terraria/Projectile_" + ProjectileID.SnowBallFriendly;
 
         public override void SetStaticDefaults() {
@@ -20,7 +19,6 @@ namespace TheDestinyMod.Projectiles
 
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
-            projectile.timeLeft = 500;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.ranged = true;
@@ -30,36 +28,25 @@ namespace TheDestinyMod.Projectiles
 
         public override void AI() {
             projectile.localAI[1]++;
-            if (projectile.localAI[0] == 0f) {
-                AdjustMagnitude(ref projectile.velocity);
-                projectile.localAI[0] = 1f;
+            bool target = projectile.HomeInOnNPC(200f, 15f, false);
+            if (!target && projectile.velocity.X < 0.25 && projectile.alpha < 200) {
+                projectile.velocity.Y = Utils.Clamp(projectile.velocity.Y, -9999999, 0);
             }
-            Vector2 move = Vector2.Zero;
-            bool target = projectile.HomeInOnNPC(200f, ref move);
-            if (target) {
-                AdjustMagnitude(ref move);
-                projectile.velocity = (10 * projectile.velocity + move) / 11f;
-                AdjustMagnitude(ref projectile.velocity);
+            if (projectile.localAI[1] > 400) {
+                projectile.alpha += 2;
             }
-            if (!target && projectile.velocity.X > 0 && projectile.localAI[1] > 1) {
-                projectile.velocity.X -= 0.5f;
+            if (projectile.alpha >= 255) {
+                projectile.Kill();
             }
-            if (!target && projectile.velocity.Y > 0 && projectile.localAI[1] > 1) {
-                projectile.velocity.Y -= 0.5f;
-            }
-            if (!target && projectile.velocity.X < 0 && projectile.localAI[1] > 3) {
-                projectile.velocity.X = 0f;
-            }
-            if (!target && projectile.velocity.Y < 0 && projectile.localAI[1] > 3) {
-                projectile.velocity.Y = 0f;
-            }
+            projectile.rotation += 0.1f;
+            projectile.Center = projectile.Center + Vector2.UnitX.RotatedBy(projectile.rotation, Vector2.Zero) * 0.5f;
         }
 
-        private void AdjustMagnitude(ref Vector2 vector) {
-            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 15f) {
-                vector *= 15f / magnitude;
-            }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+            Dust dust = Dust.NewDustDirect(projectile.Center, 1, 1, DustID.RedTorch); //different dust
+            dust.noGravity = true;
+            dust.fadeIn = 1f;
+            return base.PreDraw(spriteBatch, lightColor);
         }
 
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {

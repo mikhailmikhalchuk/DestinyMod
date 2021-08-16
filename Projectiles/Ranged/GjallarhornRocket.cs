@@ -43,18 +43,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 		}
 
 		public override void AI() {
-			target = false;
-			if (projectile.localAI[0] == 0f) {
-				AdjustMagnitude(ref projectile.velocity);
-				projectile.localAI[0] = 1f;
-			}
-			Vector2 move = Vector2.Zero;
-			target = projectile.HomeInOnNPC(400f, ref move);
-			if (target) {
-				AdjustMagnitude(ref move);
-				projectile.velocity = (10 * projectile.velocity + move) / 11f;
-				AdjustMagnitude(ref projectile.velocity);
-			}
+			target = projectile.HomeInOnNPC(400f, 20f);
 		}
 
         public override void OnHitNPC(NPC npc, int damage, float knockback, bool crit) {
@@ -65,12 +54,5 @@ namespace TheDestinyMod.Projectiles.Ranged
 				}
 			}
         }
-
-        private void AdjustMagnitude(ref Vector2 vector) {
-			float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-			if (magnitude > 20f) {
-				vector *= 20f / magnitude;
-			}
-		}
     }
 }

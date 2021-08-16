@@ -23,9 +23,9 @@ namespace TheDestinyMod.Projectiles.Ranged
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if (!target.friendly && target.damage > 0 && target.life <= 0 && crit || !target.friendly && target.damage > 0 && crit && Main.rand.NextBool(3)) {
+            if (!target.friendly && target.damage > 0 && target.life <= 0 && (crit || Main.rand.NextBool(5))) {
                 for (int k = 0; k < 4; k++) {
-                    Vector2 velocity = Main.rand.NextVector2Unit() * 150f;
+                    Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
                     Projectile.NewProjectile(target.position, velocity, ModContent.ProjectileType<SIVANanite>(), 20, 0, Main.LocalPlayer.whoAmI);
                 }
             }

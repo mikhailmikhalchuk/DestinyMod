@@ -320,7 +320,6 @@ namespace TheDestinyMod
 					TheDestinyMod.Instance.SubclassUI.borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolarBorder");
 					break;
 				case 2:
-					
 					TheDestinyMod.Instance.SubclassUI.selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIVoid");
 					TheDestinyMod.Instance.SubclassUI.selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIVoid");
 					TheDestinyMod.Instance.SubclassUI.selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIVoid");

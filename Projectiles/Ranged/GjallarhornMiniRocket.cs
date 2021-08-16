@@ -51,23 +51,8 @@ namespace TheDestinyMod.Projectiles.Ranged
         public override void AI() {
 			if (projectile.timeLeft > 190)
 				return;
-			if (projectile.localAI[0] == 0f) {
-				AdjustMagnitude(ref projectile.velocity);
-				projectile.localAI[0] = 1f;
-			}
-			Vector2 move = Vector2.Zero;
-			if (projectile.HomeInOnNPC(400f, ref move)) {
-				AdjustMagnitude(ref move);
-				projectile.velocity = (10 * projectile.velocity + move) / 11f;
-				AdjustMagnitude(ref projectile.velocity);
-			}
-		}
 
-        private void AdjustMagnitude(ref Vector2 vector) {
-			float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-			if (magnitude > 20f) {
-				vector *= 20f / magnitude;
-			}
+			projectile.HomeInOnNPC(400f, 20f);
 		}
     }
 }

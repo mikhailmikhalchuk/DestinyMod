@@ -84,7 +84,7 @@ namespace TheDestinyMod.Projectiles.Magic
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/JotunnCharge4"), projectile.Center);
                 }
                 fired = true;
-                projectile.velocity = (10 * projectile.velocity * 2f) / 11f;
+                projectile.velocity = 10 * projectile.velocity * 2f / 11f;
                 AdjustMagnitude(ref projectile.velocity);
                 Main.projectile[projectile.identity].aiStyle = ProjectileID.WoodenArrowFriendly;
             }
@@ -101,16 +101,7 @@ namespace TheDestinyMod.Projectiles.Magic
                         projectile.alpha = 70;
                     }
                 }
-                if (projectile.localAI[0] == 0f) {
-                    AdjustMagnitude(ref projectile.velocity);
-                    projectile.localAI[0] = 1f;
-                }
-                Vector2 move = Vector2.Zero;
-                if (projectile.HomeInOnNPC(400f, ref move)) {
-                    AdjustMagnitude(ref move);
-                    projectile.velocity = (10 * projectile.velocity + move) / 11f;
-                    AdjustMagnitude(ref projectile.velocity);
-                }
+                projectile.HomeInOnNPC(400f, 20f);
             }
         }
 
