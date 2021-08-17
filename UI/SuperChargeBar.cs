@@ -65,7 +65,7 @@ namespace TheDestinyMod.UI
 		}
 
 		public override void Update(GameTime gameTime) {
-            if (DestinyConfig.Instance.superBarText) {
+            if (DestinyConfig.Instance.SuperBarText) {
                 var modPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 
                 text.SetText($"Super: {modPlayer.superChargeCurrent} / {100}");

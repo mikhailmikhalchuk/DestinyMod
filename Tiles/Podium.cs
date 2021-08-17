@@ -88,11 +88,11 @@ namespace TheDestinyMod.Tiles
 			}*/
 			toDeposit = 0;
 			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-			if (!DestinyConfig.Instance.guardianGamesConfig) {
+			if (!DestinyConfig.Instance.GuardianGamesConfig) {
 				Main.NewText("You must opt-in to the Guardian Games from the config menu.", new Color(255, 0, 0));
 				return true;
 			}
-			if (DestinyConfig.Instance.guardianGamesConfig && TheDestinyMod.guardianGameError) {
+			if (DestinyConfig.Instance.GuardianGamesConfig && TheDestinyMod.guardianGameError) {
 				Main.NewText("You must reload the mod after enabling the config toggle.", new Color(255, 0, 0));
 				return true;
 			}

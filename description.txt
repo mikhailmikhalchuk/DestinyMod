@@ -50,5 +50,6 @@ Changed a few projectile sound effects
 Gjallarhorn's mini rockets now don't home or collide with any NPCs for the first 10 ticks they are alive
 Decreased Gjallarhorn's speed and increased its damage
 Drifter now has unique dialogue if there is an invasion ongoing in the world
+Fixed an issue where Graviton Lance would summon its "Void Seeker" projectile regardless of whether the bullet got the kill or not
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

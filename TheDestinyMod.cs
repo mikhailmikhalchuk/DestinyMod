@@ -62,7 +62,7 @@ namespace TheDestinyMod
             On.Terraria.UI.ItemSlot.RightClick_ItemArray_int_int += ItemSlot_RightClick_ItemArray_int_int;
             On.Terraria.GameContent.UI.Elements.UICharacterListItem.DrawSelf += UICharacterListItem_DrawSelf;
             if (!Main.dedServ) {
-                if (DestinyConfig.Instance.guardianGamesConfig) {
+                if (DestinyConfig.Instance.GuardianGamesConfig) {
                     try {
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://DestinyModServer.mikhailmcraft.repl.co");
                         request.Method = "GET";
@@ -546,7 +546,7 @@ namespace TheDestinyMod
             if (!Main.LocalPlayer.armor.IndexInRange(slot))
                 return;
             if (Main.LocalPlayer.armor[slot].modItem is IClassArmor armor) {
-                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.restrictClassItems && context == 9) {
+                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.RestrictClassItems && context == 9) {
                     return;
                 }
             }
@@ -578,7 +578,7 @@ namespace TheDestinyMod
         private void ItemSlot_LeftClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (Main.mouseItem.modItem is IClassArmor armor) {
-                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.restrictClassItems && context == 8) {
+                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.RestrictClassItems && context == 8) {
                     return;
                 }
             }
@@ -589,7 +589,7 @@ namespace TheDestinyMod
             success = false;
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (item.modItem is IClassArmor armor) {
-                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.restrictClassItems) {
+                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.RestrictClassItems) {
                     return item;
                 }
             }

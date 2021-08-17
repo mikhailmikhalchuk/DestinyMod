@@ -44,7 +44,7 @@ namespace TheDestinyMod.Items.Armor
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != DestinyClassType.Titan && DestinyConfig.Instance.restrictClassItems) {
+			if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != DestinyClassType.Titan && DestinyConfig.Instance.RestrictClassItems) {
 				tooltips.Add(new TooltipLine(mod, "HasClass", "You must be a Titan to equip this") { overrideColor = new Color(255, 0, 0) });
 			}
 		}

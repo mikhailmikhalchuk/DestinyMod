@@ -19,34 +19,32 @@ namespace TheDestinyMod
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
         [Tooltip("Adds text under the super resource bar")]
-        public bool superBarText;
+        public bool SuperBarText { get; set; }
 
         [Label("Notify on Charge")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
         [Tooltip("Notifies you in chat when your super is charged")]
-        public bool notifyOnSuper;
+        public bool NotifyOnSuper { get; set; }
 
         [Header("Gameplay")]
         [Label("Restrict Items")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
         [Tooltip("Restricts certain items to specific classes")]
-        public bool restrictClassItems;
+        public bool RestrictClassItems { get; set; }
 
         [Label("Guardian Games")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
         [ReloadRequired]
         [Tooltip("Allows you to participate in the Guardian Games\n-This will make a request to a server every time the mod is reloaded\n-Your public IP address WILL be exposed, but we do not collect or identify it\n-Enables laurel dropping from enemies")]
-        public bool guardianGamesConfig;
+        public bool GuardianGamesConfig { get; set; }
 
         [Label("Sepiks Death Animation")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
         [Tooltip("Enables Sepiks Prime's unique death animation")]
-        public bool sepiksDeathAnimation;
-
-        public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref string message) => true;
+        public bool SepiksDeathAnimation { get; set; }
     }
 }

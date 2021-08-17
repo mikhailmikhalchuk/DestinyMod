@@ -41,9 +41,11 @@ namespace TheDestinyMod
                     vector *= maxM / magnitude;
                 }
             }
-            AdjustMagnitude(ref move);
-            projectile.velocity = (10 * projectile.velocity + move) / 11f;
-            AdjustMagnitude(ref projectile.velocity);
+            if (target) {
+                AdjustMagnitude(ref move);
+                projectile.velocity = (10 * projectile.velocity + move) / 11f;
+                AdjustMagnitude(ref projectile.velocity);
+            }
             return target;
         }
 

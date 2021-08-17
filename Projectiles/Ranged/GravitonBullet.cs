@@ -16,9 +16,8 @@ namespace TheDestinyMod.Projectiles.Ranged
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            Projectile.NewProjectile(target.position, new Vector2(0, 0), ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Main.LocalPlayer.whoAmI);
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
-                Projectile.NewProjectile(target.position, new Vector2(0, 0), ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Main.LocalPlayer.whoAmI);
+                Projectile.NewProjectile(target.Center, new Vector2(0, 0), ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Main.LocalPlayer.whoAmI);
             }
         }
 

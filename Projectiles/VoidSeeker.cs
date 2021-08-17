@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -33,23 +33,35 @@ namespace TheDestinyMod.Projectiles
         }
 
         public override void AI() {
+            if (projectile.velocity.Y == 0) {
+                projectile.velocity.X *= 0.98f;
+            }
             if (!dye) {
                 if (!projectile.HomeInOnNPC(200f, 15f)) {
-                    projectile.velocity.Y += 0.25f;
+                    projectile.velocity.Y += 0.2f;
                 }
             }
             else {
                 projectile.velocity *= 0;
             }
+            if (Main.rand.NextBool(7)) {
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.PurpleTorch, projectile.velocity.X, projectile.velocity.Y);
+                dust.noGravity = true;
+            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             projectile.timeLeft = 1000000;
+            projectile.position = projectile.Center;
+            projectile.width = 44;
+            projectile.height = 44;
+            projectile.position.X -= projectile.width / 2;
+            projectile.position.Y -= projectile.height / 2;
             projectile.tileCollide = false;
             dye = true;
             Main.PlaySound(SoundID.Item14, projectile.position);
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
-                Projectile.NewProjectile(target.position, new Vector2(0, 0), ModContent.ProjectileType<VoidSeeker>(), damage, knockback, Main.LocalPlayer.whoAmI);
+                Projectile.NewProjectile(target.Center, new Vector2(0, 0), ModContent.ProjectileType<VoidSeeker>(), damage, knockback, Main.LocalPlayer.whoAmI);
             }
         }
 
@@ -58,10 +70,6 @@ namespace TheDestinyMod.Projectiles
                 return false;
             }
             return null;
-        }
-
-        public override bool CanHitPlayer(Player target) {
-            return !dye;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
@@ -82,6 +90,11 @@ namespace TheDestinyMod.Projectiles
                     projectile.Kill();
                 }
             }
+        }
+
+        public override void Kill(int timeLeft) {
+            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
+            Main.PlaySound(SoundID.Item10, projectile.position);
         }
     }
 }

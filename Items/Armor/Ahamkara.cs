@@ -28,7 +28,7 @@ namespace TheDestinyMod.Items.Armor
 		}
 
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != DestinyClassType.Warlock && DestinyConfig.Instance.restrictClassItems) {
+			if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != DestinyClassType.Warlock && DestinyConfig.Instance.RestrictClassItems) {
 				tooltips.Add(new TooltipLine(mod, "HasClass", "You must be a Warlock to equip this") { overrideColor = new Color(255, 0, 0) });
 			}
 		}
