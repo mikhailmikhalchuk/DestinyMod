@@ -57,7 +57,7 @@ namespace TheDestinyMod.UI
 			selectionOneButton.Top.Set(29, 0f);
 			selectionOneButton.Width.Set(48, 0f);
 			selectionOneButton.Height.Set(48, 0f);
-			selectionOneButton.OnClick += new MouseEvent(SelectionOneClicked);
+			selectionOneButton.OnClick += SelectionOneClicked;
 			subclass.Append(selectionOneButton);
 			
 			selectionTwoButton = new UIHoverImageButton(selectionTwoTexture, Language.GetTextValue("LegacyMisc.53"));
@@ -65,7 +65,7 @@ namespace TheDestinyMod.UI
 			selectionTwoButton.Top.Set(86, 0f);
 			selectionTwoButton.Width.Set(40, 0f);
 			selectionTwoButton.Height.Set(40, 0f);
-			selectionTwoButton.OnClick += new MouseEvent(SelectionTwoClicked);
+			selectionTwoButton.OnClick += SelectionTwoClicked;
 			subclass.Append(selectionTwoButton);
 			
 			selectionThreeButton = new UIHoverImageButton(selectionThreeTexture, Language.GetTextValue("LegacyMisc.53"));
@@ -73,7 +73,7 @@ namespace TheDestinyMod.UI
 			selectionThreeButton.Top.Set(57, 0f);
 			selectionThreeButton.Width.Set(48, 0f);
 			selectionThreeButton.Height.Set(48, 0f);
-			selectionThreeButton.OnClick += new MouseEvent(SelectionThreeClicked);
+			selectionThreeButton.OnClick += SelectionThreeClicked;
 			subclass.Append(selectionThreeButton);
 			
 			elementalBurnButton = new UIHoverImageButton(elementalBurnTexture, "Switch");
@@ -81,8 +81,8 @@ namespace TheDestinyMod.UI
 			elementalBurnButton.Top.Set(57, 0f);
 			elementalBurnButton.Width.Set(58, 0f);
 			elementalBurnButton.Height.Set(58, 0f);
-			elementalBurnButton.OnClick += new MouseEvent(ElementalBurnClicked);
-			elementalBurnButton.OnRightClick += new MouseEvent(ElementalBurnRightClicked);
+			elementalBurnButton.OnClick += ElementalBurnClicked;
+			elementalBurnButton.OnRightClick += ElementalBurnRightClicked;
 			subclass.Append(elementalBurnButton);
 
 			border = new UIImage(borderTexture);

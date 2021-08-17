@@ -543,8 +543,10 @@ namespace TheDestinyMod
 
         private void ItemSlot_RightClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_RightClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-            if (!Main.LocalPlayer.armor.IndexInRange(slot))
+            if (!Main.LocalPlayer.armor.IndexInRange(slot)) {
+                orig.Invoke(inv, context, slot);
                 return;
+            }
             if (Main.LocalPlayer.armor[slot].modItem is IClassArmor armor) {
                 if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.RestrictClassItems && context == 9) {
                     return;
