@@ -9,6 +9,8 @@ namespace TheDestinyMod.Items
 {
     public class OrbOfPower : ModItem
     {
+        public Player OrbOwner { get; set; }
+
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Orb of Power");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 19));
@@ -24,7 +26,7 @@ namespace TheDestinyMod.Items
 
         public override bool CanPickup(Player player) {
             DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
-            return dPlayer.superChargeCurrent < 100 && dPlayer.superActiveTime == 0;
+            return dPlayer.superChargeCurrent < 100 && dPlayer.superActiveTime == 0 && player != OrbOwner;
         }
 
         public override bool OnPickup(Player player) {

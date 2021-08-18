@@ -11,7 +11,7 @@ namespace TheDestinyMod.UI
 {
     internal class SubclassUI : UIState
     {
-		public UIElement subclass;
+		public UIPanel subclass;
 
 		/// <summary>
 		/// 0: Arc<br></br>
@@ -31,267 +31,36 @@ namespace TheDestinyMod.UI
 		public Texture2D selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
 		public Texture2D selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
 		public Texture2D selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIArc");
-		public Texture2D elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArc");
+		public Texture2D elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ArcSubclassIcon");
 		public Texture2D borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArcBorder");
 
-		private UIHoverImageButton selectionOneButton;
-		private UIHoverImageButton selectionTwoButton;
-		private UIHoverImageButton selectionThreeButton;
-		private UIHoverImageButton elementalBurnButton;
-		private UIImage border;
-		private UIImage selected;
-		private UIImage selectedSub;
-
         public override void OnInitialize() {
-			subclass = new UIElement();
+			subclass = new UIPanel();
 			subclass.SetPadding(0);
-			subclass.Left.Set(350, 0f);
-			subclass.Top.Set(20, 0f);
-			subclass.Width.Set(400, 0f);
+			subclass.Left.Set(1100, 0f);
+			subclass.Top.Set(500, 0f);
+			subclass.Width.Set(500, 0f);
 			subclass.Height.Set(300, 0f);
+			subclass.BackgroundColor = Terraria.ModLoader.UI.UICommon.MainPanelBackground;
 
-			Texture2D selectedTexture = ModContent.GetTexture("TheDestinyMod/UI/Selected");
-			
-			selectionOneButton = new UIHoverImageButton(selectionOneTexture, Language.GetTextValue("LegacyMisc.53"));
-			selectionOneButton.Left.Set(280, 0f);
-			selectionOneButton.Top.Set(29, 0f);
-			selectionOneButton.Width.Set(48, 0f);
-			selectionOneButton.Height.Set(48, 0f);
-			selectionOneButton.OnClick += SelectionOneClicked;
-			subclass.Append(selectionOneButton);
-			
-			selectionTwoButton = new UIHoverImageButton(selectionTwoTexture, Language.GetTextValue("LegacyMisc.53"));
-			selectionTwoButton.Left.Set(280, 0f);
-			selectionTwoButton.Top.Set(86, 0f);
-			selectionTwoButton.Width.Set(40, 0f);
-			selectionTwoButton.Height.Set(40, 0f);
-			selectionTwoButton.OnClick += SelectionTwoClicked;
-			subclass.Append(selectionTwoButton);
-			
-			selectionThreeButton = new UIHoverImageButton(selectionThreeTexture, Language.GetTextValue("LegacyMisc.53"));
-			selectionThreeButton.Left.Set(308, 0f);
-			selectionThreeButton.Top.Set(57, 0f);
-			selectionThreeButton.Width.Set(48, 0f);
-			selectionThreeButton.Height.Set(48, 0f);
-			selectionThreeButton.OnClick += SelectionThreeClicked;
-			subclass.Append(selectionThreeButton);
-			
-			elementalBurnButton = new UIHoverImageButton(elementalBurnTexture, "Switch");
-			elementalBurnButton.Left.Set(252, 0f);
-			elementalBurnButton.Top.Set(57, 0f);
-			elementalBurnButton.Width.Set(58, 0f);
-			elementalBurnButton.Height.Set(58, 0f);
-			elementalBurnButton.OnClick += ElementalBurnClicked;
-			elementalBurnButton.OnRightClick += ElementalBurnRightClicked;
-			subclass.Append(elementalBurnButton);
-
-			border = new UIImage(borderTexture);
-			border.Left.Set(239, 0f);
-			border.Top.Set(16, 0f);
-			border.Width.Set(139, 0f);
-			border.Height.Set(139, 0f);
-			subclass.Append(border);
-
-			selected = new UIImage(selectedTexture);
-			selected.Left.Set(252, 0f);
-			selected.Top.Set(57, 0f);
-			selected.Width.Set(48, 0f);
-			selected.Height.Set(48, 0f);
-
-			selectedSub = new UIImage(selectedTexture);
-			selectedSub.Left.Set(280, 0f);
-			selectedSub.Top.Set(29, 0f);
-			selectedSub.Width.Set(48, 0f);
-			selectedSub.Height.Set(48, 0f);
+			UIImage elementalBurn = new UIImage(elementalBurnTexture);
+			elementalBurn.Left.Set(10, 0f);
+			elementalBurn.Top.Set(10, 0f);
+			elementalBurn.Width.Set(76, 0f);
+			elementalBurn.Height.Set(76, 0f);
+			subclass.Append(elementalBurn);
 
 			Append(subclass);
 		}
 
-        public override void Update(GameTime gameTime) {
-			base.Update(gameTime);
+        public override void Draw(SpriteBatch spriteBatch) {
+			base.Draw(spriteBatch);
+			CalculatedStyle dims = subclass.GetDimensions();
 
-			if (elementalBurnButton.IsMouseHovering || selectionOneButton.IsMouseHovering || selectionTwoButton.IsMouseHovering || selectionThreeButton.IsMouseHovering) {
-				Main.LocalPlayer.mouseInterface = true;
-			}
-        }
-
-        private void SelectionOneClicked(UIMouseEvent evt, UIElement listeningElement) {
-			if (!Main.playerInventory) {
-				return;
-			}
-			switch (element) {
-				case 0:
-					selectedSubclass = 1;
-					break;
-				case 1:
-					selectedSubclass = 4;
-					break;
-				case 2:
-					selectedSubclass = 7;
-					break;
-			}
-			ChangeTextures();
-			Main.PlaySound(SoundID.MenuTick);
+			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBold, "SHADEBINDER", dims.X + 90, dims.Y + 15, Color.White, Color.Transparent, Vector2.Zero, 0.6f);
+			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, "WARLOCK SUBCLASS", dims.X + 90, dims.Y + 60, Color.Gray, Color.Transparent, Vector2.Zero, 0.5f);
 		}
-
-		private void SelectionTwoClicked(UIMouseEvent evt, UIElement listeningElement) {
-			if (!Main.playerInventory) {
-				return;
-			}
-			switch (element) {
-				case 0:
-					selectedSubclass = 2;
-					break;
-				case 1:
-					selectedSubclass = 5;
-					break;
-				case 2:
-					selectedSubclass = 8;
-					break;
-			}
-			ChangeTextures();
-			Main.PlaySound(SoundID.MenuTick);
-		}
-
-		private void SelectionThreeClicked(UIMouseEvent evt, UIElement listeningElement) {
-			if (!Main.playerInventory) {
-				return;
-			}
-			switch (element) {
-				case 0:
-					selectedSubclass = 3;
-					break;
-				case 1:
-					selectedSubclass = 6;
-					break;
-				case 2:
-					selectedSubclass = 9;
-					break;
-			}
-			ChangeTextures();
-			Main.PlaySound(SoundID.MenuTick);
-		}
-
-		private void ElementalBurnClicked(UIMouseEvent evt, UIElement listeningElement) {
-			if (!Main.playerInventory) {
-				return;
-			}
-			if (NPC.AnyDanger() && !Main.dedServ) {
-				Main.NewText("Cannot change subclass while a boss is alive!", new Color(255, 0, 0));
-				return;
-			}
-			switch (element) {
-				case 0:
-					element++;
-					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionISolar");
-					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIISolar");
-					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIISolar");
-					elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolar");
-					borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolarBorder");
-					break;
-				case 1:
-					element++;
-					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIVoid");
-					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIVoid");
-					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIVoid");
-					elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnVoid");
-					break;
-				case 2:
-					element = 0;
-					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
-					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
-					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIArc");
-					elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArc");
-					borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArcBorder");
-					break;
-			}
-			ChangeTextures();
-			Main.PlaySound(SoundID.MenuTick);
-		}
-
-        private void ElementalBurnRightClicked(UIMouseEvent evt, UIElement listeningElement) {
-			if (!Main.playerInventory) {
-				return;
-			}
-			if (NPC.AnyDanger() && !Main.dedServ) {
-				Main.NewText("Cannot change subclass while a boss is alive!", new Color(255, 0, 0));
-				return;
-			}
-			switch (element) {
-				case 0:
-					element = 2;
-					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIVoid");
-					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIVoid");
-					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIVoid");
-					elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnVoid");
-					break;
-				case 1:
-					element--;
-                    selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
-                    selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
-                    selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIArc");
-                    elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArc");
-					borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArcBorder");
-					break;
-				case 2:
-					element--;
-					selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionISolar");
-					selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIISolar");
-					selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIISolar");
-					elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolar");
-					borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolarBorder");
-					break;
-			}
-			ChangeTextures();
-            Main.PlaySound(SoundID.MenuTick);
-        }
-
-		public void ChangeTextures() {
-			selectedSub.Remove();
-			selected.Remove();
-			selected.Left.Set(252, 0f);
-			selected.Top.Set(57, 0f);
-			selected.Width.Set(48, 0f);
-			selected.Height.Set(48, 0f);
-			if (selectedSubclass == 1 && element == 0 || selectedSubclass == 4 && element == 1 || selectedSubclass == 7 && element == 2) {
-				selectedSub.Left.Set(280, 0f);
-				selectedSub.Top.Set(29, 0f);
-				selectedSub.Width.Set(48, 0f);
-				selectedSub.Height.Set(48, 0f);
-				subclass.Append(selectedSub);
-				subclass.Append(selected);
-			}
-			else if (selectedSubclass == 2 && element == 0 || selectedSubclass == 5 && element == 1 || selectedSubclass == 8 && element == 2) {
-				selectedSub.Left.Set(280, 0f);
-				selectedSub.Top.Set(86, 0f);
-				selectedSub.Width.Set(48, 0f);
-				selectedSub.Height.Set(48, 0f);
-				subclass.Append(selectedSub);
-				subclass.Append(selected);
-			}
-			else if (selectedSubclass == 3 && element == 0 || selectedSubclass == 6 && element == 1 || selectedSubclass == 9 && element == 2) {
-				selectedSub.Left.Set(308, 0f);
-				selectedSub.Top.Set(57, 0f);
-				selectedSub.Width.Set(48, 0f);
-				selectedSub.Height.Set(48, 0f);
-				subclass.Append(selectedSub);
-				subclass.Append(selected);
-			}
-			selectionOneButton.SetImage(selectionOneTexture);
-			selectionTwoButton.SetImage(selectionTwoTexture);
-			selectionThreeButton.SetImage(selectionThreeTexture);
-			elementalBurnButton.SetImage(elementalBurnTexture);
-			border.SetImage(borderTexture);
-			selectionOneButton.Width.Set(48, 0f);
-			selectionOneButton.Height.Set(48, 0f);
-			selectionTwoButton.Width.Set(40, 0f);
-			selectionTwoButton.Height.Set(40, 0f);
-			selectionThreeButton.Width.Set(48, 0f);
-			selectionThreeButton.Height.Set(48, 0f);
-			elementalBurnButton.Width.Set(58, 0f);
-			elementalBurnButton.Height.Set(58, 0f);
-		}
-	}
+    }
 
 	internal class UIHoverImageButton : UIImageButton
 	{

@@ -12,6 +12,7 @@ using TheDestinyMod.Items.Weapons.Ranged;
 namespace TheDestinyMod.Items
 {
     public class DestinyGlobalItem : GlobalItem {
+
         public bool catalyst = false;
 
         private readonly List<int> raidProhibitedItems = new List<int>
@@ -36,6 +37,8 @@ namespace TheDestinyMod.Items
         };
 
         public override bool InstancePerEntity => true;
+
+        public override bool CloneNewInstances => true;
 
         public override GlobalItem Clone(Item item, Item itemClone) {
             DestinyGlobalItem myClone = (DestinyGlobalItem)base.Clone(item, itemClone);

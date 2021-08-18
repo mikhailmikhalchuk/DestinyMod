@@ -135,6 +135,16 @@ namespace TheDestinyMod
 			}
 		}
 
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
+			for (int i = 0; i < Main.maxItems; i++) {
+				if (Main.item[i].modItem is OrbOfPower orb) {
+					if (orb.OrbOwner == player) {
+						Main.item[i].active = false;
+					}
+				}
+			}
+        }
+
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TheDestinyMod.activateSuper.JustPressed && superChargeCurrent == 100 && !player.dead) {
 				superActiveTime = 600;
@@ -306,29 +316,7 @@ namespace TheDestinyMod
         public override void OnEnterWorld(Player player) {
 			TheDestinyMod.Instance.SubclassUI.selectedSubclass = (int)subclassAwaitingAssign.X;
 			TheDestinyMod.Instance.SubclassUI.element = (int)subclassAwaitingAssign.Y;
-			switch ((int)subclassAwaitingAssign.Y) {
-				case 0:
-					TheDestinyMod.Instance.SubclassUI.selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIArc");
-					TheDestinyMod.Instance.SubclassUI.selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIArc");
-					TheDestinyMod.Instance.SubclassUI.selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIArc");
-					TheDestinyMod.Instance.SubclassUI.elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArc");
-					TheDestinyMod.Instance.SubclassUI.borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnArcBorder");
-					break;
-				case 1:
-					TheDestinyMod.Instance.SubclassUI.selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionISolar");
-					TheDestinyMod.Instance.SubclassUI.selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIISolar");
-					TheDestinyMod.Instance.SubclassUI.selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIISolar");
-					TheDestinyMod.Instance.SubclassUI.elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolar");
-					TheDestinyMod.Instance.SubclassUI.borderTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnSolarBorder");
-					break;
-				case 2:
-					TheDestinyMod.Instance.SubclassUI.selectionOneTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIVoid");
-					TheDestinyMod.Instance.SubclassUI.selectionTwoTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIVoid");
-					TheDestinyMod.Instance.SubclassUI.selectionThreeTexture = ModContent.GetTexture("TheDestinyMod/UI/SelectionIIIVoid");
-					TheDestinyMod.Instance.SubclassUI.elementalBurnTexture = ModContent.GetTexture("TheDestinyMod/UI/ElementalBurnVoid");
-					break;
-			}
-			TheDestinyMod.Instance.SubclassUI.ChangeTextures();
+			
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {

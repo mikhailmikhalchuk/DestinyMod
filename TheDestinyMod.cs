@@ -32,6 +32,9 @@ namespace TheDestinyMod
         public static int guardianWinner = 0;
         public static new ILog Logger = LogManager.GetLogger("TheDestinyMod");
 
+        public static DynamicSpriteFont fontFuturaBold;
+        public static DynamicSpriteFont fontFuturaBook;
+
         public static string currentSubworldID = string.Empty;
 
         internal UserInterface CryptarchUserInterface;
@@ -98,6 +101,12 @@ namespace TheDestinyMod
                 }
 
                 Main.OnTick += Main_OnTick;
+
+                if (FontExists("Fonts/FuturaBold"))
+                    fontFuturaBold = GetFont("Fonts/FuturaBold");
+
+                if (FontExists("Fonts/FuturaBook"))
+                    fontFuturaBook = GetFont("Fonts/FuturaBook");
 
                 AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SepiksPrime"), ModContent.ItemType<Items.Placeables.MusicBoxes.SepiksPrimeBox>(), ModContent.TileType<Tiles.MusicBoxes.SepiksPrimeBox>());
 

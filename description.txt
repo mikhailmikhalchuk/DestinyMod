@@ -51,5 +51,6 @@ Gjallarhorn's mini rockets now don't home or collide with any NPCs for the first
 Decreased Gjallarhorn's speed and increased its damage
 Drifter now has unique dialogue if there is an invasion ongoing in the world
 Fixed an issue where Graviton Lance would summon its "Void Seeker" projectile regardless of whether the bullet got the kill or not
+Orbs of Power now despawn when the owner dies and can no longer be picked up by the owner
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
