@@ -34,6 +34,12 @@ namespace TheDestinyMod.Projectiles.Super
             Main.PlaySound(SoundID.Item10, projectile.position);
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+            if (!target.friendly && target.damage > 0 && target.life <= 0) {
+                Item.NewItem(Main.player[projectile.owner].Hitbox, ModContent.ItemType<Items.OrbOfPower>());
+            }
+        }
+
         public override bool OnTileCollide(Vector2 oldVelocity) {
             Point checkTile = projectile.Center.ToTileCoordinates();
             bool youFailed = false;

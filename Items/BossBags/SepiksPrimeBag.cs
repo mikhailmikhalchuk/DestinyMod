@@ -20,7 +20,7 @@ namespace TheDestinyMod.Items.BossBags
 			item.consumable = true;
 			item.width = 32;
 			item.height = 32;
-			item.rare = ItemRarityID.Cyan;
+			item.rare = ItemRarityID.Orange;
 			item.expert = true;
 		}
 

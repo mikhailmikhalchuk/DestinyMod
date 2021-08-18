@@ -23,5 +23,10 @@ namespace TheDestinyMod.Items.Weapons.Supers
             item.shootSpeed = 20;
             item.UseSound = SoundID.Item1;
         }
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, 50, knockBack, player.whoAmI);
+            return false;
+        }
     }
 }

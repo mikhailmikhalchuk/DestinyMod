@@ -32,6 +32,7 @@ namespace TheDestinyMod
 		public int aegisCharge;
 		public int destinyWeaponDelay;
 		public int superCrit = 4;
+		public int orbOfPowerAdd = 0;
 		public int borealisCooldown;
 
 		public float businessReduceUse = 0.2f;
@@ -84,6 +85,7 @@ namespace TheDestinyMod
 			superDamageMult = 1f;
 			superCrit = 0;
 			superKnockback = 0;
+			orbOfPowerAdd = 0;
 		}
 
         public override float UseTimeMultiplier(Item item) {

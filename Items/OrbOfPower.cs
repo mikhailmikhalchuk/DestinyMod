@@ -10,6 +10,7 @@ namespace TheDestinyMod.Items
     public class OrbOfPower : ModItem
     {
         public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Orb of Power");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 19));
         }
 
@@ -28,7 +29,7 @@ namespace TheDestinyMod.Items
 
         public override bool OnPickup(Player player) {
             var modPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
-            modPlayer.superChargeCurrent += 4;
+            modPlayer.superChargeCurrent += 4 + modPlayer.orbOfPowerAdd;
             Main.PlaySound(SoundID.Grab, Main.LocalPlayer.position);
             return false;
         }
