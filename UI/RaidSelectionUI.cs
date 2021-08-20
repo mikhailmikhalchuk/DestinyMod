@@ -169,7 +169,19 @@ namespace TheDestinyMod.UI
 			Append(raidDragable);
 		}
 
-        private void MouseOverPanel(UIMouseEvent evt, UIElement listeningElement) {
+		public override void Draw(SpriteBatch spriteBatch) {
+			base.Draw(spriteBatch);
+
+			CalculatedStyle dims = raidDragable.GetInnerDimensions();
+
+			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBold, Raid.ToUpper(), dims.X + 20, dims.Y + 20, Color.White, Color.Transparent, Vector2.Zero, 0.5f);
+
+			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, $"Times cleared: {Clears}", dims.X + 20, dims.Y + 70, Color.White, Color.Transparent, Vector2.Zero, 0.8f);
+
+			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, $"Recommended: {(DownedRequirement ? $"[c/00FF00:{DownedName}]" : $"[c/FF0000:{DownedName}]")}", dims.X + 20, dims.Y + 100, Color.White, Color.Transparent, Vector2.Zero, 0.8f);
+		}
+
+		private void MouseOverPanel(UIMouseEvent evt, UIElement listeningElement) {
 			Main.PlaySound(SoundID.MenuTick);
 			((UITextPanel<string>)evt.Target).BackgroundColor = Terraria.ModLoader.UI.UICommon.DefaultUIBlue;
         }
