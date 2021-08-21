@@ -16,7 +16,8 @@ namespace TheDestinyMod.UI
 		/// <summary>
 		/// 0: Arc<br></br>
 		/// 1: Solar<br></br>
-		/// 2: Void
+		/// 2: Void<br></br>
+		/// 3: Stasis
 		/// </summary>
 		public int element;
 
@@ -46,7 +47,6 @@ namespace TheDestinyMod.UI
 		public UIImageButton abilitySubchoice1;
 		public UIImageButton abilitySubchoice2;
 		public UIImageButton abilitySubchoice3;
-		public UIImageButton abilitySubchoice4;
 
 		public UIImageButton fragment1;
 		public UIImageButton fragment2;
@@ -64,6 +64,7 @@ namespace TheDestinyMod.UI
 		public UIPanel mouseInfo;
 
 		private int _lastHoveredFragment;
+		private int _lastHoveredAbility;
 
 		public override void OnInitialize() {
 			subclass = new UIPanel();
@@ -168,14 +169,6 @@ namespace TheDestinyMod.UI
 			abilitySubchoice3.OnClick += AbilitySubchoice3_OnClick;
 			abilitySubchoiceContainer.Append(abilitySubchoice3);
 
-			abilitySubchoice4 = new UIImageButton(fragmentTexture);
-			abilitySubchoice4.Left.Set(150, 0f);
-			abilitySubchoice4.Top.Set(20, 0f);
-			abilitySubchoice4.Width.Set(44, 0f);
-			abilitySubchoice4.Height.Set(44, 0f);
-			abilitySubchoice4.OnClick += AbilitySubchoice4_OnClick;
-			abilitySubchoiceContainer.Append(abilitySubchoice4);
-
 			mouseInfo = new UIPanel();
 			mouseInfo.Left.Set(0, 1f);
 			mouseInfo.Top.Set(0, 1f);
@@ -218,7 +211,7 @@ namespace TheDestinyMod.UI
 			fragment4.OnMouseOut += Fragment4_OnMouseOut;
 			subclass.Append(fragment4);
 
-			ability1 = new UIImageButton(fragmentTexture);
+			ability1 = new UIImageButton(fragmentTexture); //rift, shield
 			ability1.Left.Set(150, 0f);
 			ability1.Top.Set(100, 0f);
 			ability1.Width.Set(44, 0f);
@@ -227,7 +220,7 @@ namespace TheDestinyMod.UI
             ability1.OnMouseOut += Ability1_OnMouseOut;
 			subclass.Append(ability1);
 
-			ability2 = new UIImageButton(fragmentTexture);
+			ability2 = new UIImageButton(fragmentTexture); //jumps
 			ability2.Left.Set(200, 0f);
 			ability2.Top.Set(100, 0f);
 			ability2.Width.Set(44, 0f);
@@ -236,7 +229,7 @@ namespace TheDestinyMod.UI
 			ability2.OnMouseOut += Ability2_OnMouseOut;
 			subclass.Append(ability2);
 
-			ability3 = new UIImageButton(fragmentTexture);
+			ability3 = new UIImageButton(fragmentTexture); //melee
 			ability3.Left.Set(250, 0f);
 			ability3.Top.Set(100, 0f);
 			ability3.Width.Set(44, 0f);
@@ -245,7 +238,7 @@ namespace TheDestinyMod.UI
 			ability3.OnMouseOut += Ability3_OnMouseOut;
 			subclass.Append(ability3);
 
-			ability4 = new UIImageButton(fragmentTexture);
+			ability4 = new UIImageButton(fragmentTexture); //grenade
 			ability4.Left.Set(300, 0f);
 			ability4.Top.Set(100, 0f);
 			ability4.Width.Set(44, 0f);
@@ -260,65 +253,53 @@ namespace TheDestinyMod.UI
 		}
 
         private void Ability1_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!abilitySubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
-				abilitySubchoiceContainer.Append(abilitySubchoice3);
-				abilitySubchoiceContainer.Append(abilitySubchoice4);
-				subclass.RemoveChild(abilitySubchoiceContainer);
+			if (!abilitySubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
+				RestoreAndRemoveAbilitySubchoice();
 			}
+			_lastHoveredAbility = 1;
 		}
 
 		private void Ability2_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!abilitySubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
-				abilitySubchoiceContainer.Append(abilitySubchoice3);
-				abilitySubchoiceContainer.Append(abilitySubchoice4);
-				subclass.RemoveChild(abilitySubchoiceContainer);
+			if (!abilitySubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
+				RestoreAndRemoveAbilitySubchoice();
 			}
+			_lastHoveredAbility = 2;
 		}
 
 		private void Ability3_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!abilitySubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
-				abilitySubchoiceContainer.Append(abilitySubchoice2);
-				abilitySubchoiceContainer.Append(abilitySubchoice3);
-				abilitySubchoiceContainer.Append(abilitySubchoice4);
-				subclass.RemoveChild(abilitySubchoiceContainer);
+			if (!abilitySubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
+				RestoreAndRemoveAbilitySubchoice();
 			}
+			_lastHoveredAbility = 3;
 		}
 
 		private void Ability4_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!abilitySubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
-				abilitySubchoiceContainer.Append(abilitySubchoice2);
-				abilitySubchoiceContainer.Append(abilitySubchoice3);
-				abilitySubchoiceContainer.Append(abilitySubchoice4);
-				subclass.RemoveChild(abilitySubchoiceContainer);
+			if (!abilitySubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
+				RestoreAndRemoveAbilitySubchoice();
 			}
+			_lastHoveredAbility = 4;
 		}
 
 		private void Ability1_OnMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice3);
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice4);
+			GetRidOfAbilitySubchoicesAndRestore(2);
 			subclass.Append(abilitySubchoiceContainer);
 			RemoveFragmentSubchoice();
 		}
 
 		private void Ability2_OnMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice3);
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice4);
+			GetRidOfAbilitySubchoicesAndRestore(3);
 			subclass.Append(abilitySubchoiceContainer);
 			RemoveFragmentSubchoice();
 		}
 
 		private void Ability3_OnMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice2);
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice3);
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice4);
+			GetRidOfAbilitySubchoicesAndRestore(1);
 			subclass.Append(abilitySubchoiceContainer);
 			RemoveFragmentSubchoice();
 		}
 
 		private void Ability4_OnMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice2);
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice3);
-			abilitySubchoiceContainer.RemoveChild(abilitySubchoice4);
+			GetRidOfAbilitySubchoicesAndRestore(3);
 			subclass.Append(abilitySubchoiceContainer);
 			RemoveFragmentSubchoice();
 		}
@@ -375,32 +356,168 @@ namespace TheDestinyMod.UI
 			}
 		}
 
+		private void ApplyAbilityTo(int num) {
+			Main.PlaySound(SoundID.Unlock);
+			DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+			Texture2D textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel");
+			if (_lastHoveredAbility == 1) { //CROSS-CHECK WITH MOUSEINFO DRAWS FOR CORRECT TEXTURES
+				subclass.RemoveChild(ability1);
+				switch (num) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //barrier
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //rift
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //something
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //barrier
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //rift
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //something
+						break;
+				}
+				ability1 = new UIImageButton(textureToApply);
+				ability1.Left.Set(150, 0f);
+				ability1.Top.Set(100, 0f);
+				ability1.Width.Set(44, 0f);
+				ability1.Height.Set(44, 0f);
+				ability1.OnMouseOver += Ability1_OnMouseOver;
+				ability1.OnMouseOut += Ability1_OnMouseOut;
+				subclass.Append(ability1);
+				abilityChoice1 = num;
+			}
+			else if (_lastHoveredAbility == 2) { //CROSS-CHECK WITH MOUSEINFO DRAWS FOR CORRECT TEXTURES
+				subclass.RemoveChild(ability2);
+				switch (num) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //jump
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //blink
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //double jump w/ momentum
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //jump
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //glide
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //something
+						break;
+					case 3 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //jump
+						break;
+					case 3 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //glide 2
+						break;
+					case 3 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //something 2
+						break;
+				}
+				ability2 = new UIImageButton(textureToApply);
+				ability2.Left.Set(200, 0f);
+				ability2.Top.Set(100, 0f);
+				ability2.Width.Set(44, 0f);
+				ability2.Height.Set(44, 0f);
+				ability2.OnMouseOver += Ability2_OnMouseOver;
+				ability2.OnMouseOut += Ability2_OnMouseOut;
+				subclass.Append(ability2);
+				abilityChoice2 = num;
+			}
+			else if (_lastHoveredAbility == 3) { //CROSS-CHECK WITH MOUSEINFO DRAWS FOR CORRECT TEXTURES
+				subclass.RemoveChild(ability3);
+				switch (num) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //melee
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //melee
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //melee
+						break;
+				}
+				ability3 = new UIImageButton(textureToApply);
+				ability3.Left.Set(250, 0f);
+				ability3.Top.Set(100, 0f);
+				ability3.Width.Set(44, 0f);
+				ability3.Height.Set(44, 0f);
+				ability3.OnMouseOver += Ability3_OnMouseOver;
+				ability3.OnMouseOut += Ability3_OnMouseOut;
+				subclass.Append(ability3);
+				abilityChoice3 = num;
+			}
+			else if (_lastHoveredAbility == 4) { //CROSS-CHECK WITH MOUSEINFO DRAWS FOR CORRECT TEXTURES
+				subclass.RemoveChild(ability4);
+				switch (num) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 3 when playerClass == DestinyClassType.Titan:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 3 when playerClass == DestinyClassType.Warlock:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+					case 3 when playerClass == DestinyClassType.Hunter:
+						textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel"); //grenade
+						break;
+				}
+				ability4 = new UIImageButton(textureToApply);
+				ability4.Left.Set(300, 0f);
+				ability4.Top.Set(100, 0f);
+				ability4.Width.Set(44, 0f);
+				ability4.Height.Set(44, 0f);
+				ability4.OnMouseOver += Ability4_OnMouseOver;
+				ability4.OnMouseOut += Ability4_OnMouseOut;
+				subclass.Append(ability4);
+				abilityChoice4 = num;
+			}
+		}
+
 		private void AbilitySubchoice1_OnClick(UIMouseEvent evt, UIElement listeningElement) {
 			if (AnyAbilityChosenOfType(1))
 				return;
 			Texture2D abilityTexture = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel");
-			ApplyFragmentTo(abilityTexture, 1);
+			ApplyAbilityTo(1);
 		}
 
 		private void AbilitySubchoice2_OnClick(UIMouseEvent evt, UIElement listeningElement) {
 			if (AnyAbilityChosenOfType(2))
 				return;
 			Texture2D abilityTexture = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel");
-			ApplyFragmentTo(abilityTexture, 2);
+			ApplyAbilityTo(2);
 		}
 
 		private void AbilitySubchoice3_OnClick(UIMouseEvent evt, UIElement listeningElement) {
 			if (AnyAbilityChosenOfType(3))
 				return;
 			Texture2D abilityTexture = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel");
-			ApplyFragmentTo(abilityTexture, 3);
-		}
-
-		private void AbilitySubchoice4_OnClick(UIMouseEvent evt, UIElement listeningElement) {
-			if (AnyAbilityChosenOfType(4))
-				return;
-			Texture2D abilityTexture = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel");
-			ApplyFragmentTo(abilityTexture, 4);
+			ApplyAbilityTo(3);
 		}
 
 		private void FragmentSubchoice1_OnClick(UIMouseEvent evt, UIElement listeningElement) {
@@ -408,7 +525,7 @@ namespace TheDestinyMod.UI
 				return;
 			Texture2D fragmentTexture = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel");
 			ApplyFragmentTo(fragmentTexture, 1);
-        }
+		}
 
 		private void FragmentSubchoice2_OnClick(UIMouseEvent evt, UIElement listeningElement) {
 			if (AnyFragmentChosenOfType(2))
@@ -446,31 +563,49 @@ namespace TheDestinyMod.UI
 		}
 
 		private void Fragment1_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!fragmentSubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
+			if (!fragmentSubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
 				subclass.RemoveChild(fragmentSubchoiceContainer);
 			}
 			_lastHoveredFragment = 1;
         }
 
 		private void Fragment2_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!fragmentSubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
+			if (!fragmentSubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
 				subclass.RemoveChild(fragmentSubchoiceContainer);
 			}
 			_lastHoveredFragment = 2;
 		}
 
 		private void Fragment3_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!fragmentSubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
+			if (!fragmentSubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
 				subclass.RemoveChild(fragmentSubchoiceContainer);
 			}
 			_lastHoveredFragment = 3;
 		}
 
 		private void Fragment4_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) {
-			if (!fragmentSubchoiceContainer.GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint())) {
+			if (!fragmentSubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
 				subclass.RemoveChild(fragmentSubchoiceContainer);
 			}
 			_lastHoveredFragment = 4;
+		}
+
+		private void GetRidOfAbilitySubchoicesAndRestore(int toRestore) {
+			abilitySubchoiceContainer.RemoveChild(abilitySubchoice1);
+			abilitySubchoiceContainer.RemoveChild(abilitySubchoice2);
+			abilitySubchoiceContainer.RemoveChild(abilitySubchoice3);
+			if (toRestore == 1) {
+				abilitySubchoiceContainer.Append(abilitySubchoice1);
+			}
+			else if (toRestore == 2) {
+				abilitySubchoiceContainer.Append(abilitySubchoice1);
+				abilitySubchoiceContainer.Append(abilitySubchoice2);
+			}
+			else if (toRestore == 3) {
+				abilitySubchoiceContainer.Append(abilitySubchoice1);
+				abilitySubchoiceContainer.Append(abilitySubchoice2);
+				abilitySubchoiceContainer.Append(abilitySubchoice3);
+			}
 		}
 
 		private void RestoreAndRemoveAbilitySubchoice() {
@@ -480,8 +615,6 @@ namespace TheDestinyMod.UI
 				abilitySubchoiceContainer.Append(abilitySubchoice2);
 			if (!abilitySubchoiceContainer.HasChild(abilitySubchoice3))
 				abilitySubchoiceContainer.Append(abilitySubchoice3);
-			if (!abilitySubchoiceContainer.HasChild(abilitySubchoice4))
-				abilitySubchoiceContainer.Append(abilitySubchoice4);
 			subclass.RemoveChild(abilitySubchoiceContainer);
 		}
 
@@ -523,8 +656,6 @@ namespace TheDestinyMod.UI
 					abilitySubchoiceContainer.Append(abilitySubchoice2);
 				if (!abilitySubchoiceContainer.HasChild(abilitySubchoice3))
 					abilitySubchoiceContainer.Append(abilitySubchoice3);
-				if (!abilitySubchoiceContainer.HasChild(abilitySubchoice4))
-					abilitySubchoiceContainer.Append(abilitySubchoice4);
 				subclass.RemoveChild(abilitySubchoiceContainer);
 			}
 			if (!abilitySubchoiceContainer.HasChild(abilitySubchoice2) && !abilitySubchoice1.ContainsPoint(Main.MouseScreen) && !abilitySubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
@@ -533,16 +664,13 @@ namespace TheDestinyMod.UI
 			else if (!abilitySubchoiceContainer.HasChild(abilitySubchoice3) && !abilitySubchoice1.ContainsPoint(Main.MouseScreen) && !abilitySubchoice2.ContainsPoint(Main.MouseScreen) && !abilitySubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
 				ActualExecute();
 			}
-			else if (!abilitySubchoiceContainer.HasChild(abilitySubchoice4) && !abilitySubchoice1.ContainsPoint(Main.MouseScreen) && !abilitySubchoice2.ContainsPoint(Main.MouseScreen) && !abilitySubchoice3.ContainsPoint(Main.MouseScreen) && !abilitySubchoiceContainer.ContainsPoint(Main.MouseScreen)) {
-				ActualExecute();
-			}
 		}
 
 		private bool AnyFragmentChosenOfType(int type) => fragmentChoice1 == type || fragmentChoice2 == type || fragmentChoice3 == type || fragmentChoice4 == type;
 
-		private bool AnyAbilityChosenOfType(int type) => abilityChoice1 == type || abilityChoice2 == type || abilityChoice3 == type || abilityChoice4 == type;
+		private bool AnyAbilityChosenOfType(int type) => _lastHoveredAbility == 1 && abilityChoice1 == type || _lastHoveredAbility == 2 && abilityChoice2 == type || _lastHoveredAbility == 3 && abilityChoice3 == type || _lastHoveredAbility == 4 && abilityChoice4 == type;
 
-		private void DrawFragmentArc(SpriteBatch spriteBatch, CalculatedStyle dimensions) {
+		private void DrawSlotsArc(SpriteBatch spriteBatch, CalculatedStyle dimensions) {
 			if (fragmentSubchoice1.ContainsPoint(Main.MouseScreen) && subclass.HasChild(fragmentSubchoiceContainer)) {
 				mouseInfo.Left.Set(Main.MouseScreen.X + 5, 0f);
 				mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
@@ -597,6 +725,156 @@ namespace TheDestinyMod.UI
 					Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, "Already Applied", dimensions.X + 10, dimensions.Y + 40, Color.Red, Color.Transparent, Vector2.Zero, 0.6f);
 				}
 			}
+			else if (abilitySubchoice1.ContainsPoint(Main.MouseScreen) && abilitySubchoiceContainer.HasChild(abilitySubchoice1) && subclass.HasChild(abilitySubchoiceContainer)) {
+				mouseInfo.Left.Set(Main.MouseScreen.X + 5, 0f);
+				mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
+				string abilityName = string.Empty;
+				string abilityDesc = string.Empty;
+				DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+				switch (_lastHoveredAbility) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						abilityName = "Small Barrier";
+						abilityDesc = "A small barrier";
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						abilityName = "Healing Rift";
+						abilityDesc = "A healing rift";
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						abilityName = "Hunter's subclass thing";
+						abilityDesc = "I don't know what this is";
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						abilityName = "Propelled Jump";
+						abilityDesc = "The jump with momentum at the beginning";
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						abilityName = "Blink";
+						abilityDesc = "The teleporting one";
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						abilityName = "double jump keep momentum";
+						abilityDesc = "yeah i don't know";
+						break;
+					case 3 when playerClass == DestinyClassType.Titan:
+						abilityName = "Don't know titan melee";
+						abilityDesc = "figure out";
+						break;
+					case 3 when playerClass == DestinyClassType.Warlock:
+						abilityName = "A punch";
+						abilityDesc = "for warlock";
+						break;
+					case 3 when playerClass == DestinyClassType.Hunter:
+						abilityName = "knife probably";
+						abilityDesc = "hunter one";
+						break;
+					case 4 when playerClass == DestinyClassType.Titan:
+						abilityName = "glacial grenade?";
+						abilityDesc = "who knows";
+						break;
+					case 4 when playerClass == DestinyClassType.Warlock:
+						abilityName = "warlock stasis grenade";
+						abilityDesc = "for warlock";
+						break;
+					case 4 when playerClass == DestinyClassType.Hunter:
+						abilityName = "hunter smoke bomb probably";
+						abilityDesc = "hunter smoke";
+						break;
+				}
+				Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBold, abilityName, dimensions.X + 10, dimensions.Y + 10, Color.White, Color.Transparent, Vector2.Zero, 0.4f);
+				Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, abilityDesc, dimensions.X + 10, dimensions.Y + 200, Color.LightGray, Color.Transparent, Vector2.Zero, 0.6f);
+				if (AnyAbilityChosenOfType(1)) {
+					Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, "Already Applied", dimensions.X + 10, dimensions.Y + 40, Color.Red, Color.Transparent, Vector2.Zero, 0.6f);
+				}
+			}
+			else if (abilitySubchoice2.ContainsPoint(Main.MouseScreen) && abilitySubchoiceContainer.HasChild(abilitySubchoice2) && subclass.HasChild(abilitySubchoiceContainer)) {
+				mouseInfo.Left.Set(Main.MouseScreen.X + 5, 0f);
+				mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
+				string abilityName = string.Empty;
+				string abilityDesc = string.Empty;
+				DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+				switch (_lastHoveredAbility) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						abilityName = "Big Barrier";
+						abilityDesc = "A big barrier";
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						abilityName = "Damage Rift";
+						abilityDesc = "A damage boosting rift";
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						abilityName = "Hunter's subclass thing 2";
+						abilityDesc = "I don't know what this is 2";
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						abilityName = "something Jump titan 2";
+						abilityDesc = "The jump with boosting 2";
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						abilityName = "Glide";
+						abilityDesc = "The gliding one";
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						abilityName = "jump hunter 2";
+						abilityDesc = "yeah i don't know";
+						break;
+					case 4 when playerClass == DestinyClassType.Titan:
+						abilityName = "another grenade";
+						abilityDesc = "who knows 2";
+						break;
+					case 4 when playerClass == DestinyClassType.Warlock:
+						abilityName = "warlock stasis grenade 2";
+						abilityDesc = "for warlock 2";
+						break;
+					case 4 when playerClass == DestinyClassType.Hunter:
+						abilityName = "hunter grenade 2";
+						abilityDesc = "hunter 2";
+						break;
+				}
+				Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBold, abilityName, dimensions.X + 10, dimensions.Y + 10, Color.White, Color.Transparent, Vector2.Zero, 0.4f);
+				Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, abilityDesc, dimensions.X + 10, dimensions.Y + 200, Color.LightGray, Color.Transparent, Vector2.Zero, 0.6f);
+				if (AnyAbilityChosenOfType(2)) {
+					Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, "Already Applied", dimensions.X + 10, dimensions.Y + 40, Color.Red, Color.Transparent, Vector2.Zero, 0.6f);
+				}
+			}
+			else if (abilitySubchoice3.ContainsPoint(Main.MouseScreen) && abilitySubchoiceContainer.HasChild(abilitySubchoice3) && subclass.HasChild(abilitySubchoiceContainer)) {
+				mouseInfo.Left.Set(Main.MouseScreen.X + 5, 0f);
+				mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
+				string abilityName = string.Empty;
+				string abilityDesc = string.Empty;
+				DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+				switch (_lastHoveredAbility) {
+					case 2 when playerClass == DestinyClassType.Titan:
+						abilityName = "something Jump titan 3";
+						abilityDesc = "The jump with boosting 3";
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						abilityName = "Glide 2";
+						abilityDesc = "The gliding one 2";
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						abilityName = "jump hunter 3";
+						abilityDesc = "yeah i don't know";
+						break;
+					case 4 when playerClass == DestinyClassType.Titan:
+						abilityName = "another grenade 3";
+						abilityDesc = "who knows 3";
+						break;
+					case 4 when playerClass == DestinyClassType.Warlock:
+						abilityName = "warlock stasis grenade 3";
+						abilityDesc = "for warlock 3";
+						break;
+					case 4 when playerClass == DestinyClassType.Hunter:
+						abilityName = "hunter grenade 3";
+						abilityDesc = "hunter 3";
+						break;
+				}
+				Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBold, abilityName, dimensions.X + 10, dimensions.Y + 10, Color.White, Color.Transparent, Vector2.Zero, 0.4f);
+				Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, abilityDesc, dimensions.X + 10, dimensions.Y + 200, Color.LightGray, Color.Transparent, Vector2.Zero, 0.6f);
+				if (AnyAbilityChosenOfType(3)) {
+					Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, "Already Applied", dimensions.X + 10, dimensions.Y + 40, Color.Red, Color.Transparent, Vector2.Zero, 0.6f);
+				}
+			}
 			else {
 				mouseInfo.Left.Set(0, 1f);
 				mouseInfo.Top.Set(0, 1f);
@@ -638,13 +916,147 @@ namespace TheDestinyMod.UI
 			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, choiceDesc, dimensions.X + 10, dimensions.Y + 200, Color.LightGray, Color.Transparent, Vector2.Zero, 0.6f);
 		}
 
+		private void DrawAbilityChoice(SpriteBatch spriteBatch, CalculatedStyle dimensions, int ability, int choiceToSwitch) {
+			mouseInfo.Left.Set(Main.MouseScreen.X + 5, 0f);
+			mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
+			string choiceName = string.Empty;
+			string choiceDesc = string.Empty;
+			DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+			if (ability == 1) {
+				switch (choiceToSwitch) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						choiceName = "Small Barrier";
+						choiceDesc = "A small barrier";
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						choiceName = "Healing Rift";
+						choiceDesc = "A healing rift";
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						choiceName = "Hunter's subclass thing";
+						choiceDesc = "I don't know what this is";
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						choiceName = "Big Barrier";
+						choiceDesc = "A big barrier";
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						choiceName = "Damage Rift";
+						choiceDesc = "A damage boosting rift";
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						choiceName = "Hunter's subclass thing 2";
+						choiceDesc = "I don't know what this is 2";
+						break;
+				}
+			}
+			if (ability == 2) {
+				switch (choiceToSwitch) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						choiceName = "Propelled Jump";
+						choiceDesc = "The jump with momentum at the beginning";
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						choiceName = "Blink";
+						choiceDesc = "The teleporting one";
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						choiceName = "double jump keep momentum";
+						choiceDesc = "yeah i don't know";
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						choiceName = "something Jump titan 2";
+						choiceDesc = "The jump with boosting 2";
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						choiceName = "Glide";
+						choiceDesc = "The gliding one";
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						choiceName = "jump hunter 2";
+						choiceDesc = "yeah i don't know";
+						break;
+					case 3 when playerClass == DestinyClassType.Titan:
+						choiceName = "something Jump titan 3";
+						choiceDesc = "The jump with boosting 3";
+						break;
+					case 3 when playerClass == DestinyClassType.Warlock:
+						choiceName = "Glide 2";
+						choiceDesc = "The gliding one 2";
+						break;
+					case 3 when playerClass == DestinyClassType.Hunter:
+						choiceName = "jump hunter 3";
+						choiceDesc = "yeah i don't know";
+						break;
+				}
+			}
+			if (ability == 3) {
+				switch (choiceToSwitch) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						choiceName = "Don't know titan melee";
+						choiceDesc = "figure out";
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						choiceName = "A punch";
+						choiceDesc = "for warlock";
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						choiceName = "knife probably";
+						choiceDesc = "hunter one";
+						break;
+				}
+			}
+			if (ability == 4) {
+				switch (choiceToSwitch) {
+					case 1 when playerClass == DestinyClassType.Titan:
+						choiceName = "glacial grenade?";
+						choiceDesc = "who knows";
+						break;
+					case 1 when playerClass == DestinyClassType.Warlock:
+						choiceName = "warlock stasis grenade";
+						choiceDesc = "for warlock";
+						break;
+					case 1 when playerClass == DestinyClassType.Hunter:
+						choiceName = "hunter smoke bomb probably";
+						choiceDesc = "hunter smoke";
+						break;
+					case 2 when playerClass == DestinyClassType.Titan:
+						choiceName = "another grenade";
+						choiceDesc = "who knows 2";
+						break;
+					case 2 when playerClass == DestinyClassType.Warlock:
+						choiceName = "warlock stasis grenade 2";
+						choiceDesc = "for warlock 2";
+						break;
+					case 2 when playerClass == DestinyClassType.Hunter:
+						choiceName = "hunter grenade 2";
+						choiceDesc = "hunter 2";
+						break;
+					case 3 when playerClass == DestinyClassType.Titan:
+						choiceName = "another grenade 3";
+						choiceDesc = "who knows 3";
+						break;
+					case 3 when playerClass == DestinyClassType.Warlock:
+						choiceName = "warlock stasis grenade 3";
+						choiceDesc = "for warlock 3";
+						break;
+					case 3 when playerClass == DestinyClassType.Hunter:
+						choiceName = "hunter grenade 3";
+						choiceDesc = "hunter 3";
+						break;
+				}
+			}
+			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBold, choiceName, dimensions.X + 10, dimensions.Y + 10, Color.White, Color.Transparent, Vector2.Zero, 0.4f);
+			Utils.DrawBorderStringFourWay(spriteBatch, TheDestinyMod.fontFuturaBook, choiceDesc, dimensions.X + 10, dimensions.Y + 200, Color.LightGray, Color.Transparent, Vector2.Zero, 0.6f);
+		}
+
 		public override void Draw(SpriteBatch spriteBatch) {
 			base.Draw(spriteBatch);
 			CalculatedStyle dims = subclass.GetDimensions();
 			CalculatedStyle mouseDims = mouseInfo.GetDimensions();
 			switch (element) {
 				case 0:
-					DrawFragmentArc(spriteBatch, mouseDims);
+					DrawSlotsArc(spriteBatch, mouseDims);
 					break;
 			}
 			if (fragment1.ContainsPoint(Main.MouseScreen) && fragmentChoice1 > 0) {
@@ -656,8 +1068,20 @@ namespace TheDestinyMod.UI
 			if (fragment3.ContainsPoint(Main.MouseScreen) && fragmentChoice3 > 0) {
 				DrawFragmentChoice(spriteBatch, mouseDims, fragmentChoice3);
 			}
-			if (fragment4.ContainsPoint(Main.MouseScreen) && fragmentChoice4 > 0) {
-				DrawFragmentChoice(spriteBatch, mouseDims, fragmentChoice4);
+            if (fragment4.ContainsPoint(Main.MouseScreen) && fragmentChoice4 > 0) {
+                DrawFragmentChoice(spriteBatch, mouseDims, fragmentChoice4);
+            }
+			if (ability1.ContainsPoint(Main.MouseScreen) && abilityChoice1 > 0) {
+				DrawAbilityChoice(spriteBatch, mouseDims, 1, abilityChoice1);
+			}
+			if (ability2.ContainsPoint(Main.MouseScreen) && abilityChoice2 > 0) {
+				DrawAbilityChoice(spriteBatch, mouseDims, 2, abilityChoice2);
+			}
+			if (ability3.ContainsPoint(Main.MouseScreen) && abilityChoice3 > 0) {
+				DrawAbilityChoice(spriteBatch, mouseDims, 3, abilityChoice3);
+			}
+			if (ability4.ContainsPoint(Main.MouseScreen) && abilityChoice4 > 0) {
+				DrawAbilityChoice(spriteBatch, mouseDims, 4, abilityChoice4);
 			}
 			if (subclass.ContainsPoint(Main.MouseScreen)) {
 				Main.LocalPlayer.mouseInterface = true;

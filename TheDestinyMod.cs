@@ -48,7 +48,7 @@ namespace TheDestinyMod
         private UserInterface subclassInterface;
         internal UserInterface classSelectionInterface;
 
-        public static TheDestinyMod Instance;
+        public static TheDestinyMod Instance { get; private set; }
 
         private bool classSelecting;
 
@@ -101,6 +101,9 @@ namespace TheDestinyMod
                 }
 
                 Main.OnTick += Main_OnTick;
+
+                fontFuturaBold = Main.fontMouseText;
+                fontFuturaBook = Main.fontMouseText;
 
                 if (FontExists("Fonts/FuturaBold"))
                     fontFuturaBold = GetFont("Fonts/FuturaBold");

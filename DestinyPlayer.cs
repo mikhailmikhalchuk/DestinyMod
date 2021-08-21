@@ -63,6 +63,7 @@ namespace TheDestinyMod
 		private bool shouldBeThundercrashed = false;
 		private int elementAwaitingAssign;
 		private List<int> fragmentsAwaitingAssign;
+		private List<int> abilitiesAwaitingAssign;
 
 		public override void ResetEffects() {
 			ResetVariables();
@@ -289,6 +290,13 @@ namespace TheDestinyMod
 				TheDestinyMod.Instance.SubclassUI.fragmentChoice3,
 				TheDestinyMod.Instance.SubclassUI.fragmentChoice4
 			};
+			abilitiesAwaitingAssign = new List<int>()
+			{
+				TheDestinyMod.Instance.SubclassUI.abilityChoice1,
+				TheDestinyMod.Instance.SubclassUI.abilityChoice2,
+				TheDestinyMod.Instance.SubclassUI.abilityChoice3,
+				TheDestinyMod.Instance.SubclassUI.abilityChoice4
+			};
 			return new TagCompound {
 				{"motesGiven", motesGiven},
 				{"drifterRewards", drifterRewards},
@@ -299,6 +307,7 @@ namespace TheDestinyMod
 				{"superActiveTime", superActiveTime},
 				{"subclassElement", TheDestinyMod.Instance.SubclassUI.element},
 				{"subclassFragments", fragmentsAwaitingAssign},
+				{"subclassAbilities", abilitiesAwaitingAssign},
 				{"classType", (byte)classType}
 			};
 		}
@@ -323,15 +332,24 @@ namespace TheDestinyMod
 			if (tag.ContainsKey("subclassFragments")) {
 				fragmentsAwaitingAssign = (List<int>)tag.GetList<int>("subclassFragments");
 			}
+			if (tag.ContainsKey("subclassAbilities")) {
+				abilitiesAwaitingAssign = (List<int>)tag.GetList<int>("subclassAbilities");
+			}
 		}
 
         public override void OnEnterWorld(Player player) {
 			TheDestinyMod.Instance.SubclassUI.element = elementAwaitingAssign;
-			if (fragmentsAwaitingAssign.Count > 0) {
+			if (fragmentsAwaitingAssign != null) {
 				TheDestinyMod.Instance.SubclassUI.fragmentChoice1 = fragmentsAwaitingAssign[0];
 				TheDestinyMod.Instance.SubclassUI.fragmentChoice2 = fragmentsAwaitingAssign[1];
 				TheDestinyMod.Instance.SubclassUI.fragmentChoice3 = fragmentsAwaitingAssign[2];
 				TheDestinyMod.Instance.SubclassUI.fragmentChoice4 = fragmentsAwaitingAssign[3];
+			}
+			if (abilitiesAwaitingAssign != null) {
+				TheDestinyMod.Instance.SubclassUI.abilityChoice1 = abilitiesAwaitingAssign[0];
+				TheDestinyMod.Instance.SubclassUI.abilityChoice2 = abilitiesAwaitingAssign[1];
+				TheDestinyMod.Instance.SubclassUI.abilityChoice3 = abilitiesAwaitingAssign[2];
+				TheDestinyMod.Instance.SubclassUI.abilityChoice4 = abilitiesAwaitingAssign[3];
 			}
 		}
 
