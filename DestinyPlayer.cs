@@ -61,7 +61,8 @@ namespace TheDestinyMod
 		private int countThunderlord = 0;
 		public bool isThundercrash = false;
 		private bool shouldBeThundercrashed = false;
-		private Vector2 subclassAwaitingAssign;
+		private int elementAwaitingAssign;
+		private List<int> fragmentsAwaitingAssign;
 
 		public override void ResetEffects() {
 			ResetVariables();
@@ -166,7 +167,7 @@ namespace TheDestinyMod
 					}
 					return false;
 				}
-				switch (TheDestinyMod.Instance.SubclassUI.selectedSubclass) {
+				/*switch (TheDestinyMod.Instance.SubclassUI.selectedSubclass) {
 					case 3 when classType == DestinyClassType.Titan:
 						Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
 						Projectile.NewProjectile(player.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, player.whoAmI);
@@ -191,7 +192,7 @@ namespace TheDestinyMod
 						superActiveTime = 0;
 						notifiedThatSuperIsReady = true;
 						break;
-				}
+				}*/
 			}
 			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
 				countThunderlord = 0;
@@ -281,6 +282,13 @@ namespace TheDestinyMod
 			if (boughtRare) {
 				engramsPurchased.Add("rare");
 			}
+			fragmentsAwaitingAssign = new List<int>()
+			{
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice1,
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice2,
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice3,
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice4
+			};
 			return new TagCompound {
 				{"motesGiven", motesGiven},
 				{"drifterRewards", drifterRewards},
@@ -289,7 +297,8 @@ namespace TheDestinyMod
 				{"engramsPurchased", engramsPurchased},
 				{"superChargeCurrent", superChargeCurrent},
 				{"superActiveTime", superActiveTime},
-				{"subclassSelected", new Vector2(TheDestinyMod.Instance.SubclassUI.selectedSubclass, TheDestinyMod.Instance.SubclassUI.element)},
+				{"subclassElement", TheDestinyMod.Instance.SubclassUI.element},
+				{"subclassFragments", fragmentsAwaitingAssign},
 				{"classType", (byte)classType}
 			};
 		}
@@ -309,15 +318,22 @@ namespace TheDestinyMod
 				classType = (DestinyClassType)tag.GetByte("classType");
 			}
 			if (tag.ContainsKey("subclassSelected")) {
-				subclassAwaitingAssign = tag.Get<Vector2>("subclassSelected");
+				elementAwaitingAssign = tag.GetInt("subclassElement");
+			}
+			if (tag.ContainsKey("subclassFragments")) {
+				fragmentsAwaitingAssign = (List<int>)tag.GetList<int>("subclassFragments");
 			}
 		}
 
         public override void OnEnterWorld(Player player) {
-			TheDestinyMod.Instance.SubclassUI.selectedSubclass = (int)subclassAwaitingAssign.X;
-			TheDestinyMod.Instance.SubclassUI.element = (int)subclassAwaitingAssign.Y;
-			
-        }
+			TheDestinyMod.Instance.SubclassUI.element = elementAwaitingAssign;
+			if (fragmentsAwaitingAssign.Count > 0) {
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice1 = fragmentsAwaitingAssign[0];
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice2 = fragmentsAwaitingAssign[1];
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice3 = fragmentsAwaitingAssign[2];
+				TheDestinyMod.Instance.SubclassUI.fragmentChoice4 = fragmentsAwaitingAssign[3];
+			}
+		}
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
 			if (target.TypeName == "Zombie" && zavalaBounty == 1 && zavalaEnemies < 100 && target.life <= 1) {
