@@ -23,8 +23,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.autoReuse = false;
 			item.width = 40;
 			item.height = 20;
-			item.useTime = 11;
-			item.useAnimation = 11;
+			item.useTime = 14;
+			item.useAnimation = 14;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);

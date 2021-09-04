@@ -35,7 +35,7 @@ Lowered Sweet Business' chance to consume ammo to 25% (from 10%)
 Fixed an issue which would allow players to place class-restricted armor in armor slots when they were not allowed to
 Fixed an issue where Borealis would not sync projectile types in multiplayer
 Fixed an issue where Ticuu's Divination's firing sounds would only play to the owner of the weapon
-Added a lot more Polish and Spanish translations
+Added a lot more Polish and Spanish translations and fixed some existing ones
 Titan Prodigal set now has tooltips if the player is not a Titan and has the "strict-class" config enabled
 Fixed a typo in the Prodigal Helm's description
 Fixed an issue which would allow users to place a class-restricted item in their vanity slot and then right-click to equip it
@@ -52,5 +52,6 @@ Decreased Gjallarhorn's speed and increased its damage
 Drifter now has unique dialogue if there is an invasion ongoing in the world
 Fixed an issue where Graviton Lance would summon its "Void Seeker" projectile regardless of whether the bullet got the kill or not
 Orbs of Power now despawn when the owner dies and can no longer be picked up by the owner
+Changed The Last Word's mechanics to make them fit with the game's mechanics
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

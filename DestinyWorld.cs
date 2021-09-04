@@ -149,7 +149,7 @@ namespace TheDestinyMod
             int attempts = 0;
             while (!success) {
                 attempts++;
-                if (attempts > 50000) {
+                if (attempts > 50000 || ModLoader.GetMod("StructureHelper") == null) {
                     success = true;
                     TheDestinyMod.Logger.Info("TheDestinyMod WorldGen: Failed to place the Vex portal");
                     continue;

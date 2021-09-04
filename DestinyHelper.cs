@@ -9,8 +9,6 @@ namespace TheDestinyMod
 {
     public static class DestinyHelper
     {
-        private static Mod structureHelper = ModLoader.GetMod("StructureHelper");
-
         /// <summary>
         /// Homes in on an NPC
         /// </summary>
@@ -80,7 +78,7 @@ namespace TheDestinyMod
         ///True if successful, otherwise false
         ///</returns>
         public static bool StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
-            if (structureHelper != null) {
+            if (ModLoader.GetMod("StructureHelper") != null) {
                 return StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
             }
             return false;

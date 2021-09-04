@@ -678,13 +678,15 @@ namespace TheDestinyMod
         }
 
         public override void Close() {
-            int soundSlot = GetSoundSlot(SoundType.Music, "Sounds/Music/SepiksPrime");
-            if (Main.music.IndexInRange(soundSlot)) {
-                var check = Main.music[soundSlot];
-                if (check != null && check.IsPlaying) {
-                    Main.music[soundSlot].Stop(AudioStopOptions.Immediate);
+            void EndMusic(int soundSlot) {
+                if (Main.music.IndexInRange(soundSlot)) {
+                    var check = Main.music[soundSlot];
+                    if (check != null && check.IsPlaying) {
+                        Main.music[soundSlot].Stop(AudioStopOptions.Immediate);
+                    }
                 }
             }
+            EndMusic(GetSoundSlot(SoundType.Music, "Sounds/Music/SepiksPrime"));
             base.Close();
         }
 
