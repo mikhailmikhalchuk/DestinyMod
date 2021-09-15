@@ -25,33 +25,6 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
-Completely overhauled class selection
-Classes are now chosen on character creation and cannot currently be changed afterwards
-Classes are shown on the player's character bar on the character select screen
-Removed class marks
-Fixed flickering that would occur when using No Land Beyond
-Made Rat King an automatic gun (from semi-automatic)
-Lowered Sweet Business' chance to consume ammo to 25% (from 10%)
-Fixed an issue which would allow players to place class-restricted armor in armor slots when they were not allowed to
-Fixed an issue where Borealis would not sync projectile types in multiplayer
-Fixed an issue where Ticuu's Divination's firing sounds would only play to the owner of the weapon
-Added a lot more Polish and Spanish translations and fixed some existing ones
-Titan Prodigal set now has tooltips if the player is not a Titan and has the "strict-class" config enabled
-Fixed a typo in the Prodigal Helm's description
-Fixed an issue which would allow users to place a class-restricted item in their vanity slot and then right-click to equip it
-Decreased the volume of Divinity and all fusion rifles
-Cryptarch now refreshes uncommon and rare engrams every 2 and 4 days after purchasing them, respectively (they should have before)
-Restocking or purchasing one uncommon or rare engram resets the days counter (e.x. if 2 days pass and uncommon restocks, another 4 days must be waited before rare restocks)
-Fixed an issue where the Cryptarch would check whether or not the player has bought an uncommon engram when purchasing a rare engram
-Decreased the prices of the common and uncommon engrams
-The Cryptarch's decryption slot is now colored blue instead of red
-All bullets now play impact sounds when they hit anything as opposed to on hitting tiles
-Changed a few projectile sound effects
-Gjallarhorn's mini rockets now don't home or collide with any NPCs for the first 10 ticks they are alive
-Decreased Gjallarhorn's speed and increased its damage
-Drifter now has unique dialogue if there is an invasion ongoing in the world
-Fixed an issue where Graviton Lance would summon its "Void Seeker" projectile regardless of whether the bullet got the kill or not
-Orbs of Power now despawn when the owner dies and can no longer be picked up by the owner
-Changed The Last Word's mechanics to make them fit with the game's mechanics
+
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
