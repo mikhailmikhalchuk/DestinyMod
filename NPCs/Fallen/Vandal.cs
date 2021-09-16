@@ -13,9 +13,8 @@ namespace TheDestinyMod.NPCs.Fallen
         }
 
         public override void SetDefaults() {
-            aiType = 0;
-            npc.width = 120;
-            npc.height = 120;
+            npc.width = 60;
+            npc.height = 70;
             npc.lifeMax = 100;
             npc.damage = 5;
             npc.defense = 2;
@@ -27,15 +26,15 @@ namespace TheDestinyMod.NPCs.Fallen
             npc.DeathSound = SoundID.NPCDeath8;
         }
 
-        private bool walking = false;
+        private bool walking;
 
         private int onFrame = 5;
 
-        private int currentDelay = 0;
+        private int currentDelay;
 
-        private int waiting = 0;
+        private int waiting;
 
-        private Vector2 previousPos;
+        private bool triedJump;
 
         public override void AI() {
             currentDelay++;
@@ -48,8 +47,9 @@ namespace TheDestinyMod.NPCs.Fallen
                 walking = false;
                 npc.velocity.X = 0;
                 waiting++;
+                triedJump = false;
                 if (waiting >= 60 && Main.netMode != NetmodeID.MultiplayerClient) {
-                    Vector2 delta = target.Center - npc.Center;
+                    Vector2 delta = target.Center - new Vector2(npc.Center.X + (npc.width / 2), npc.Center.Y - 20);
                     float magnitude = (float)Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
                     if (magnitude > 0) {
                         delta *= 10f / magnitude;
@@ -57,7 +57,8 @@ namespace TheDestinyMod.NPCs.Fallen
                     else {
                         delta = new Vector2(0f, 5f);
                     }
-                    Projectile p = Projectile.NewProjectileDirect(npc.Center, delta, ProjectileID.Bullet, 5, 0);
+                    Main.PlaySound(SoundID.Item11, new Vector2(npc.Center.X + (npc.width / 2), npc.Center.Y - 20));
+                    Projectile p = Projectile.NewProjectileDirect(new Vector2(npc.Center.X + (npc.width / 2), npc.Center.Y - 20), delta, ProjectileID.Bullet, 5, 0);
                     p.friendly = false;
                     p.hostile = true;
                     waiting = 0;
@@ -65,42 +66,66 @@ namespace TheDestinyMod.NPCs.Fallen
             }
             else {
                 Vector2 delta = target.Center - npc.Center;
-                float magnitude = (float)Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
-                if (magnitude > 0) {
-                    delta *= 2f / magnitude;
+                walking = true;
+                if (delta.X < 0) {
+                    npc.velocity.X = -3;
                 }
                 else {
-                    delta = new Vector2(0f, 5f);
-                }
-                walking = true;
-                npc.velocity.X = delta.X;
-                if (previousPos != npc.position) {
-                    previousPos = npc.position;
+                    npc.velocity.X = 3;
                 }
             }
         }
 
         public override void FindFrame(int frameHeight) {
-            if (walking && onFrame == 5 && currentDelay > 7) {
+            if (npc.oldPosition == npc.position && triedJump) {
+                npc.frame.Y = frameHeight * 3;
+            }
+            else if (walking && onFrame == 5 && currentDelay > 5) {
                 npc.frame.Y = frameHeight * 6;
                 currentDelay = 0;
                 onFrame++;
             }
-            else if (walking && onFrame >= 6 && onFrame < 9 && currentDelay > 7 && previousPos != npc.position) {
+            else if (walking && onFrame >= 6 && onFrame < 9 && currentDelay > 5) {
                 npc.frame.Y += frameHeight;
                 onFrame++;
                 currentDelay = 0;
             }
-            else if (walking && onFrame >= 6 && onFrame >= 9 && currentDelay > 7 && previousPos != npc.position) {
+            else if (walking && onFrame >= 6 && onFrame >= 9 && currentDelay > 5) {
                 npc.frame.Y = frameHeight * 6;
                 onFrame = 6;
                 currentDelay = 0;
             }
             else if (!walking) {
-                npc.frame.Y = frameHeight * 2;
+                float rotRelative = (Main.player[npc.target].Center - npc.Center).ToRotation();
+                if (rotRelative < -0.3 && rotRelative > -1.3 || rotRelative < -1.6 && rotRelative > -2.8) {
+                    npc.frame.Y = frameHeight;
+                }
+                else if (rotRelative < -1.3 && rotRelative > -1.6) {
+                    npc.frame.Y = 0;
+                }
+                else if (rotRelative > 0.3 && rotRelative < 1.3 || rotRelative > 1.6 && rotRelative < 2.8) {
+                    npc.frame.Y = frameHeight * 3;
+                }
+                else if (rotRelative > 1.3 && rotRelative < 1.6) {
+                    npc.frame.Y = frameHeight * 4;
+                }
+                else {
+                    npc.frame.Y = frameHeight * 2;
+                }
             }
-            else if (previousPos == npc.position) {
-                npc.frame.Y = frameHeight * 3;
+        }
+
+        public override void HitEffect(int hitDirection, double damage) {
+            if (Main.rand.NextBool(5)) {
+                Dust.NewDust(npc.position, npc.width, npc.height, DustID.Ash, 1.5f * hitDirection, -1f, Scale: 0.4f);
+                Dust.NewDust(npc.position, npc.width, npc.height, DustID.Ash, 1.5f * hitDirection, -1f, Scale: 0.6f);
+            }
+            if (npc.life <= 0) {
+                for (int i = 0; i < 20; i++) {
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, Scale: 1.5f);
+                    dust.velocity *= 2f;
+                    dust.noGravity = true;
+                }
             }
         }
     }
