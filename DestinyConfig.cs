@@ -18,20 +18,20 @@ namespace TheDestinyMod
         [Label("Super Bar Text")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
-        [Tooltip("Adds text under the super resource bar")]
+        [Tooltip("Adds text under the super resource bar.")]
         public bool SuperBarText { get; set; }
 
         [Label("Notify on Charge")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
-        [Tooltip("Notifies you in chat when your super is charged")]
+        [Tooltip("Notifies you in chat when your super is charged.")]
         public bool NotifyOnSuper { get; set; }
 
         [Header("Gameplay")]
         [Label("Restrict Items")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
-        [Tooltip("Restricts certain items to specific classes")]
+        [Tooltip("Restricts certain items to specific classes.")]
         public bool RestrictClassItems { get; set; }
 
         [Label("Guardian Games")]
@@ -44,7 +44,14 @@ namespace TheDestinyMod
         [Label("Sepiks Death Animation")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(false)]
-        [Tooltip("Enables Sepiks Prime's unique death animation")]
+        [Tooltip("Enables Sepiks Prime's unique death animation.")]
         public bool SepiksDeathAnimation { get; set; }
+
+        [Header("UI")]
+        [Label("Class Labels")]
+        [BackgroundColor(26, 70, 143, 192)]
+        [DefaultValue(true)]
+        [Tooltip("Displays character classes on the character selection screen.")]
+        public bool CharacterClassLabels { get; set; }
     }
 }

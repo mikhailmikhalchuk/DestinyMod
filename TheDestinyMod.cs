@@ -530,6 +530,8 @@ namespace TheDestinyMod
 
         private void UICharacterListItem_DrawSelf(On.Terraria.GameContent.UI.Elements.UICharacterListItem.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UICharacterListItem self, SpriteBatch spriteBatch) {
             orig.Invoke(self, spriteBatch);
+            if (!DestinyConfig.Instance.CharacterClassLabels)
+                return;
             float width = self.GetInnerDimensions().X + self.GetInnerDimensions().Width;
             Vector2 vector4 = new Vector2(self.GetDimensions().X + 100f, self.GetInnerDimensions().Y + 59f);
             Texture2D texture = ModContent.GetTexture("Terraria/UI/InnerPanelBackground");

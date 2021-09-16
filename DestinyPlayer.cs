@@ -34,6 +34,7 @@ namespace TheDestinyMod
 		public int superCrit = 4;
 		public int orbOfPowerAdd = 0;
 		public int borealisCooldown;
+		public int duneRunTime;
 
 		public float businessReduceUse = 0.2f;
 		public float thunderlordReduceUse = 1f;
@@ -51,6 +52,7 @@ namespace TheDestinyMod
 		public bool notifiedThatSuperIsReady;
 		public DestinyClassType classType;
 		public bool exoticEquipped;
+		public bool duneKill;
 
 		public static bool gorgonsHaveSpotted;
 		public static DestinyClassType classAwaitingAssign;
@@ -103,6 +105,13 @@ namespace TheDestinyMod
 				spottedIntensity++;
 			}
 		}
+
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
+			if (item.melee && player.HasBuff(ModContent.BuffType<Buffs.LinearActuators>())) {
+				mult *= 4;
+				player.ClearBuff(ModContent.BuffType<Buffs.LinearActuators>());
+			}
+        }
 
         public override void PostUpdate() {
 			countThunderlord++;

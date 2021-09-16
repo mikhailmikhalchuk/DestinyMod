@@ -73,6 +73,14 @@ namespace TheDestinyMod.NPCs
             return true;
         }
 
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            if (npc.TypeName == "Zombie") {
+                if (new Rectangle(npc.Hitbox.X, npc.Hitbox.Y, npc.Hitbox.Width, 8).Intersects(projectile.Hitbox)) {
+                    crit = true;
+                }
+            }
+        }
+
         public override void DrawEffects(NPC npc, ref Color drawColor) {
             if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
                 drawColor = Color.Yellow;

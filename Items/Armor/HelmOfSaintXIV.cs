@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 namespace TheDestinyMod.Items.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
-	public class SaintXIV : ExoticArmor, IClassArmor
+	public class HelmOfSaintXIV : ExoticArmor, IClassArmor
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Helm of Saint-14");
