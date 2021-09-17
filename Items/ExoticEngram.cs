@@ -36,15 +36,6 @@ namespace TheDestinyMod.Items
             Lighting.AddLight(item.Center, Color.Yellow.ToVector3() * 0.55f * Main.essScale);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift)) {
-				tooltips.Add(new TooltipLine(TheDestinyMod.Instance, "WeaponsInfo", $"[i:{ModContent.ItemType<Weapons.Ranged.HakkeAutoRifle>()}]"));
-			}
-			else {
-				tooltips.Add(new TooltipLine(TheDestinyMod.Instance, "WeaponsInfo", "Press Shift to see potential drops"));
-			}
-        }
-
         public override bool CanBurnInLava() => true;
 	}
 }
