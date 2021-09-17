@@ -27,5 +27,6 @@ Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
 Added a config toggle for displaying class labels on the character selection screen
+The Cryptarch's decryption UI now shows potential engram drops if the item has dropped previously
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

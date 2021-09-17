@@ -48,11 +48,16 @@ namespace TheDestinyMod
 		public bool boughtRare;
 		public bool ghostPet;
 		public bool servitorMinion;
-		public bool releasedMouseLeft;
+		public bool mouseLeftDown;
+		public bool leftShiftDown;
 		public bool notifiedThatSuperIsReady;
 		public DestinyClassType classType;
 		public bool exoticEquipped;
 		public bool duneKill;
+
+		public List<int> commonItemsDecrypted = new List<int>();
+		public List<int> uncommonItemsDecrypted = new List<int>();
+		public List<int> rareItemsDecrypted = new List<int>();
 
 		public static bool gorgonsHaveSpotted;
 		public static DestinyClassType classAwaitingAssign;
@@ -206,7 +211,7 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
 				countThunderlord = 0;
-				releasedMouseLeft = false;
+				mouseLeftDown = true;
 				if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>())) {
 					timesClicked++;
 					Main.PlaySound(SoundID.Item50, player.Center);
@@ -217,7 +222,7 @@ namespace TheDestinyMod
 				}
 			}
 			if (PlayerInput.Triggers.JustReleased.MouseLeft) {
-				releasedMouseLeft = true;
+				mouseLeftDown = false;
 				businessReduceUse = 0.2f;
 				thunderlordReduceUse = 1f;
 			}
@@ -314,6 +319,9 @@ namespace TheDestinyMod
 				{"engramsPurchased", engramsPurchased},
 				{"superChargeCurrent", superChargeCurrent},
 				{"superActiveTime", superActiveTime},
+				{"commonItemsDecrypted", commonItemsDecrypted},
+				{"uncommonItemsDecrypted", uncommonItemsDecrypted},
+				{"rareItemsDecrypted", rareItemsDecrypted},
 				{"subclassElement", TheDestinyMod.Instance.SubclassUI.element},
 				{"subclassFragments", fragmentsAwaitingAssign},
 				{"subclassAbilities", abilitiesAwaitingAssign},
@@ -332,6 +340,11 @@ namespace TheDestinyMod
 			zavalaEnemies = tag.GetInt("zavalaEnemies");
 			superChargeCurrent = tag.GetInt("superChargeCurrent");
 			superActiveTime = tag.GetInt("superActiveTime");
+			if (tag.ContainsKey("commonItemsDecrypted")) {
+				commonItemsDecrypted = (List<int>)tag.GetList<int>("commonItemsDecrypted");
+				uncommonItemsDecrypted = (List<int>)tag.GetList<int>("uncommonItemsDecrypted");
+				rareItemsDecrypted = (List<int>)tag.GetList<int>("rareItemsDecrypted");
+			}
 			if (tag.ContainsKey("classType")) {
 				classType = (DestinyClassType)tag.GetByte("classType");
 			}
