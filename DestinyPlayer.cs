@@ -49,7 +49,6 @@ namespace TheDestinyMod
 		public bool ghostPet;
 		public bool servitorMinion;
 		public bool mouseLeftDown;
-		public bool leftShiftDown;
 		public bool notifiedThatSuperIsReady;
 		public DestinyClassType classType;
 		public bool exoticEquipped;
@@ -174,7 +173,6 @@ namespace TheDestinyMod
 						}
 						if (item.IsAir) {
 							//Main.PlaySound(SoundID.Item74, Main.LocalPlayer.position);
-							Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
 							Projectile.NewProjectile(player.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, player.whoAmI);
 							player.QuickSpawnItem(superItem, 1);
 							return true;
@@ -194,11 +192,13 @@ namespace TheDestinyMod
 					case 4 when classType == DestinyClassType.Hunter:
 					case 5 when classType == DestinyClassType.Hunter:
 						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>())) {
+							Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/GoldenGunActivate"), player.position);
 							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
 						}
 						break;
 					case 4 when classType == DestinyClassType.Titan:
 						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>())) {
+							Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
 							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
 						}
 						break;

@@ -28,5 +28,7 @@ Added Titan, Warlock, and Hunter-themed decor
 --
 Added a config toggle for displaying class labels on the character selection screen
 The Cryptarch's decryption UI now shows potential engram drops if the item has dropped previously
+Right-clicking on the decrypt button in the Cryptarch's UI now decrypts one engram (useful for stacks)
+Changed the Orb of Power's pickup sound
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

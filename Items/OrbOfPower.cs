@@ -1,4 +1,5 @@
 using Terraria;
+using System.Reflection;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.DataStructures;
@@ -32,7 +33,7 @@ namespace TheDestinyMod.Items
         public override bool OnPickup(Player player) {
             var modPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             modPlayer.superChargeCurrent += 4 + modPlayer.orbOfPowerAdd;
-            Main.PlaySound(SoundID.Grab, Main.LocalPlayer.position);
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/OrbOfPower"), player.Center);
             return false;
         }
     }

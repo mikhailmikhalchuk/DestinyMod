@@ -23,7 +23,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.width = 78;
 			item.height = 20;
 			item.useTime = 60;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/UniversalRemote");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/FoundVerdict");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 16f;
 			item.useAnimation = 60;

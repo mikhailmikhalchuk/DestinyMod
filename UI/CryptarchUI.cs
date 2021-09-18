@@ -116,6 +116,7 @@ namespace TheDestinyMod.UI
 				DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Decrypt {_vanillaItemSlot.Item.Name}", new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One);
 				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Potential drops:", new Vector2(slotX + 100, slotY + 30), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One);
+				TextSnippet extSnip = null;
 				if (_vanillaItemSlot.Item.type == ModContent.ItemType<CommonEngram>()) {
 					int start = 55;
 					foreach (int item in commonLoot) {
@@ -126,12 +127,9 @@ namespace TheDestinyMod.UI
 						}
 						List<TextSnippet> list = ChatManager.ParseMessage(toParse, dPlayer.commonItemsDecrypted.Contains(item) ? GetColorBasedOnRarity(ModContent.GetModItem(item).item.rare) : Color.White);
 						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, list.ToArray(), new Vector2(slotX + 100, slotY + start), 0f, Vector2.Zero, Vector2.One, out hoveredSnippet);
-						start += 20;
+						start += 25;
 						if (hoveredSnippet > -1) {
-							list[hoveredSnippet].OnHover();
-							if (Main.mouseLeft && Main.mouseLeftRelease) {
-								list[hoveredSnippet].OnClick();
-							}
+							extSnip = list[0];
 						}
 					}
 				}
@@ -145,12 +143,9 @@ namespace TheDestinyMod.UI
 						}
 						List<TextSnippet> list = ChatManager.ParseMessage(toParse, dPlayer.uncommonItemsDecrypted.Contains(item) ? GetColorBasedOnRarity(ModContent.GetModItem(item).item.rare) : Color.White);
 						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, list.ToArray(), new Vector2(slotX + 100, slotY + start), 0f, Vector2.Zero, Vector2.One, out hoveredSnippet);
-						start += 20;
+						start += 25;
 						if (hoveredSnippet > -1) {
-							list[hoveredSnippet].OnHover();
-							if (Main.mouseLeft && Main.mouseLeftRelease) {
-								list[hoveredSnippet].OnClick();
-							}
+							extSnip = list[0];
 						}
 					}
 				}
@@ -164,15 +159,13 @@ namespace TheDestinyMod.UI
 						}
 						List<TextSnippet> list = ChatManager.ParseMessage(toParse, dPlayer.rareItemsDecrypted.Contains(item) ? GetColorBasedOnRarity(ModContent.GetModItem(item).item.rare) : Color.White);
 						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, list.ToArray(), new Vector2(slotX + 100, slotY + start), 0f, Vector2.Zero, Vector2.One, out hoveredSnippet);
-						start += 20;
+						start += 25;
 						if (hoveredSnippet > -1) {
-							list[hoveredSnippet].OnHover();
-							if (Main.mouseLeft && Main.mouseLeftRelease) {
-								list[hoveredSnippet].OnClick();
-							}
+							extSnip = list[0];
 						}
 					}
 				}
+				extSnip?.OnHover();
 				int decryptX = slotX + 70;
 				int decryptY = slotY + 40;
 				bool hoveringOverDecryptButton = Main.mouseX > decryptX - 15 && Main.mouseX < decryptX + 15 && Main.mouseY > decryptY - 15 && Main.mouseY < decryptY + 15 && !PlayerInput.IgnoreMouseInterface;
@@ -185,41 +178,48 @@ namespace TheDestinyMod.UI
 					}
 					tickPlayed = true;
 					Main.LocalPlayer.mouseInterface = true;
+					void GiveEngramItem() {
+						if (_vanillaItemSlot.Item.type == ModContent.ItemType<CommonEngram>()) {
+							if (Main.rand.Next(20) > commonLoot.Count) {
+								Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(1, 10));
+							}
+							else {
+								int random = Main.rand.Next(commonLoot);
+								Main.LocalPlayer.QuickSpawnItem(random);
+								dPlayer.commonItemsDecrypted.Add(random);
+							}
+						}
+						else if (_vanillaItemSlot.Item.type == ModContent.ItemType<UncommonEngram>()) {
+							if (Main.rand.Next(20) > uncommonLoot.Count) {
+								Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(10, 50));
+							}
+							else {
+								int random = Main.rand.Next(uncommonLoot);
+								Main.LocalPlayer.QuickSpawnItem(random);
+								dPlayer.uncommonItemsDecrypted.Add(random);
+							}
+						}
+						else if (_vanillaItemSlot.Item.type == ModContent.ItemType<RareEngram>()) {
+							if (Main.rand.Next(20) > rareLoot.Count) {
+								Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(1, 3));
+							}
+							else {
+								int random = Main.rand.Next(rareLoot);
+								Main.LocalPlayer.QuickSpawnItem(random);
+								dPlayer.rareItemsDecrypted.Add(random);
+							}
+						}
+						_vanillaItemSlot.Item.stack--;
+					}
 					if (Main.mouseLeftRelease && Main.mouseLeft) {
 						while (_vanillaItemSlot.Item.stack > 0) {
-							if (_vanillaItemSlot.Item.type == ModContent.ItemType<CommonEngram>()) {
-								if (Main.rand.Next(20) > commonLoot.Count) {
-									Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(1, 10));
-								}
-								else {
-									int random = Main.rand.Next(commonLoot);
-									Main.LocalPlayer.QuickSpawnItem(random);
-									dPlayer.commonItemsDecrypted.Add(random);
-								}
-							}
-							else if (_vanillaItemSlot.Item.type == ModContent.ItemType<UncommonEngram>()) {
-								if (Main.rand.Next(20) > uncommonLoot.Count) {
-									Main.LocalPlayer.QuickSpawnItem(ItemID.SilverCoin, Main.rand.Next(10, 50));
-								}
-								else {
-									int random = Main.rand.Next(uncommonLoot);
-									Main.LocalPlayer.QuickSpawnItem(random);
-									dPlayer.uncommonItemsDecrypted.Add(random);
-								}
-							}
-							else if (_vanillaItemSlot.Item.type == ModContent.ItemType<RareEngram>()) {
-								if (Main.rand.Next(20) > rareLoot.Count) {
-									Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(1, 3));
-								}
-								else {
-									int random = Main.rand.Next(rareLoot);
-									Main.LocalPlayer.QuickSpawnItem(random);
-									dPlayer.rareItemsDecrypted.Add(random);
-								}
-							}
-							_vanillaItemSlot.Item.stack--;
+							GiveEngramItem();
 						}
 						_vanillaItemSlot.Item.TurnToAir();
+						Main.PlaySound(SoundID.Item37, -1, -1);
+					}
+					else if (Main.mouseRightRelease && Main.mouseRight) {
+						GiveEngramItem();
 						Main.PlaySound(SoundID.Item37, -1, -1);
 					}
 				}
@@ -228,8 +228,7 @@ namespace TheDestinyMod.UI
 				}
 			}
 			else {
-				string message = "Place an Engram here to decrypt it";
-				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, message, new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One, -1f, 2f);
+				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, "Place an Engram here to decrypt it", new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One, -1f, 2f);
 			}
 		}
 	}

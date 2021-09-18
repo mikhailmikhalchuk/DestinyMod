@@ -26,7 +26,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Blue;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Riskrunner");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HezenVengeance");
 			item.shoot = ProjectileID.RocketI;
 			item.shootSpeed = 16f;
 			item.useAmmo = ItemID.Grenade;
