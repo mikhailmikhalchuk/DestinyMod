@@ -29,5 +29,9 @@ namespace TheDestinyMod.Projectiles.Ranged
         public override void AI() {
 			projectile.HomeInOnNPC(400f, 15f);
 		}
+
+		public override Color? GetAlpha(Color lightColor) {
+			return new Color(lightColor.R, lightColor.G * 0.75f, lightColor.B * 0.55f, lightColor.A);
+		}
 	}
 }

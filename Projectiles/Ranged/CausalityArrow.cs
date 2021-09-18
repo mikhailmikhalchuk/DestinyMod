@@ -24,5 +24,9 @@ namespace TheDestinyMod.Projectiles.Ranged
 			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
 			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
 		}
+
+        public override Color? GetAlpha(Color lightColor) {
+			return new Color(lightColor.R, lightColor.G * 0.75f, lightColor.B * 0.55f, lightColor.A);
+        }
     }
 }

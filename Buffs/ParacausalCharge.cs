@@ -9,7 +9,7 @@ namespace TheDestinyMod.Buffs
 		public override void SetDefaults() {
 			DisplayName.SetDefault("Paracausal Charge");
 			DisplayName.AddTranslation(GameCulture.Polish, "ładunek Parakasualny");
-			Description.SetDefault("Grants double damage when using Hawkmoon");
+			Description.SetDefault("Hawkmoon damage is doubled");
 			Description.AddTranslation(GameCulture.Polish, "Zapewnia podwójne obrażenia podczas korzystania z Jastrzębiego Księżyca");
             Main.buffNoSave[Type] = true;
 		}

@@ -35,7 +35,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, ModContent.ProjectileType<OutbreakBullet>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y - 4, speedX, speedY, ModContent.ProjectileType<OutbreakBullet>(), damage, knockBack, player.whoAmI);
 			player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 5;
 			return false;
         }

@@ -110,12 +110,26 @@ namespace TheDestinyMod
 			}
 		}
 
-        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
+        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
 			if (item.melee && player.HasBuff(ModContent.BuffType<Buffs.LinearActuators>())) {
-				mult *= 4;
+				damage *= 4;
 				player.ClearBuff(ModContent.BuffType<Buffs.LinearActuators>());
 			}
-        }
+		}
+
+        public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
+			if (item.melee && player.HasBuff(ModContent.BuffType<Buffs.LinearActuators>())) {
+				damage *= 4;
+				player.ClearBuff(ModContent.BuffType<Buffs.LinearActuators>());
+			}
+		}
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+			if (proj.melee && player.HasBuff(ModContent.BuffType<Buffs.LinearActuators>())) {
+				damage *= 4;
+				player.ClearBuff(ModContent.BuffType<Buffs.LinearActuators>());
+			}
+		}
 
         public override void PostUpdate() {
 			countThunderlord++;
@@ -376,10 +390,10 @@ namespace TheDestinyMod
 		}
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
-			if (target.TypeName == "Zombie" && zavalaBounty == 1 && zavalaEnemies < 100 && target.life <= 1) {
+			if (target.TypeName == "Zombie" && zavalaBounty == 1 && zavalaEnemies < 100 && target.life <= 0) {
 				zavalaEnemies++;
 			}
-			if (target.TypeName == "Skeleton" && zavalaBounty == 3 && zavalaEnemies < 50 && target.life <= 1) {
+			if (target.TypeName == "Skeleton" && zavalaBounty == 3 && zavalaEnemies < 50 && target.life <= 0) {
 				zavalaEnemies++;
 			}
 		}
@@ -498,7 +512,7 @@ namespace TheDestinyMod
 			}
         }
 
-        private float GetSuperDamage(float damage) {
+        public float GetSuperDamage(float damage) {
 			if (Main.rand.Next(1, 101) <= superCrit) {
 				return Math.Max(0, damage * 2 * superDamageMult + superDamageAdd);
 			}

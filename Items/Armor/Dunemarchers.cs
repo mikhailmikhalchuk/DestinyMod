@@ -17,19 +17,18 @@ namespace TheDestinyMod.Items.Armor
 			item.width = 20;
 			item.height = 18;
 			item.value = Item.sellPrice(0, 0, 60, 0);
-			item.rare = ItemRarityID.Orange;
+			item.rare = ItemRarityID.Yellow;
 			item.defense = 8;
 		}
 
 		public override void UpdateEquip(Player player) {
-			player.rangedDamage += 0.06f;
-			player.accRunSpeed = 5;
+			player.accRunSpeed = 5f;
 			DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
-			if (player.velocity.X > 0f - player.accRunSpeed && player.velocity.X < 0f - ((player.accRunSpeed + player.maxRunSpeed) / 2f) && player.velocity.Y == 0f && !player.mount.Active && player.dashDelay >= 0 && player.controlLeft || player.velocity.X > ((player.accRunSpeed + player.maxRunSpeed) / 2f) && player.velocity.X < player.accRunSpeed && player.velocity.Y == 0f && !player.mount.Active && player.dashDelay >= 0 && player.controlRight) {
+			if ((player.velocity.X > 0f - player.accRunSpeed && player.velocity.X < 0f - ((player.accRunSpeed + player.maxRunSpeed) / 2f) || player.velocity.X > ((player.accRunSpeed + player.maxRunSpeed) / 2f) && player.velocity.X < player.accRunSpeed) && player.velocity.Y == 0f && !player.mount.Active && player.dashDelay >= 0) {
 				dPlayer.duneRunTime++;
 				dPlayer.duneKill = false;
 				if (dPlayer.duneRunTime >= 300) {
-					player.AddBuff(ModContent.BuffType<Buffs.LinearActuators>(), 10);
+					player.AddBuff(ModContent.BuffType<Buffs.LinearActuators>(), 100);
 				}
 			}
 			else {

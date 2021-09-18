@@ -19,6 +19,10 @@ namespace TheDestinyMod.Projectiles.Ranged
             Main.PlaySound(SoundID.Item10, projectile.position);
         }
 
+        public override Color? GetAlpha(Color lightColor) {
+            return new Color(lightColor.R, lightColor.G * 0.5f, lightColor.B * 0.1f, lightColor.A);
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
                 Main.LocalPlayer.statLife += 5;

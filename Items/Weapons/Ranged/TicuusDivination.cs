@@ -16,7 +16,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override void SetDefaults() {
-			item.damage = 50;
+			item.damage = 65;
 			item.ranged = true;
 			item.noMelee = true;
 			item.width = 36;
@@ -54,7 +54,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			}
 			for (int i = 0; i < 3; i++) {
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20));
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<SacredFlame>(), damage / 2, knockBack, player.whoAmI);
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<SacredFlame>(), 35, knockBack, player.whoAmI);
 			}
 			return false;
 		}

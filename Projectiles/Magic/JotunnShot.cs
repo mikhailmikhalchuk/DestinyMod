@@ -105,8 +105,26 @@ namespace TheDestinyMod.Projectiles.Magic
             }
         }
 
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Lighting.AddLight(projectile.Center, Color.Orange.ToVector3() * 2f);
+        public override void Kill(int timeLeft) {
+            if (projectile.localAI[0] >= 80f) {
+                Main.PlaySound(SoundID.Item14, projectile.position);
+                projectile.position = projectile.Center;
+                projectile.width = 11;
+                projectile.height = 11;
+                projectile.position.X -= projectile.width / 2;
+                projectile.position.Y -= projectile.height / 2;
+                for (int i = 0; i < 20; i++) {
+                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 3.5f);
+                    dust.noGravity = true;
+                    dust.velocity *= 7f;
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.Fire, 0f, 0f, 100, default, 1.5f);
+                    dust.velocity *= 3f;
+                }
+            }
+        }
+
+        public override Color? GetAlpha(Color lightColor) {
+            return new Color(lightColor.R, lightColor.G * 0.75f, lightColor.B * 0.55f, lightColor.A);
         }
 
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {

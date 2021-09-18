@@ -19,12 +19,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override void SetDefaults() {
-			item.damage = 50;
+			item.damage = 195;
 			item.ranged = true;
 			item.width = 128;
 			item.height = 40;
-			item.useTime = 28;
-			item.useAnimation = 28;
+			item.useTime = 40;
+			item.useAnimation = 40;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 4;

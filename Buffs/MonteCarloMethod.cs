@@ -9,7 +9,7 @@ namespace TheDestinyMod.Buffs
 		public override void SetDefaults() {
 			DisplayName.SetDefault("Monte Carlo Method");
 			DisplayName.AddTranslation(GameCulture.Polish, "Metoda Monte Carlo");
-			Description.SetDefault("Grants increased damage to melee weapons");
+			Description.SetDefault("25% increased melee damage");
 			Description.AddTranslation(GameCulture.Polish, "Zwiększone obrażenia dla broni białej");
             Main.buffNoSave[Type] = true;
 		}

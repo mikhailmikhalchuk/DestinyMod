@@ -22,6 +22,10 @@ namespace TheDestinyMod.Projectiles.Ranged
             }
         }
 
+        public override Color? GetAlpha(Color lightColor) {
+            return new Color(lightColor.R * 0.9f, lightColor.G, lightColor.B * 0.4f, lightColor.A);
+        }
+
         public override void Kill(int timeLeft) {
             Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
             Main.PlaySound(SoundID.Item10, projectile.position);

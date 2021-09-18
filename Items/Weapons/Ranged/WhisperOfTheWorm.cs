@@ -16,13 +16,13 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Tooltip.SetDefault("\"A Guardian's power makes a rich feeding ground. Do not be revolted\"");
 		}
 		public override void SetDefaults() {
-			item.damage = 100;
+			item.damage = 250;
 			item.ranged = true;
 			item.noMelee = true;
 			item.width = 124;
 			item.height = 40;
-			item.useTime = 30;
-			item.useAnimation = 30;
+			item.useTime = 50;
+			item.useAnimation = 50;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Purple;

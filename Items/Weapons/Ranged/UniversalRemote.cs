@@ -17,18 +17,18 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override void SetDefaults() {
-			item.damage = 25;
+			item.damage = 15;
 			item.ranged = true;
 			item.noMelee = true;
 			item.rare = ItemRarityID.Yellow;
 			item.knockBack = 0;
 			item.width = 80;
 			item.height = 32;
-			item.useTime = 60;
+			item.useTime = 55;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/UniversalRemote");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 16f;
-			item.useAnimation = 60;
+			item.useAnimation = 55;
 			item.shoot = 10;
 			item.useAmmo = AmmoID.Bullet;
 			item.value = Item.buyPrice(0, 1, 0, 0);

@@ -30,5 +30,9 @@ Added a config toggle for displaying class labels on the character selection scr
 The Cryptarch's decryption UI now shows potential engram drops if the item has dropped previously
 Right-clicking on the decrypt button in the Cryptarch's UI now decrypts one engram (useful for stacks)
 Changed the Orb of Power's pickup sound
+Removed an accidental debugging feature which would occur when using Borealis' melee or magic types
+Gjallarhorn's rockets now no longer summon more than 5 rockets when hitting a large target
+Removed Sweet Business' catalyst and catalyst feature
+Added lighting to modded bullets to better fit vanilla
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

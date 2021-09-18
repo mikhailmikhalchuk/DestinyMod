@@ -21,7 +21,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
         public override void SetDefaults() {
-			item.damage = 84;
+			item.damage = 85;
 			item.ranged = true;
 			item.noMelee = true;
 			item.autoReuse = true;
@@ -30,16 +30,16 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.knockBack = 0;
 			item.width = 104;
 			item.height = 46;
-			item.useTime = 13;
+			item.useTime = 18;
 			item.crit = 10;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclast"); //thanks, fillinek
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 10f;
-			item.useAnimation = 13;
+			item.useAnimation = 18;
 			item.shoot = 10;
 			item.useAmmo = AmmoID.Bullet;
 			item.value = Item.buyPrice(0, 1, 0, 0);
-			item.scale = 0.7f;
+			item.scale = 0.65f;
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
@@ -84,7 +84,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.7f;
+			scale *= 0.65f;
             return true;
         }
 
@@ -194,6 +194,10 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
             aiType = ProjectileID.Bullet;
+        }
+
+        public override Color? GetAlpha(Color lightColor) {
+            return new Color(lightColor.R, lightColor.G * 0.7f, lightColor.B * 0.1f, lightColor.A);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity) {

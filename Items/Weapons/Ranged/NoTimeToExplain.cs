@@ -16,7 +16,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Tooltip.SetDefault("Three round burst\n\"A single word etched onto the inside of the weapon's casing: Now.\"");
 		}
 		public override void SetDefaults() {
-			item.damage = 50;
+			item.damage = 65;
 			item.ranged = true;
 			item.noMelee = true;
 			item.autoReuse = true;

@@ -17,14 +17,14 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override void SetDefaults() {
-			item.damage = 100;
+			item.damage = 35;
 			item.ranged = true;
 			item.noMelee = true;
 			item.autoReuse = false;
 			item.width = 40;
 			item.height = 20;
-			item.useTime = 14;
-			item.useAnimation = 14;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);

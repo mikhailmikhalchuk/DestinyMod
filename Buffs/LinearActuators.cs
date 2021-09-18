@@ -10,7 +10,7 @@ namespace TheDestinyMod.Buffs
             DisplayName.SetDefault("Linear Actuators");
             Description.SetDefault("300% increased damage for next melee strike");
             Main.buffNoTimeDisplay[Type] = true;
-            Main.debuff[Type] = false;
+            Main.buffNoSave[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex) {

@@ -20,6 +20,10 @@ namespace TheDestinyMod.Projectiles.Ranged
             Main.PlaySound(SoundID.Item10, projectile.position);
         }
 
+        public override Color? GetAlpha(Color lightColor) {
+            return new Color(lightColor.R * 0.1f, lightColor.G * 0.5f, lightColor.B, lightColor.A);
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (Main.rand.NextBool(10)) {
                 target.AddBuff(ModContent.BuffType<Buffs.Debuffs.Conducted>(), 120);

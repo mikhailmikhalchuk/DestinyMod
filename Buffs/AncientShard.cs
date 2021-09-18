@@ -8,7 +8,7 @@ namespace TheDestinyMod.Buffs
     {
         public override void SetDefaults() {
             DisplayName.SetDefault("Ancient Shard");
-            Description.SetDefault("Increases the chance of finding Motes from enemies");
+            Description.SetDefault("Enemy Mote drop chance increased");
             Description.AddTranslation(GameCulture.Polish, "Zwiększa szanse na znalezienie okruchów z przeciwników");
             Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = false;

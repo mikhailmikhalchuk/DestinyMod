@@ -53,6 +53,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 					Projectile.NewProjectile(projectile.position, velocity, ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, projectile.owner);
 				}
 			}
+			projectile.Kill();
         }
     }
 }

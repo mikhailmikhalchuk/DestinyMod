@@ -16,7 +16,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override void SetDefaults() {
-			item.damage = 40;
+			item.damage = 125;
 			item.ranged = true;
 			item.autoReuse = true;
 			item.width = 100;
