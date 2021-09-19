@@ -50,7 +50,8 @@ namespace TheDestinyMod
 
         public static TheDestinyMod Instance { get; private set; }
 
-        private bool classSelecting;
+        public static bool classSelecting;
+        private bool wasJustCreating;
 
         public TheDestinyMod() {
             Instance = this;
@@ -570,15 +571,22 @@ namespace TheDestinyMod
         }
 
         private void Main_OnTick() {
-            if (Main.menuMode == 1) {
-                classSelecting = false;
-            }
-            if (Main.menuMode == 2 && !classSelecting) {
+            void SetUI() {
                 classSelectionInterface.SetState(ClassSelectionUI);
                 Main.menuMode = 888;
                 Main.MenuUI.SetState(ClassSelectionUI);
                 classSelecting = true;
             }
+            if (Main.menuMode == 1) {
+                classSelecting = false;
+                if (wasJustCreating) {
+                    SetUI();
+                }
+            }
+            if (Main.menuMode == 2 && !classSelecting) {
+                SetUI();
+            }
+            wasJustCreating = Main.menuMode == 2;
         }
 
         public override void Unload() {

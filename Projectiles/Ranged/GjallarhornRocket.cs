@@ -12,6 +12,10 @@ namespace TheDestinyMod.Projectiles.Ranged
 
 		private bool target = false;
 
+        public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Wolfpack Round");
+        }
+
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.RocketI);
             aiType = ProjectileID.RocketI;

@@ -11,10 +11,8 @@ using TheDestinyMod.Items.Weapons.Ranged;
 
 namespace TheDestinyMod.Items
 {
-    public class DestinyGlobalItem : GlobalItem {
-
-        public bool catalyst = false;
-
+    public class DestinyGlobalItem : GlobalItem
+    {
         private readonly List<int> raidProhibitedItems = new List<int>()
         {
             ItemID.RodofDiscord,

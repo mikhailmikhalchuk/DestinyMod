@@ -1,16 +1,28 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.UI;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace TheDestinyMod.UI
 {
 	public class ClassSelectionUI : UIState
 	{
+		private UIPanel wrapper;
+
+		private UITextPanel<string> titanSelect;
+
+		private UITextPanel<string> hunterSelect;
+
+		private UITextPanel<string> warlockSelect;
+
+		private UITextPanel<string> returnToMenu;
+
 		private UIText titanDescription;
 
 		private UIText warlockDescription;
@@ -25,7 +37,7 @@ namespace TheDestinyMod.UI
 			HAlign = 0.5f;
 			VAlign = 0.5f;
 
-			UIPanel wrapper = new UIPanel();
+			wrapper = new UIPanel();
 			wrapper.HAlign = 0.5f;
 			wrapper.VAlign = 0.5f;
 			wrapper.Width.Set(600f, 0f);
@@ -39,65 +51,69 @@ namespace TheDestinyMod.UI
 			selectClassText.Height.Set(30, 0);
 			wrapper.Append(selectClassText);
 
-			UITextPanel<string> titanSelect = new UITextPanel<string>("Titan", 0.7f, true);
+			titanSelect = new UITextPanel<string>("Titan", 0.7f, true);
 			titanSelect.HAlign = 0.5f;
-			titanSelect.Top.Set(100, 0);
+			titanSelect.Top.Set(0, 0.14f);
 			titanSelect.Width.Set(200, 0f);
 			titanSelect.Height.Set(50, 0);
             titanSelect.OnClick += TitanSelect;
             titanSelect.OnMouseOver += TitanSelect_OnMouseOver;
             titanSelect.OnMouseOut += TitanSelect_OnMouseOut;
+			titanSelect.SetSnapPoint("Titan", 0);
 			wrapper.Append(titanSelect);
 
 			titanDescription = new UIText("");
 			titanDescription.HAlign = 0.5f;
-			titanDescription.Top.Set(170, 0);
+			titanDescription.Top.Set(0, 0.22f);
 			titanDescription.Width.Set(100, 0f);
 			titanDescription.Height.Set(50, 0);
 			wrapper.Append(titanDescription);
 
-			UITextPanel<string> hunterSelect = new UITextPanel<string>("Hunter", 0.7f, true);
+			hunterSelect = new UITextPanel<string>("Hunter", 0.7f, true);
 			hunterSelect.HAlign = 0.5f;
-			hunterSelect.Top.Set(300, 0);
+			hunterSelect.Top.Set(0, 0.39f);
 			hunterSelect.Width.Set(200, 0f);
 			hunterSelect.Height.Set(50, 0);
 			hunterSelect.OnClick += HunterSelect;
 			hunterSelect.OnMouseOver += HunterSelect_OnMouseOver;
 			hunterSelect.OnMouseOut += HunterSelect_OnMouseOut;
+			hunterSelect.SetSnapPoint("Hunter", 0);
 			wrapper.Append(hunterSelect);
 
 			hunterDescription = new UIText("");
 			hunterDescription.HAlign = 0.5f;
-			hunterDescription.Top.Set(370, 0);
+			hunterDescription.Top.Set(0, 0.47f);
 			hunterDescription.Width.Set(100, 0f);
 			hunterDescription.Height.Set(50, 0);
 			wrapper.Append(hunterDescription);
 
-			UITextPanel<string> warlockSelect = new UITextPanel<string>("Warlock", 0.7f, true);
+			warlockSelect = new UITextPanel<string>("Warlock", 0.7f, true);
 			warlockSelect.HAlign = 0.5f;
-			warlockSelect.Top.Set(500, 0);
+			warlockSelect.Top.Set(0, 0.65f);
 			warlockSelect.Width.Set(200, 0f);
 			warlockSelect.Height.Set(50, 0);
 			warlockSelect.OnClick += WarlockSelect;
             warlockSelect.OnMouseOver += WarlockSelect_OnMouseOver;
             warlockSelect.OnMouseOut += WarlockSelect_OnMouseOut;
+			warlockSelect.SetSnapPoint("Warlock", 0);
 			wrapper.Append(warlockSelect);
 
 			warlockDescription = new UIText("");
 			warlockDescription.HAlign = 0.5f;
-			warlockDescription.Top.Set(570, 0);
+			warlockDescription.Top.Set(0, 0.73f);
 			warlockDescription.Width.Set(100, 0f);
 			warlockDescription.Height.Set(50, 0);
 			wrapper.Append(warlockDescription);
 
-			UITextPanel<string> returnToMenu = new UITextPanel<string>("Back", 0.7f, true);
+			returnToMenu = new UITextPanel<string>("Back", 0.7f, true);
 			returnToMenu.HAlign = 0.5f;
-			returnToMenu.Top.Set(1000f, 0f);
+			returnToMenu.Top.Set(0, 0.86f);
 			returnToMenu.Width.Set(250, 0);
 			returnToMenu.Height.Set(50, 0);
             returnToMenu.OnClick += ReturnToMenu;
             returnToMenu.OnMouseOver += ReturnToMenu_OnMouseOver;
             returnToMenu.OnMouseOut += ReturnToMenu_OnMouseOut;
+			returnToMenu.SetSnapPoint("Back", 0);
 			Append(returnToMenu);
 
 			Append(wrapper);
@@ -118,7 +134,9 @@ namespace TheDestinyMod.UI
 		}
 
         private void HunterSelect_OnMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-			hunterDescription.SetText("Agile and daring, Hunters are quick on their feet and\nquicker on the draw");
+			if (Main.PendingResolutionHeight > 750)
+				hunterDescription.SetText("Agile and daring, Hunters are quick on their feet and\nquicker on the draw");
+
 			Main.PlaySound(SoundID.MenuTick);
 			((UITextPanel<string>)evt.Target).BackgroundColor = UICommon.DefaultUIBlue;
 		}
@@ -129,7 +147,9 @@ namespace TheDestinyMod.UI
 		}
 
         private void WarlockSelect_OnMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-			warlockDescription.SetText("Warlocks weaponize the mysteries of the universe to\nsustain themselves and devastate their foes");
+			if (Main.PendingResolutionHeight > 750)
+				warlockDescription.SetText("Warlocks weaponize the mysteries of the universe to\nsustain themselves and devastate their foes");
+
 			Main.PlaySound(SoundID.MenuTick);
 			((UITextPanel<string>)evt.Target).BackgroundColor = UICommon.DefaultUIBlue;
 		}
@@ -140,7 +160,9 @@ namespace TheDestinyMod.UI
 		}
 
         private void TitanSelect_OnMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-			titanDescription.SetText("Disciplined and proud, Titans are capable of both\naggressive assaults and stalwart defenses");
+			if (Main.PendingResolutionHeight > 750)
+				titanDescription.SetText("Disciplined and proud, Titans are capable of both\naggressive assaults and stalwart defenses");
+
 			Main.PlaySound(SoundID.MenuTick);
 			((UITextPanel<string>)evt.Target).BackgroundColor = UICommon.DefaultUIBlue;
 		}
@@ -166,7 +188,36 @@ namespace TheDestinyMod.UI
 			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);
 		}
 
-		private void ReturnToMenu(UIMouseEvent evt, UIElement listeningElement) {
+        public override void Draw(SpriteBatch spriteBatch) {
+            base.Draw(spriteBatch);
+			UILinkPointNavigator.Shortcuts.BackButtonCommand = 1;
+			UILinkPointNavigator.SetPosition(3000, titanSelect.GetInnerDimensions().ToRectangle().Center.ToVector2());
+			UILinkPointNavigator.SetPosition(3001, hunterSelect.GetInnerDimensions().ToRectangle().Center.ToVector2());
+			UILinkPointNavigator.SetPosition(3002, warlockSelect.GetInnerDimensions().ToRectangle().Center.ToVector2());
+			UILinkPointNavigator.SetPosition(3003, returnToMenu.GetInnerDimensions().ToRectangle().Center.ToVector2());
+			UILinkPoint uiLinkPoint = UILinkPointNavigator.Points[3000];
+			uiLinkPoint.Unlink();
+			uiLinkPoint.Down = 3001;
+			uiLinkPoint = UILinkPointNavigator.Points[3001];
+			uiLinkPoint.Unlink();
+			uiLinkPoint.Up = 3000;
+			uiLinkPoint.Down = 3002;
+			uiLinkPoint = UILinkPointNavigator.Points[3002];
+			uiLinkPoint.Unlink();
+			uiLinkPoint.Up = 3001;
+            uiLinkPoint.Down = 3003;
+			uiLinkPoint = UILinkPointNavigator.Points[3003];
+			uiLinkPoint.Unlink();
+			uiLinkPoint.Up = 3002;
+		}
+
+        public override void Update(GameTime gameTime) {
+            base.Update(gameTime);
+			if (Terraria.GameInput.PlayerInput.Triggers.JustPressed.Inventory)
+				ReturnToMenu();
+		}
+
+        private void ReturnToMenu(UIMouseEvent evt = null, UIElement listeningElement = null) {
 			Main.PlaySound(SoundID.MenuClose);
 			Main.menuMode = 1;
 			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);

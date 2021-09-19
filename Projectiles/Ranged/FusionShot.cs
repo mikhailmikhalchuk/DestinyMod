@@ -11,7 +11,7 @@ namespace TheDestinyMod.Projectiles.Ranged
     //If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
     public class FusionShot : ModProjectile
     {
-        private  bool fired;
+        private bool fired;
 
         private int countFires;
 

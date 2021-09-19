@@ -10,7 +10,11 @@ namespace TheDestinyMod.Projectiles.Ranged
     {
         public override string Texture => "Terraria/Projectile_" + ProjectileID.RocketI;
 
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Wolfpack Round");
+		}
+
+		public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.RocketI);
             aiType = ProjectileID.RocketI;
 			projectile.timeLeft = 200;
