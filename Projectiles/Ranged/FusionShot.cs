@@ -40,6 +40,7 @@ namespace TheDestinyMod.Projectiles.Ranged
         }
 
         public override void AI() {
+            projectile.localAI[0]++;
             if (projectile.ai[0] <= 0) {
                 projectile.ai[0] = 5;
             } 

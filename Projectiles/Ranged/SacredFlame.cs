@@ -8,7 +8,11 @@ namespace TheDestinyMod.Projectiles.Ranged
 {
 	public class SacredFlame : ModProjectile
 	{
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+			ProjectileID.Sets.Homing[projectile.type] = true;
+		}
+
+        public override void SetDefaults() {
 			projectile.CloneDefaults(ProjectileID.FireArrow);
 			aiType = ProjectileID.FireArrow;
 			projectile.width = 2;

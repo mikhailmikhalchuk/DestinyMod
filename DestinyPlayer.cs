@@ -52,7 +52,6 @@ namespace TheDestinyMod
 		public bool notifiedThatSuperIsReady;
 		public DestinyClassType classType;
 		public bool exoticEquipped;
-		public bool duneKill;
 
 		public List<int> commonItemsDecrypted = new List<int>();
 		public List<int> uncommonItemsDecrypted = new List<int>();
@@ -91,7 +90,7 @@ namespace TheDestinyMod
 			exoticEquipped = false;
 			superDamageAdd = 0f;
 			superDamageMult = 1f;
-			superCrit = 0;
+			superCrit = 4;
 			superKnockback = 0;
 			orbOfPowerAdd = 0;
 		}

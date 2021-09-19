@@ -54,6 +54,10 @@ namespace TheDestinyMod.Projectiles.Magic
             return base.PreAI();
         }
 
+        public override void AI() {
+            projectile.HomeInOnNPC(400, 10f);
+        }
+
         public override bool OnTileCollide(Vector2 oldVelocity) {
             Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
             projectile.Kill();

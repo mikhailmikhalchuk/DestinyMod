@@ -9,6 +9,8 @@ namespace TheDestinyMod.Items.Armor
 	[AutoloadEquip(EquipType.Legs)]
 	public class Dunemarchers : ModItem, IClassArmor
 	{
+		private bool duneKill;
+
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("Increases maximum running speed\nRunning for more than 5 seconds straight will grant the \"Linear Actuators\" buff\n\"Whether on solid rock or shifting sand dune, the inexorable Sand Eaters never slow their pace.\"");
 		}
@@ -26,16 +28,16 @@ namespace TheDestinyMod.Items.Armor
 			DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
 			if ((player.velocity.X > 0f - player.accRunSpeed && player.velocity.X < 0f - ((player.accRunSpeed + player.maxRunSpeed) / 2f) || player.velocity.X > ((player.accRunSpeed + player.maxRunSpeed) / 2f) && player.velocity.X < player.accRunSpeed) && player.velocity.Y == 0f && !player.mount.Active && player.dashDelay >= 0) {
 				dPlayer.duneRunTime++;
-				dPlayer.duneKill = false;
+				duneKill = false;
 				if (dPlayer.duneRunTime >= 300) {
 					player.AddBuff(ModContent.BuffType<Buffs.LinearActuators>(), 100);
 				}
 			}
 			else {
-				if (dPlayer.duneKill)
+				if (duneKill)
 					dPlayer.duneRunTime = 0;
 
-				dPlayer.duneKill = true;
+				duneKill = true;
 			}
 		}
 

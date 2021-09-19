@@ -11,7 +11,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	public class FoundVerdict : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("\"Witness.\"");
+			Tooltip.SetDefault("Fires a spread of bullets\n\"Witness.\"");
 		}
 
 		public override void SetDefaults() {

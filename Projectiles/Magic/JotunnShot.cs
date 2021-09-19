@@ -15,6 +15,7 @@ namespace TheDestinyMod.Projectiles.Magic
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Jötunn Shot");
+            ProjectileID.Sets.Homing[projectile.type] = true;
         }
 
         public override void SetDefaults() {
@@ -65,7 +66,7 @@ namespace TheDestinyMod.Projectiles.Magic
                 dustVelocity = dustVelocity.RotatedBy(projectile.rotation - 1.57f);
                 Vector2 spawnPos = projectile.Center + dustVelocity;
                 Vector2 spawn = spawnPos + ((float)Main.rand.NextDouble() * 6.28f).ToRotationVector2() * (12f - projectile.localAI[0]);
-                Dust dust = Main.dust[Dust.NewDust(pos, 20, 20, DustID.Fire, projectile.velocity.X / 2f, projectile.velocity.Y / 2f)];
+                Dust dust = Dust.NewDustDirect(pos, 20, 20, DustID.Fire, projectile.velocity.X / 2f, projectile.velocity.Y / 2f);
                 dust.velocity = Vector2.Normalize(spawnPos - spawn) * 1.5f * (10f - projectile.localAI[0]) / 10f;
                 dust.noGravity = true;
                 dust.scale = Main.rand.Next(10, 20) * 0.05f;

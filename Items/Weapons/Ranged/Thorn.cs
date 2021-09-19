@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using System.Linq;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using TheDestinyMod.Items.Materials;
@@ -34,8 +35,10 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile p = Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 1), new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
-			p.penetrate = -1;
+			Projectile p = Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 2), new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+			p.penetrate = ProjectileID.Sets.Homing[type] ? 2 : - 1;
+			p.usesLocalNPCImmunity = true;
+			p.localNPCHitCooldown = 2;
 			return false;
 		}
 

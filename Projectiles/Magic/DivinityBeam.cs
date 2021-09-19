@@ -48,18 +48,17 @@ namespace TheDestinyMod.Projectiles.Magic
 			float r = unit.ToRotation() + rotation;
 
 			for (float i = transDist; i <= Distance; i += step) {
-				Color c = Color.White;
-				var origin = start + i * unit;
+                var origin = start + i * unit;
 				spriteBatch.Draw(texture, origin - Main.screenPosition,
-					new Rectangle(0, 26, 20, 26), i < transDist ? Color.Transparent : c, r,
-					new Vector2(20 * .5f, 26 * .5f), scale, 0, 0);
+					new Rectangle(0, 26, 20, 26), i < transDist ? Color.Transparent : Color.White, r,
+					new Vector2(10, 13), scale, 0, 0);
 			}
 
 			spriteBatch.Draw(texture, start + unit * (transDist - step) - Main.screenPosition,
-				new Rectangle(0, 0, 20, 26), Color.White, r, new Vector2(20 * .5f, 26 * .5f), scale, 0, 0);
+				new Rectangle(0, 0, 20, 26), Color.White, r, new Vector2(10, 13), scale, 0, 0);
 
 			spriteBatch.Draw(texture, start + (Distance + step) * unit - Main.screenPosition,
-				new Rectangle(0, 52, 20, 26), Color.White, r, new Vector2(20 * .5f, 26 * .5f), scale, 0, 0);
+				new Rectangle(0, 52, 20, 26), Color.White, r, new Vector2(10, 13), scale, 0, 0);
 
 			collisionBox = start + (Distance + step) * unit;
 		}

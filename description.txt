@@ -36,5 +36,7 @@ Removed Sweet Business' catalyst and catalyst feature
 Added lighting to modded bullets to better fit vanilla
 Class selection UI now has snap points and scales with the screen
 Pressing "Escape" on the class selection UI now returns to the menu, and pressing "Back" on the character selection screen sends to class selection
+Gave enemies a 2 tick immunity frame after being hit with Thorn's bullets, to prevent instances of double damage on a small enemy
+Thorn's bullets now pierce only once if the bullet fired has homing capabilities
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
