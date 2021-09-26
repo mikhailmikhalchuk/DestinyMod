@@ -115,7 +115,7 @@ namespace TheDestinyMod.UI
 				}
 				DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Decrypt {_vanillaItemSlot.Item.Name}", new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One);
-				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Potential drops:", new Vector2(slotX + 100, slotY + 30), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One);
+				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, "Potential drops:", new Vector2(slotX + 100, slotY + 30), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One);
 				TextSnippet extSnip = null;
 				if (_vanillaItemSlot.Item.type == ModContent.ItemType<CommonEngram>()) {
 					int start = 55;
@@ -166,8 +166,8 @@ namespace TheDestinyMod.UI
 					}
 				}
 				extSnip?.OnHover();
-				int decryptX = slotX + 70;
-				int decryptY = slotY + 40;
+				const int decryptX = slotX + 70;
+				const int decryptY = slotY + 40;
 				bool hoveringOverDecryptButton = Main.mouseX > decryptX - 15 && Main.mouseX < decryptX + 15 && Main.mouseY > decryptY - 15 && Main.mouseY < decryptY + 15 && !PlayerInput.IgnoreMouseInterface;
 				Texture2D decryptTexture = Main.reforgeTexture[hoveringOverDecryptButton ? 1 : 0];
 				Main.spriteBatch.Draw(decryptTexture, new Vector2(decryptX, decryptY), null, Color.White, 0f, decryptTexture.Size() / 2f, 0.8f, SpriteEffects.None, 0f);

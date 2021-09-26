@@ -62,7 +62,6 @@ namespace TheDestinyMod
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
-            TheDestinyMod.Logger.Info(tasks);
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle Temple"));
             tasks.Insert(genIndex + 1, new PassLegacy("Microphasic Datalattice", PlaceDatalattice));
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Silt"));
@@ -151,7 +150,7 @@ namespace TheDestinyMod
                 attempts++;
                 if (attempts > 50000 || ModLoader.GetMod("StructureHelper") == null) {
                     success = true;
-                    TheDestinyMod.Logger.Info("TheDestinyMod WorldGen: Failed to place the Vex portal");
+                    TheDestinyMod.Instance.Logger.Info("TheDestinyMod WorldGen: Failed to place the Vex portal");
                     continue;
                 }
                 progress.Set(attempts / 50000);
@@ -174,7 +173,7 @@ namespace TheDestinyMod
                             placementOK = false;
                         }
                         if (placementOK) {
-                            TheDestinyMod.Logger.Info($"X: {i * 16} | Y: {j * 16}");
+                            TheDestinyMod.Instance.Logger.Info($"X: {i * 16} | Y: {j * 16}");
                             success = DestinyHelper.StructureHelperGenerateStructure(new Terraria.DataStructures.Point16(i / 16, j / 16), "VoGPortal");
                         }
                     }
@@ -243,9 +242,11 @@ namespace TheDestinyMod
         }
 
         public override void NetSend(BinaryWriter writer) {
-            var flags = new BitsByte();
-			flags[0] = downedPrime;
-			writer.Write(flags);
+            var flags = new BitsByte
+            {
+                [0] = downedPrime
+            };
+            writer.Write(flags);
         }
 
         public override void NetReceive(BinaryReader reader) {

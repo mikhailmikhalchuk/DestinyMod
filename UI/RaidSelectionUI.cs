@@ -73,7 +73,7 @@ namespace TheDestinyMod.UI
 
 		private string Raid
 		{
-			get;
+            get;
 		}
 
 		private int Clears
@@ -191,7 +191,8 @@ namespace TheDestinyMod.UI
 		}
 
 		private string GetCheckpointString() {
-			if (Raid == "Vault of Glass") {
+			if (Raid == "Vault of Glass")
+            {
 				switch (DestinyWorld.checkpointVOG) {
 					case 0:
 						return "None";

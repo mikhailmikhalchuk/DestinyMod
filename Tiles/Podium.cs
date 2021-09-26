@@ -175,7 +175,7 @@ namespace TheDestinyMod.Tiles
 					}
 				}
 				catch (Exception e) {
-					TheDestinyMod.Logger.Info($"Failed to send Laurels to the server: {e.Message}");
+					TheDestinyMod.Instance.Logger.Error($"Failed to send Laurels to the server: {e.Message}");
 					Main.NewText("An error occurred and Laurels couldn't be deposited", new Color(255, 0, 0));
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Laurel>(), toDeposit);
 				}

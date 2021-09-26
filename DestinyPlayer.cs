@@ -272,7 +272,7 @@ namespace TheDestinyMod
 					return subworldLibrary.Call("Enter", id) as bool?;
 				}
 				catch (Exception e) {
-					TheDestinyMod.Logger.Error($"TheDestinyMod: Got exception of type {e} while trying to enter raid: {TheDestinyMod.currentSubworldID.Substring(14)}.");
+					TheDestinyMod.Instance.Logger.Error($"TheDestinyMod: Got exception of type {e} while trying to enter raid: {TheDestinyMod.currentSubworldID.Substring(14)}.");
                 }
             }
             return null;
@@ -281,14 +281,11 @@ namespace TheDestinyMod
 		/// <summary>
 		/// Used to exit a subworld using SubworldLibrary
 		/// </summary>
-		/// <returns>True if the subworld was succesfully exited, otherwise false. Returns null by default.</returns>
+		/// <returns>True if the subworld was successfully exited, otherwise false. Returns null by default.</returns>
 		public static bool? Exit() {
 			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-			if (subworldLibrary != null) {
-				return subworldLibrary.Call("Exit") as bool?;
-			}
-			return null;
-		}
+            return subworldLibrary?.Call("Exit") as bool?;
+        }
 
         public override void PostUpdateEquips() {
 			if (TheDestinyMod.currentSubworldID != string.Empty) {
@@ -456,7 +453,7 @@ namespace TheDestinyMod
 		}
 
 		public override void ModifyDrawLayers(List<PlayerLayer> layers) {
-			Action<PlayerDrawInfo> layerTarget = s => DrawAegis(s);
+			Action<PlayerDrawInfo> layerTarget = DrawAegis;
 			PlayerLayer layer = new PlayerLayer("TheDestinyMod", "Aegis Shield", layerTarget);
 			layers.Insert(layers.IndexOf(layers.FirstOrDefault(n => n.Name == "Arms")) + 1, layer);
 			if (!Main.gameMenu && (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && Main.LocalPlayer.channel || Main.LocalPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0)) {

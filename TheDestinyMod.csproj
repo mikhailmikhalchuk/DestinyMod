@@ -6,7 +6,6 @@
     <TargetFramework>net45</TargetFramework>
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>8</LangVersion>
-    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Target Name="BuildMod" AfterTargets="Build">
     <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -define &quot;$(DefineConstants)&quot; -unsafe $(AllowUnsafeBlocks)" />
@@ -18,10 +17,5 @@
     <Reference Include="StructureHelper">
       <HintPath>lib\StructureHelper.FNA.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Items\Accessories\" />
-    <Folder Include="Localization\" />
   </ItemGroup>
 </Project>

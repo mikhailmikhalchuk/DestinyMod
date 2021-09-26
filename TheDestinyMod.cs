@@ -30,7 +30,6 @@ namespace TheDestinyMod
         public static bool guardianGames = false;
         public static bool guardianGameError = false;
         public static int guardianWinner = 0;
-        public static new ILog Logger = LogManager.GetLogger("TheDestinyMod");
 
         public static DynamicSpriteFont fontFuturaBold;
         public static DynamicSpriteFont fontFuturaBook;
@@ -74,6 +73,7 @@ namespace TheDestinyMod
                         request.Headers["DUPLICATE-CHECK"] = Steamworks.SteamUser.GetSteamID().ToString();
                         request.Timeout = 1500;
 
+#pragma warning disable IDE0063
                         using (Stream s = request.GetResponse().GetResponseStream()) {
                             using (StreamReader sr = new StreamReader(s)) {
                                 var jsonResponse = sr.ReadToEnd();
@@ -91,6 +91,7 @@ namespace TheDestinyMod
                                 }
                             }
                         }
+#pragma warning restore IDE0063
                     }
                     catch (Exception e) {
                         Logger.Error($"Failed to receive a response from the server: {e.Message}");
@@ -704,72 +705,64 @@ namespace TheDestinyMod
             Mod bossChecklist = ModLoader.GetMod("BossChecklist");
             Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
             Mod census = ModLoader.GetMod("Census");
-            if (bossChecklist != null) {
-                bossChecklist.Call(
-                    "AddBoss",
-                    5.5f,
-                    ModContent.NPCType<SepiksPrime>(),
-                    this,
-                    "Sepiks Prime",
-                    (Func<bool>)(() => DestinyWorld.downedPrime),
-                    ModContent.ItemType<Items.Summons.GuardianSkull>(),
-                    new List<int> {
-                        ModContent.ItemType<Items.Placeables.SepiksPrimeTrophy>(),
-                        ModContent.ItemType<Items.Vanity.SepiksPrimeMask>(),
-                        ModContent.ItemType<Items.Placeables.MusicBoxes.SepiksPrimeBox>()
-                    },
-                    new List<int> {
-                        ModContent.ItemType<Items.Weapons.Summon.ServitorStaff>()
-                    },
-                    $"Use a [i:{ModContent.ItemType<Items.Summons.GuardianSkull>()}]",
-                    "Sepiks Prime retreats back into the House of Devils' lair..."
-                );
-            }
-            if (subworldLibrary != null) {
-                subworldLibrary.Call(
-                    "Register",
-                    ModContent.GetInstance<TheDestinyMod>(),
-                    "Vault of Glass",
-                    600,
-                    700,
-                    VaultOfGlassGenPass(),
-                    (Action)VaultOfGlassLoad,
-                    (Action)VaultOfGlassUnload,
-                    null,
-                    false
-                );
-            }
-            if (census != null) {
-                census.Call(
-                    "TownNPCCondition",
-                    ModContent.NPCType<NPCs.Town.Drifter>(),
-                    "Have 5 Motes of Dark in your inventory"
-                );
-                census.Call(
-                    "TownNPCCondition",
-                    ModContent.NPCType<NPCs.Town.Zavala>(),
-                    "Defeat King Slime"
-                );
-                census.Call(
-                    "TownNPCCondition",
-                    ModContent.NPCType<NPCs.Town.Cryptarch>(),
-                    "Have 1 Common Engram in your inventory"
-                );
-                census.Call(
-                    "TownNPCCondition",
-                    ModContent.NPCType<NPCs.Town.AgentOfNine>(),
-                    "Traveling Merchant-like NPC that has a 1/10 chance to visit in Hardmode"
-                );
-            }
+            bossChecklist?.Call(
+                "AddBoss",
+                5.5f,
+                ModContent.NPCType<SepiksPrime>(),
+                this,
+                "Sepiks Prime",
+                (Func<bool>)(() => DestinyWorld.downedPrime),
+                ModContent.ItemType<Items.Summons.GuardianSkull>(),
+                new List<int> {
+                    ModContent.ItemType<Items.Placeables.SepiksPrimeTrophy>(),
+                    ModContent.ItemType<Items.Vanity.SepiksPrimeMask>(),
+                    ModContent.ItemType<Items.Placeables.MusicBoxes.SepiksPrimeBox>()
+                },
+                new List<int> {
+                    ModContent.ItemType<Items.Weapons.Summon.ServitorStaff>()
+                },
+                $"Use a [i:{ModContent.ItemType<Items.Summons.GuardianSkull>()}]",
+                "Sepiks Prime retreats back into the House of Devils' lair..."
+            );
+            subworldLibrary?.Call(
+                "Register",
+                ModContent.GetInstance<TheDestinyMod>(),
+                "Vault of Glass",
+                600,
+                700,
+                VaultOfGlassGenPass(),
+                (Action)VaultOfGlassLoad,
+                (Action)VaultOfGlassUnload,
+                null,
+                false
+            );
+            census?.Call(
+                "TownNPCCondition",
+                ModContent.NPCType<NPCs.Town.Drifter>(),
+                "Have 5 Motes of Dark in your inventory"
+            );
+            census?.Call(
+                "TownNPCCondition",
+                ModContent.NPCType<NPCs.Town.Zavala>(),
+                "Defeat King Slime"
+            );
+            census?.Call(
+                "TownNPCCondition",
+                ModContent.NPCType<NPCs.Town.Cryptarch>(),
+                "Have 1 Common Engram in your inventory"
+            );
+            census?.Call(
+                "TownNPCCondition",
+                ModContent.NPCType<NPCs.Town.AgentOfNine>(),
+                "Traveling Merchant-like NPC that has a 1/10 chance to visit in Hardmode"
+            );
         }
 
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-            if (subworldLibrary != null) {
-                if (currentSubworldID == "TheDestinyMod_Vault Of Glass") {
-                    music = GetSoundSlot(SoundType.Music, "Sounds/Music/VoGAmbience");
-                    priority = MusicPriority.BossHigh;
-                }
+            if (subworldLibrary != null && currentSubworldID == "TheDestinyMod_Vault Of Glass") {
+                music = GetSoundSlot(SoundType.Music, "Sounds/Music/VoGAmbience");
+                priority = MusicPriority.BossHigh;
             }
         }
 

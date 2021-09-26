@@ -218,6 +218,7 @@ namespace TheDestinyMod.UI
 		}
 
         private void ReturnToMenu(UIMouseEvent evt = null, UIElement listeningElement = null) {
+			TheDestinyMod.Instance.Logger.Info(Main.menuMode);
 			Main.PlaySound(SoundID.MenuClose);
 			Main.menuMode = 1;
 			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);

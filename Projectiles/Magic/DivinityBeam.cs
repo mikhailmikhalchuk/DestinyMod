@@ -134,7 +134,6 @@ namespace TheDestinyMod.Projectiles.Magic
 					break;
 				}
 			}
-			Vector2 unit = projectile.velocity * -1;
 			Vector2 dustPos = player.Center + projectile.velocity * Distance;
 
 			for (int i = 0; i < 2; ++i) {
@@ -147,8 +146,7 @@ namespace TheDestinyMod.Projectiles.Magic
 			}
 
 			if (Main.rand.NextBool(5)) {
-				Vector2 offset = projectile.velocity.RotatedBy(1.57f) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
-				unit = dustPos - Main.player[projectile.owner].Center;
+                Vector2 unit = dustPos - Main.player[projectile.owner].Center;
 				unit.Normalize();
 				Dust dust = Main.dust[Dust.NewDust(Main.player[projectile.owner].Center + 55 * unit, 8, 8, DustID.Electric, 0.0f, 0.0f, 100, new Color(), 1.5f)];
 				dust.noGravity = true;
