@@ -14,6 +14,7 @@ namespace TheDestinyMod.Buffs.Debuffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<DestinyPlayer>().stasisFrozen = true;
             player.controlLeft = false;
             player.controlRight = false;
             player.controlUp = false;
@@ -33,6 +34,10 @@ namespace TheDestinyMod.Buffs.Debuffs
             }
             player.sandStorm = false;
             Dust.NewDust(player.Center, player.width, player.height, DustID.Clentaminator_Blue);
+        }
+
+        public override void Update(NPC npc, ref int buffIndex) {
+            npc.GetGlobalNPC<NPCs.DestinyGlobalNPC>().stasisFrozen = true;
         }
     }
 }

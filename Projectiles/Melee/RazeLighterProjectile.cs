@@ -31,7 +31,7 @@ namespace TheDestinyMod.Projectiles.Melee
         }
 
         public override void AI() {
-            if (Main.player[projectile.owner].HasBuff(BuffID.Frozen) || Main.player[projectile.owner].HasBuff(BuffID.Stoned)) {
+            if (Main.player[projectile.owner].frozen || Main.player[projectile.owner].stoned) {
                 projectile.Kill();
             }
             projectile.velocity *= 0.70f;

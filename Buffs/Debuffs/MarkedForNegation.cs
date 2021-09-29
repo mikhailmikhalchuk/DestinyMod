@@ -15,6 +15,7 @@ namespace TheDestinyMod.Buffs.Debuffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<DestinyPlayer>().markedForNegation = true;
             player.buffTime[buffIndex] = 18000;
         }
     }

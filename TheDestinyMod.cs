@@ -759,10 +759,12 @@ namespace TheDestinyMod
         }
 
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
-            Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-            if (subworldLibrary != null && currentSubworldID == "TheDestinyMod_Vault Of Glass") {
+            if (Main.gameMenu || !Main.LocalPlayer.active)
+                return;
+
+            if (currentSubworldID == "TheDestinyMod_Vault of Glass") {
                 music = GetSoundSlot(SoundType.Music, "Sounds/Music/VoGAmbience");
-                priority = MusicPriority.BossHigh;
+                priority = MusicPriority.BiomeHigh;
             }
         }
 

@@ -15,6 +15,7 @@ namespace TheDestinyMod.Buffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<DestinyPlayer>().hakkeCraftsmanship = true;
             player.statDefense += 2;
             player.moveSpeed += 0.15f;
             player.rangedDamage += 0.1f;

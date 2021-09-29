@@ -45,7 +45,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
                 if (progress >= 2.5f) {
                     Filters.Scene["TheDestinyMod:Shockwave"].Deactivate();
                     foreach (Player player in Main.player) {
-                        if (player.active && player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedForNegation>())) {
+                        if (player.active && player.GetModPlayer<DestinyPlayer>().markedForNegation) {
                             Terraria.DataStructures.PlayerDeathReason deathReason = new Terraria.DataStructures.PlayerDeathReason
                             {
                                 SourceCustomReason = player.name + " was negated.",

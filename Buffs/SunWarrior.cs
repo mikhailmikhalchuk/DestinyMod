@@ -14,6 +14,7 @@ namespace TheDestinyMod.Buffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<DestinyPlayer>().sunWarrior = true;
             player.thrownVelocity *= 0.5f;
         }
     }

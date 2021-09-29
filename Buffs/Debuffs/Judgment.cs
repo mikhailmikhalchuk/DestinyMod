@@ -14,10 +14,12 @@ namespace TheDestinyMod.Buffs.Debuffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<DestinyPlayer>().judged = true;
             player.statDefense -= player.statDefense / 5;
         }
 
         public override void Update(NPC npc, ref int buffIndex) {
+            npc.GetGlobalNPC<NPCs.DestinyGlobalNPC>().judged = true;
             npc.defense -= npc.defense / 5;
         }
     }

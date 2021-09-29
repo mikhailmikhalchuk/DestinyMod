@@ -15,6 +15,7 @@ namespace TheDestinyMod.Buffs
 		}
 
         public override void Update(Player player, ref int buffIndex) {
+			player.GetModPlayer<DestinyPlayer>().paracausalCharge = true;
             player.GetModPlayer<DestinyPlayer>().pCharge--;
         }
 	}

@@ -54,7 +54,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
 		public override bool CanUseItem(Player player) {
-			if (player.altFunctionUse == 2 && !alt && cooldown <= 0 && player.HasBuff(ModContent.BuffType<Buffs.Overcharge>())) {
+			if (player.altFunctionUse == 2 && !alt && cooldown <= 0 && player.GetModPlayer<DestinyPlayer>().overcharged) {
 				alt = true;
                 item.autoReuse = false;
                 item.UseSound = null;
@@ -72,7 +72,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            if ((Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overchargeStacks <= 0 || !Main.LocalPlayer.HasBuff(ModContent.BuffType<Buffs.Overcharge>())) && alt) {
+            if ((Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overchargeStacks <= 0 || !Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overcharged) && alt) {
                 alt = false;
                 item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclast");
                 Main.LocalPlayer.ClearBuff(ModContent.BuffType<Buffs.Overcharge>());

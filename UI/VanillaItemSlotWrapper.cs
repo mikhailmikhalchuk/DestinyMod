@@ -17,6 +17,7 @@ namespace TheDestinyMod.UI
 
 		public VanillaItemSlotWrapper(int context = ItemSlot.Context.BankItem, int handlerContext = ItemSlot.Context.BankItem, float scale = 1f) {
 			_context = context;
+			_handlerContext = handlerContext;
 			_scale = scale;
 			Item = new Item();
 			Item.SetDefaults(0);

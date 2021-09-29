@@ -14,6 +14,7 @@ namespace TheDestinyMod.Buffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<DestinyPlayer>().linearActuators = true;
             player.buffTime[buffIndex] = 18000;
         }
     }

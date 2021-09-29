@@ -14,6 +14,7 @@ namespace TheDestinyMod.Buffs
 		}
 
         public override void Update(Player player, ref int buffIndex) {
+			player.GetModPlayer<DestinyPlayer>().overcharged = true;
 			player.buffTime[buffIndex] = 18000;
 			if (player.GetModPlayer<DestinyPlayer>().overchargeStacks <= 0) {
 				player.ClearBuff(Type);

@@ -13,6 +13,18 @@ namespace TheDestinyMod.NPCs
 {
     public class DestinyGlobalNPC : GlobalNPC
     {
+        public bool judged;
+        public bool conducted;
+        public bool stasisFrozen;
+
+        public override bool InstancePerEntity => true;
+
+        public override void ResetEffects(NPC npc) {
+            judged = false;
+            conducted = false;
+            stasisFrozen = false;
+        }
+
         public override void NPCLoot(NPC npc) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (npc.TypeName == "Zombie") {
@@ -82,7 +94,7 @@ namespace TheDestinyMod.NPCs
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor) {
-            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>())) {
+            if (judged) {
                 drawColor = Color.Yellow;
                 if (Main.rand.NextBool(10)) {
                     Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Firework_Yellow);
@@ -98,7 +110,7 @@ namespace TheDestinyMod.NPCs
         }
 
         public override void UpdateLifeRegen(NPC npc, ref int damage) {
-            if (npc.HasBuff(ModContent.BuffType<Buffs.Debuffs.Conducted>())) {
+            if (conducted) {
                 if (npc.lifeRegen > 0) {
                     npc.lifeRegen = 0;
                 }

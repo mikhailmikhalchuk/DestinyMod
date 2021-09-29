@@ -42,7 +42,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 				position += muzzleOffset;
 			}
 			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, ModContent.ProjectileType<HakkeBullet>(), damage, knockBack, player.whoAmI);
-			if (Main.rand.NextBool(10) && !player.HasBuff(ModContent.BuffType<HakkeBuff>())) {
+			if (Main.rand.NextBool(10) && !player.GetModPlayer<DestinyPlayer>().hakkeCraftsmanship) {
 				player.AddBuff(ModContent.BuffType<HakkeBuff>(), 90);
 			}
             return false;

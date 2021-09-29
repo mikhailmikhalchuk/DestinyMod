@@ -15,6 +15,7 @@ namespace TheDestinyMod.Buffs.Debuffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<DestinyPlayer>().conducted = true;
             Dust dust = Dust.NewDustDirect(new Vector2(player.position.X - 2f, player.position.Y - 2f), player.width + 4, player.height + 4, DustID.Electric, 0f, 0f, 100, default, 0.5f);
             dust.velocity *= 1.6f;
             dust.velocity.Y -= 1f;
@@ -22,6 +23,7 @@ namespace TheDestinyMod.Buffs.Debuffs
         }
 
         public override void Update(NPC npc, ref int buffIndex) {
+            npc.GetGlobalNPC<NPCs.DestinyGlobalNPC>().conducted = true;
             Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.Electric, 0f, 0f, 100, default, 0.5f);
             dust.velocity *= 1.6f;
             dust.velocity.Y -= 1f;

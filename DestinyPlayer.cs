@@ -52,6 +52,17 @@ namespace TheDestinyMod
 		public bool notifiedThatSuperIsReady;
 		public DestinyClassType classType;
 		public bool exoticEquipped;
+		public bool overcharged;
+		public bool hakkeCraftsmanship;
+		public bool linearActuators;
+		public bool conducted;
+		public bool stasisFrozen;
+		public bool detained;
+		public bool markedByVoid;
+		public bool markedForNegation;
+		public bool judged;
+		public bool sunWarrior;
+		public bool paracausalCharge;
 
 		public List<int> commonItemsDecrypted = new List<int>();
 		public List<int> uncommonItemsDecrypted = new List<int>();
@@ -88,6 +99,17 @@ namespace TheDestinyMod
 			servitorMinion = false;
 			boughtCommon = false;
 			exoticEquipped = false;
+			overcharged = false;
+			hakkeCraftsmanship = false;
+			linearActuators = false;
+			conducted = false;
+			stasisFrozen = false;
+			detained = false;
+			markedByVoid = false;
+			markedForNegation = false;
+			judged = false;
+			sunWarrior = false;
+			paracausalCharge = false;
 			superDamageAdd = 0f;
 			superDamageMult = 1f;
 			superCrit = 4;
@@ -96,7 +118,7 @@ namespace TheDestinyMod
 		}
 
         public override float UseTimeMultiplier(Item item) {
-			if (item.type == ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>() && player.HasBuff(ModContent.BuffType<Buffs.SunWarrior>())) {
+			if (item.type == ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>() && sunWarrior) {
 				return 2f;
 			}
             return base.UseTimeMultiplier(item);
@@ -110,21 +132,21 @@ namespace TheDestinyMod
 		}
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
-			if (item.melee && player.HasBuff(ModContent.BuffType<Buffs.LinearActuators>())) {
+			if (item.melee && linearActuators) {
 				damage *= 4;
 				player.ClearBuff(ModContent.BuffType<Buffs.LinearActuators>());
 			}
 		}
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
-			if (item.melee && player.HasBuff(ModContent.BuffType<Buffs.LinearActuators>())) {
+			if (item.melee && linearActuators) {
 				damage *= 4;
 				player.ClearBuff(ModContent.BuffType<Buffs.LinearActuators>());
 			}
 		}
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			if (proj.melee && player.HasBuff(ModContent.BuffType<Buffs.LinearActuators>())) {
+			if (proj.melee && linearActuators) {
 				damage *= 4;
 				player.ClearBuff(ModContent.BuffType<Buffs.LinearActuators>());
 			}
@@ -225,7 +247,7 @@ namespace TheDestinyMod
 			if (PlayerInput.Triggers.JustPressed.MouseLeft) {
 				countThunderlord = 0;
 				mouseLeftDown = true;
-				if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>())) {
+				if (stasisFrozen) {
 					timesClicked++;
 					Main.PlaySound(SoundID.Item50, player.Center);
 					if (timesClicked > 4) {
@@ -241,11 +263,12 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
 				superChargeCurrent = 100;
+				Main.NewText(TheDestinyMod.currentSubworldID);
 			}
         }
 
         public override void UpdateBadLifeRegen() {
-			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Conducted>())) {
+			if (conducted) {
 				if (player.lifeRegen > 0) {
 					player.lifeRegen = 0;
 				}
@@ -540,7 +563,7 @@ namespace TheDestinyMod
 					Main.mouseItem.TurnToAir();
 				}
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.MarkedByVoid>()) && Main.BlackFadeIn < 255 && Main.LocalPlayer == player && !Main.dedServ) {
+			if (markedByVoid && Main.BlackFadeIn < 255 && Main.LocalPlayer == player && !Main.dedServ) {
 				Main.BlackFadeIn = blackFadeInTimer;
 				markedByVoidDelay--;
 				if (markedByVoidDelay <= 0) {

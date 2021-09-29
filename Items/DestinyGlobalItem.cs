@@ -50,7 +50,8 @@ namespace TheDestinyMod.Items
         }
 
         public override bool CanUseItem(Item item, Player player) {
-            if (player.HasBuff(ModContent.BuffType<Buffs.Debuffs.DeepFreeze>()) || player.HasBuff(ModContent.BuffType<Buffs.Debuffs.Detained>()) || player.GetModPlayer<DestinyPlayer>().isThundercrash) {
+            DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+            if (dPlayer.stasisFrozen || dPlayer.detained || dPlayer.isThundercrash) {
                 return false;
             }
             if ((raidProhibitedItems.Contains(item.type) || item.mountType != -1) && TheDestinyMod.currentSubworldID != string.Empty) {

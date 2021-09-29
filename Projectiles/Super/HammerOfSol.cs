@@ -84,7 +84,7 @@ namespace TheDestinyMod.Projectiles.Super
                 projectile.Kill();
                 return;
             }
-            if ((owner.Center - projectile.Center).Length() < 200 && !owner.HasBuff(ModContent.BuffType<Buffs.SunWarrior>())) {
+            if ((owner.Center - projectile.Center).Length() < 200 && !owner.GetModPlayer<DestinyPlayer>().sunWarrior) {
                 owner.AddBuff(ModContent.BuffType<Buffs.SunWarrior>(), 3);
             }
         }
