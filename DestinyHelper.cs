@@ -10,12 +10,12 @@ namespace TheDestinyMod
     public static class DestinyHelper
     {
         /// <summary>
-        /// Homes in on an NPC
+        /// Homes in on an <see cref="NPC"/>.
         /// </summary>
-        /// <param name="distance">The current distance from the NPC</param>
-        /// <param name="maxM">The projectile's max magnitude</param>
-        /// <param name="checkTiles">Whether or not to home in if there are tiles in the way. Default true</param>
-        /// <returns>True if the projectile found a target to lock onto. Otherwise returns false.</returns>
+        /// <param name="distance">The current distance from the <see cref="NPC"/>.</param>
+        /// <param name="maxM">The projectile's max magnitude.</param>
+        /// <param name="checkTiles">Whether or not to home in if there are tiles in the way. Default <see langword="true"/>.</param>
+        /// <returns><see langword="true"/> if the projectile found a target to lock onto; otherwise, <see langword="false"/>.</returns>
         public static bool HomeInOnNPC(this Projectile projectile, float distance, float maxM, bool checkTiles = true) {
             bool target = false;
             Vector2 move = Vector2.Zero;
@@ -48,45 +48,63 @@ namespace TheDestinyMod
         }
 
         ///<summary>
-        ///Used to generate a structure using StructureHelper.
+        ///Generates a structure using StructureHelper.
         ///</summary>
-        ///<param name="location">The location to place the structure</param>
-        ///<param name="structure">The structure file name</param>
+        ///<param name="location">The location to place the structure.</param>
+        ///<param name="structure">The structure file name.</param>
         ///<example>
         ///<code>
         ///StructureHelperGenerateStructure(new Vector2(100, 150), "Example");
         ///</code>
         ///</example>
         ///<returns>
-        ///True if successful, otherwise false
+        ///<see langword="true"/> if successful; otherwise, <see langword="false"/>.
         ///</returns>
         public static bool StructureHelperGenerateStructure(Vector2 location, string structure) {
             return StructureHelperGenerateStructure(location.ToPoint16(), structure);
         }
 
         ///<summary>
-        ///Used to generate a structure using StructureHelper.
+        ///Generates a structure using StructureHelper.
         ///</summary>
-        ///<param name="location">The location to place the structure</param>
-        ///<param name="structure">The structure file name</param>
+        ///<param name="location">The location to place the structure.</param>
+        ///<param name="structure">The structure file name.</param>
         ///<example>
         ///<code>
         ///StructureHelperGenerateStructure(new Point16(100, 150), "Example");
         ///</code>
         ///</example>
         ///<returns>
-        ///True if successful, otherwise false
+        ///<see langword="true"/> if successful; otherwise, <see langword="false"/>.
         ///</returns>
         public static bool StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
             return ModLoader.GetMod("StructureHelper") != null && StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
         }
+
+
+        /// <summary>
+        /// Used to set the tooltips of Destiny armor items. Should be called within <c>tooltips.Add()</c>
+        /// </summary>
+        /// <param name="classType">The <see cref="DestinyClassType"/> of the armor.</param>
+        /// <returns>A <see cref="TooltipLine"/> containing the data in which to add to the tooltip; otherwise, an empty <see cref="TooltipLine"/>.</returns>
+        public static TooltipLine GetRestrictedClassTooltip(DestinyClassType classType) {
+            if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != classType && DestinyClientConfig.Instance.RestrictClassItems) {
+                return new TooltipLine(TheDestinyMod.Instance, "HasClass", $"You must be a {classType} to equip this")
+                {
+                    overrideColor = new Color(255, 0, 0)
+                };
+            }
+            return new TooltipLine(TheDestinyMod.Instance, "", "");
+        }
     }
 
+    /// <summary>Represents an armor type with a specified <see cref="DestinyClassType"/>.</summary>
     public interface IClassArmor
     {
         DestinyClassType ArmorClassType();
     }
 
+    /// <summary>Represents a Destiny class (not a language <see langword="class"/>).</summary>
     public enum DestinyClassType : byte
     {
         None,

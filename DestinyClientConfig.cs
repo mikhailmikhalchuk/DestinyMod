@@ -5,14 +5,13 @@ using Terraria.ModLoader.Config;
 
 namespace TheDestinyMod
 {
-    [Label("Config")]
+    [Label("Client Config")]
     [BackgroundColor(66, 109, 179, 216)]
-
-    public class DestinyConfig : ModConfig
+    public class DestinyClientConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        public static DestinyConfig Instance;
+        public static DestinyClientConfig Instance;
 
         [Header("Super")]
         [Label("Super Bar Text")]

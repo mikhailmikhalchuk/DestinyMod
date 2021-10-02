@@ -68,7 +68,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
         }
 
         public override bool? CanBeHitByProjectile(Projectile projectile) {
-            if (projectile.damage > npc.life && DestinyConfig.Instance.SepiksDeathAnimation) {
+            if (projectile.damage > npc.life && DestinyClientConfig.Instance.SepiksDeathAnimation) {
                 npc.life = 49;
                 return false;
             }
@@ -78,10 +78,10 @@ namespace TheDestinyMod.NPCs.SepiksPrime
         public override void AI() {
             npc.ai[0]++;
             Player target = Main.player[npc.target];
-            if (npc.life > 50 && DestinyConfig.Instance.SepiksDeathAnimation || !DestinyConfig.Instance.SepiksDeathAnimation) {
+            if (npc.life > 50 && DestinyClientConfig.Instance.SepiksDeathAnimation || !DestinyClientConfig.Instance.SepiksDeathAnimation) {
                 npc.rotation = (float)Math.Atan2(npc.position.Y + npc.height - 80f - target.position.Y - (target.height / 2), npc.position.X + (npc.width / 2) - target.position.X - (target.width / 2)) + (float)Math.PI / 2f;
             }
-            else if (npc.life < 50 && !npc.dontTakeDamage && DestinyConfig.Instance.SepiksDeathAnimation) { //doesnt work with others
+            else if (npc.life < 50 && !npc.dontTakeDamage && DestinyClientConfig.Instance.SepiksDeathAnimation) { //doesnt work with others
                 npc.dontTakeDamage = true;
                 npc.rotation += 1;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/NPC/SepiksDie"), npc.Center);
@@ -89,7 +89,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
                 npc.alpha = 0;
                 return;
             }
-            else if (npc.life < 50 && npc.dontTakeDamage && DestinyConfig.Instance.SepiksDeathAnimation) {
+            else if (npc.life < 50 && npc.dontTakeDamage && DestinyClientConfig.Instance.SepiksDeathAnimation) {
                 npc.rotation += 1;
                 if (npc.ai[0] > 192) {
                     npc.StrikeNPC(9999, 0, 0); //has to be 9999 damage because...terraria

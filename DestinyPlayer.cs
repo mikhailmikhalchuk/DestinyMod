@@ -539,7 +539,7 @@ namespace TheDestinyMod
 		}
 
         public override void PostUpdateMiscEffects() {
-			if (!notifiedThatSuperIsReady && superChargeCurrent == 100 && !Main.dedServ && DestinyConfig.Instance.NotifyOnSuper && superActiveTime == 0 && !player.dead) {
+			if (!notifiedThatSuperIsReady && superChargeCurrent == 100 && !Main.dedServ && DestinyClientConfig.Instance.NotifyOnSuper && superActiveTime == 0 && !player.dead) {
 				Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperCharge"), new Color(255, 255, 0));
 				notifiedThatSuperIsReady = true;
 			}

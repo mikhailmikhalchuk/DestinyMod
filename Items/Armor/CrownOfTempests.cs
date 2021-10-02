@@ -28,11 +28,7 @@ namespace TheDestinyMod.Items.Armor
 			player.moveSpeed += 0.05f;
 		}
 
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != DestinyClassType.Warlock && DestinyConfig.Instance.RestrictClassItems) {
-				tooltips.Add(new TooltipLine(mod, "HasClass", "You must be a Warlock to equip this") { overrideColor = new Color(255, 0, 0) });
-			}
-		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.Add(DestinyHelper.GetRestrictedClassTooltip(DestinyClassType.Warlock));
 
 		public DestinyClassType ArmorClassType() => DestinyClassType.Warlock;
 	}

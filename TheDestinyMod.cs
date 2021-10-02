@@ -65,7 +65,7 @@ namespace TheDestinyMod
             On.Terraria.UI.ItemSlot.RightClick_ItemArray_int_int += ItemSlot_RightClick_ItemArray_int_int;
             On.Terraria.GameContent.UI.Elements.UICharacterListItem.DrawSelf += UICharacterListItem_DrawSelf;
             if (!Main.dedServ) {
-                if (DestinyConfig.Instance.GuardianGamesConfig) {
+                if (DestinyClientConfig.Instance.GuardianGamesConfig) {
                     try {
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://DestinyModServer.mikhailmcraft.repl.co");
                         request.Method = "GET";
@@ -228,6 +228,7 @@ namespace TheDestinyMod
             AddTranslation(text);
             text = CreateTranslation("Cryptarch8");
             text.SetDefault("Hmm, this one is labeled \"Bigm55\"...yes, Guardian?");
+            text.AddTranslation(GameCulture.Spanish, "Hmm, esta está etiquetada como \"Bigm55\"... ¿Si, Guardián?");
             AddTranslation(text);
             text = CreateTranslation("RelicShard");
             text.SetDefault("Relic Shards have begun to grow!");
@@ -309,13 +310,39 @@ namespace TheDestinyMod
             text.AddTranslation(GameCulture.Spanish, "¡Excelente trabajo, Guardián!");
             text.AddTranslation(GameCulture.Polish, "Znakomita robota Strażniku! Weź to jako zapłatę za twoją ciężka prace.");
             AddTranslation(text);
+            text = CreateTranslation("ZavalaBounty3");
+            text.SetDefault("I've got another bounty for you, Guardian. The Dungeon is an evil place, filled with servants of the Darkness.\nI need you to slay 50 Skeletons to purge this infestation.");
+            text.AddTranslation(GameCulture.Spanish, "La mazmorra es un lugar vil, lleno de sirvientes de la Oscuridad. Necesito que elimines 50 Esqueletos para purgar esta infestación.");
+            AddTranslation(text);
+            text = CreateTranslation("ZavalaBounty4");
+            text.SetDefault("I can feel the settling of the Darkness from here. You've done well, Guardian.");
+            text.AddTranslation(GameCulture.Spanish, "Puedo sentir el desvanecimiento de la Oscuridad desde aquí. Hiciste un buen trabajo, Guardián.");
+            AddTranslation(text);
             text = CreateTranslation("ZavalaKilled1");
             text.SetDefault("Let's see here, Guardian. You've killed {0}/100 Zombies.");
             text.AddTranslation(GameCulture.Spanish, "Veamos, Guardián. Eliminaste {0}/100 Zombis.");
             text.AddTranslation(GameCulture.Polish, "Zobaczmy, Strażniku. Jak dotychczas zabiłeś {0}/100 Zombie.");
             AddTranslation(text);
+            text = CreateTranslation("ZavalaKilled2");
+            text.SetDefault("Let's see here, Guardian. You've killed {0}/50 Skeletons.");
+            text.AddTranslation(GameCulture.Spanish, "Veamos aquí, Guardian. Has matado (number)/50 Esqueletos.");
+            text.AddTranslation(GameCulture.Polish, "Zobaczmy, Strażniku. Jak dotychczas zabiłeś {0}/50 Skeleton.");
+            AddTranslation(text);
             text = CreateTranslation("ZavalaGG");
             text.SetDefault("The Guardian Games are on, Guardian! Show everyone which class is the greatest.");
+            text.AddTranslation(GameCulture.Spanish, "¡Los juegos de Guardianes han comenzado, Guardián! Muestrales a todos cual clase es la mejor.");
+            AddTranslation(text);
+            text = CreateTranslation("ZavalaGGTitanWin");
+            text.SetDefault("Through a fierce competition and defying all odds, my Titans have punched their way to victory in this year's Guardian Games. Make no mistake; the determination of both the Warlocks and Hunters were admirable. To commemorate, here is some Titan-themed decor. Stay strong, Guardian.");
+            text.AddTranslation(GameCulture.Spanish, "A través de una dura competición y desafiando todas las posibilidades, mis Titanes golpearon hasta la victoria en los Juegos de Guardianes este año. No te equivoques, la determinación de los Hechiceros y Cazadores fue admirable. Para conmemorar, aquí tienes un poco de decoración de Titán. Mantenete fuerte, Guardián.");
+            AddTranslation(text);
+            text = CreateTranslation("ZavalaGGHunterWin");
+            text.SetDefault("Through a fierce competition and defying all odds, the Hunters have stealthily taken the win in this year's Guardian Games. Make no mistake; the determination of the Hunters was admirable, but us Titans will achieve victory next year. To commemorate, here is some Hunter-themed decor. Stay strong, Guardian.");
+            text.AddTranslation(GameCulture.Spanish, "A través de una dura competición y desafiando todas las posibilidades, los Cazadores tomaron sigilosamente la victoria en los Juegos de Guardianes este año. No te equivoques, la determinación de los Hechiceros fue admirable, pero nosotros los Titanes alcanzaremos la victoria el proximo año. Para conmemorar, aquí tienes un poco de decoración de Cazador. Mantente fuerte, Guardián.");
+            AddTranslation(text);
+            text = CreateTranslation("ZavalaGGWarlockWin");
+            text.SetDefault("Through a fierce competition and defying all odds, the Warlocks have outsmarted every other class in this year's Guardian Games. Make no mistake; the determination of the Warlocks was admirable, but us Titans will achieve victory next year. To commemorate, here is some Warlock-themed decor. Stay strong, Guardian.");
+            text.AddTranslation(GameCulture.Spanish, "A través de una dura competición y desafiando todas las posibilidades, los Hechiceros han burlado las demas clases en los Juegos de Guardianes este año. No te equivoques, la determinación de los Cazadores fue admirable, pero nosotros los Titanes alcanzaremos la victoria el proximo año. Para conmemorar, aquí tienes un poco de decoración de Hechicero. Mantente fuerte, Guardián.");
             AddTranslation(text);
             text = CreateTranslation("Drifter1");
             text.SetDefault("How you livin'?");
@@ -449,22 +476,22 @@ namespace TheDestinyMod
             AddTranslation(text);
             text = CreateTranslation("DrifterMotes12");
             text.SetDefault("Motes, {0}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.");
-            text.AddTranslation(GameCulture.Spanish, "Motes, {0}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.");
+            text.AddTranslation(GameCulture.Spanish, "¡Motas, {0}, Motas! Tengo un arma que hice para ti, cuidala.");
             text.AddTranslation(GameCulture.Polish, "Motes, {0}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.");
             AddTranslation(text);
             text = CreateTranslation("DrifterMotes13");
             text.SetDefault("{0}, you gotta have those Motes on you! Come back when you got some.");
-            text.AddTranslation(GameCulture.Spanish, "{0}, you gotta have those Motes on you! Come back when you got some.");
+            text.AddTranslation(GameCulture.Spanish, "{0}, ¡tienes que tener las Motas contigo! Vuelve cuando tengas algunas.");
             text.AddTranslation(GameCulture.Polish, "{0}, you gotta have those Motes on you! Come back when you got some.");
             AddTranslation(text);
             text = CreateTranslation("DrifterMotes14");
             text.SetDefault("Thanks for the...huh? You don't have any Motes for me to unload off 'ya!");
-            text.AddTranslation(GameCulture.Spanish, "Thanks for the...huh? You don't have any Motes for me to unload off 'ya!");
+            text.AddTranslation(GameCulture.Spanish, "Gracias por las... ¿Heh? ¡No tienes ningunas Motas para desocuparme de ti!");
             text.AddTranslation(GameCulture.Polish, "Thanks for the...huh? You don't have any Motes for me to unload off 'ya!");
             AddTranslation(text);
             text = CreateTranslation("DrifterMotes15");
             text.SetDefault("Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {0}.");
-            text.AddTranslation(GameCulture.Spanish, "Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {0}.");
+            text.AddTranslation(GameCulture.Spanish, "¡Hey, tienes que depositar las Motas en el deposito! ¿Estás intentando estafarme? Es broma, {0}.");
             text.AddTranslation(GameCulture.Polish, "Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {0}.");
             AddTranslation(text);
             text = CreateTranslation("DrifterMotes16");
@@ -504,6 +531,8 @@ namespace TheDestinyMod
             AddTranslation(text);
             text = CreateTranslation("Decrypt");
             text.SetDefault("Decrypt");
+            text.AddTranslation(GameCulture.Spanish, "Desencriptar");
+            text.AddTranslation(GameCulture.Polish, "Odszyfruj"); //taken off G translate
             AddTranslation(text);
             text = CreateTranslation("GiveMotes");
             text.SetDefault("Give Motes");
@@ -532,7 +561,7 @@ namespace TheDestinyMod
 
         private void UICharacterListItem_DrawSelf(On.Terraria.GameContent.UI.Elements.UICharacterListItem.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UICharacterListItem self, SpriteBatch spriteBatch) {
             orig.Invoke(self, spriteBatch);
-            if (!DestinyConfig.Instance.CharacterClassLabels)
+            if (!DestinyClientConfig.Instance.CharacterClassLabels)
                 return;
             float width = self.GetInnerDimensions().X + self.GetInnerDimensions().Width;
             Vector2 vector4 = new Vector2(self.GetDimensions().X + 100f, self.GetInnerDimensions().Y + 59f);
@@ -564,7 +593,7 @@ namespace TheDestinyMod
                 return;
             }
             if (Main.LocalPlayer.armor[slot].modItem is IClassArmor armor) {
-                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.RestrictClassItems && context == 9) {
+                if (armor.ArmorClassType() != player.classType && DestinyClientConfig.Instance.RestrictClassItems && context == 9) {
                     return;
                 }
             }
@@ -603,7 +632,7 @@ namespace TheDestinyMod
         private void ItemSlot_LeftClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (Main.mouseItem.modItem is IClassArmor armor) {
-                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.RestrictClassItems && context == 8) {
+                if (armor.ArmorClassType() != player.classType && DestinyClientConfig.Instance.RestrictClassItems && context == 8) {
                     return;
                 }
             }
@@ -614,7 +643,7 @@ namespace TheDestinyMod
             success = false;
             DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
             if (item.modItem is IClassArmor armor) {
-                if (armor.ArmorClassType() != player.classType && DestinyConfig.Instance.RestrictClassItems) {
+                if (armor.ArmorClassType() != player.classType && DestinyClientConfig.Instance.RestrictClassItems) {
                     return item;
                 }
             }

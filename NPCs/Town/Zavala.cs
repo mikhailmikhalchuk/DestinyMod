@@ -60,19 +60,19 @@ namespace TheDestinyMod.NPCs.Town
 				if (!DestinyWorld.claimedItemsGG) {
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.TitanFlag>());
 				}
-				return "Through a fierce competition and defying all odds, my Titans have punched their way to victory in this year's Guardian Games. Make no mistake; the determination of both the Warlocks and Hunters were admirable. To commemorate, here is some Titan-themed decor. Stay strong, Guardian.";
+				return Language.GetTextValue("Mods.TheDestinyMod.ZavalaGGTitanWin");
 			}
 			else if (TheDestinyMod.guardianWinner == 2 && !hasClosedCeremony) {
 				if (!DestinyWorld.claimedItemsGG) {
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.HunterFlag>());
 				}
-				return "Through a fierce competition and defying all odds, the Hunters have stealthily taken the win in this year's Guardian Games. Make no mistake; the determination of the Hunters was admirable, but us Titans will achieve victory next year. To commemorate, here is some Hunter-themed decor. Stay strong, Guardian.";
+				return Language.GetTextValue("Mods.TheDestinyMod.ZavalaGGHunterWin");
 			}
 			else if (TheDestinyMod.guardianWinner == 3 && !hasClosedCeremony) {
 				if (!DestinyWorld.claimedItemsGG) {
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.WarlockFlag>());
 				}
-				return "Through a fierce competition and defying all odds, the Warlocks have outsmarted every other class in this year's Guardian Games. Make no mistake; the determination of the Warlocks was admirable, but us Titans will achieve victory next year. To commemorate, here is some Warlock-themed decor. Stay strong, Guardian.";
+				return Language.GetTextValue("Mods.TheDestinyMod.ZavalaGGWarlockWin");
 			}
 			if (Main.rand.NextBool(100)) {
                 return "Whether we wanted it or not, we've stepped into a war with the Cabal on Mars. So let's get to taking out their command, one by one. Valus Ta'aurc. From what I can gather he commands the Siege Dancers from an Imperial Land Tank outside of Rubicon. He's well protected, but with the right team, we can punch through those defenses, take this beast out, and break their grip on Freehold.";
@@ -137,11 +137,11 @@ namespace TheDestinyMod.NPCs.Town
 					player.zavalaEnemies = 0;
 				}
 				else if (player.zavalaBounty == 2) {
-					Main.npcChatText = "I've got another bounty for you, Guardian. The Dungeon is an evil place, filled with servants of the Darkness.\nI need you to slay 50 Skeletons to purge this infestation.";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaBounty3");
 					player.zavalaBounty = 3;
 				}
 				else if (player.zavalaBounty == 3 && player.zavalaEnemies == 50) {
-					Main.npcChatText = "I can feel the settling of the Darkness from here. You've done well, Guardian.";
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaBounty4");
 					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<LastWord>());
 					player.zavalaBounty = 4;
 					player.zavalaEnemies = 0;
@@ -154,7 +154,7 @@ namespace TheDestinyMod.NPCs.Town
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaKilled1", player.zavalaEnemies);
 					}
 					else if (player.zavalaBounty == 3) {
-						Main.npcChatText = $"Let's see here, Guardian. You've killed {player.zavalaEnemies}/50 Skeletons.";
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaKilled2", player.zavalaEnemies);
 					}
 				}
             }
