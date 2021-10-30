@@ -92,10 +92,6 @@ namespace TheDestinyMod.Tiles
 				Main.NewText("You must opt-in to the Guardian Games from the config menu.", new Color(255, 0, 0));
 				return true;
 			}
-			if (DestinyClientConfig.Instance.GuardianGamesConfig && TheDestinyMod.guardianGameError) {
-				Main.NewText("You must reload the mod after enabling the config toggle.", new Color(255, 0, 0));
-				return true;
-			}
 			if (TheDestinyMod.guardianWinner > 0) {
 				Main.NewText("The Guardian Games have ended. Speak to Zavala for the closing statement.", new Color(0, 170, 255));
 				return true;

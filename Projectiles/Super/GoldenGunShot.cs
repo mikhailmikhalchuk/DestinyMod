@@ -26,8 +26,8 @@ namespace TheDestinyMod.Projectiles.Super
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
-                int i = Item.NewItem(Main.player[projectile.owner].Hitbox, ModContent.ItemType<Items.OrbOfPower>());
-                (Main.item[i].modItem as Items.OrbOfPower).OrbOwner = Main.player[projectile.owner];
+                int i = Item.NewItem(Main.player[projectile.owner].Hitbox, ModContent.ItemType<Items.Buffers.OrbOfPower>());
+                (Main.item[i].modItem as Items.Buffers.OrbOfPower).OrbOwner = Main.player[projectile.owner];
             }
         }
     }

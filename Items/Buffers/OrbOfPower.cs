@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace TheDestinyMod.Items
+namespace TheDestinyMod.Items.Buffers
 {
     public class OrbOfPower : ModItem
     {
@@ -31,7 +31,7 @@ namespace TheDestinyMod.Items
         }
 
         public override bool OnPickup(Player player) {
-            var modPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            var modPlayer = player.GetModPlayer<DestinyPlayer>();
             modPlayer.superChargeCurrent += 4 + modPlayer.orbOfPowerAdd;
             Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/OrbOfPower"), player.Center);
             return false;

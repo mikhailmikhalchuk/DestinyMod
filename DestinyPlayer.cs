@@ -41,6 +41,7 @@ namespace TheDestinyMod
 		public float superDamageAdd;
 		public float superDamageMult = 1f;
 		public float superKnockback;
+		public float thornPierceAdd;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -63,6 +64,7 @@ namespace TheDestinyMod
 		public bool judged;
 		public bool sunWarrior;
 		public bool paracausalCharge;
+		public bool necroticRot;
 
 		public List<int> commonItemsDecrypted = new List<int>();
 		public List<int> uncommonItemsDecrypted = new List<int>();
@@ -110,6 +112,7 @@ namespace TheDestinyMod
 			judged = false;
 			sunWarrior = false;
 			paracausalCharge = false;
+			necroticRot = false;
 			superDamageAdd = 0f;
 			superDamageMult = 1f;
 			superCrit = 4;
@@ -187,12 +190,22 @@ namespace TheDestinyMod
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			for (int i = 0; i < Main.maxItems; i++) {
-				if (Main.item[i].modItem is OrbOfPower orb) {
+				if (Main.item[i].modItem is Items.Buffers.OrbOfPower orb) {
 					if (orb.OrbOwner == player) {
 						Main.item[i].active = false;
 					}
 				}
 			}
+        }
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+			if (conducted && damage == 10 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) {
+				damageSource = PlayerDeathReason.ByCustomReason(" couldn't channel their energy.");
+			}
+			if (necroticRot && damage == 10 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) {
+				damageSource = PlayerDeathReason.ByCustomReason("'s flesh rotted.");
+			}
+			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -263,18 +276,22 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
 				superChargeCurrent = 100;
-				Main.NewText(TheDestinyMod.currentSubworldID);
+				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.NecroticRot>(), 120);
 			}
         }
 
-        public override void UpdateBadLifeRegen() {
-			if (conducted) {
-				if (player.lifeRegen > 0) {
-					player.lifeRegen = 0;
+        public override void UpdateBadLifeRegen() { // lifeRegen deducts 1/2 of the value you give it!! (passing 8 as damage deducts 4 life per second)
+			void ApplyDebuff(bool debuff, int damage) {
+				if (debuff) {
+					if (player.lifeRegen > 0) {
+						player.lifeRegen = 0;
+					}
+					player.lifeRegenTime = 0;
+					player.lifeRegen -= damage;
 				}
-				player.lifeRegenTime = 0;
-				player.lifeRegen -= 15;
 			}
+			ApplyDebuff(conducted, 4);
+			ApplyDebuff(necroticRot, 70);
 		}
 
         /// <summary>

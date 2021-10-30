@@ -16,6 +16,7 @@ namespace TheDestinyMod.NPCs
         public bool judged;
         public bool conducted;
         public bool stasisFrozen;
+        public bool necroticRot;
 
         public override bool InstancePerEntity => true;
 
@@ -23,6 +24,7 @@ namespace TheDestinyMod.NPCs
             judged = false;
             conducted = false;
             stasisFrozen = false;
+            necroticRot = false;
         }
 
         public override void NPCLoot(NPC npc) {
@@ -93,11 +95,25 @@ namespace TheDestinyMod.NPCs
             }
         }
 
+        public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
+            if (damage >= npc.life && necroticRot && hitDirection == 0 && npc.damage > 0 && !npc.friendly) {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Items.Buffers.ThornRemnant>());
+            }
+            return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
+        }
+
         public override void DrawEffects(NPC npc, ref Color drawColor) {
             if (judged) {
                 drawColor = Color.Yellow;
                 if (Main.rand.NextBool(10)) {
                     Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Firework_Yellow);
+                    dust.noGravity = true;
+                }
+            }
+            if (necroticRot) {
+                drawColor = Color.ForestGreen;
+                if (Main.rand.NextBool(10)) {
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.JungleSpore);
                     dust.noGravity = true;
                 }
             }
@@ -110,13 +126,16 @@ namespace TheDestinyMod.NPCs
         }
 
         public override void UpdateLifeRegen(NPC npc, ref int damage) {
-            if (conducted) {
-                if (npc.lifeRegen > 0) {
-                    npc.lifeRegen = 0;
+            void ApplyDebuff(bool debuff, int lifeRegen) { // lifeRegen deducts 1/2 of the value you give it!! (passing 8 as damage deducts 4 life per second)
+                if (debuff) {
+                    if (npc.lifeRegen > 0) {
+                        npc.lifeRegen = 0;
+                    }
+                    npc.lifeRegen -= lifeRegen;
                 }
-                npc.lifeRegen -= 15;
-                damage = 2;
             }
+            ApplyDebuff(conducted, 4);
+            ApplyDebuff(necroticRot, 70);
         }
     }
 }

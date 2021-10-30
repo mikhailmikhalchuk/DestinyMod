@@ -22,11 +22,7 @@ namespace TheDestinyMod.Buffs.Debuffs
             player.controlJump = false;
             player.dashDelay = 10;
             if (player.buffTime[buffIndex] <= 1) {
-                Terraria.DataStructures.PlayerDeathReason deathReason = new Terraria.DataStructures.PlayerDeathReason
-                {
-                    SourceCustomReason = player.name + "'s death was correctly predicted." //, SourceNPCIndex = AtheonTypeHere
-                };
-                player.KillMe(deathReason, 0, 0);
+                player.KillMe(Terraria.DataStructures.PlayerDeathReason.ByCustomReason("'s death was correctly predicted."), 0, 0);
             }
         }
     }

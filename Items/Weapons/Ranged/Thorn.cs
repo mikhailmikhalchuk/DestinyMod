@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	public class Thorn : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Rounds pierce targets\n\"To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.\"");
+			Tooltip.SetDefault("Rounds pierce targets and inflict Poison on hit\nKills with this weapon drop Remnants\nPicking up Remnants increase bullet piercing damage\n\"To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.\"");
 		}
 
 		public override void SetDefaults() {
@@ -29,16 +29,13 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.rare = ItemRarityID.Yellow;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Thorn");
 			item.shoot = 10;
-			item.shootSpeed = 18f;
+			item.shootSpeed = 40f;
 			item.useAmmo = AmmoID.Bullet;
 			item.scale = .80f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile p = Projectile.NewProjectileDirect(new Vector2(position.X, position.Y - 2), new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
-			p.penetrate = ProjectileID.Sets.Homing[type] ? 2 : - 1;
-			p.usesLocalNPCImmunity = true;
-			p.localNPCHitCooldown = 2;
+			Projectile.NewProjectile(new Vector2(position.X, position.Y - 2), new Vector2(speedX, speedY), ModContent.ProjectileType<Projectiles.Ranged.ThornBullet>(), damage, knockBack, player.whoAmI);
 			return false;
 		}
 
