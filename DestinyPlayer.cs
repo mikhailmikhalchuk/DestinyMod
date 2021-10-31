@@ -35,13 +35,14 @@ namespace TheDestinyMod
 		public int orbOfPowerAdd = 0;
 		public int borealisCooldown;
 		public int duneRunTime;
+		public int lamentRevUp;
 
 		public float businessReduceUse = 0.2f;
 		public float thunderlordReduceUse = 1f;
 		public float superDamageAdd;
 		public float superDamageMult = 1f;
 		public float superKnockback;
-		public float thornPierceAdd;
+		public float necroticDamageMult;
 		
 		public bool ancientShard;
 		public bool boughtCommon;
@@ -65,6 +66,8 @@ namespace TheDestinyMod
 		public bool sunWarrior;
 		public bool paracausalCharge;
 		public bool necroticRot;
+
+		public Player necroticApplier;
 
 		public List<int> commonItemsDecrypted = new List<int>();
 		public List<int> uncommonItemsDecrypted = new List<int>();
@@ -180,7 +183,7 @@ namespace TheDestinyMod
 		}
 
         public override void PostUpdateRunSpeeds() {
-			if (player.channel && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>()) {
+			if (player.channel && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() || Main.mouseRight && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Melee.TheLament>() && lamentRevUp <= 90) {
 				player.maxRunSpeed /= 2;
 				player.accRunSpeed /= 2;
 				player.dashDelay = 10;
@@ -200,10 +203,10 @@ namespace TheDestinyMod
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
 			if (conducted && damage == 10 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) {
-				damageSource = PlayerDeathReason.ByCustomReason(" couldn't channel their energy.");
+				damageSource = PlayerDeathReason.ByCustomReason(player.name + " energy was dispersed.");
 			}
 			if (necroticRot && damage == 10 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) {
-				damageSource = PlayerDeathReason.ByCustomReason("'s flesh rotted.");
+				damageSource = PlayerDeathReason.ByCustomReason(player.name + "'s partial necrosis became complete.");
 			}
 			return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
         }
@@ -269,6 +272,23 @@ namespace TheDestinyMod
 					}
 				}
 			}
+			if (Main.mouseRight && player.HeldItem.type == ModContent.ItemType<Items.Weapons.Melee.TheLament>() && lamentRevUp <= 90) {
+				lamentRevUp++;
+				if (lamentRevUp % 5 == 0)
+					Main.PlaySound(SoundID.Item22);
+			}
+			if (!Main.mouseRight && lamentRevUp <= 90) {
+				lamentRevUp = 0;
+			}
+			if (lamentRevUp > 90) {
+				lamentRevUp++;
+				if (lamentRevUp > 300) {
+					lamentRevUp = 0;
+				}
+			}
+			if (lamentRevUp == 92) {
+				Main.PlaySound(SoundID.Item23);
+			}
 			if (PlayerInput.Triggers.JustReleased.MouseLeft) {
 				mouseLeftDown = false;
 				businessReduceUse = 0.2f;
@@ -276,7 +296,6 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
 				superChargeCurrent = 100;
-				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.NecroticRot>(), 120);
 			}
         }
 
@@ -291,7 +310,9 @@ namespace TheDestinyMod
 				}
 			}
 			ApplyDebuff(conducted, 4);
-			ApplyDebuff(necroticRot, 70);
+			if (necroticApplier != null) {
+				ApplyDebuff(necroticRot, 40 + (int)(40 * necroticApplier.GetModPlayer<DestinyPlayer>().necroticDamageMult));
+			}
 		}
 
         /// <summary>

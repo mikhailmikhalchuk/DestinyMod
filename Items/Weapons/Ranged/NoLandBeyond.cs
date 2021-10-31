@@ -40,10 +40,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
 		public override bool CanUseItem(Player player) {
-			if (player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay > 0) {
-				return false;
-			}
-			return base.CanUseItem(player);
+			return player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay <= 0;
 		}
 
 		public override void AddRecipes() {

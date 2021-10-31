@@ -23,6 +23,14 @@ namespace TheDestinyMod.Projectiles.Ranged
             return new Color(lightColor.R, lightColor.G * 0.5f, lightColor.B * 0.1f, lightColor.A);
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			projectile.Kill();
+        }
+
+        public override void OnHitPvp(Player target, int damage, bool crit) {
+			projectile.Kill();
+		}
+
         public override void AI() {
 			try {
 				int projX = (int)(projectile.position.X / 16f) - 1;
@@ -59,12 +67,15 @@ namespace TheDestinyMod.Projectiles.Ranged
 				Main.NewText("Test");
 			}
 			if (projectile.ai[1] > 50) {
-				Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, projectile.damage / 2, 0, projectile.owner);
-				proj.friendly = true;
-				proj.hostile = true;
-				Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.Center);
 				projectile.Kill();
 			}
+		}
+
+        public override void Kill(int timeLeft) {
+			Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, projectile.damage / 2, 0, projectile.owner);
+			proj.friendly = true;
+			proj.hostile = true;
+			Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.Center);
 		}
     }
 }

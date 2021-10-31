@@ -29,16 +29,13 @@ namespace TheDestinyMod.Items.Buffers
         public override bool ItemSpace(Player player) => true;
 
         public override bool CanPickup(Player player) {
-            if (RemnantOwner == null) {
-                return true;
-            }
             return player == RemnantOwner;
         }
 
         public override bool OnPickup(Player player) {
             var modPlayer = player.GetModPlayer<DestinyPlayer>();
-            if (modPlayer.thornPierceAdd < 1f) {
-                modPlayer.thornPierceAdd += 0.2f;
+            if (modPlayer.necroticDamageMult < 1f) {
+                modPlayer.necroticDamageMult += 0.2f;
             }
             player.AddBuff(ModContent.BuffType<Buffs.MarkOfTheDevourer>(), 600);
             Main.PlaySound(SoundID.Grab, player.Center);

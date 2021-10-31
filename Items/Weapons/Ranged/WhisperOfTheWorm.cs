@@ -42,11 +42,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override bool CanUseItem(Player player) {
-			if (player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay > 0) {
-				return false;
-			}
-            return base.CanUseItem(player);
-        }
+			return player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay <= 0;
+		}
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			scale *= 0.8f;

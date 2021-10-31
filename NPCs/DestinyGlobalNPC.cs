@@ -17,6 +17,7 @@ namespace TheDestinyMod.NPCs
         public bool conducted;
         public bool stasisFrozen;
         public bool necroticRot;
+        public Player necroticApplier;
 
         public override bool InstancePerEntity => true;
 
@@ -97,7 +98,8 @@ namespace TheDestinyMod.NPCs
 
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
             if (damage >= npc.life && necroticRot && hitDirection == 0 && npc.damage > 0 && !npc.friendly) {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<Items.Buffers.ThornRemnant>());
+                int i = Item.NewItem(npc.Hitbox, ModContent.ItemType<Items.Buffers.ThornRemnant>());
+                (Main.item[i].modItem as Items.Buffers.ThornRemnant).RemnantOwner = necroticApplier;
             }
             return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
         }
@@ -135,7 +137,9 @@ namespace TheDestinyMod.NPCs
                 }
             }
             ApplyDebuff(conducted, 4);
-            ApplyDebuff(necroticRot, 70);
+            if (necroticApplier != null) {
+                ApplyDebuff(necroticRot, 40 + (int)(40 * necroticApplier.GetModPlayer<DestinyPlayer>().necroticDamageMult));
+            }
         }
     }
 }

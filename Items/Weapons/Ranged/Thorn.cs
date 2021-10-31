@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	public class Thorn : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Rounds pierce targets and inflict Poison on hit\nKills with this weapon drop Remnants\nPicking up Remnants increase bullet piercing damage\n\"To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.\"");
+			Tooltip.SetDefault("Rounds pierce and poison targets\nKills with this weapon drop Remnants\nPicking up Remnants increases the damage of the poison\n\"To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.\"");
 		}
 
 		public override void SetDefaults() {

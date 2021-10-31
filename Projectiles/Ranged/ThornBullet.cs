@@ -20,6 +20,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(ModContent.BuffType<Buffs.Debuffs.NecroticRot>(), 120);
+            target.GetGlobalNPC<NPCs.DestinyGlobalNPC>().necroticApplier = Main.player[projectile.owner];
             for (int i = 0; i < Main.rand.Next(15, 31); i++) {
                 Dust dust = Dust.NewDustDirect(projectile.Center, 0, 0, DustID.PoisonStaff, 0f, 0f, Alpha: 100, Scale: 0.8f);
                 dust.velocity *= 1.6f;
@@ -31,16 +32,22 @@ namespace TheDestinyMod.Projectiles.Ranged
                 int i = Item.NewItem(target.Hitbox, ModContent.ItemType<Items.Buffers.ThornRemnant>());
                 (Main.item[i].modItem as Items.Buffers.ThornRemnant).RemnantOwner = Main.player[projectile.owner];
             }
-            projectile.damage += (int)(projectile.damage * Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().thornPierceAdd);
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {
             target.AddBuff(ModContent.BuffType<Buffs.Debuffs.NecroticRot>(), 120);
+            target.GetModPlayer<DestinyPlayer>().necroticApplier = Main.player[projectile.owner];
+            for (int i = 0; i < Main.rand.Next(15, 31); i++) {
+                Dust dust = Dust.NewDustDirect(projectile.Center, 0, 0, DustID.PoisonStaff, 0f, 0f, Alpha: 100, Scale: 0.8f);
+                dust.velocity *= 1.6f;
+                dust.velocity.Y -= 1f;
+                dust.velocity += projectile.velocity;
+                dust.noGravity = true;
+            }
             if (target.statLife <= 0) {
                 int i = Item.NewItem(target.Hitbox, ModContent.ItemType<Items.Buffers.ThornRemnant>());
                 (Main.item[i].modItem as Items.Buffers.ThornRemnant).RemnantOwner = Main.player[projectile.owner];
             }
-            projectile.damage += (int)(projectile.damage * Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().thornPierceAdd);
         }
 
         public override Color? GetAlpha(Color lightColor) {
