@@ -25,25 +25,25 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void AI() {
 			try {
-				int num337 = (int)(projectile.position.X / 16f) - 1;
-				int num338 = (int)((projectile.position.X + projectile.width) / 16f) + 2;
-				int num339 = (int)(projectile.position.Y / 16f) - 1;
-				int num340 = (int)((projectile.position.Y + projectile.height) / 16f) + 2;
-				if (num337 < 0) {
-					num337 = 0;
+				int projX = (int)(projectile.position.X / 16f) - 1;
+				int projWidth = (int)((projectile.position.X + projectile.width) / 16f) + 2;
+				int projY = (int)(projectile.position.Y / 16f) - 1;
+				int projHeight = (int)((projectile.position.Y + projectile.height) / 16f) + 2;
+				if (projX < 0) {
+					projX = 0;
 				}
-				if (num338 > Main.maxTilesX) {
-					num338 = Main.maxTilesX;
+				if (projWidth > Main.maxTilesX) {
+					projWidth = Main.maxTilesX;
 				}
-				if (num339 < 0) {
-					num339 = 0;
+				if (projY < 0) {
+					projY = 0;
 				}
-				if (num340 > Main.maxTilesY) {
-					num340 = Main.maxTilesY;
+				if (projHeight > Main.maxTilesY) {
+					projHeight = Main.maxTilesY;
 				}
-				Vector2 vec = default;
-				for (int i = num337; i < num338; i++) {
-					for (int j = num339; j < num340; j++) {
+				Vector2 vec;
+				for (int i = projX; i < projWidth; i++) {
+					for (int j = projY; j < projHeight; j++) {
 						if (Main.tile[i, j] != null && Main.tile[i, j].nactive() && (Main.tileSolid[Main.tile[i, j].type] || (Main.tileSolidTop[Main.tile[i, j].type] && Main.tile[i, j].frameY == 0))) {
 							vec.X = i * 16;
 							vec.Y = j * 16;
@@ -56,6 +56,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 				}
 			}
 			catch {
+				Main.NewText("Test");
 			}
 			if (projectile.ai[1] > 50) {
 				Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, projectile.damage / 2, 0, projectile.owner);

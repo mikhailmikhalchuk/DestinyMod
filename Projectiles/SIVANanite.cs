@@ -29,9 +29,15 @@ namespace TheDestinyMod.Projectiles
         public override void AI() {
 			projectile.localAI[1]++;
 			bool target = projectile.HomeInOnNPC(200f, 15f, false);
-			if (!target && projectile.velocity.X < 0.25 && projectile.alpha < 200) {
-				projectile.velocity.Y = Utils.Clamp(projectile.velocity.Y, -9999999, 0);
+			if (!target && projectile.alpha < 200 && projectile.velocity.Y > 0f) {
+                projectile.velocity.Y--;
+                if (projectile.velocity.Y < 0f) {
+                    projectile.velocity.Y = 0f;
+                }
 			}
+            if (target) {
+                projectile.alpha = 0;
+            }
 			if (projectile.localAI[1] > 400) {
 				projectile.alpha += 2;
 			}

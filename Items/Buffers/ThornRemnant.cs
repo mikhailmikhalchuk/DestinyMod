@@ -17,12 +17,12 @@ namespace TheDestinyMod.Items.Buffers
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Remnant");
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 19));
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 
         public override void SetDefaults() {
-            item.width = 16;
-            item.height = 16;
+            item.width = 24;
+            item.height = 24;
             item.rare = ItemRarityID.Gray;
         }
 
@@ -41,7 +41,16 @@ namespace TheDestinyMod.Items.Buffers
                 modPlayer.thornPierceAdd += 0.2f;
             }
             player.AddBuff(ModContent.BuffType<Buffs.MarkOfTheDevourer>(), 600);
+            Main.PlaySound(SoundID.Grab, player.Center);
             return false;
+        }
+
+        public override void GrabRange(Player player, ref int grabRange) {
+            grabRange = 128;
+        }
+
+        public override void PostUpdate() {
+            Lighting.AddLight(item.Center, Color.Green.ToVector3());
         }
     }
 }
