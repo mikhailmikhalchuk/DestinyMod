@@ -4,14 +4,16 @@ Developers
 ---------
 Cuno - Programmer
 Brent dya - Spriter
+ghost - Trial Spriter
+chis - Trial Spriter
 Aeterna - Trial Spriter
 
 Special Thanks
 ---------
-Fillinek - Building and SFX
 Solstice - SFX
-Black Snow - Sprites and Balancing
+Fillinek - Building and SFX
 zsewqaspider - Sprites
+Black Snow - Sprites and Balancing
 
 [c/FF1919:We are currently looking for spriters,] if you are one and would like to help in the making of this mod please join the Discord and contact Cuno#9958
 This mod is not finished! Do not expect weapons or armor to be balanced if you decide to use it in a playthrough
@@ -27,6 +29,7 @@ Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
 Added a config toggle for displaying class labels on the character selection screen
+Added the Dawnblade super
 The Cryptarch's decryption UI now shows potential engram drops if the item has dropped previously
 Right-clicking on the decrypt button in the Cryptarch's UI now decrypts one engram (useful for stacks)
 Changed the Orb of Power's pickup sound
@@ -41,5 +44,8 @@ Overhauled Thorn, making it act more similar to its in-game behavior
 Added Telesto (I hope I don't regret this...)
 Increased Outbreak Perfected's base critical strike chance to 6% (up from 2%)
 Added Lament's rev-up and health on damage perks
+Vex Mythoclast now becomes bright red when in its alternate firing mode
+Resprited Golden Gun
+Changed The Last Word's firing sound
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

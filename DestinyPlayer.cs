@@ -82,7 +82,7 @@ namespace TheDestinyMod
 		private int countThunderlord = 0;
 		public bool isThundercrash = false;
 		private bool shouldBeThundercrashed = false;
-		private int elementAwaitingAssign;
+		private DestinyDamageType elementAwaitingAssign;
 		private List<int> fragmentsAwaitingAssign;
 		private List<int> abilitiesAwaitingAssign;
 
@@ -231,8 +231,9 @@ namespace TheDestinyMod
 					}
 					return false;
 				}
-				/*switch (TheDestinyMod.Instance.SubclassUI.selectedSubclass) {
-					case 3 when classType == DestinyClassType.Titan:
+				PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.Dawnblade>());
+				/*switch (TheDestinyMod.Instance.SubclassUI.element) {
+					case DestinyDamageType.Arc when classType == DestinyClassType.Titan:
 						Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
 						Projectile.NewProjectile(player.position, new Vector2(0, 0), ProjectileID.StardustGuardianExplosion, 0, 0, player.whoAmI);
 						if (player.mount.Active) {
@@ -240,14 +241,14 @@ namespace TheDestinyMod
 						}
 						isThundercrash = true;
 						break;
-					case 4 when classType == DestinyClassType.Hunter:
-					case 5 when classType == DestinyClassType.Hunter:
+					case DestinyDamageType.Arc when classType == DestinyClassType.Hunter:
+					case DestinyDamageType.Solar when classType == DestinyClassType.Hunter:
 						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.GoldenGun>())) {
 							Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/GoldenGunActivate"), player.position);
 							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
 						}
 						break;
-					case 4 when classType == DestinyClassType.Titan:
+					case DestinyDamageType.Solar when classType == DestinyClassType.Titan:
 						if (!PlaceSuperInventory(ModContent.ItemType<Items.Weapons.Supers.HammerOfSol>())) {
 							Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HammerOfSolActivate"), player.position);
 							Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperInventory"), new Color(255, 0, 0));
@@ -296,6 +297,7 @@ namespace TheDestinyMod
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
 				superChargeCurrent = 100;
+				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.NecroticRot>(), 120);
 			}
         }
 
@@ -393,7 +395,7 @@ namespace TheDestinyMod
 				{"commonItemsDecrypted", commonItemsDecrypted},
 				{"uncommonItemsDecrypted", uncommonItemsDecrypted},
 				{"rareItemsDecrypted", rareItemsDecrypted},
-				{"subclassElement", TheDestinyMod.Instance.SubclassUI.element},
+				{"subclassElement", (byte)TheDestinyMod.Instance.SubclassUI.element},
 				{"subclassFragments", fragmentsAwaitingAssign},
 				{"subclassAbilities", abilitiesAwaitingAssign},
 				{"classType", (byte)classType}
@@ -420,7 +422,7 @@ namespace TheDestinyMod
 				classType = (DestinyClassType)tag.GetByte("classType");
 			}
 			if (tag.ContainsKey("subclassSelected")) {
-				elementAwaitingAssign = tag.GetInt("subclassElement");
+				elementAwaitingAssign = (DestinyDamageType)tag.GetByte("subclassElement");
 			}
 			if (tag.ContainsKey("subclassFragments")) {
 				fragmentsAwaitingAssign = (List<int>)tag.GetList<int>("subclassFragments");

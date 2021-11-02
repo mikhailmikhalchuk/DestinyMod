@@ -20,6 +20,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
             item.magic = false;
             item.summon = false;
             item.thrown = false;
+            item.value = 0;
         }
 
         public virtual void SetSuperDefaults() {
@@ -28,7 +29,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
 
         public override bool CanUseItem(Player player) {
             var modPlayer = player.GetModPlayer<DestinyPlayer>();
-            return modPlayer.superActiveTime > 0;
+            return modPlayer.superActiveTime == 0;
         }
 
         public override bool? PrefixChance(int pre, UnifiedRandom rand) {

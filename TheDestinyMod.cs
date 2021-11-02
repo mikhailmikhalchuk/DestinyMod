@@ -854,4 +854,22 @@ namespace TheDestinyMod
     {
         SepiksPrime
     }
+
+    /// <summary>Represents a Destiny class (not a language <see langword="class"/>).</summary>
+    public enum DestinyClassType : byte
+    {
+        None,
+        Titan,
+        Hunter,
+        Warlock
+    }
+
+    public enum DestinyDamageType : byte
+    {
+        None,
+        Arc,
+        Void,
+        Solar,
+        Stasis
+    }
 }

@@ -13,13 +13,7 @@ namespace TheDestinyMod.UI
     {
 		public UIPanel subclass;
 
-		/// <summary>
-		/// 0: Arc<br></br>
-		/// 1: Solar<br></br>
-		/// 2: Void<br></br>
-		/// 3: Stasis
-		/// </summary>
-		public int element;
+		public DestinyDamageType element;
 
 		public int fragmentChoice1;
 		public int fragmentChoice2;
@@ -1090,40 +1084,40 @@ namespace TheDestinyMod.UI
             string subclassName = "UNKNOWN";
 			DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
 			switch (playerClass) {
-				case DestinyClassType.Warlock when element == 0:
+				case DestinyClassType.Warlock when element == DestinyDamageType.Arc:
 					subclassName = "STORMCALLER";
 					break;
-				case DestinyClassType.Titan when element == 0:
+				case DestinyClassType.Titan when element == DestinyDamageType.Arc:
 					subclassName = "STRIKER";
 					break;
-				case DestinyClassType.Hunter when element == 0:
+				case DestinyClassType.Hunter when element == DestinyDamageType.Arc:
 					subclassName = "ARCSTRIDER";
 					break;
-				case DestinyClassType.Warlock when element == 1:
+				case DestinyClassType.Warlock when element == DestinyDamageType.Solar:
 					subclassName = "DAWNBLADE";
 					break;
-				case DestinyClassType.Titan when element == 1:
+				case DestinyClassType.Titan when element == DestinyDamageType.Solar:
 					subclassName = "SUNBREAKER";
 					break;
-				case DestinyClassType.Hunter when element == 1:
+				case DestinyClassType.Hunter when element == DestinyDamageType.Solar:
 					subclassName = "GUNSLINGER";
 					break;
-				case DestinyClassType.Warlock when element == 2:
+				case DestinyClassType.Warlock when element == DestinyDamageType.Void:
 					subclassName = "VOIDWALKER";
 					break;
-				case DestinyClassType.Titan when element == 2:
+				case DestinyClassType.Titan when element == DestinyDamageType.Void:
 					subclassName = "SENTINEL";
 					break;
-				case DestinyClassType.Hunter when element == 2:
+				case DestinyClassType.Hunter when element == DestinyDamageType.Void:
 					subclassName = "NIGHTSTALKER";
 					break;
-				case DestinyClassType.Warlock when element == 3:
+				case DestinyClassType.Warlock when element == DestinyDamageType.Stasis:
 					subclassName = "SHADEBINDER";
 					break;
-				case DestinyClassType.Titan when element == 3:
+				case DestinyClassType.Titan when element == DestinyDamageType.Stasis:
 					subclassName = "BEHEMOTH";
 					break;
-				case DestinyClassType.Hunter when element == 3:
+				case DestinyClassType.Hunter when element == DestinyDamageType.Stasis:
 					subclassName = "REVENANT";
 					break;
 			}

@@ -60,6 +60,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
                 item.UseSound = null;
 				Main.PlaySound(SoundID.Item101);
 				cooldown = 15;
+                item.color = Color.LightPink;
 			}
 			else if (player.altFunctionUse == 2 && alt && cooldown <= 0) {
 				alt = false;
@@ -67,20 +68,20 @@ namespace TheDestinyMod.Items.Weapons.Ranged
                 item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclast");
                 Main.PlaySound(SoundID.Item101);
 				cooldown = 15;
+                item.color = default;
 			}
 			return player.altFunctionUse != 2;
 		}
 
-        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+        public override void UpdateInventory(Player player) {
             if ((Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overchargeStacks <= 0 || !Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overcharged) && alt) {
                 alt = false;
                 item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclast");
                 Main.LocalPlayer.ClearBuff(ModContent.BuffType<Buffs.Overcharge>());
+                item.color = default;
             }
             if (cooldown > 0)
                 cooldown--;
-
-            return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

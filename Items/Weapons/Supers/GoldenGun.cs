@@ -12,24 +12,18 @@ namespace TheDestinyMod.Items.Weapons.Supers
         public override void SetSuperDefaults() {
             item.damage = 100;
 			item.noMelee = true;
-			item.autoReuse = false;
 			item.width = 54;
 			item.height = 30;
 			item.useTime = 5;
 			item.useAnimation = 5;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.knockBack = 0;
-			item.value = Item.buyPrice(0, 0, 0, 0);
-			item.rare = ItemRarityID.Yellow;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/MidaMultiTool");
 			item.shoot = ModContent.ProjectileType<Projectiles.Super.GoldenGunShot>();
 			item.shootSpeed = 30f;
 			item.scale = .8f;
         }
 
-		public override Vector2? HoldoutOffset() {
-			return new Vector2(5, 2);
-		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
 			timesShot++;
@@ -40,5 +34,9 @@ namespace TheDestinyMod.Items.Weapons.Supers
 			}
 			return true;
         }
-    }
+
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(5, 2);
+		}
+	}
 }

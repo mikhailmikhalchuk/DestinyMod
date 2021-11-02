@@ -59,7 +59,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 			return true;
         }
 
-        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+        public override void UpdateInventory(Player player) {
 			if (cooldown > 0) {
 				cooldown--;
 			}
@@ -67,8 +67,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 				Main.PlaySound(SoundID.MaxMana);
 				notified = true;
 			}
-            return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
-        }
+		}
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			scale *= 0.8f;

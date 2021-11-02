@@ -103,13 +103,4 @@ namespace TheDestinyMod
     {
         DestinyClassType ArmorClassType();
     }
-
-    /// <summary>Represents a Destiny class (not a language <see langword="class"/>).</summary>
-    public enum DestinyClassType : byte
-    {
-        None,
-        Titan,
-        Hunter,
-        Warlock
-    }
 }

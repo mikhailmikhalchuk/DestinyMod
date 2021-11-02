@@ -8,22 +8,20 @@ namespace TheDestinyMod.Projectiles.Ranged
 {
     public class TelestoBullet : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_" + ProjectileID.ExplosiveBullet;
-
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
             aiType = ProjectileID.Bullet;
-            projectile.height = 5;
-            projectile.width = 5;
+            projectile.height = 14;
+            projectile.width = 14;
 			projectile.penetrate = 5;
 			projectile.tileCollide = false;
         }
 
-        public override Color? GetAlpha(Color lightColor) {
-            return new Color(lightColor.R, lightColor.G * 0.5f, lightColor.B * 0.1f, lightColor.A);
-        }
+		public override Color? GetAlpha(Color lightColor) {
+			return new Color(lightColor.R, lightColor.G * 0.1f, lightColor.B * 0.8f, lightColor.A);
+		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			projectile.Kill();
         }
 

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using TheDestinyMod.Projectiles.Melee;
 using TheDestinyMod.Items.Materials;
 using TheDestinyMod.Sounds;
+using Microsoft.Xna.Framework;
 
 namespace TheDestinyMod.Items.Weapons.Melee
 {
@@ -40,6 +41,13 @@ namespace TheDestinyMod.Items.Weapons.Melee
             }
         }
 
+        public override void MeleeEffects(Player player, Rectangle hitbox) {
+            item.color = default;
+            if (player.GetModPlayer<DestinyPlayer>().lamentRevUp > 90) {
+                item.color = Color.LightPink;
+            }
+        }
+
         public override bool AltFunctionUse(Player player) {
             return player.GetModPlayer<DestinyPlayer>().lamentRevUp <= 90;
         }
@@ -47,15 +55,19 @@ namespace TheDestinyMod.Items.Weapons.Melee
         public override bool CanUseItem(Player player) {
             if (player.altFunctionUse == 2) {
                 item.useStyle = ItemUseStyleID.HoldingOut;
-                item.melee = false;
                 item.UseSound = null;
+                item.noMelee = true;
             }
             else {
                 item.useStyle = ItemUseStyleID.SwingThrow;
-                item.melee = true;
                 item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/RazeLighter");
+                item.noMelee = false;
             }
             return base.CanUseItem(player);
+        }
+
+        public override Vector2? HoldoutOffset() {
+            return new Vector2(3, -17);
         }
 
         public override void OnHitPvp(Player player, Player target, int damage, bool crit) {

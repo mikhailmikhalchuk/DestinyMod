@@ -16,7 +16,7 @@ namespace TheDestinyMod.Items.Armor
 		}
 
 		public override void SetDefaults() {
-			item.width = 20;
+			item.width = 22;
 			item.height = 18;
 			item.value = Item.sellPrice(0, 0, 60, 0);
 			item.rare = ItemRarityID.Yellow;

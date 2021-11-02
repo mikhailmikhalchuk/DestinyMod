@@ -26,7 +26,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.width = 54;
 			item.height = 30;
 			item.useTime = 14;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HandCannon120");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/TheLastWord");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 40f;
 			item.useAnimation = 14;
