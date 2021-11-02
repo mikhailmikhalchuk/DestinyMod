@@ -17,6 +17,7 @@ namespace TheDestinyMod.NPCs
         public bool conducted;
         public bool stasisFrozen;
         public bool necroticRot;
+        public int highlightedTime;
         public Player necroticApplier;
 
         public override bool InstancePerEntity => true;
@@ -117,6 +118,17 @@ namespace TheDestinyMod.NPCs
                 if (Main.rand.NextBool(10)) {
                     Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.JungleSpore);
                     dust.noGravity = true;
+                }
+            }
+            if (highlightedTime > 0) {
+                if (drawColor.R < 255) {
+                    drawColor.R = 255;
+                }
+                if (drawColor.G < 50) {
+                    drawColor.G = 50;
+                }
+                if (drawColor.B < 50) {
+                    drawColor.B = 50;
                 }
             }
         }

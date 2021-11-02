@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	public class TheThirdAxiom : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("\"Don't tell me the odds.\"");
+			Tooltip.SetDefault("Three round burst\n\"Don't tell me the odds.\"");
 		}
 		public override void SetDefaults() {
 			item.damage = 13;

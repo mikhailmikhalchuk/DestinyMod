@@ -296,8 +296,9 @@ namespace TheDestinyMod
 				thunderlordReduceUse = 1f;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
-				superChargeCurrent = 100;
-				player.AddBuff(ModContent.BuffType<Buffs.Debuffs.NecroticRot>(), 120);
+				superActiveTime = 600;
+				notifiedThatSuperIsReady = false;
+				isThundercrash = true;
 			}
         }
 
@@ -627,6 +628,8 @@ namespace TheDestinyMod
 				Main.PlaySound(SoundID.MenuClose);
 			}
 			if (isThundercrash) {
+				player.maxFallSpeed = 500;
+				player.gravity = 0;
 				if (superActiveTime > 580) {
 					player.velocity += (Main.MouseWorld - player.Center) / 300;
 				}
@@ -640,7 +643,7 @@ namespace TheDestinyMod
 				}
 				else {
 					player.velocity.X = Utils.Clamp(player.velocity.X, -20f, 20f);
-					player.velocity.Y = Utils.Clamp(player.velocity.Y, -30f, 40f);
+					player.velocity.Y = Utils.Clamp(player.velocity.Y, -20f, 20f);
 					if (player.velocity.Length() < 20 && superActiveTime < 580) {
 						player.velocity.Normalize();
 						player.velocity *= 20;

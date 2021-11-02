@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	public class Sunshot : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Fires explosive rounds\n\"Can't outrun the sunrise.\" -Liu Feng");
+			Tooltip.SetDefault("Fires explosive rounds\nRounds highlight enemies on contact\n\"Can't outrun the sunrise.\" -Liu Feng");
 		}
 
 		public override void SetDefaults() {
@@ -36,7 +36,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ProjectileID.ExplosiveBullet, damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y - 4, speedX, speedY, ModContent.ProjectileType<SunshotBullet>(), damage, knockBack, player.whoAmI);
 			return false;
 		}
 
@@ -46,7 +46,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(5, 0);
+			return new Vector2(5, -5);
 		}
 	}
 }

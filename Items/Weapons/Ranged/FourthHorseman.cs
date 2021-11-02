@@ -12,7 +12,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("The Fourth Horseman");
-			Tooltip.SetDefault("\"It's not a holdout weapon; it's a pathfinder.\"");
+			Tooltip.SetDefault("Fires a spread of bullets\n\"It's not a holdout weapon; it's a pathfinder.\"");
 		}
 
 		public override void SetDefaults() {

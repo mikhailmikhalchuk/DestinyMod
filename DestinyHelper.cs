@@ -96,6 +96,19 @@ namespace TheDestinyMod
             }
             return new TooltipLine(TheDestinyMod.Instance, "", "");
         }
+
+        /// <summary>
+        /// Fires a fusion rifle bullet, causing the current weapon to act like a fusion rifle. Should be called within <c>ModItem.Shoot()</c>
+        /// </summary>
+        /// <param name="owner">The owner of the projectile. By default, pass the <c>player</c> parameter provided by <c>ModItem.Shoot()</c></param>
+        /// <param name="position">The position of the projectile. By default, pass the <c>position</c> parameter provided by <c>ModItem.Shoot()</c></param>
+        /// <param name="velocity">The velocity of the projectile. By default, pass the <c>speedX</c> and <c>speedY</c> parameters provided by <c>ModItem.Shoot()</c></param>
+        /// <param name="damage">The damage of the projectile. By default, pass the <c>damage</c> parameter provided by <c>ModItem.Shoot()</c></param>
+        /// <param name="knockBack">The knockback of the projectile. By default, pass the <c>knockBack</c> parameter provided by <c>ModItem.Shoot()</c></param>
+        /// <param name="bulletsToFire">The amount of bullets the fusion rifle should fire.</param>
+        /// <param name="projectileType">The type of the projectile the fusion rifle should fire.</param>
+        /// <returns>The <seealso cref="Projectile"/> fired.</returns>
+        public static Projectile FireFusionProjectile(Player owner, Vector2 position, Vector2 velocity, int damage, float knockBack, int bulletsToFire = 6, int projectileType = ProjectileID.Bullet) => Projectile.NewProjectileDirect(position, velocity, ModContent.ProjectileType<Projectiles.Ranged.FusionShot>(), damage, knockBack, owner.whoAmI, bulletsToFire, projectileType);
     }
 
     /// <summary>Represents an armor type with a specified <see cref="DestinyClassType"/>.</summary>

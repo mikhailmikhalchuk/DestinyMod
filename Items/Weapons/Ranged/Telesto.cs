@@ -34,7 +34,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, ModContent.ProjectileType<Projectiles.Ranged.FusionShot>(), damage, knockBack, player.whoAmI, 7, ModContent.ProjectileType<Projectiles.Ranged.TelestoBullet>());
+			DestinyHelper.FireFusionProjectile(player, new Vector2(position.X, position.Y - 2), new Vector2(speedX, speedY), damage, knockBack, 7, ModContent.ProjectileType<Projectiles.Ranged.TelestoBullet>());
 			return false;
 		}
 
