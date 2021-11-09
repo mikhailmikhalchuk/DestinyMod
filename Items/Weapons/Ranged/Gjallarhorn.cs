@@ -27,7 +27,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Yellow;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/RocketLauncher");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Gjallarhorn");
 			item.autoReuse = true;
 			item.shoot = 10;
 			item.shootSpeed = 16f;

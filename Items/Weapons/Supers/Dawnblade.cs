@@ -18,7 +18,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 0;
 			item.UseSound = SoundID.Item1;
-			item.shoot = ProjectileID.Bullet;
+			item.shoot = ModContent.ProjectileType<Projectiles.Super.DawnbladeShot>();
 			item.shootSpeed = 30f;
 		}
 

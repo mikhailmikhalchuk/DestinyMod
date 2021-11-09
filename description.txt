@@ -46,6 +46,6 @@ Increased Outbreak Perfected's base critical strike chance to 6% (up from 2%)
 Added Lament's rev-up and health on damage perks
 Vex Mythoclast now becomes bright red when in its alternate firing mode
 Resprited Golden Gun
-Changed The Last Word's firing sound
+Changed The Last Word's firing sound and added a unique sound effect for Gjallarhorn
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
