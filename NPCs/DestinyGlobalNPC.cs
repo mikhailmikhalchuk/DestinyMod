@@ -19,6 +19,8 @@ namespace TheDestinyMod.NPCs
         public bool necroticRot;
         public int highlightedTime;
         public Player necroticApplier;
+        public int outbreakHits;
+        public int outbreakCounter;
 
         public override bool InstancePerEntity => true;
 
@@ -27,6 +29,15 @@ namespace TheDestinyMod.NPCs
             conducted = false;
             stasisFrozen = false;
             necroticRot = false;
+        }
+
+        public override bool PreAI(NPC npc) {
+            if (outbreakCounter > 0) {
+                outbreakCounter--;
+                if (outbreakCounter <= 0)
+                    outbreakHits = 0;
+            }
+            return base.PreAI(npc);
         }
 
         public override void NPCLoot(NPC npc) {
@@ -50,12 +61,18 @@ namespace TheDestinyMod.NPCs
         }
 
         public override bool PreNPCLoot(NPC npc) {
+            bool WormSegmentsAlive() {
+                for (int i = 0; i < Main.maxNPCs; i++) {
+                    NPC check = Main.npc[i];
+                    if (check.active && check.lifeMax > 0 && check.whoAmI != npc.whoAmI && (check.type == NPCID.EaterofWorldsBody || check.type == NPCID.EaterofWorldsHead || check.type == NPCID.EaterofWorldsTail)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
             switch (npc.type) {
                 case NPCID.KingSlime when !NPC.downedSlimeKing:
                 case NPCID.EyeofCthulhu when !NPC.downedBoss1:
-                case NPCID.EaterofWorldsBody when !NPC.downedBoss2:
-                case NPCID.EaterofWorldsHead when !NPC.downedBoss2:
-                case NPCID.EaterofWorldsTail when !NPC.downedBoss2:
                 case NPCID.BrainofCthulhu when !NPC.downedBoss2:
                 case NPCID.QueenBee when !NPC.downedQueenBee:
                 case NPCID.SkeletronHead when !NPC.downedBoss3:
@@ -70,6 +87,13 @@ namespace TheDestinyMod.NPCs
                 case NPCID.CultistBoss when !NPC.downedAncientCultist:
                 case NPCID.MoonLordCore when !NPC.downedMoonlord:
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Items.ExoticCipher>());
+                    break;
+                case NPCID.EaterofWorldsBody when !NPC.downedBoss2:
+                case NPCID.EaterofWorldsHead when !NPC.downedBoss2:
+                case NPCID.EaterofWorldsTail when !NPC.downedBoss2:
+                    if (!WormSegmentsAlive()) {
+                        Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Items.ExoticCipher>());
+                    }
                     break;
             }
             if (npc.type == NPCID.EyeofCthulhu && !NPC.downedBoss1) {

@@ -20,7 +20,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.damage = 78;
 			item.ranged = true;
 			item.noMelee = true;
-			item.rare = ItemRarityID.Yellow;
+			item.rare = ItemRarityID.LightRed;
 			item.knockBack = 0;
 			item.width = 50;
 			item.height = 25;

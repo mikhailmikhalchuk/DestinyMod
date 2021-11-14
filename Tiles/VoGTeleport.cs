@@ -13,8 +13,8 @@ namespace TheDestinyMod.Tiles
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
-            minPick = 500;
-            mineResist = 200f;
+            minPick = 50; //500
+            mineResist = 2f; //200
             AddMapEntry(new Color(255, 255, 0));
             soundType = SoundID.Tink;
         }

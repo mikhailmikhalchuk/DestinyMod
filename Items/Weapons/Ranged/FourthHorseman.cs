@@ -27,7 +27,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.noMelee = true;
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.Red;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Hakke2");
 			item.shoot = 10;
 			item.shootSpeed = 10f;

@@ -28,6 +28,8 @@ namespace TheDestinyMod.Projectiles
 
         public override void AI() {
 			projectile.localAI[1]++;
+            if (projectile.localAI[1] < 20)
+                return;
 			bool target = projectile.HomeInOnNPC(200f, 15f, false);
 			if (!target && projectile.alpha < 200 && projectile.velocity.Y > 0f) {
                 projectile.velocity.Y--;
@@ -47,6 +49,11 @@ namespace TheDestinyMod.Projectiles
             projectile.rotation += 0.1f;
 			projectile.Center = projectile.Center + Vector2.UnitX.RotatedBy(projectile.rotation, Vector2.Zero) * 0.5f;
 		}
+
+        public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+            if (projectile.localAI[1] < 20)
+                hitbox = Rectangle.Empty;
+        }
 
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
             Lighting.AddLight(projectile.Center, Color.Red.ToVector3() * 0.55f * Main.essScale);

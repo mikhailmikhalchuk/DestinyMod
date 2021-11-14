@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheDestinyMod.Buffs;
+using TheDestinyMod.NPCs;
 
 namespace TheDestinyMod.Projectiles.Ranged
 {
@@ -27,10 +27,16 @@ namespace TheDestinyMod.Projectiles.Ranged
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if (!target.friendly && target.damage > 0 && target.life <= 0 && (crit || Main.rand.NextBool(5))) {
-                for (int k = 0; k < 4; k++) {
-                    Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 3f, 5f);
-                    Projectile.NewProjectile(target.position, velocity, ModContent.ProjectileType<SIVANanite>(), 20, 0, Main.LocalPlayer.whoAmI);
+            if (!target.friendly && target.damage > 0) {
+                DestinyGlobalNPC dNPC = target.GetGlobalNPC<DestinyGlobalNPC>();
+                dNPC.outbreakHits++;
+                dNPC.outbreakCounter = 60;
+                if ((crit && target.life <= 0) || dNPC.outbreakHits >= 12) {
+                    dNPC.outbreakHits = 0;
+                    for (int k = 0; k < 4; k++) {
+                        Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 3f, 5f);
+                        Projectile.NewProjectile(target.position, velocity, ModContent.ProjectileType<SIVANanite>(), 20, 0, Main.LocalPlayer.whoAmI);
+                    }
                 }
             }
         }

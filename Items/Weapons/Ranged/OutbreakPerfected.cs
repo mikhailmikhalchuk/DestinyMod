@@ -11,7 +11,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
     public class OutbreakPerfected : ModItem 
     {
         public override void SetStaticDefaults() {
-            Tooltip.SetDefault("Three round burst\nCreates nanite swarms on critical kills\n\"~directive = KILL while enemies = PRESENT: execute(directive)~\"");
+            Tooltip.SetDefault("Three round burst\nCreates nanite swarms on critical kills and rapid hits\n\"~directive = KILL while enemies = PRESENT: execute(directive)~\"");
         }
 
 		public override void SetDefaults() {
@@ -23,8 +23,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.useAnimation = 18;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
-			item.knockBack = 6;
-			item.crit = 6;
+			item.knockBack = 0;
+			item.crit = 2;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.LightRed;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/OutbreakPerfected");

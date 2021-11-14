@@ -42,10 +42,11 @@ Pressing "Escape" on the class selection UI now returns to the menu, and pressin
 Added a few more Polish and Spanish translations for Zavala and the Drifter
 Overhauled Thorn, making it act more similar to its in-game behavior
 Added Telesto (I hope I don't regret this...)
-Increased Outbreak Perfected's base critical strike chance to 6% (up from 2%)
 Added Lament's rev-up and health on damage perks
 Vex Mythoclast now becomes bright red when in its alternate firing mode
-Resprited Golden Gun
+Resprited Golden Gun and Relic Shard's world sprite
 Changed The Last Word's firing sound and added a unique sound effect for Gjallarhorn
+Fixed a bug where the Eater of Worlds would drop an Exotic Cipher for every segment killed
+Removed Outbreak Perfected's knockback and caused it to now summon nanites on repeated hits as well as on crit death
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
