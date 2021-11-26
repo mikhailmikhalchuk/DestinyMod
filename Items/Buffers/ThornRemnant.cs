@@ -10,10 +10,7 @@ namespace TheDestinyMod.Items.Buffers
 {
     public class ThornRemnant : ModItem
     {
-        public Player RemnantOwner
-        {
-            get; set;
-        }
+        public Player RemnantOwner { get; set; }
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Remnant");

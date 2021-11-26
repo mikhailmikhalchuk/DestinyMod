@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Net;
+using System.Linq;
 using log4net;
 using System.Reflection;
 
@@ -64,6 +65,7 @@ namespace TheDestinyMod
             On.Terraria.UI.ItemSlot.LeftClick_ItemArray_int_int += ItemSlot_LeftClick_ItemArray_int_int;
             On.Terraria.UI.ItemSlot.RightClick_ItemArray_int_int += ItemSlot_RightClick_ItemArray_int_int;
             On.Terraria.GameContent.UI.Elements.UICharacterListItem.DrawSelf += UICharacterListItem_DrawSelf;
+            On.Terraria.Main.DrawMouseOver += Main_DrawMouseOver;
             if (!Main.dedServ) {
                 if (DestinyClientConfig.Instance.GuardianGamesConfig) {
                     try {
@@ -557,6 +559,18 @@ namespace TheDestinyMod
             text.AddTranslation(GameCulture.Spanish, "Vault of Glass");
             AddTranslation(text);
             #endregion
+        }
+
+        private void Main_DrawMouseOver(On.Terraria.Main.orig_DrawMouseOver orig, Main self) {
+            Rectangle mousePos = new Rectangle((int)(Main.mouseX + Main.screenPosition.X), (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
+            List<int> TypesToNotDraw = new List<int>()
+            {
+                ModContent.NPCType<NPCs.Vex.VaultOfGlass.EncounterBox>(),
+                ModContent.NPCType<NPCs.Vex.VaultOfGlass.DetainmentBubble>()
+            };
+            if (Main.npc.FirstOrDefault(npc => TypesToNotDraw.Contains(npc.type) && new Rectangle((int)npc.Bottom.X - npc.frame.Width / 2, (int)npc.Bottom.Y - npc.frame.Height, npc.frame.Width, npc.frame.Height).Intersects(mousePos)) == null) {
+                orig.Invoke(self);
+            }
         }
 
         private void UICharacterListItem_DrawSelf(On.Terraria.GameContent.UI.Elements.UICharacterListItem.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UICharacterListItem self, SpriteBatch spriteBatch) {

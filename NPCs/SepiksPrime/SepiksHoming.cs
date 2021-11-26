@@ -14,6 +14,7 @@ namespace TheDestinyMod.NPCs.SepiksPrime
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Homing Eye Blast");
             Main.npcFrameCount[npc.type] = 8;
+            NPCID.Sets.ProjectileNPC[npc.type] = true;
         }
 
         public override void SetDefaults() {

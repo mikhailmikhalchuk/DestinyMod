@@ -4,39 +4,37 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using TheDestinyMod.Projectiles.Ranged;
 using TheDestinyMod.Items.Materials;
 
 namespace TheDestinyMod.Items.Weapons.Ranged
 {
-	public class Sunshot : ModItem
+	public class Witherhoard : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Fires explosive rounds\nRounds highlight enemies on contact\n\"Can't outrun the sunrise.\" -Liu Feng");
+			Tooltip.SetDefault("Projectiles blight surrounding tiles on impact\nEnemies that come in contact with the blight will be damaged\n\"Like a one-man private security company.\"");
 		}
 
 		public override void SetDefaults() {
-			item.damage = 84;
+			item.damage = 35;
 			item.ranged = true;
-			item.noMelee = true;
-			item.rare = ItemRarityID.Red;
-			item.knockBack = 0;
-			item.width = 58;
+			item.width = 82;
 			item.height = 30;
-			item.useTime = 20;
-			item.crit = 10;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/AceOfSpades");
+			item.useTime = 30;
+			item.useAnimation = 30;
 			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.shootSpeed = 10f;
-			item.useAnimation = 20;
-			item.shoot = 10;
-			item.useAmmo = AmmoID.Bullet;
+			item.noMelee = true;
+			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
-			item.scale = 0.8f;
+			item.rare = ItemRarityID.Pink;
+			item.UseSound = SoundID.Item61;
+			item.shoot = ProjectileID.GrenadeI;
+			item.shootSpeed = 8f;
+			item.useAmmo = ItemID.Grenade;
+			item.scale = .80f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile.NewProjectile(position.X, position.Y - 4, speedX, speedY, ModContent.ProjectileType<SunshotBullet>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y - 7, speedX, speedY, ProjectileID.GrenadeI, damage, knockBack, player.whoAmI);
 			return false;
 		}
 
@@ -46,7 +44,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(3, -1);
+			return new Vector2(-15, 0);
 		}
 	}
 }

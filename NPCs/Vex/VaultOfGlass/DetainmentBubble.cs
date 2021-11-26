@@ -10,6 +10,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Detainment Bubble");
+            NPCID.Sets.ExcludedFromDeathTally[npc.type] = true;
         }
 
         public override void SetDefaults() {
