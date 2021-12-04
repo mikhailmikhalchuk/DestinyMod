@@ -36,7 +36,14 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile.NewProjectile(position.X, position.Y - 6, speedX, speedY, ModContent.ProjectileType<GjallarhornRocket>(), damage, knockBack, player.whoAmI);
+			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
+			Projectile.NewProjectile(position.X, position.Y - 6, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TwoTailedVoid>(), damage, knockBack, player.whoAmI);
+			Vector2 otherPert = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
+			while (otherPert == perturbedSpeed) {
+				otherPert = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(5));
+			}
+			perturbedSpeed = otherPert;
+			Projectile.NewProjectile(position.X, position.Y - 6, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TwoTailedSolar>(), damage, knockBack, player.whoAmI);
 			return false;
 		}
 
@@ -47,14 +54,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-50, -5);
-		}
-
-		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Ectoplasm, 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
 		}
 	}
 }

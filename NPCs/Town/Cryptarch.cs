@@ -46,7 +46,7 @@ namespace TheDestinyMod.NPCs.Town
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) {
-			for (int k = 0; k < 255; k++) {
+			for (int k = 0; k < Main.maxPlayers; k++) {
 				Player player = Main.player[k];
 				if (!player.active) {
 					continue;

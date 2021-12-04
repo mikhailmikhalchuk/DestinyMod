@@ -49,6 +49,8 @@ Changed The Last Word's firing sound and added a unique sound effect for Gjallar
 Fixed a bug where the Eater of Worlds would drop an Exotic Cipher for every segment killed
 Removed Outbreak Perfected's knockback and caused it to now summon nanites on repeated hits as well as on crit death
 Set the base crit chance of all scout rifles to 2%
-Added Scathelocke, Drang, and Haunted Earth
+Added Scathelocke, Drang, Haunted Earth, Two-Tailed Fox, and Nemesis Star
+Optimized NPC spawn checking
+Significantly decreased the explosion size of Salvager's Salvo's grenades and halved the maximum time before they automatically explode
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

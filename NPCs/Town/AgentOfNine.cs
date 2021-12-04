@@ -93,7 +93,8 @@ namespace TheDestinyMod.NPCs.Town
 			int h = NPC.sHeight + NPC.safeRangeY * 2;
 			Rectangle npcScreenRect = new Rectangle((int)center.X - w / 2, (int)center.Y - h / 2, w, h);
 			foreach (Player player in Main.player) {
-				if (player.active && player.getRect().Intersects(npcScreenRect)) return true;
+				if (player.active && player.getRect().Intersects(npcScreenRect))
+					return true;
 			}
 			return false;
 		}
