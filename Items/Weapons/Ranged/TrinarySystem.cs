@@ -51,15 +51,14 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
         public override void GetWeaponCrit(Player player, ref int crit) {
-			crit = 1;
 			if (Main.hardMode) {
-				crit = 3;
+				crit += 3;
 			}
 			if (NPC.downedMechBossAny) {
-				crit = 5;
+				crit += 5;
 			}
 			if (NPC.downedPlantBoss) {
-				crit = 7;
+				crit += 7;
 			}
 		}
 

@@ -44,9 +44,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged {
         }
 
         public override void GetWeaponCrit(Player player, ref int crit) {
-			crit = 5;
 			if (Main.hardMode) {
-				crit = 8;
+				crit += 8;
 			}
         }
 

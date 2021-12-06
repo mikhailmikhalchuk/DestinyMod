@@ -45,8 +45,14 @@ namespace TheDestinyMod.Projectiles.Ranged
                 projectile.ai[0] = 5;
             } 
             if (charge == null && !fired) {
-                charge = mod.GetSound("Sounds/Item/FusionRifleCharge").CreateInstance();
-                charge.Play();
+                if (Main.soundVolume <= 0) {
+                    charge = mod.GetSound("Sounds/Item/FusionRifleCharge").CreateInstance();
+                    charge.Volume = 0;
+                    charge.Play();
+                }
+                else {
+                    charge = Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/FusionRifleCharge"), projectile.Center);
+                }
             }
             Player player = Main.player[projectile.owner];
             projectile.position = player.Center + projectile.velocity;

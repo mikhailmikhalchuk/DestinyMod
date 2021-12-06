@@ -52,5 +52,7 @@ Set the base crit chance of all scout rifles to 2%
 Added Scathelocke, Drang, Haunted Earth, Two-Tailed Fox, and Nemesis Star
 Optimized NPC spawn checking
 Significantly decreased the explosion size of Salvager's Salvo's grenades and halved the maximum time before they automatically explode
+Trinary System's charge-up sound effect and all of Divinity's sound effects now obey the "Sound" volume set in Settings, and can no longer be heard from extreme distances
+Trinary System and Bottom Dollar are now affected by critical strike chance-affecting modifiers and accessories
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

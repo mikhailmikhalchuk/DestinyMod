@@ -90,8 +90,14 @@ namespace TheDestinyMod.Projectiles.Magic
 			projectile.position = player.Center + projectile.velocity * 60;
 			projectile.timeLeft = 4;
 			if (!done && start == null) {
-				start = mod.GetSound("Sounds/Item/DivinityStart").CreateInstance();
-				start.Play();
+				if (Main.soundVolume <= 0) {
+					start = mod.GetSound("Sounds/Item/DivinityStart").CreateInstance();
+					start.Volume = 0;
+					start.Play();
+				}
+				else {
+					start = Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/DivinityStart"), projectile.Center);
+				}
 				done = true;
 			}
 			else if (!done && start != null) {
@@ -99,9 +105,15 @@ namespace TheDestinyMod.Projectiles.Magic
 				done = true;
 			}
 			if (fire == null && start.State != SoundState.Playing) {
-				fire = mod.GetSound("Sounds/Item/DivinityFire").CreateInstance();
-				fire.IsLooped = true;
-				fire.Play();
+				if (Main.soundVolume <= 0) {
+					fire = mod.GetSound("Sounds/Item/DivinityFire").CreateInstance();
+					fire.IsLooped = true;
+					fire.Volume = 0;
+					fire.Play();
+				}
+				else {
+					fire = Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/DivinityFire"), projectile.Center);
+				}
 			}
 			else if (fire != null && start.State != SoundState.Playing && fire.State == SoundState.Stopped) {
 				fire.Play();
