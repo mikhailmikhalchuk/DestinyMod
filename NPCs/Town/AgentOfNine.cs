@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -52,7 +53,9 @@ namespace TheDestinyMod.NPCs.Town
 
 		public static void UpdateTravelingMerchant() {
 			NPC agentOfNine = Main.npc.FirstOrDefault(npc => npc.type == ModContent.NPCType<AgentOfNine>() && npc.active);
-			if (agentOfNine != null && (Main.dayTime || Main.time >= 32400) && !IsNpcOnscreen(agentOfNine.Center)) {
+			DateTime now = DateTime.Now;
+			DayOfWeek day = now.DayOfWeek;
+			if (agentOfNine != null && day != DayOfWeek.Friday && !IsNpcOnscreen(agentOfNine.Center)) {
 				if (Main.netMode == NetmodeID.SinglePlayer) Main.NewText(agentOfNine.FullName + " has departed!", 50, 125, 255);
 				else NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(agentOfNine.FullName + " has departed!"), new Color(50, 125, 255));
 				agentOfNine.active = false;
@@ -82,10 +85,12 @@ namespace TheDestinyMod.NPCs.Town
 		}
 
 		private static bool CanSpawnNow() {
+			DateTime now = DateTime.Now;
+			DayOfWeek day = now.DayOfWeek;
 			if (Main.eclipse || Main.fastForwardTime || !Main.hardMode || Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0)
 				return false;
 
-			return !Main.dayTime && Main.time >= spawnTime && Main.time < 32400;
+			return day == DayOfWeek.Friday;
 		}
 
 		private static bool IsNpcOnscreen(Vector2 center) {

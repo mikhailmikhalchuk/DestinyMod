@@ -28,31 +28,6 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
-Added a config toggle for displaying class labels on the character selection screen
-Added the Dawnblade super
-The Cryptarch's decryption UI now shows potential engram drops if the item has dropped previously
-Right-clicking on the decrypt button in the Cryptarch's UI now decrypts one engram (useful for stacks)
-Changed the Orb of Power's pickup sound
-Removed an accidental debugging feature which would occur when using Borealis' melee or magic types
-Gjallarhorn's rockets now no longer summon more than 5 rockets when hitting a large target
-Removed Sweet Business' catalyst and catalyst feature
-Added lighting to modded bullets to better fit vanilla
-Class selection UI now has snap points and scales with the screen
-Pressing "Escape" on the class selection UI now returns to the menu, and pressing "Back" on the character selection screen sends to class selection
-Added a few more Polish and Spanish translations for Zavala and the Drifter
-Overhauled Thorn, making it act more similar to its in-game behavior
-Added Telesto (I hope I don't regret this...)
-Added Lament's rev-up and health on damage perks
-Vex Mythoclast now becomes bright red when in its alternate firing mode
-Resprited Golden Gun, Sunshot, and Relic Shard's world sprite
-Changed The Last Word's firing sound and added a unique sound effect for Gjallarhorn
-Fixed a bug where the Eater of Worlds would drop an Exotic Cipher for every segment killed
-Removed Outbreak Perfected's knockback and caused it to now summon nanites on repeated hits as well as on crit death
-Set the base crit chance of all scout rifles to 2%
-Added Scathelocke, Drang, Haunted Earth, Two-Tailed Fox, and Nemesis Star
-Optimized NPC spawn checking
-Significantly decreased the explosion size of Salvager's Salvo's grenades and halved the maximum time before they automatically explode
-Trinary System's charge-up sound effect and all of Divinity's sound effects now obey the "Sound" volume set in Settings, and can no longer be heard from extreme distances
-Trinary System and Bottom Dollar are now affected by critical strike chance-affecting modifiers and accessories
+Xur now appears every Friday if the world is in Hardmode
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
