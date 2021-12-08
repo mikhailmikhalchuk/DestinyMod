@@ -29,5 +29,9 @@ Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
 Xur now appears every Friday if the world is in Hardmode
+Gave all modded rocket launchers the generic rocket launcher sound
+Monte Carlo now has its own sound effect
+Resprited the Hakke Scout Rifle and Hakke Sidearm
+Hakke weapons' bullets and Two-Tailed Fox's rockets now give off light
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

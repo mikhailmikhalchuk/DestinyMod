@@ -16,8 +16,8 @@ namespace TheDestinyMod.Items.Pets
 		public override void SetDefaults() {
 			item.damage = 0;
 			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.width = 32;
-			item.height = 32;
+			item.width = 40;
+			item.height = 40;
 			item.useAnimation = 20;
 			item.useTime = 20;
 			item.rare = ItemRarityID.LightRed;

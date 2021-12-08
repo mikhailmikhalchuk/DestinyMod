@@ -22,7 +22,11 @@ namespace TheDestinyMod.Projectiles.Ranged
 			projectile.penetrate = 1;
 		}
 
-		public override void Kill(int timeLeft) {
+        public override Color? GetAlpha(Color lightColor) {
+			return new Color(lightColor.R, lightColor.G * 0.1f, lightColor.B * 0.8f, lightColor.A);
+		}
+
+        public override void Kill(int timeLeft) {
 			Main.PlaySound(SoundID.Item14, projectile.position);
 			projectile.position = projectile.Center;
 			projectile.width = 22;

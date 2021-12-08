@@ -21,8 +21,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		public override void SetDefaults() {
 			item.damage = 25;
 			item.ranged = true; 
-			item.width = 100;
-			item.height = 40;
+			item.width = 64;
+			item.height = 26;
 			item.useTime = 19;
 			item.useAnimation = 19;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -31,11 +31,10 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.crit = 2;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Blue;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Hakke3");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HakkeLongRifle");
 			item.shoot = 10;
 			item.shootSpeed = 300f;
 			item.useAmmo = AmmoID.Bullet;
-			item.scale = .85f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
@@ -49,11 +48,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			}
             return false;
 		}
-
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.85f;
-            return true;
-        }
 
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-10, 0);

@@ -20,8 +20,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		public override void SetDefaults() {
 			item.damage = 16;
 			item.ranged = true;
-			item.width = 60;
-			item.height = 30;
+			item.width = 34;
+			item.height = 22;
 			item.useTime = 10;
 			item.useAnimation = 10;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -29,11 +29,10 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.knockBack = 4;
 			item.value = Item.buyPrice(0, 1, 0, 0);
 			item.rare = ItemRarityID.Blue;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Hakke4");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/HakkeSidearm");
 			item.shoot = 10;
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Bullet;
-			item.scale = .80f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
@@ -41,17 +40,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0)) {
 				position += muzzleOffset;
 			}
-			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, ModContent.ProjectileType<HakkeBullet>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(position.X, position.Y - 5, speedX, speedY, ModContent.ProjectileType<HakkeBullet>(), damage, knockBack, player.whoAmI);
 			if (Main.rand.NextBool(10) && !player.GetModPlayer<DestinyPlayer>().hakkeCraftsmanship) {
 				player.AddBuff(ModContent.BuffType<HakkeBuff>(), 90);
 			}
             return false;
 		}
-
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.8f;
-            return true;
-        }
 
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(5, 2);

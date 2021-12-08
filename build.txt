@@ -1,7 +1,7 @@
 displayName = Destiny
 author = MikhailMCraft & Co.
 version = 0.0.8.5
-buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*
+buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*, Properties\*
 weakReferences = StructureHelper@1.1.1
 hideCode = true
 hideResources = true

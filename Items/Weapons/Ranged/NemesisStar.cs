@@ -22,7 +22,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.width = 76;
 			item.height = 34;
 			item.useTime = 9;
-			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/MonteCarlo");
+			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/NemesisStar");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 20f;
 			item.useAnimation = 9;

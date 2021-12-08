@@ -38,6 +38,10 @@ namespace TheDestinyMod.Projectiles.Ranged
 			}
 		}
 
+		public override Color? GetAlpha(Color lightColor) {
+			return new Color(lightColor.R, lightColor.G * 0.5f, lightColor.B * 0.1f, lightColor.A);
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
 			projectile.Kill();

@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
+using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
 
 namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
 {
@@ -36,7 +38,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
                 Main.NewText("The Templar prepares the Ritual of Negation");
             }
             if (Main.netMode != NetmodeID.Server && !Filters.Scene["TheDestinyMod:Shockwave"].IsActive() && counter > 900) {
-                Main.NewText("RITUAL OF NEGATION!", new Microsoft.Xna.Framework.Color(255, 255, 0));
+                Main.NewText("RITUAL OF NEGATION!", new Color(255, 255, 0));
                 Filters.Scene.Activate("TheDestinyMod:Shockwave", npc.Center).GetShader().UseColor(1, 7, 15).UseTargetPosition(npc.Center);
             }
             if (Main.netMode != NetmodeID.Server && Filters.Scene["TheDestinyMod:Shockwave"].IsActive()) {
@@ -46,7 +48,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
                     Filters.Scene["TheDestinyMod:Shockwave"].Deactivate();
                     foreach (Player player in Main.player) {
                         if (player.active && player.GetModPlayer<DestinyPlayer>().markedForNegation) {
-                            Terraria.DataStructures.PlayerDeathReason deathReason = new Terraria.DataStructures.PlayerDeathReason
+                            PlayerDeathReason deathReason = new PlayerDeathReason
                             {
                                 SourceCustomReason = player.name + " was negated.",
                                 SourceNPCIndex = npc.type
