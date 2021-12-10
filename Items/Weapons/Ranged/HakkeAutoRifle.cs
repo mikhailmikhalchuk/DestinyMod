@@ -21,8 +21,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		public override void SetDefaults() {
 			item.damage = 7;
 			item.ranged = true;
-			item.width = 70;
-			item.height = 30;
+			item.width = 66;
+			item.height = 24;
 			item.useTime = 9;
 			item.useAnimation = 9;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -35,7 +35,6 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shoot = 10;
 			item.shootSpeed = 30f;
 			item.useAmmo = AmmoID.Bullet;
-			item.scale = .85f;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 10f;
@@ -52,13 +51,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.85f;
-            return true;
-        }
-
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(0, 0);
+			return new Vector2(-10, -2);
 		}
 
 		public override void AddRecipes() {

@@ -21,8 +21,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		public override void SetDefaults() {
 			item.damage = 50;
 			item.ranged = true;
-			item.width = 100;
-			item.height = 40;
+			item.width = 96;
+			item.height = 32;
 			item.useTime = 28;
 			item.useAnimation = 28;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -35,13 +35,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shoot = 10;
 			item.shootSpeed = 300f;
 			item.useAmmo = AmmoID.Bullet;
-			item.scale = .85f;
 		}
-
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.85f;
-            return true;
-        }
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 10f;
