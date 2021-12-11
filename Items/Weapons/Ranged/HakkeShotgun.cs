@@ -47,7 +47,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20));
 				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<HakkeBullet>(), damage, knockBack, player.whoAmI);
 			}
-			if (Main.rand.NextBool(10) && !player.GetModPlayer<DestinyPlayer>().hakkeCraftsmanship) {
+			if (Main.rand.NextBool(10) && !player.DestinyPlayer().hakkeCraftsmanship) {
 				player.AddBuff(ModContent.BuffType<HakkeBuff>(), 90);
 			}
 			return false;

@@ -23,7 +23,7 @@ namespace TheDestinyMod.Items.Armor
 		}
 
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<DestinyPlayer>().exoticEquipped = true;
+			player.DestinyPlayer().exoticEquipped = true;
 			player.accRunSpeed = 6f;
 			player.moveSpeed += 0.05f;
 		}

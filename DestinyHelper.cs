@@ -4,6 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TheDestinyMod.Items;
+using TheDestinyMod.NPCs;
+using TheDestinyMod.Projectiles;
 
 namespace TheDestinyMod
 {
@@ -88,7 +91,7 @@ namespace TheDestinyMod
         /// <param name="classType">The <see cref="DestinyClassType"/> of the armor.</param>
         /// <returns>A <see cref="TooltipLine"/> containing the data in which to add to the tooltip; otherwise, an empty <see cref="TooltipLine"/>.</returns>
         public static TooltipLine GetRestrictedClassTooltip(DestinyClassType classType) {
-            if (Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType != classType && DestinyClientConfig.Instance.RestrictClassItems) {
+            if (Main.LocalPlayer.DestinyPlayer().classType != classType && DestinyClientConfig.Instance.RestrictClassItems) {
                 return new TooltipLine(TheDestinyMod.Instance, "HasClass", $"You must be a {classType} to equip this")
                 {
                     overrideColor = new Color(255, 0, 0)
@@ -96,6 +99,14 @@ namespace TheDestinyMod
             }
             return new TooltipLine(TheDestinyMod.Instance, "", "");
         }
+
+        public static DestinyGlobalItem DestinyItem(this Item item) => item.GetGlobalItem<DestinyGlobalItem>();
+
+        public static DestinyGlobalNPC DestinyNPC(this NPC npc) => npc.GetGlobalNPC<DestinyGlobalNPC>();
+
+        public static DestinyGlobalProjectile DestinyProjectile(this Projectile projectile) => projectile.GetGlobalProjectile<DestinyGlobalProjectile>();
+
+        public static DestinyPlayer DestinyPlayer(this Player player) => player.GetModPlayer<DestinyPlayer>();
 
         /// <summary>
         /// Fires a fusion rifle bullet, causing the current weapon to act like a fusion rifle. Should be called within <c>ModItem.Shoot()</c>

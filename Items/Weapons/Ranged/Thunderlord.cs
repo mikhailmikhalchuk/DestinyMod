@@ -48,7 +48,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override float UseTimeMultiplier(Player player) {
-            return player.GetModPlayer<DestinyPlayer>().thunderlordReduceUse;
+            return player.DestinyPlayer().thunderlordReduceUse;
         }
 
         public override Vector2? HoldoutOffset() {

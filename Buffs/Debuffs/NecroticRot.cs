@@ -15,11 +15,11 @@ namespace TheDestinyMod.Buffs.Debuffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<DestinyPlayer>().necroticRot = true;
+            player.DestinyPlayer().necroticRot = true;
         }
 
         public override void Update(NPC npc, ref int buffIndex) {
-            npc.GetGlobalNPC<NPCs.DestinyGlobalNPC>().necroticRot = true;
+            npc.DestinyNPC().necroticRot = true;
         }
     }
 }

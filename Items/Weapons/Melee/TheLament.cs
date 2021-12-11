@@ -36,20 +36,20 @@ namespace TheDestinyMod.Items.Weapons.Melee
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
-            if (player.GetModPlayer<DestinyPlayer>().lamentRevUp > 90) {
+            if (player.DestinyPlayer().lamentRevUp > 90) {
                 add += 0.1f;
             }
         }
 
         public override void MeleeEffects(Player player, Rectangle hitbox) {
             item.color = default;
-            if (player.GetModPlayer<DestinyPlayer>().lamentRevUp > 90) {
+            if (player.DestinyPlayer().lamentRevUp > 90) {
                 item.color = Color.LightPink;
             }
         }
 
         public override bool AltFunctionUse(Player player) {
-            return player.GetModPlayer<DestinyPlayer>().lamentRevUp <= 90;
+            return player.DestinyPlayer().lamentRevUp <= 90;
         }
 
         public override bool CanUseItem(Player player) {

@@ -54,7 +54,7 @@ namespace TheDestinyMod.Tiles
 		}
 
 		public void FireRocket() {
-			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = Main.LocalPlayer.DestinyPlayer();
 			if (dPlayer.classType == DestinyClassType.Warlock) {
 				Projectile.NewProjectile(Main.LocalPlayer.position, new Vector2(0, -Main.rand.Next(5, 8)), ProjectileID.RocketFireworkYellow, 0, 0, Main.LocalPlayer.whoAmI);
 			}
@@ -87,7 +87,7 @@ namespace TheDestinyMod.Tiles
 				num99 -= 2;
 			}*/
 			toDeposit = 0;
-			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = Main.LocalPlayer.DestinyPlayer();
 			if (!DestinyClientConfig.Instance.GuardianGamesConfig) {
 				Main.NewText("You must opt-in to the Guardian Games from the config menu.", new Color(255, 0, 0));
 				return true;

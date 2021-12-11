@@ -43,7 +43,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 		}
 
 		public override bool CanUseItem(Player player) {
-			DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = player.DestinyPlayer();
 			if (player.altFunctionUse == 2 && dPlayer.borealisCooldown == 0) {
 				for (int i = 0; i < Main.maxInventory; i++) {
 					if (player.inventory[i] == item) {

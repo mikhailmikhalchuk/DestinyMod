@@ -113,7 +113,7 @@ namespace TheDestinyMod.UI
                     }
                     return new Color();
 				}
-				DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+				DestinyPlayer dPlayer = Main.LocalPlayer.DestinyPlayer();
 				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, $"Decrypt {_vanillaItemSlot.Item.Name}", new Vector2(slotX + 50, slotY), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One);
 				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, "Potential drops:", new Vector2(slotX + 100, slotY + 30), new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor), 0f, Vector2.Zero, Vector2.One);
 				TextSnippet extSnip = null;

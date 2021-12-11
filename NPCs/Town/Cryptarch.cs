@@ -96,7 +96,7 @@ namespace TheDestinyMod.NPCs.Town
         }
 
         public override void SetupShop(Chest shop, ref int nextSlot) {
-			DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
 			if (!player.boughtCommon) {
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<CommonEngram>());
             	shop.item[nextSlot].shopCustomPrice = Item.buyPrice(gold: 5);

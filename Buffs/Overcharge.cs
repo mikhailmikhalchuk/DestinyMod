@@ -14,15 +14,15 @@ namespace TheDestinyMod.Buffs
 		}
 
         public override void Update(Player player, ref int buffIndex) {
-			player.GetModPlayer<DestinyPlayer>().overcharged = true;
+			player.DestinyPlayer().overcharged = true;
 			player.buffTime[buffIndex] = 18000;
-			if (player.GetModPlayer<DestinyPlayer>().overchargeStacks <= 0) {
+			if (player.DestinyPlayer().overchargeStacks <= 0) {
 				player.ClearBuff(Type);
 			}
 		}
 
         public override void ModifyBuffTip(ref string tip, ref int rare) {
-			tip += $" ({Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overchargeStacks})";
+			tip += $" ({Main.LocalPlayer.DestinyPlayer().overchargeStacks})";
         }
     }
 }

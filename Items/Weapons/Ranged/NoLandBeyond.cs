@@ -35,12 +35,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			position.Y -= 2;
-			player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 20;
+			player.DestinyPlayer().destinyWeaponDelay = 20;
 			return true;
         }
 
 		public override bool CanUseItem(Player player) {
-			return player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay <= 0;
+			return player.DestinyPlayer().destinyWeaponDelay <= 0;
 		}
 
 		public override void AddRecipes() {

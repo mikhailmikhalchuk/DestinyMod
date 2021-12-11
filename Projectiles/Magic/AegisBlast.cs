@@ -28,7 +28,7 @@ namespace TheDestinyMod.Projectiles.Magic
 
         public override bool PreAI() {
             Player player = Main.player[projectile.owner];
-            DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer dPlayer = player.DestinyPlayer();
             if (dPlayer.aegisCharge < 30 && dPlayer.aegisCharge >= 1) {
                 projectile.hide = true;
                 projectile.tileCollide = false;
@@ -65,7 +65,7 @@ namespace TheDestinyMod.Projectiles.Magic
         }
 
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-            if (Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().aegisCharge < 30 && Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().aegisCharge >= 1) {
+            if (Main.player[projectile.owner].DestinyPlayer().aegisCharge < 30 && Main.player[projectile.owner].DestinyPlayer().aegisCharge >= 1) {
                 hitbox = Rectangle.Empty;
             }
         }

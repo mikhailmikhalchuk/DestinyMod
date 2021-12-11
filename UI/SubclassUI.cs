@@ -352,7 +352,7 @@ namespace TheDestinyMod.UI
 
 		private void ApplyAbilityTo(int num) {
 			Main.PlaySound(SoundID.Unlock);
-			DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+			DestinyClassType playerClass = Main.LocalPlayer.DestinyPlayer().classType;
 			Texture2D textureToApply = ModContent.GetTexture("Terraria/UI/CharCreation/CategoryPanel");
 			if (_lastHoveredAbility == 1) { //CROSS-CHECK WITH MOUSEINFO DRAWS FOR CORRECT TEXTURES
 				subclass.RemoveChild(ability1);
@@ -724,7 +724,7 @@ namespace TheDestinyMod.UI
 				mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
 				string abilityName = string.Empty;
 				string abilityDesc = string.Empty;
-				DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+				DestinyClassType playerClass = Main.LocalPlayer.DestinyPlayer().classType;
 				switch (_lastHoveredAbility) {
 					case 1 when playerClass == DestinyClassType.Titan:
 						abilityName = "Small Barrier";
@@ -786,7 +786,7 @@ namespace TheDestinyMod.UI
 				mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
 				string abilityName = string.Empty;
 				string abilityDesc = string.Empty;
-				DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+				DestinyClassType playerClass = Main.LocalPlayer.DestinyPlayer().classType;
 				switch (_lastHoveredAbility) {
 					case 1 when playerClass == DestinyClassType.Titan:
 						abilityName = "Big Barrier";
@@ -836,7 +836,7 @@ namespace TheDestinyMod.UI
 				mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
 				string abilityName = string.Empty;
 				string abilityDesc = string.Empty;
-				DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+				DestinyClassType playerClass = Main.LocalPlayer.DestinyPlayer().classType;
 				switch (_lastHoveredAbility) {
 					case 2 when playerClass == DestinyClassType.Titan:
 						abilityName = "something Jump titan 3";
@@ -915,7 +915,7 @@ namespace TheDestinyMod.UI
 			mouseInfo.Top.Set(Main.MouseScreen.Y + 5, 0f);
 			string choiceName = string.Empty;
 			string choiceDesc = string.Empty;
-			DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+			DestinyClassType playerClass = Main.LocalPlayer.DestinyPlayer().classType;
 			if (ability == 1) {
 				switch (choiceToSwitch) {
 					case 1 when playerClass == DestinyClassType.Titan:
@@ -1082,7 +1082,7 @@ namespace TheDestinyMod.UI
 			}
 
             string subclassName = "UNKNOWN";
-			DestinyClassType playerClass = Main.LocalPlayer.GetModPlayer<DestinyPlayer>().classType;
+			DestinyClassType playerClass = Main.LocalPlayer.DestinyPlayer().classType;
 			switch (playerClass) {
 				case DestinyClassType.Warlock when element == DestinyDamageType.Arc:
 					subclassName = "STORMCALLER";

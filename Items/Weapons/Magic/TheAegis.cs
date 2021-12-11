@@ -38,7 +38,7 @@ namespace TheDestinyMod.Items.Weapons.Magic
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = player.DestinyPlayer();
 			player.itemLocation = player.Center;
 			if (player.altFunctionUse == 2 && !player.mount.Active) {
 				Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<Projectiles.Magic.AegisBlast>(), 20, 0, player.whoAmI);

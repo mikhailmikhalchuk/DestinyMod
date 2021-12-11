@@ -45,7 +45,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
 			Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, ModContent.ProjectileType<HakkeBullet>(), damage, knockBack, player.whoAmI);
-			if (Main.rand.NextBool(10) && !player.GetModPlayer<DestinyPlayer>().hakkeCraftsmanship) {
+			if (Main.rand.NextBool(10) && !player.DestinyPlayer().hakkeCraftsmanship) {
 				player.AddBuff(ModContent.BuffType<HakkeBuff>(), 90);
 			}
 			return false;

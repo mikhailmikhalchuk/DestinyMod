@@ -25,7 +25,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = Main.LocalPlayer.DestinyPlayer();
 			timesShot++;
 			if (timesShot >= 6) {
 				timesShot = 0;

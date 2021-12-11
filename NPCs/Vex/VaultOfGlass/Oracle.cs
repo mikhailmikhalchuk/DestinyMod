@@ -48,7 +48,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
             else {
                 Main.NewText("MARKED BY AN ORACLE!");
                 foreach (Player player in Main.player) {
-                    if (player.active && !player.GetModPlayer<DestinyPlayer>().markedForNegation) {
+                    if (player.active && !player.DestinyPlayer().markedForNegation) {
                         player.AddBuff(ModContent.BuffType<Buffs.Debuffs.MarkedForNegation>(), 1);
                     }
                 }

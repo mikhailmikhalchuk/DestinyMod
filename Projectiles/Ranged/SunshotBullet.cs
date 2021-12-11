@@ -21,7 +21,7 @@ namespace TheDestinyMod.Projectiles.Ranged
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.GetGlobalNPC<NPCs.DestinyGlobalNPC>().highlightedTime = 180;
+            target.DestinyNPC().highlightedTime = 180;
         }
 
         public override Color? GetAlpha(Color lightColor) {

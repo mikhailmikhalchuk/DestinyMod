@@ -47,7 +47,7 @@ namespace TheDestinyMod
         internal bool wasJustCreating;
 
         public TheDestinyMod() => Instance = this;
-
+        
         public override void Load() => Autoloading.ImplementIAutoloadable(Code);
 
         public override void PostSetupContent()

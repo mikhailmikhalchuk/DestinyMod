@@ -9,7 +9,7 @@ namespace TheDestinyMod.Items.Armor
         public int armorClassType;
 
         public override bool CanEquipAccessory(Player player, int slot) {
-            if (player.GetModPlayer<DestinyPlayer>().exoticEquipped) {
+            if (player.DestinyPlayer().exoticEquipped) {
                 return false;
             }
             return base.CanEquipAccessory(player, slot);

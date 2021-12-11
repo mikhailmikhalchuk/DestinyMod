@@ -47,7 +47,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
                 if (progress >= 2.5f) {
                     Filters.Scene["TheDestinyMod:Shockwave"].Deactivate();
                     foreach (Player player in Main.player) {
-                        if (player.active && player.GetModPlayer<DestinyPlayer>().markedForNegation) {
+                        if (player.active && player.DestinyPlayer().markedForNegation) {
                             PlayerDeathReason deathReason = new PlayerDeathReason
                             {
                                 SourceCustomReason = player.name + " was negated.",

@@ -32,7 +32,7 @@ namespace TheDestinyMod.Projectiles.Minions
 
         public override void AI() {
             Player player = Main.player[projectile.owner];
-			DestinyPlayer modPlayer = player.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer modPlayer = player.DestinyPlayer();
 			float spacing = (float)projectile.width;
 			for (int k = 0; k < 1000; k++) {
 				Projectile otherProj = Main.projectile[k];

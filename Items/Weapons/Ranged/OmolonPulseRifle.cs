@@ -39,13 +39,13 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
-			player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 14;
+			player.DestinyPlayer().destinyWeaponDelay = 14;
 			Projectile.NewProjectile(position.X, position.Y - 2, speedX, speedY, type, damage, knockBack, player.whoAmI);
             return false;
 		}
 
 		public override bool CanUseItem(Player player) {
-			return player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay <= 0;
+			return player.DestinyPlayer().destinyWeaponDelay <= 0;
 		}
 
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

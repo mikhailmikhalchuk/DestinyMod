@@ -21,7 +21,7 @@ namespace TheDestinyMod.Items
 		}
 
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = Main.LocalPlayer.DestinyPlayer();
 			Texture2D texture = mod.GetTexture("Items/Laurel");
 			if (dPlayer.classType == DestinyClassType.Warlock) {
 				texture = mod.GetTexture("Items/WarlockLaurel");
@@ -35,7 +35,7 @@ namespace TheDestinyMod.Items
 		}
 
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			DestinyPlayer dPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = Main.LocalPlayer.DestinyPlayer();
 			Texture2D texture = mod.GetTexture("Items/Laurel");
 			if (dPlayer.classType == DestinyClassType.Warlock) {
 				texture = mod.GetTexture("Items/WarlockLaurel");

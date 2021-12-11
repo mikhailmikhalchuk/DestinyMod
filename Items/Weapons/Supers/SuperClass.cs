@@ -28,7 +28,7 @@ namespace TheDestinyMod.Items.Weapons.Supers
         }
 
         public override bool CanUseItem(Player player) {
-            var modPlayer = player.GetModPlayer<DestinyPlayer>();
+            var modPlayer = player.DestinyPlayer();
             return modPlayer.superActiveTime == 0;
         }
 
@@ -37,16 +37,16 @@ namespace TheDestinyMod.Items.Weapons.Supers
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
-            add += player.GetModPlayer<DestinyPlayer>().superDamageAdd;
-            mult *= player.GetModPlayer<DestinyPlayer>().superDamageMult;
+            add += player.DestinyPlayer().superDamageAdd;
+            mult *= player.DestinyPlayer().superDamageMult;
         }
 
         public override void GetWeaponKnockback(Player player, ref float knockback) {
-            knockback += player.GetModPlayer<DestinyPlayer>().superKnockback;
+            knockback += player.DestinyPlayer().superKnockback;
         }
 
         public override void GetWeaponCrit(Player player, ref int crit) {
-            crit += player.GetModPlayer<DestinyPlayer>().superCrit;
+            crit += player.DestinyPlayer().superCrit;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips) {

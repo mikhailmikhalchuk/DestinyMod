@@ -13,7 +13,7 @@ namespace TheDestinyMod.Buffs.Minions
 		}
 
 		public override void Update(Player player, ref int buffIndex) {
-			DestinyPlayer modPlayer = player.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer modPlayer = player.DestinyPlayer();
 			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Minions.TinyServitor>()] > 0) {
 				modPlayer.servitorMinion = true;
 			}

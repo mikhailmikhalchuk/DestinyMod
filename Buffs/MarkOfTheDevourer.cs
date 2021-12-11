@@ -14,12 +14,12 @@ namespace TheDestinyMod.Buffs
 
         public override void Update(Player player, ref int buffIndex) {
             if (player.buffTime[buffIndex] <= 1) {
-                player.GetModPlayer<DestinyPlayer>().necroticDamageMult = 0f;
+                player.DestinyPlayer().necroticDamageMult = 0f;
             }
         }
 
         public override void ModifyBuffTip(ref string tip, ref int rare) {
-            tip += $"{Main.LocalPlayer.GetModPlayer<DestinyPlayer>().necroticDamageMult * 100}%";
+            tip += $"{Main.LocalPlayer.DestinyPlayer().necroticDamageMult * 100}%";
         }
     }
 }
