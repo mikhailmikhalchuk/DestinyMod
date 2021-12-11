@@ -28,7 +28,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (!target.friendly && target.damage > 0) {
-                DestinyGlobalNPC dNPC = target.GetGlobalNPC<DestinyGlobalNPC>();
+                DestinyGlobalNPC dNPC = target.DestinyNPC();
                 dNPC.outbreakHits++;
                 dNPC.outbreakCounter = 60;
                 if ((crit && target.life <= 0) || dNPC.outbreakHits >= 12) {

@@ -97,7 +97,7 @@ namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
             else if (alreadySummoned && counter > 600 && alreadyCalled.Count == 0 && timesShown == 2) { //debuff players if they failed
                 Main.NewText("MARKED BY AN ORACLE!");
                 foreach (Player player in Main.player) {
-                    if (player.active && !player.GetModPlayer<DestinyPlayer>().markedForNegation) {
+                    if (player.active && !player.DestinyPlayer().markedForNegation) {
                         player.AddBuff(ModContent.BuffType<Buffs.Debuffs.MarkedForNegation>(), 1);
                     }
                 }

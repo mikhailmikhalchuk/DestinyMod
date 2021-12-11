@@ -33,15 +33,15 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			if (player.GetModPlayer<DestinyPlayer>().nemesisPerk < 6) {
-				player.GetModPlayer<DestinyPlayer>().nemesisPerk++;
+			if (player.DestinyPlayer().nemesisPerk < 6) {
+				player.DestinyPlayer().nemesisPerk++;
 			}
 			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, type, damage, knockBack, player.whoAmI);
 			return false;
 		}
 
         public override float UseTimeMultiplier(Player player) {
-			return player.GetModPlayer<DestinyPlayer>().nemesisPerk < 6 ? 2f : 1f;
+			return player.DestinyPlayer().nemesisPerk < 6 ? 2f : 1f;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

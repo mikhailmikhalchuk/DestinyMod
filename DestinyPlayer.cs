@@ -316,7 +316,7 @@ namespace TheDestinyMod
 			}
 			ApplyDebuff(conducted, 4);
 			if (necroticApplier != null) {
-				ApplyDebuff(necroticRot, 40 + (int)(40 * necroticApplier.GetModPlayer<DestinyPlayer>().necroticDamageMult));
+				ApplyDebuff(necroticRot, 40 + (int)(40 * necroticApplier.DestinyPlayer().necroticDamageMult));
 			}
 		}
 
@@ -522,7 +522,7 @@ namespace TheDestinyMod
 			Action<PlayerDrawInfo> layerTarget = DrawAegis;
 			PlayerLayer layer = new PlayerLayer("TheDestinyMod", "Aegis Shield", layerTarget);
 			layers.Insert(layers.IndexOf(layers.FirstOrDefault(n => n.Name == "Arms")) + 1, layer);
-			if (!Main.gameMenu && (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && Main.LocalPlayer.channel || Main.LocalPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0)) {
+			if (!Main.gameMenu && (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && Main.LocalPlayer.channel || Main.LocalPlayer.DestinyPlayer().aegisCharge > 0)) {
 				layers.RemoveAt(layers.IndexOf(layers.FirstOrDefault(n => n.Name == "ShieldAcc")));
 			}
 		}
@@ -530,14 +530,14 @@ namespace TheDestinyMod
 		private void DrawAegis(PlayerDrawInfo info) {
 			Microsoft.Xna.Framework.Graphics.Texture2D tex = ModContent.GetTexture("TheDestinyMod/Items/Weapons/Magic/TheAegis_Shield");
 
-			if (info.drawPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && info.drawPlayer.channel || info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0) {
+			if (info.drawPlayer.HeldItem.type == ModContent.ItemType<Items.Weapons.Magic.TheAegis>() && info.drawPlayer.channel || info.drawPlayer.DestinyPlayer().aegisCharge > 0) {
 				Main.playerDrawData.Add(
 					new DrawData(
 						tex,
 						info.itemLocation - Main.screenPosition + new Vector2(info.drawPlayer.direction == 1 ? 4 : -4, 20),
 						tex.Frame(),
 						Lighting.GetColor((int)info.drawPlayer.Center.X / 16, (int)info.drawPlayer.Center.Y / 16),
-						info.drawPlayer.GetModPlayer<DestinyPlayer>().aegisCharge > 0 ? 0f : info.drawPlayer.headRotation - (info.drawPlayer.direction == 1 ? 0.1f : -0.1f),
+						info.drawPlayer.DestinyPlayer().aegisCharge > 0 ? 0f : info.drawPlayer.headRotation - (info.drawPlayer.direction == 1 ? 0.1f : -0.1f),
 						new Vector2(info.drawPlayer.direction == 1 ? 0 : tex.Frame().Width, tex.Frame().Height),
 						info.drawPlayer.HeldItem.scale * 0.8f,
 						info.spriteEffects,

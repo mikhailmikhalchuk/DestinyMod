@@ -36,12 +36,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Projectile.NewProjectile(position.X, position.Y - 4, speedX, speedY, ModContent.ProjectileType<OutbreakBullet>(), damage, knockBack, player.whoAmI);
-			player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay = 5;
+			player.DestinyPlayer().destinyWeaponDelay = 5;
 			return false;
         }
 
         public override bool CanUseItem(Player player) {
-            return player.GetModPlayer<DestinyPlayer>().destinyWeaponDelay <= 0;
+            return player.DestinyPlayer().destinyWeaponDelay <= 0;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

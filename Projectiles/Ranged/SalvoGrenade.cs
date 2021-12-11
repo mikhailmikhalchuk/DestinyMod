@@ -47,7 +47,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 
         public override void AI() {
 			Main.player[projectile.owner].itemAnimation = Main.player[projectile.owner].itemTime = 10;
-			if (projectile.owner == Main.myPlayer && projectile.timeLeft <= 3 || !Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().mouseLeftDown && projectile.timeLeft <= 370) {
+			if (projectile.owner == Main.myPlayer && projectile.timeLeft <= 3 || !Main.player[projectile.owner].DestinyPlayer().mouseLeftDown && projectile.timeLeft <= 370) {
 				projectile.tileCollide = false;
 				projectile.alpha = 255;
 				projectile.position = projectile.Center;

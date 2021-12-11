@@ -13,6 +13,8 @@ namespace TheDestinyMod.Items
 {
     public class DestinyGlobalItem : GlobalItem
     {
+        public DestinyRarityType WeaponRarity;
+
         private readonly List<int> raidProhibitedItems = new List<int>()
         {
             ItemID.RodofDiscord,
@@ -50,7 +52,7 @@ namespace TheDestinyMod.Items
         }
 
         public override bool CanUseItem(Item item, Player player) {
-            DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer dPlayer = player.DestinyPlayer();
             if (dPlayer.stasisFrozen || dPlayer.detained || dPlayer.isThundercrash) {
                 return false;
             }
@@ -66,5 +68,14 @@ namespace TheDestinyMod.Items
             }
             return null;
         }
+    }
+
+    public enum DestinyRarityType : byte
+    {
+        Common,
+        Uncommon,
+        Rare,
+        Legendary,
+        Exotic
     }
 }

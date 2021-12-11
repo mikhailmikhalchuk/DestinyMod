@@ -20,8 +20,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.ranged = true;
 			item.width = 72;
 			item.height = 34;
-			item.useTime = 14;
-			item.useAnimation = 14;
+			item.useTime = 20;
+			item.useAnimation = 20;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 4;

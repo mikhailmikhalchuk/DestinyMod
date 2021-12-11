@@ -15,7 +15,7 @@ namespace TheDestinyMod.Buffs.Debuffs
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<DestinyPlayer>().detained = true;
+            player.DestinyPlayer().detained = true;
             player.velocity.X = 0;
             player.velocity.Y = 0.000001f;
             player.gravity = 0f;

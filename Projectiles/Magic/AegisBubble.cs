@@ -28,7 +28,7 @@ namespace TheDestinyMod.Projectiles.Magic
 
         public override void AI() {
             Player player = Main.player[projectile.owner];
-            if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true) && player.whoAmI == Main.myPlayer || player.GetModPlayer<DestinyPlayer>().aegisCharge > 0 && player.whoAmI == Main.myPlayer) {
+            if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true) && player.whoAmI == Main.myPlayer || player.DestinyPlayer().aegisCharge > 0 && player.whoAmI == Main.myPlayer) {
                 projectile.Kill();
             }
             player.itemTime = player.itemAnimation = 3;

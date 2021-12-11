@@ -51,8 +51,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			if (player.GetModPlayer<DestinyPlayer>().businessReduceUse < 1.3f) {
-				player.GetModPlayer<DestinyPlayer>().businessReduceUse += 0.05f;
+			if (player.DestinyPlayer().businessReduceUse < 1.3f) {
+				player.DestinyPlayer().businessReduceUse += 0.05f;
 			}
             Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
 			speedX = perturbedSpeed.X;
@@ -62,7 +62,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
         public override float UseTimeMultiplier(Player player) {
-            return player.GetModPlayer<DestinyPlayer>().businessReduceUse;
+            return player.DestinyPlayer().businessReduceUse;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {

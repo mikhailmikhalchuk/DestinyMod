@@ -41,7 +41,7 @@ namespace TheDestinyMod.NPCs
         }
 
         public override void NPCLoot(NPC npc) {
-            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
             if (npc.TypeName == "Zombie") {
                 if (Main.rand.NextBool(10)) {
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GunsmithMaterials>());
@@ -174,7 +174,7 @@ namespace TheDestinyMod.NPCs
             }
             ApplyDebuff(conducted, 4);
             if (necroticApplier != null) {
-                ApplyDebuff(necroticRot, 40 + (int)(40 * necroticApplier.GetModPlayer<DestinyPlayer>().necroticDamageMult));
+                ApplyDebuff(necroticRot, 40 + (int)(40 * necroticApplier.DestinyPlayer().necroticDamageMult));
             }
         }
     }

@@ -25,7 +25,7 @@ namespace TheDestinyMod.Items.Armor
 
 		public override void UpdateEquip(Player player) {
 			player.accRunSpeed = 5f;
-			DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+			DestinyPlayer dPlayer = player.DestinyPlayer();
 			if ((player.velocity.X > 0f - player.accRunSpeed && player.velocity.X < 0f - ((player.accRunSpeed + player.maxRunSpeed) / 2f) || player.velocity.X > ((player.accRunSpeed + player.maxRunSpeed) / 2f) && player.velocity.X < player.accRunSpeed) && player.velocity.Y == 0f && !player.mount.Active && player.dashDelay >= 0) {
 				dPlayer.duneRunTime++;
 				duneKill = false;

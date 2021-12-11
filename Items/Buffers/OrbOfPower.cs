@@ -26,12 +26,12 @@ namespace TheDestinyMod.Items.Buffers
         public override bool ItemSpace(Player player) => true;
 
         public override bool CanPickup(Player player) {
-            DestinyPlayer dPlayer = player.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer dPlayer = player.DestinyPlayer();
             return dPlayer.superChargeCurrent < 100 && dPlayer.superActiveTime == 0 && player != OrbOwner;
         }
 
         public override bool OnPickup(Player player) {
-            var modPlayer = player.GetModPlayer<DestinyPlayer>();
+            var modPlayer = player.DestinyPlayer();
             modPlayer.superChargeCurrent += 4 + modPlayer.orbOfPowerAdd;
             Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/OrbOfPower"), player.Center);
             return false;

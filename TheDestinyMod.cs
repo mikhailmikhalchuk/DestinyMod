@@ -585,7 +585,7 @@ namespace TheDestinyMod
             spriteBatch.Draw(texture, new Vector2(vector4.X + 8f, vector4.Y), new Rectangle(8, 0, 8, texture.Height), Color.White, 0f, Vector2.Zero, new Vector2((num - 16f) / 8f, 1f), SpriteEffects.None, 0f);
             spriteBatch.Draw(texture, new Vector2(vector4.X + num - 8f, vector4.Y), new Rectangle(16, 0, 8, texture.Height), Color.White);
             string classType = "None";
-            switch (((Terraria.IO.PlayerFileData)self.GetType().GetField("_data", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(self)).Player.GetModPlayer<DestinyPlayer>().classType) {
+            switch (((Terraria.IO.PlayerFileData)self.GetType().GetField("_data", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(self)).Player.DestinyPlayer().classType) {
                 case DestinyClassType.Titan:
                     classType = "Titan";
                     break;
@@ -601,7 +601,7 @@ namespace TheDestinyMod
         }
 
         private void ItemSlot_RightClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_RightClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
-            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
             if (!Main.LocalPlayer.armor.IndexInRange(slot)) {
                 orig.Invoke(inv, context, slot);
                 return;
@@ -644,7 +644,7 @@ namespace TheDestinyMod
         }
 
         private void ItemSlot_LeftClick_ItemArray_int_int(On.Terraria.UI.ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
-            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
             if (Main.mouseItem.modItem is IClassArmor armor) {
                 if (armor.ArmorClassType() != player.classType && DestinyClientConfig.Instance.RestrictClassItems && context == 8) {
                     return;
@@ -655,7 +655,7 @@ namespace TheDestinyMod
 
         private Item ItemSlot_ArmorSwap(On.Terraria.UI.ItemSlot.orig_ArmorSwap orig, Item item, out bool success) {
             success = false;
-            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
             if (item.modItem is IClassArmor armor) {
                 if (armor.ArmorClassType() != player.classType && DestinyClientConfig.Instance.RestrictClassItems) {
                     return item;

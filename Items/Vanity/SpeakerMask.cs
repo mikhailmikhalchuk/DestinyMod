@@ -8,7 +8,8 @@ namespace TheDestinyMod.Items.Vanity
 	{
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Speaker's Mask");
-        }
+			Tooltip.SetDefault("\"Devotion, self sacrifice, death.\"");
+		}
 
         public override void SetDefaults() {
 			item.width = 18;

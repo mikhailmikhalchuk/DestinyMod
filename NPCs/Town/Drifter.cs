@@ -113,7 +113,7 @@ namespace TheDestinyMod.NPCs.Town
 		}
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop) {
-            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
 			string gender = Main.LocalPlayer.Male ? Language.GetTextValue("Mods.TheDestinyMod.Brother") : Language.GetTextValue("Mods.TheDestinyMod.Sister");
 			if (firstButton) {
 				if (Main.LocalPlayer.HasItem(ModContent.ItemType<MoteOfDark>())) {

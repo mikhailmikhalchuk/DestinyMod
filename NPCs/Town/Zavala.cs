@@ -125,7 +125,7 @@ namespace TheDestinyMod.NPCs.Town
 				shop = true;
             }
             else {
-                DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+                DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
 				if (player.zavalaBounty == 0) {
 					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaBounty1");
 					player.zavalaBounty = 1;

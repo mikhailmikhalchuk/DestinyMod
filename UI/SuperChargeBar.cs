@@ -44,7 +44,7 @@ namespace TheDestinyMod.UI
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			base.DrawSelf(spriteBatch);
 
-			var modPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+			var modPlayer = Main.LocalPlayer.DestinyPlayer();
 
 			float quotient = (float)modPlayer.superChargeCurrent / 100;
 			quotient = Utils.Clamp(quotient, 0f, 1f);
@@ -66,7 +66,7 @@ namespace TheDestinyMod.UI
 
 		public override void Update(GameTime gameTime) {
             if (DestinyClientConfig.Instance.SuperBarText) {
-                var modPlayer = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+                var modPlayer = Main.LocalPlayer.DestinyPlayer();
 
                 text.SetText($"Super: {modPlayer.superChargeCurrent} / {100}");
             }

@@ -23,7 +23,7 @@ namespace TheDestinyMod.Projectiles.Pets
 
 		public override void AI() {
 			Player player = Main.player[projectile.owner];
-            DestinyPlayer modPlayer = player.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer modPlayer = player.DestinyPlayer();
 			if (!player.active) {
 				projectile.active = false;
 				return;

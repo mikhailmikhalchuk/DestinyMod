@@ -54,7 +54,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
         }
 
 		public override bool CanUseItem(Player player) {
-			if (player.altFunctionUse == 2 && !alt && cooldown <= 0 && player.GetModPlayer<DestinyPlayer>().overcharged) {
+			if (player.altFunctionUse == 2 && !alt && cooldown <= 0 && player.DestinyPlayer().overcharged) {
 				alt = true;
                 item.autoReuse = false;
                 item.UseSound = null;
@@ -74,7 +74,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
         public override void UpdateInventory(Player player) {
-            if ((Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overchargeStacks <= 0 || !Main.LocalPlayer.GetModPlayer<DestinyPlayer>().overcharged) && alt) {
+            if ((Main.LocalPlayer.DestinyPlayer().overchargeStacks <= 0 || !Main.LocalPlayer.DestinyPlayer().overcharged) && alt) {
                 alt = false;
                 item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/VexMythoclast");
                 Main.LocalPlayer.ClearBuff(ModContent.BuffType<Buffs.Overcharge>());
@@ -161,7 +161,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
                     projectile.velocity = perturbedSpeed;
                     projectile.tileCollide = true;
                     projectile.hide = false;
-                    Main.player[projectile.owner].GetModPlayer<DestinyPlayer>().overchargeStacks--;
+                    Main.player[projectile.owner].DestinyPlayer().overchargeStacks--;
                 }
                 else if (!player.channel && charge.State == SoundState.Playing && !fired && player.whoAmI == Main.myPlayer) {
                     projectile.Kill();
@@ -209,7 +209,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (!target.friendly && target.damage > 0 && target.life <= 0) {
-                DestinyPlayer player = Main.player[projectile.owner].GetModPlayer<DestinyPlayer>();
+                DestinyPlayer player = Main.player[projectile.owner].DestinyPlayer();
                 Main.player[projectile.owner].AddBuff(ModContent.BuffType<Buffs.Overcharge>(), 2);
                 if (player.overchargeStacks < 3)
                     player.overchargeStacks++;
@@ -218,7 +218,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 
         public override void OnHitPvp(Player target, int damage, bool crit) {
             if (target.statLife <= 0) {
-                DestinyPlayer player = Main.player[projectile.owner].GetModPlayer<DestinyPlayer>();
+                DestinyPlayer player = Main.player[projectile.owner].DestinyPlayer();
                 Main.player[projectile.owner].AddBuff(ModContent.BuffType<Buffs.Overcharge>(), 2);
                 if (player.overchargeStacks < 3)
                     player.overchargeStacks++;

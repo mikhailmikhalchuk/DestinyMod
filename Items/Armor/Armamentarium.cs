@@ -22,8 +22,8 @@ namespace TheDestinyMod.Items.Armor
 		}
 
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<DestinyPlayer>().exoticEquipped = true;
-			if (player.GetModPlayer<DestinyPlayer>().superChargeCurrent >= 100) {
+			player.DestinyPlayer().exoticEquipped = true;
+			if (player.DestinyPlayer().superChargeCurrent >= 100) {
 				player.thrownDamage += 0.5f;
 			}
 		}

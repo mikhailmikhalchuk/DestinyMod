@@ -80,11 +80,11 @@ namespace TheDestinyMod.Projectiles.Super
 
         public override void AI() {
             Player owner = Main.player[projectile.owner];
-            if (owner.GetModPlayer<DestinyPlayer>().superActiveTime <= 0) {
+            if (owner.DestinyPlayer().superActiveTime <= 0) {
                 projectile.Kill();
                 return;
             }
-            if ((owner.Center - projectile.Center).Length() < 200 && !owner.GetModPlayer<DestinyPlayer>().sunWarrior) {
+            if ((owner.Center - projectile.Center).Length() < 200 && !owner.DestinyPlayer().sunWarrior) {
                 owner.AddBuff(ModContent.BuffType<Buffs.SunWarrior>(), 3);
             }
         }

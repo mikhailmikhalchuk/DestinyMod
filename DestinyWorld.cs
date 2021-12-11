@@ -226,7 +226,7 @@ namespace TheDestinyMod
 
         public override void PreUpdate() {
             AgentOfNine.UpdateTravelingMerchant();
-            DestinyPlayer player = Main.LocalPlayer.GetModPlayer<DestinyPlayer>();
+            DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
             if (Main.dayTime && Main.time == 0) {
                 player.boughtCommon = false;
                 daysPassed++;
