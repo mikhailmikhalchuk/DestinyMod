@@ -9,7 +9,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 	public class NemesisStar : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("\"What is the answer when the question is extinction?\"");
+			Tooltip.SetDefault("Fires faster on initial trigger pull\n\"What is the answer when the question is extinction?\"");
 		}
 
 		public override void SetDefaults() {
@@ -21,11 +21,11 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.knockBack = 0;
 			item.width = 76;
 			item.height = 34;
-			item.useTime = 9;
+			item.useTime = 12;
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/NemesisStar");
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.shootSpeed = 20f;
-			item.useAnimation = 9;
+			item.useAnimation = 12;
 			item.shoot = 10;
 			item.useAmmo = AmmoID.Bullet;
 			item.value = Item.buyPrice(0, 1, 0, 0);
@@ -33,11 +33,18 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+			if (player.GetModPlayer<DestinyPlayer>().nemesisPerk < 6) {
+				player.GetModPlayer<DestinyPlayer>().nemesisPerk++;
+			}
 			Projectile.NewProjectile(position.X, position.Y - 3, speedX, speedY, type, damage, knockBack, player.whoAmI);
 			return false;
 		}
 
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+        public override float UseTimeMultiplier(Player player) {
+			return player.GetModPlayer<DestinyPlayer>().nemesisPerk < 6 ? 2f : 1f;
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			scale *= 0.8f;
 			return true;
 		}

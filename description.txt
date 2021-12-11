@@ -33,5 +33,6 @@ Gave all modded rocket launchers the generic rocket launcher sound
 Monte Carlo now has its own sound effect
 Resprited the Hakke weapons
 Hakke weapons' bullets and Two-Tailed Fox's rockets now give off light
+Implemented Nemesis Star's exotic perk
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

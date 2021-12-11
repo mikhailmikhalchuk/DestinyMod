@@ -36,6 +36,7 @@ namespace TheDestinyMod
 		public int borealisCooldown;
 		public int duneRunTime;
 		public int lamentRevUp;
+		public int nemesisPerk;
 
 		public float businessReduceUse = 0.2f;
 		public float thunderlordReduceUse = 1f;
@@ -294,6 +295,7 @@ namespace TheDestinyMod
 				mouseLeftDown = false;
 				businessReduceUse = 0.2f;
 				thunderlordReduceUse = 1f;
+				nemesisPerk = 0;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
 				superActiveTime = 600;

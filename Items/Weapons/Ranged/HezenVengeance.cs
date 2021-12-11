@@ -29,7 +29,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/RocketLauncher");
 			item.shoot = ProjectileID.RocketI;
 			item.shootSpeed = 16f;
-			item.useAmmo = ItemID.Grenade;
+			item.useAmmo = AmmoID.Rocket;
 			item.scale = .80f;
 		}
 
