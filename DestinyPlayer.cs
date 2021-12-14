@@ -13,6 +13,7 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using TheDestinyMod.UI;
 using Terraria.Graphics.Effects;
+using System.IO;
 
 namespace TheDestinyMod
 {
@@ -297,18 +298,22 @@ namespace TheDestinyMod
 				thunderlordReduceUse = 1f;
 				nemesisPerk = 0;
 			}
-			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
+			if (PlayerInput.Triggers.JustPressed.QuickBuff)
+			{
 				//superActiveTime = 600;
 				//notifiedThatSuperIsReady = false;
 				//isThundercrash = true;
-				RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X, (int)Main.LocalPlayer.position.Y, 10, 10);
+				RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 10, 10);
 			}
-			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
-				(int, int, int[,]) tileData = RaidLoader.ReadRaid((int)Main.LocalPlayer.position.X, (int)Main.LocalPlayer.position.Y, @"C:/Users/Cuno/Documents/My Games/TheDestinyMod");
-				for (int i = tileData.Item1; i < tileData.Item3.GetLength(0); i++) {
-					for (int j = tileData.Item2; j < tileData.Item3.GetLength(1); j++) {
-						Main.NewText(tileData.Item3[i, j]);
-						WorldGen.PlaceTile((int)Main.LocalPlayer.position.X + i, (int)Main.LocalPlayer.position.Y + j, tileData.Item3[i, j], true, true);
+			if (PlayerInput.Triggers.JustPressed.QuickHeal)
+			{
+				(int x, int y, Tile[,] tileData) tileData = RaidLoader.ReadRaid(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod");
+				for (int i = 0; i <  tileData.tileData.GetLength(0); i++)
+				{
+					for (int j = 0; j < tileData.tileData.GetLength(1); j++)
+					{
+						Main.NewText(tileData.tileData[i, j]);
+						Main.tile[i + tileData.x, j + tileData.y] = tileData.tileData[i, j];
 					}
 				}
 			}
