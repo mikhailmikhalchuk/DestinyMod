@@ -298,9 +298,19 @@ namespace TheDestinyMod
 				nemesisPerk = 0;
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
-				superActiveTime = 600;
-				notifiedThatSuperIsReady = false;
-				isThundercrash = true;
+				//superActiveTime = 600;
+				//notifiedThatSuperIsReady = false;
+				//isThundercrash = true;
+				RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X, (int)Main.LocalPlayer.position.Y, 10, 10);
+			}
+			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
+				(int, int, int[,]) tileData = RaidLoader.ReadRaid((int)Main.LocalPlayer.position.X, (int)Main.LocalPlayer.position.Y, @"C:/Users/Cuno/Documents/My Games/TheDestinyMod");
+				for (int i = tileData.Item1; i < tileData.Item3.GetLength(0); i++) {
+					for (int j = tileData.Item2; j < tileData.Item3.GetLength(1); j++) {
+						Main.NewText(tileData.Item3[i, j]);
+						WorldGen.PlaceTile((int)Main.LocalPlayer.position.X + i, (int)Main.LocalPlayer.position.Y + j, tileData.Item3[i, j], true, true);
+					}
+				}
 			}
         }
 
