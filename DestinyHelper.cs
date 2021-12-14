@@ -50,40 +50,6 @@ namespace TheDestinyMod
             return target;
         }
 
-        ///<summary>
-        ///Generates a structure using StructureHelper.
-        ///</summary>
-        ///<param name="location">The location to place the structure.</param>
-        ///<param name="structure">The structure file name.</param>
-        ///<example>
-        ///<code>
-        ///StructureHelperGenerateStructure(new Vector2(100, 150), "Example");
-        ///</code>
-        ///</example>
-        ///<returns>
-        ///<see langword="true"/> if successful; otherwise, <see langword="false"/>.
-        ///</returns>
-        public static bool StructureHelperGenerateStructure(Vector2 location, string structure) {
-            return StructureHelperGenerateStructure(location.ToPoint16(), structure);
-        }
-
-        ///<summary>
-        ///Generates a structure using StructureHelper.
-        ///</summary>
-        ///<param name="location">The location to place the structure.</param>
-        ///<param name="structure">The structure file name.</param>
-        ///<example>
-        ///<code>
-        ///StructureHelperGenerateStructure(new Point16(100, 150), "Example");
-        ///</code>
-        ///</example>
-        ///<returns>
-        ///<see langword="true"/> if successful; otherwise, <see langword="false"/>.
-        ///</returns>
-        public static bool StructureHelperGenerateStructure(Terraria.DataStructures.Point16 location, string structure) {
-            return ModLoader.GetMod("StructureHelper") != null && StructureHelper.Generator.GenerateStructure($"Structures/{structure}", location, TheDestinyMod.Instance);
-        }
-
 
         /// <summary>
         /// Used to set the tooltips of Destiny armor items. Should be called within <c>tooltips.Add()</c>

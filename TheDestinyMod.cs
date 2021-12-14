@@ -170,7 +170,7 @@ namespace TheDestinyMod
                 delegate (GenerationProgress progress)
                 {
                     progress.Message = "Templar's Well";
-                    DestinyHelper.StructureHelperGenerateStructure(new Vector2(100, 200), "TemplarsWell");
+                    //DestinyHelper.StructureHelperGenerateStructure(new Vector2(100, 200), "TemplarsWell");
                 },
                 1f)
 		    };

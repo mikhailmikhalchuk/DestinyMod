@@ -10,6 +10,7 @@ using TheDestinyMod.Items.Weapons.Ranged;
 using TheDestinyMod.Tiles;
 using TheDestinyMod.Tiles.Herbs;
 using System.Collections.Generic;
+using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 
@@ -174,7 +175,12 @@ namespace TheDestinyMod
                         }
                         if (placementOK) {
                             TheDestinyMod.Instance.Logger.Info($"X: {i * 16} | Y: {j * 16}");
-                            success = DestinyHelper.StructureHelperGenerateStructure(new Terraria.DataStructures.Point16(i / 16, j / 16), "VoGPortal");
+                            /*(int x, int y, Tile[,] tileData) tileData = RaidLoader.ReadRaid(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod");
+                            for (int n = 0; i < tileData.tileData.GetLength(0); i++) {
+                                for (int o = 0; j < tileData.tileData.GetLength(1); j++) {
+                                    Main.tile[n + (int)Main.LocalPlayer.position.X / 16, o + (int)Main.LocalPlayer.position.Y / 16] = tileData.tileData[n, o];
+                                }
+                            }*/
                         }
                     }
                 }

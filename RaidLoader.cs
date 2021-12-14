@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using TheDestinyMod.Items;
 using TheDestinyMod.NPCs;
 using TheDestinyMod.Projectiles;
-using System.Reflection;
 
 namespace TheDestinyMod
 {
@@ -20,6 +19,9 @@ namespace TheDestinyMod
 
 		public static string RaidDataSavePathName = "";
 
+        //chest saving and loading is low priority
+        //npc saving and loading is not necessary
+        //don't know what modded tile data entails
 		public static void WriteRaid(int x, int y, int width, int height)
         {
             Tile[,] tiles = new Tile[width, height];
@@ -36,6 +38,7 @@ namespace TheDestinyMod
                 }
             }
 
+            //mod.GetFileStream("Structures/etc")
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod";
             string directory = filePath.Substring(0, filePath.LastIndexOf("/"));
             if (!Directory.Exists(directory))

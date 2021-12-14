@@ -312,8 +312,7 @@ namespace TheDestinyMod
 				{
 					for (int j = 0; j < tileData.tileData.GetLength(1); j++)
 					{
-						Main.NewText(tileData.tileData[i, j]);
-						Main.tile[i + tileData.x, j + tileData.y] = tileData.tileData[i, j];
+						Main.tile[i + (int)Main.LocalPlayer.position.X / 16, j + (int)Main.LocalPlayer.position.Y / 16] = tileData.tileData[i, j];
 					}
 				}
 			}
