@@ -39,7 +39,7 @@ namespace TheDestinyMod
             }
 
             //mod.GetFileStream("Structures/etc")
-            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod";
+            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/Terraria/ModLoader/Mod Sources/TheDestinyMod/Structures/TemplarsWell";
             string directory = filePath.Substring(0, filePath.LastIndexOf("/"));
             if (!Directory.Exists(directory))
             {
@@ -65,7 +65,7 @@ namespace TheDestinyMod
 
         public static (int, int, Tile[,]) ReadRaid(string filePath)
         {
-            using (var reader = new BinaryReader(File.Open(filePath, FileMode.Open, FileAccess.Read)))
+            using (var reader = new BinaryReader(TheDestinyMod.Instance.GetFileStream(filePath)))
             {
                 int xR = reader.ReadInt32();
                 int yR = reader.ReadInt32();
@@ -89,8 +89,13 @@ namespace TheDestinyMod
 		{
 			binaryWriter.Write(tile.active());
             binaryWriter.Write(tile.type);
+            binaryWriter.Write(tile.wall);
             binaryWriter.Write(tile.frameX);
             binaryWriter.Write(tile.frameY);
+            binaryWriter.Write(tile.bTileHeader);
+            binaryWriter.Write(tile.bTileHeader2);
+            binaryWriter.Write(tile.bTileHeader3);
+            binaryWriter.Write(tile.sTileHeader);
             binaryWriter.Write(tile.color());
             binaryWriter.Write(tile.liquid);
             binaryWriter.Write(tile.wire());
@@ -107,8 +112,13 @@ namespace TheDestinyMod
             Tile tile = new Tile();
             tile.active(binaryReader.ReadBoolean());
             tile.type = binaryReader.ReadUInt16();
+            tile.wall = binaryReader.ReadUInt16();
             tile.frameX = binaryReader.ReadInt16();
             tile.frameY = binaryReader.ReadInt16();
+            tile.bTileHeader = binaryReader.ReadByte();
+            tile.bTileHeader2 = binaryReader.ReadByte();
+            tile.bTileHeader3 = binaryReader.ReadByte();
+            tile.sTileHeader = binaryReader.ReadUInt16();
             tile.color(binaryReader.ReadByte());
             tile.liquid = binaryReader.ReadByte();
             tile.wire(binaryReader.ReadBoolean());

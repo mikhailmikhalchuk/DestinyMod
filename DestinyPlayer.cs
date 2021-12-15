@@ -303,18 +303,20 @@ namespace TheDestinyMod
 				//superActiveTime = 600;
 				//notifiedThatSuperIsReady = false;
 				//isThundercrash = true;
-				RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 10, 10);
+				//RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 300, 135);
+				Exit();
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal)
 			{
-				(int x, int y, Tile[,] tileData) tileData = RaidLoader.ReadRaid(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod");
-				for (int i = 0; i <  tileData.tileData.GetLength(0); i++)
+				/*(int x, int y, Tile[,] tileData) tileData = RaidLoader.ReadRaid("Structures/TemplarsWell");
+				for (int i = 0; i < tileData.tileData.GetLength(0); i++)
 				{
 					for (int j = 0; j < tileData.tileData.GetLength(1); j++)
 					{
 						Main.tile[i + (int)Main.LocalPlayer.position.X / 16, j + (int)Main.LocalPlayer.position.Y / 16] = tileData.tileData[i, j];
 					}
-				}
+				}*/
+				Enter("TheDestinyMod_Vault of Glass");
 			}
         }
 
@@ -341,8 +343,8 @@ namespace TheDestinyMod
         /// <returns>True if the subworld was succesfully entered, otherwise false. Returns null by default.</returns>
         public static bool? Enter(string id) {
             Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-			if (ModLoader.GetMod("StructureHelper") == null || subworldLibrary == null) {
-				Main.NewText("You must have the Subworld Library and Structure Helper mods enabled to enter a raid.", Color.Red);
+			if (subworldLibrary == null) {
+				Main.NewText("You must have the Subworld Library mod enabled to enter a raid.", Color.Red);
 			}
             else {
 				TheDestinyMod.currentSubworldID = id;
