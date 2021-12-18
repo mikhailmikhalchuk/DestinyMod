@@ -5,15 +5,14 @@ Developers
 Cuno - Programmer
 Smug - Trial Programmer
 Brent dya - Spriter
-ghost - Trial Spriter
+ghost - Spriter
+Aeterna - Spriter
 chis - Trial Spriter
-Aeterna - Trial Spriter
 
 Special Thanks
 ---------
 Solstice - SFX
 Fillinek - Building and SFX
-zsewqaspider - Sprites
 Black Snow - Sprites and Balancing
 
 [c/FF1919:We are currently looking for spriters,] if you are one and would like to help in the making of this mod please join the Discord and contact Cuno#9958

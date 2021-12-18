@@ -21,8 +21,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		public override void SetDefaults() {
 			item.damage = 50;
 			item.ranged = true;
-			item.width = 96;
-			item.height = 32;
+			item.width = 72;
+			item.height = 24;
 			item.useTime = 28;
 			item.useAnimation = 28;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -50,7 +50,7 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		}
 
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(-10, -5);
+			return new Vector2(-10, 0);
 		}
 
         public override void AddRecipes() {

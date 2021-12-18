@@ -70,7 +70,7 @@ namespace TheDestinyMod.Projectiles.Ranged
 		}
 
         public override void Kill(int timeLeft) {
-			Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, projectile.damage / 2, 0, projectile.owner);
+			Projectile proj = Projectile.NewProjectileDirect(new Vector2(projectile.Center.X, projectile.Center.Y - 48), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, projectile.damage / 2, 0, projectile.owner);
 			proj.friendly = true;
 			proj.hostile = true;
 			Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.Center);
