@@ -31,20 +31,27 @@ namespace TheDestinyMod
                 { "Y", y },
                 { "Width", width },
                 { "Height", height },
-                { "TileDatas", WriteTile(x, y, width, height) }
+                { "TileData", WriteTile(x, y, width, height) },
+                { "ChestData", WriteContainers(x, y, width, height) },
             };
 
-            MemoryStream memoryStream = new MemoryStream();
-            TagIO.ToStream(fileSave, memoryStream);
-            byte[] array = memoryStream.ToArray();
-            FileUtilities.Write(filePath, array, array.Length, false);
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                TagIO.ToStream(fileSave, memoryStream);
+                byte[] array = memoryStream.ToArray();
+                FileUtilities.Write(filePath, array, array.Length, false);
+            }
         }
 
-        public static (int, int, Tile[,]) ReadRaid(string filePath)
+        public static (int x, int y, Tile[,] tileData, List<Chest> chestData) ReadRaid(string filePath)
         {
             byte[] array = FileUtilities.ReadAllBytes(filePath, false);
             TagCompound tagCompound = TagIO.FromStream(new MemoryStream(array));
-            Tile[,] tiles = ReadTile(tagCompound.Get<TagCompound>("Tiles"));
+            int x = tagCompound.Get<int>("X");
+            int y = tagCompound.Get<int>("Y");
+            Tile[,] tiles = ReadTile(tagCompound.Get<TagCompound>("TileData"));
+            List<Chest> chests = ReadContainers(tagCompound.Get<TagCompound>("ChestData"));
+            return (x, y, tiles, chests);
         }
 
         public static TagCompound WriteTile(int x, int y, int width, int height)
@@ -100,19 +107,19 @@ namespace TheDestinyMod
                 {
                     TagCompound tileCompound = tagCompound.Get<TagCompound>(i + ", " + j);
                     Tile tile = new Tile();
-                    tile.active(tagCompound.Get<bool>("Active"));
-                    tile.type = tagCompound.Get<ushort>("Type");
-                    tile.frameX = tagCompound.Get<short>("FrameX");
-                    tile.frameY = tagCompound.Get<short>("FrameY");
-                    tile.color(tagCompound.Get<byte>("Color"));
-                    tile.liquid = tagCompound.Get<byte>("Liquid");
-                    tile.wire(tagCompound.Get<bool>("Wire"));
-                    tile.wire2(tagCompound.Get<bool>("Wire2"));
-                    tile.wire3(tagCompound.Get<bool>("Wire3"));
-                    tile.wire4(tagCompound.Get<bool>("Wire4"));
-                    tile.slope(tagCompound.Get<byte>("Slope"));
-                    tile.actuator(tagCompound.Get<bool>("Actuator"));
-                    tile.inActive(tagCompound.Get<bool>("InActive"));
+                    tile.active(tileCompound.Get<bool>("Active"));
+                    tile.type = tileCompound.Get<ushort>("Type");
+                    tile.frameX = tileCompound.Get<short>("FrameX");
+                    tile.frameY = tileCompound.Get<short>("FrameY");
+                    tile.color(tileCompound.Get<byte>("Color"));
+                    tile.liquid = tileCompound.Get<byte>("Liquid");
+                    tile.wire(tileCompound.Get<bool>("Wire"));
+                    tile.wire2(tileCompound.Get<bool>("Wire2"));
+                    tile.wire3(tileCompound.Get<bool>("Wire3"));
+                    tile.wire4(tileCompound.Get<bool>("Wire4"));
+                    tile.slope(tileCompound.Get<byte>("Slope"));
+                    tile.actuator(tileCompound.Get<bool>("Actuator"));
+                    tile.inActive(tileCompound.Get<bool>("InActive"));
                     tiles[i, j] = tile;
                 }
             }
@@ -145,23 +152,19 @@ namespace TheDestinyMod
                         Item item = chest.item[itemSlot];
                         if (ItemLoader.NeedsModSaving(item))
                         {
-                            itemCompound.Add(new TagCompound()
-                            {
-                                { "Slot", i },
-                                { "Actual Data", ItemIO.Save(item) },
-                            });
+                            itemCompound.Add(ItemIO.Save(item));
                         }
-                        else if (!item.IsAir)
+                        else
 						{
                             itemCompound.Add(new TagCompound()
                             {
-                                { "Slot", i },
+                                { "Slot", itemSlot },
                                 { "Type", item.type },
                                 { "Stack", item.stack },
                             });
                         }
                     }
-                    chestCompound.Add("Chests", chestCompound);
+                    chestCompound.Add("Items", itemCompound);
                     chestCompounds.Add(chestCompound);
                 }
             }
@@ -172,30 +175,43 @@ namespace TheDestinyMod
 
         public static List<Chest> ReadContainers(TagCompound tagCumpound)
 		{
-            int width = tagCumpound.Get<int>("width");
+            List<Chest> output = new List<Chest>();
+			int width = tagCumpound.Get<int>("width");
             int height = tagCumpound.Get<int>("height");
             List<TagCompound> chestCompounds = tagCumpound.Get<List<TagCompound>>("Chests");
             foreach (TagCompound chestCompound in chestCompounds)
 			{
-                Chest chest = new Chest();
-                chest.x = chestCompound.Get<int>("X");
-                chest.y = chestCompound.Get<int>("Y");
-                List<TagCompound> itemCompounds = chestCompound.Get<List<TagCompound>>("Chest");
+				Chest chest = new Chest
+				{
+					x = chestCompound.Get<int>("X"),
+					y = chestCompound.Get<int>("Y")
+				};
+
+				List<TagCompound> itemCompounds = chestCompound.Get<List<TagCompound>>("Items");
+                int chestIndex = 0;
                 foreach (TagCompound itemCompound in itemCompounds)
 				{
-
                     if (itemCompound.ContainsKey("mod"))
 					{
-                        ItemIO.Load(itemCompound);
+                        chest.item[chestIndex] = ItemIO.Load(itemCompound);
 					}
                     else
 					{
                         int type = itemCompound.Get<int>("Type");
                         int stack = itemCompound.Get<int>("Stack");
+                        Item item = new Item();
+                        item.SetDefaults(type);
+                        item.stack = stack;
+                        chest.item[chestIndex] = item;
                     }
 
+                    chestIndex++;
                 }
+
+                output.Add(chest);
             }
+
+            return output;
         }
     }
 }
