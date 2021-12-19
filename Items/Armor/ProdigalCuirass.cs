@@ -10,7 +10,7 @@ namespace TheDestinyMod.Items.Armor
 	public class ProdigalCuirass : ModItem, IClassArmor
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("7% increased ranged damage");
+			Tooltip.SetDefault("5% increased ranged damage");
 		}
 
 		public override void SetDefaults() {
@@ -22,7 +22,7 @@ namespace TheDestinyMod.Items.Armor
 		}
 
 		public override void UpdateEquip(Player player) {
-			player.rangedDamage += 0.07f;
+			player.rangedDamage += 0.05f;
 		}
 
 		public override void AddRecipes() {

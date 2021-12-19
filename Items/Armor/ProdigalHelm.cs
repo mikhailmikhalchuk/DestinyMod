@@ -30,8 +30,8 @@ namespace TheDestinyMod.Items.Armor
         }
 
         public override void UpdateArmorSet(Player player) {
-			player.setBonus = "17% increased ranged damage";
-			player.rangedDamage += 0.17f;
+			player.setBonus = "7% increased ranged damage";
+			player.rangedDamage += 0.07f;
         }
 
         public override void AddRecipes() {

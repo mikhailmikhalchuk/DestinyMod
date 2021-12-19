@@ -10,7 +10,7 @@ namespace TheDestinyMod.Items.Armor
 	public class ProdigalGreaves : ModItem, IClassArmor
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("5% increased ranged damage");
+			Tooltip.SetDefault("3% increased ranged damage");
 		}
 
 		public override void SetDefaults() {
@@ -22,7 +22,7 @@ namespace TheDestinyMod.Items.Armor
 		}
 
 		public override void UpdateEquip(Player player) {
-			player.rangedDamage += 0.06f;
+			player.rangedDamage += 0.03f;
 		}
 
         public override void AddRecipes() {

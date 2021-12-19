@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheDestinyMod.Buffs;
 
-namespace TheDestinyMod.Items.Potions
+namespace TheDestinyMod.Items.Consumables.Potions
 {
 	public class ImpactShard : ModItem
 	{

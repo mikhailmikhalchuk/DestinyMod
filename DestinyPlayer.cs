@@ -19,7 +19,6 @@ namespace TheDestinyMod
 	public class DestinyPlayer : ModPlayer
 	{
 		public int motesGiven;
-		public int drifterRewards;
 		public int zavalaBounty;
 		public int zavalaEnemies;
 		public int pCharge;
@@ -399,7 +398,6 @@ namespace TheDestinyMod
 			};
 			return new TagCompound {
 				{"motesGiven", motesGiven},
-				{"drifterRewards", drifterRewards},
 				{"zavalaBounty", zavalaBounty},
 				{"zavalaEnemies", zavalaEnemies},
 				{"engramsPurchased", engramsPurchased},
@@ -421,7 +419,6 @@ namespace TheDestinyMod
 			boughtUncommon = engrams.Contains("uncommon");
 			boughtRare = engrams.Contains("rare");
 			motesGiven = tag.GetInt("motesGiven");
-			drifterRewards = tag.GetInt("drifterRewards");
 			zavalaBounty = tag.GetInt("zavalaBounty");
 			zavalaEnemies = tag.GetInt("zavalaEnemies");
 			superChargeCurrent = tag.GetInt("superChargeCurrent");

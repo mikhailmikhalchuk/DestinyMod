@@ -476,6 +476,14 @@ namespace TheDestinyMod.Content.Autoloading.Misc
             text.AddTranslation(GameCulture.Polish, "Zdepozytowałeś w sumie {0} Okruchów, {1}.");
             mod.AddTranslation(text);
 
+            text = mod.CreateTranslation("DrifterRepeatable1");
+            text.SetDefault("Here's your reward, {0}. Use it to get me more Motes!");
+            mod.AddTranslation(text);
+
+            text = mod.CreateTranslation("DrifterRepeatable2");
+            text.SetDefault("Awesome, {0}. This'll get you more Motes.");
+            mod.AddTranslation(text);
+
             text = mod.CreateTranslation("Brother");
             text.SetDefault("brother");
             text.AddTranslation(GameCulture.Spanish, "hermano");

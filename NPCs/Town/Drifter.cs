@@ -11,7 +11,7 @@ using TheDestinyMod.Items.Materials;
 using TheDestinyMod.Items.Dyes;
 using TheDestinyMod.Items.Pets;
 using TheDestinyMod.Items.Weapons.Ranged;
-using TheDestinyMod.Items.Potions;
+using TheDestinyMod.Items.Consumables.Potions;
 
 namespace TheDestinyMod.NPCs.Town
 {
@@ -66,19 +66,19 @@ namespace TheDestinyMod.NPCs.Town
 
 		public override string GetChat() {
 			int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
-			int xur = NPC.FindFirstNPC(ModContent.NPCType<AgentOfNine>());
+			bool xur = NPC.AnyNPCs(ModContent.NPCType<AgentOfNine>());
 			string gender = Main.LocalPlayer.Male ? Language.GetTextValue("Mods.TheDestinyMod.Brother") : Language.GetTextValue("Mods.TheDestinyMod.Sister");
 			List<string> dialogue = new List<string>();
 			if (taxCollector >= 0) {
-				int zavala = NPC.FindFirstNPC(ModContent.NPCType<Zavala>());
-				if (zavala >= 0) {
+				bool zavala = NPC.AnyNPCs(ModContent.NPCType<Zavala>());
+				if (zavala) {
 					dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter16", Main.npc[taxCollector].GivenName, gender));
 				}
 				else {
 					dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter17", Main.npc[taxCollector].GivenName, gender));
 				}
 			}
-			if (xur >= 0) {
+			if (xur) {
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Drifter15", gender));
 			}
 			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(6)) {
@@ -124,18 +124,9 @@ namespace TheDestinyMod.NPCs.Town
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes2");
 					}
 					else {
-						switch (Main.rand.Next(3)) {
-							case 1:
-								Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes3", gender);
-								break;
-							case 2:
-								Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes4");
-								break;
-							default:
-								Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes5");
-								break;
-						}
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes" + Main.rand.Next(3, 6), gender);
 					}
+					int motesPrior = player.motesGiven;
 					player.motesGiven += Main.LocalPlayer.CountItem(ModContent.ItemType<MoteOfDark>());
 					foreach (Item item in Main.LocalPlayer.inventory) {
 						if (item.type == ModContent.ItemType<MoteOfDark>()) {
@@ -143,38 +134,36 @@ namespace TheDestinyMod.NPCs.Town
 						}
 					}
 					Main.PlaySound(SoundID.Grab);
-					if (player.motesGiven > 10 && player.drifterRewards == 0) {
-						player.drifterRewards = 1;
+					int checkImpact = (player.motesGiven - motesPrior) / 10;
+					if (checkImpact >= 1 && player.motesGiven > 20) {
+						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<ImpactShard>(), checkImpact);
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterRepeatable" + Main.rand.Next(1, 3), gender);
+					}
+					if (player.motesGiven > 10 && motesPrior < 10) {
 						Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, 5);
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes6", gender);
 					}
-					if (player.motesGiven > 20 && player.drifterRewards < 2) {
-						player.drifterRewards = 2;
-						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<ImpactShard>());
+					if (player.motesGiven > 20 && motesPrior < 20) {
+						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<ImpactShard>(), 5);
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes7", gender);
 					}
-					if (player.motesGiven > 30 && player.drifterRewards < 3) {
-						player.drifterRewards = 3;
+					if (player.motesGiven > 30 && motesPrior < 30) {
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<BottomDollar>());
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes8");
 					}
-					if (player.motesGiven > 40 && player.drifterRewards < 4) {
-						player.drifterRewards = 4;
+					if (player.motesGiven > 40 && motesPrior < 40) {
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<GambitDye>(), 3);
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes9", gender);
 					}
-					if (player.motesGiven > 50 && player.drifterRewards < 5) {
-						player.drifterRewards = 5;
+					if (player.motesGiven > 50 && motesPrior < 50) {
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<GunsmithMaterials>(), 100);
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes10", gender);
 					}
-					if (player.motesGiven > 60 && player.drifterRewards < 6) {
-						player.drifterRewards = 6;
+					if (player.motesGiven > 60 && motesPrior < 60) {
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Ghost>());
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes11", gender);
 					}
-					if (player.motesGiven > 70 && player.drifterRewards < 7) {
-						player.drifterRewards = 7;
+					if (player.motesGiven > 70 && motesPrior < 70) {
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TrinarySystem>());
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes12", gender);
 					}

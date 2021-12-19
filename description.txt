@@ -34,5 +34,6 @@ Monte Carlo now has its own sound effect
 Resprited the Hakke weapons
 Hakke weapons' bullets and Two-Tailed Fox's rockets now give off light
 Implemented Nemesis Star's exotic perk
+Decreased the ranged damage buffs Prodigal armor grants
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

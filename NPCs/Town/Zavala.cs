@@ -78,14 +78,7 @@ namespace TheDestinyMod.NPCs.Town
                 return "Whether we wanted it or not, we've stepped into a war with the Cabal on Mars. So let's get to taking out their command, one by one. Valus Ta'aurc. From what I can gather he commands the Siege Dancers from an Imperial Land Tank outside of Rubicon. He's well protected, but with the right team, we can punch through those defenses, take this beast out, and break their grip on Freehold.";
             }
             if (NPC.AnyDanger()) {
-                switch (Main.rand.Next(3)) {
-                    case 0:
-                        return Language.GetTextValue("Mods.TheDestinyMod.Zavala1");
-                    case 1:
-                        return Language.GetTextValue("Mods.TheDestinyMod.Zavala2");
-                    default:
-                        return Language.GetTextValue("Mods.TheDestinyMod.Zavala3");
-                }
+				return Language.GetTextValue("Mods.TheDestinyMod.Zavala" + Main.rand.Next(1, 4));
             }
 			List<string> dialogue = new List<string>();
             if (NPC.downedMoonlord) {
