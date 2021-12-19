@@ -303,6 +303,11 @@ namespace TheDestinyMod
 				//superActiveTime = 600;
 				//notifiedThatSuperIsReady = false;
 				//isThundercrash = true;
+				RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 100, 100);
+			}
+			if (PlayerInput.Triggers.JustPressed.QuickHeal)
+			{
+				(int x, int y, Tile[,] tileData, List<Chest> chestData) tileData = RaidLoader.ReadRaid(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod");
 				//RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 300, 135);
 				Exit();
 			}
@@ -315,6 +320,35 @@ namespace TheDestinyMod
 					{
 						Main.tile[i + (int)Main.LocalPlayer.position.X / 16, j + (int)Main.LocalPlayer.position.Y / 16] = tileData.tileData[i, j];
 					}
+				}
+
+				foreach (Chest chest in tileData.chestData)
+				{
+					int chestID = Chest.FindChest(chest.x + (int)Main.LocalPlayer.position.X / 16, chest.y + (int)Main.LocalPlayer.position.Y / 16);
+					if (chestID == -1)
+					{
+						for (int i = 0; i < 1000; i++)
+						{
+							if (Main.chest[i] != null)
+							{
+								continue;
+							}
+
+							Main.chest[i] = new Chest();
+							Main.chest[i].x = chest.x + (int)Main.LocalPlayer.position.X / 16;
+							Main.chest[i].y = chest.y + (int)Main.LocalPlayer.position.Y / 16;
+							Main.chest[i].item = chest.item;
+							break;
+						}
+					}
+					else
+					{
+						Main.chest[chestID] = chest;
+					}
+				}
+
+				WorldGen.EveryTileFrame();
+=======
 				}*/
 				Enter("TheDestinyMod_Vault of Glass");
 			}
