@@ -5,6 +5,11 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using TheDestinyMod.Items;
+using TheDestinyMod.NPCs;
+using TheDestinyMod.Projectiles;
 
 namespace TheDestinyMod
 {
@@ -16,9 +21,13 @@ namespace TheDestinyMod
 
         public static string RaidDataSavePathName = "";
 
-        public static void WriteRaid(int x, int y, int width, int height)
+        //chest saving and loading is low priority
+        //npc saving and loading is not necessary
+        //don't know what modded tile data entails
+		    public static void WriteRaid(int x, int y, int width, int height)
         {
-            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod";
+            //mod.GetFileStream("Structures/etc")
+            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/Terraria/ModLoader/Mod Sources/TheDestinyMod/Structures/TemplarsWell";
             string directory = filePath.Substring(0, filePath.LastIndexOf("/"));
             if (!Directory.Exists(directory))
             {
@@ -102,7 +111,7 @@ namespace TheDestinyMod
             int height = tagCompound.Get<int>("height");
             Tile[,] tiles = new Tile[width, height];
             for (int i = 0; i < width; i++)
-			{
+			      {
                 for (int j = 0; j < height; j++)
                 {
                     TagCompound tileCompound = tagCompound.Get<TagCompound>(i + ", " + j);
@@ -148,14 +157,14 @@ namespace TheDestinyMod
 
                     List<TagCompound> itemCompound = new List<TagCompound>();
                     for (int itemSlot = 0; itemSlot < chest.item.Length; itemSlot++)
-					{
+					          {
                         Item item = chest.item[itemSlot];
                         if (ItemLoader.NeedsModSaving(item))
                         {
                             itemCompound.Add(ItemIO.Save(item));
                         }
                         else
-						{
+						            {
                             itemCompound.Add(new TagCompound()
                             {
                                 { "Slot", itemSlot },
@@ -174,29 +183,29 @@ namespace TheDestinyMod
         }
 
         public static List<Chest> ReadContainers(TagCompound tagCumpound)
-		{
+		    {
             List<Chest> output = new List<Chest>();
-			int width = tagCumpound.Get<int>("width");
+			      int width = tagCumpound.Get<int>("width");
             int height = tagCumpound.Get<int>("height");
             List<TagCompound> chestCompounds = tagCumpound.Get<List<TagCompound>>("Chests");
             foreach (TagCompound chestCompound in chestCompounds)
-			{
-				Chest chest = new Chest
-				{
-					x = chestCompound.Get<int>("X"),
-					y = chestCompound.Get<int>("Y")
-				};
+			      {
+				        Chest chest = new Chest
+				        {
+					          x = chestCompound.Get<int>("X"),
+					          y = chestCompound.Get<int>("Y")
+				        };
 
-				List<TagCompound> itemCompounds = chestCompound.Get<List<TagCompound>>("Items");
+				        List<TagCompound> itemCompounds = chestCompound.Get<List<TagCompound>>("Items");
                 int chestIndex = 0;
                 foreach (TagCompound itemCompound in itemCompounds)
-				{
+				        {
                     if (itemCompound.ContainsKey("mod"))
-					{
+					          {
                         chest.item[chestIndex] = ItemIO.Load(itemCompound);
-					}
+					          }
                     else
-					{
+					          {
                         int type = itemCompound.Get<int>("Type");
                         int stack = itemCompound.Get<int>("Stack");
                         Item item = new Item();
@@ -212,6 +221,5 @@ namespace TheDestinyMod
             }
 
             return output;
-        }
     }
 }
