@@ -24,10 +24,10 @@ namespace TheDestinyMod
         //chest saving and loading is low priority
         //npc saving and loading is not necessary
         //don't know what modded tile data entails
-		    public static void WriteRaid(int x, int y, int width, int height)
+		public static void WriteRaid(int x, int y, int width, int height, string fileName)
         {
             //mod.GetFileStream("Structures/etc")
-            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/Terraria/ModLoader/Mod Sources/TheDestinyMod/Structures/TemplarsWell";
+            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/Terraria/ModLoader/Mod Sources/TheDestinyMod/Structures/" + fileName;
             string directory = filePath.Substring(0, filePath.LastIndexOf("/"));
             if (!Directory.Exists(directory))
             {
@@ -54,13 +54,14 @@ namespace TheDestinyMod
 
         public static (int x, int y, Tile[,] tileData, List<Chest> chestData) ReadRaid(string filePath)
         {
-            byte[] array = FileUtilities.ReadAllBytes(filePath, false);
-            TagCompound tagCompound = TagIO.FromStream(new MemoryStream(array));
-            int x = tagCompound.Get<int>("X");
-            int y = tagCompound.Get<int>("Y");
-            Tile[,] tiles = ReadTile(tagCompound.Get<TagCompound>("TileData"));
-            List<Chest> chests = ReadContainers(tagCompound.Get<TagCompound>("ChestData"));
-            return (x, y, tiles, chests);
+            using (Stream array = TheDestinyMod.Instance.GetFileStream(filePath)) {
+                TagCompound tagCompound = TagIO.FromStream(array);
+                int x = tagCompound.Get<int>("X");
+                int y = tagCompound.Get<int>("Y");
+                Tile[,] tiles = ReadTile(tagCompound.Get<TagCompound>("TileData"));
+                List<Chest> chests = ReadContainers(tagCompound.Get<TagCompound>("ChestData"));
+                return (x, y, tiles, chests);
+            }
         }
 
         public static TagCompound WriteTile(int x, int y, int width, int height)
@@ -77,7 +78,7 @@ namespace TheDestinyMod
                 {
                     int iAdjusted = x + i;
                     int jAdjusted = y + j;
-                    if (!WorldGen.InWorld(iAdjusted, jAdjusted))
+                    if (!WorldGen.InWorld(iAdjusted, jAdjusted)) //iAdjusted some bitches
                     {
                         continue;
                     }
@@ -87,9 +88,18 @@ namespace TheDestinyMod
                     {
                         { "Active", tile.active() },
                         { "Type", tile.type },
+                        { "Wall", tile.wall },
+                        { "Header1", tile.bTileHeader },
+                        { "Header2", tile.bTileHeader2 },
+                        { "Header3", tile.bTileHeader3 },
+                        { "Header4", tile.sTileHeader },
                         { "FrameX", tile.frameX },
                         { "FrameY", tile.frameY },
+                        { "WallFrameX", tile.wallFrameX() },
+                        { "WallFrameY", tile.wallFrameY() },
+                        { "WallFrameNumber", tile.wallFrameNumber() },
                         { "Color", tile.color() },
+                        { "WallColor", tile.wallColor() },
                         { "Liquid", tile.liquid },
                         { "Wire", tile.wire() },
                         { "Wire2", tile.wire2() },
@@ -118,9 +128,18 @@ namespace TheDestinyMod
                     Tile tile = new Tile();
                     tile.active(tileCompound.Get<bool>("Active"));
                     tile.type = tileCompound.Get<ushort>("Type");
+                    tile.wall = tileCompound.Get<ushort>("Wall");
+                    tile.bTileHeader = tileCompound.Get<byte>("Header1");
+                    tile.bTileHeader2 = tileCompound.Get<byte>("Header2");
+                    tile.bTileHeader3 = tileCompound.Get<byte>("Header3");
+                    tile.sTileHeader = tileCompound.Get<ushort>("Header4");
                     tile.frameX = tileCompound.Get<short>("FrameX");
                     tile.frameY = tileCompound.Get<short>("FrameY");
+                    tile.wallFrameX(tileCompound.Get<int>("WallFrameX"));
+                    tile.wallFrameY(tileCompound.Get<int>("WallFrameY"));
+                    tile.wallFrameNumber(tileCompound.Get<byte>("WallFrameNumber"));
                     tile.color(tileCompound.Get<byte>("Color"));
+                    tile.wallColor(tileCompound.Get<byte>("WallColor"));
                     tile.liquid = tileCompound.Get<byte>("Liquid");
                     tile.wire(tileCompound.Get<bool>("Wire"));
                     tile.wire2(tileCompound.Get<bool>("Wire2"));
@@ -182,30 +201,25 @@ namespace TheDestinyMod
             return tagCompound;
         }
 
-        public static List<Chest> ReadContainers(TagCompound tagCumpound)
-		    {
+        public static List<Chest> ReadContainers(TagCompound tagCumpound) {
             List<Chest> output = new List<Chest>();
-			      int width = tagCumpound.Get<int>("width");
+            int width = tagCumpound.Get<int>("width");
             int height = tagCumpound.Get<int>("height");
             List<TagCompound> chestCompounds = tagCumpound.Get<List<TagCompound>>("Chests");
-            foreach (TagCompound chestCompound in chestCompounds)
-			      {
-				        Chest chest = new Chest
-				        {
-					          x = chestCompound.Get<int>("X"),
-					          y = chestCompound.Get<int>("Y")
-				        };
+            foreach (TagCompound chestCompound in chestCompounds) {
+                Chest chest = new Chest
+                {
+                    x = chestCompound.Get<int>("X"),
+                    y = chestCompound.Get<int>("Y")
+                };
 
-				        List<TagCompound> itemCompounds = chestCompound.Get<List<TagCompound>>("Items");
+                List<TagCompound> itemCompounds = chestCompound.Get<List<TagCompound>>("Items");
                 int chestIndex = 0;
-                foreach (TagCompound itemCompound in itemCompounds)
-				        {
-                    if (itemCompound.ContainsKey("mod"))
-					          {
+                foreach (TagCompound itemCompound in itemCompounds) {
+                    if (itemCompound.ContainsKey("mod")) {
                         chest.item[chestIndex] = ItemIO.Load(itemCompound);
-					          }
-                    else
-					          {
+                    }
+                    else {
                         int type = itemCompound.Get<int>("Type");
                         int stack = itemCompound.Get<int>("Stack");
                         Item item = new Item();
@@ -221,5 +235,6 @@ namespace TheDestinyMod
             }
 
             return output;
+        }
     }
 }

@@ -84,6 +84,8 @@ namespace TheDestinyMod
 		private int countThunderlord = 0;
 		public bool isThundercrash = false;
 		private bool shouldBeThundercrashed = false;
+		private Vector2 firstSavePosition = Vector2.Zero;
+		private bool currentlySelectingSaves;
 		private DestinyDamageType elementAwaitingAssign;
 		private List<int> fragmentsAwaitingAssign;
 		private List<int> abilitiesAwaitingAssign;
@@ -303,13 +305,7 @@ namespace TheDestinyMod
 				//superActiveTime = 600;
 				//notifiedThatSuperIsReady = false;
 				//isThundercrash = true;
-				RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 100, 100);
-			}
-			if (PlayerInput.Triggers.JustPressed.QuickHeal)
-			{
-				(int x, int y, Tile[,] tileData, List<Chest> chestData) tileData = RaidLoader.ReadRaid(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "My Games/TheDestinyMod");
-				//RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 300, 135);
-				Exit();
+				//RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 100, 100);
 			}
 			if (PlayerInput.Triggers.JustPressed.QuickHeal)
 			{
@@ -348,11 +344,38 @@ namespace TheDestinyMod
 				}
 
 				WorldGen.EveryTileFrame();
-=======
 				}*/
 				Enter("TheDestinyMod_Vault of Glass");
 			}
+			HandleRaidWriter();
         }
+
+		private void HandleRaidWriter() {
+			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
+				if (currentlySelectingSaves) {
+					Main.NewText("Deactivated raid writer!");
+					currentlySelectingSaves = false;
+					firstSavePosition = Vector2.Zero;
+				}
+				Main.NewText("Activated raid writer:");
+				Main.NewText("Press quick buff again to quit");
+				Main.NewText("Otherwise, hover over the first tile that should be written and right click");
+				currentlySelectingSaves = true;
+			}
+			if (PlayerInput.Triggers.JustPressed.MouseRight) {
+				if (currentlySelectingSaves && firstSavePosition == Vector2.Zero) {
+					firstSavePosition = Main.MouseWorld / 16;
+					Main.NewText("First tile position saved!");
+					Main.NewText("Hover over the second tile and right click");
+				}
+				else if (currentlySelectingSaves && firstSavePosition != Vector2.Zero) {
+					RaidLoader.WriteRaid((int)firstSavePosition.X, (int)firstSavePosition.Y, (int)(Main.MouseWorld.X / 16 - firstSavePosition.X), (int)(Main.MouseWorld.Y / 16 - firstSavePosition.Y), "SavedRaid");
+					Main.NewText("Saved!");
+					currentlySelectingSaves = false;
+					firstSavePosition = Vector2.Zero;
+				}
+			}
+		}
 
         public override void UpdateBadLifeRegen() { // lifeRegen deducts 1/2 of the value you give it!! (passing 8 as damage deducts 4 life per second)
 			void ApplyDebuff(bool debuff, int damage) {
@@ -376,16 +399,15 @@ namespace TheDestinyMod
         /// <param name="id">The subworld ID</param>
         /// <returns>True if the subworld was succesfully entered, otherwise false. Returns null by default.</returns>
         public static bool? Enter(string id) {
-            Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-			if (subworldLibrary == null) {
+			if (TheDestinyMod.SubworldLibrary == null) {
 				Main.NewText("You must have the Subworld Library mod enabled to enter a raid.", Color.Red);
 			}
             else {
 				TheDestinyMod.currentSubworldID = id;
 				ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
 				try {
-					subworldLibrary.Call("DrawUnderworldBackground", false);
-					return subworldLibrary.Call("Enter", id) as bool?;
+					TheDestinyMod.SubworldLibrary.Call("DrawUnderworldBackground", false);
+					return TheDestinyMod.SubworldLibrary.Call("Enter", id) as bool?;
 				}
 				catch (Exception e) {
 					TheDestinyMod.Instance.Logger.Error($"TheDestinyMod: Got exception of type {e} while trying to enter raid: {TheDestinyMod.currentSubworldID.Substring(14)}.");
@@ -399,8 +421,7 @@ namespace TheDestinyMod
 		/// </summary>
 		/// <returns>True if the subworld was successfully exited, otherwise false. Returns null by default.</returns>
 		public static bool? Exit() {
-			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-            return subworldLibrary?.Call("Exit") as bool?;
+            return TheDestinyMod.SubworldLibrary?.Call("Exit") as bool?;
         }
 
         public override void PostUpdateEquips() {

@@ -121,7 +121,7 @@ namespace TheDestinyMod
             progress.Message = "Altering the fabric of time and space...";
             bool success = false;
             float attempts = 0;
-            (int x, int y, Tile[,] tileData) tileData = RaidLoader.ReadRaid("Structures/VoGPortal");
+            (int x, int y, Tile[,] tileData, List<Chest> chestData) tileData = RaidLoader.ReadRaid("Structures/VoGPortal");
             while (!success) {
                 attempts++;
                 if (attempts > 50000) {

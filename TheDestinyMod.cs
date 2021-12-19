@@ -42,6 +42,7 @@ namespace TheDestinyMod
         internal UserInterface classSelectionInterface;
 
         public static TheDestinyMod Instance { get; private set; }
+        public static Mod SubworldLibrary;
 
         public static bool classSelecting;
         internal bool wasJustCreating;
@@ -53,7 +54,6 @@ namespace TheDestinyMod
         public override void PostSetupContent()
         {
             Mod bossChecklist = ModLoader.GetMod("BossChecklist");
-            Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
             Mod census = ModLoader.GetMod("Census");
             bossChecklist?.Call(
                 "AddBoss",
@@ -74,7 +74,7 @@ namespace TheDestinyMod
                 $"Use a [i:{ModContent.ItemType<Items.Summons.GuardianSkull>()}]",
                 "Sepiks Prime retreats back into the House of Devils' lair..."
             );
-            subworldLibrary?.Call(
+            SubworldLibrary?.Call(
                 "Register",
                 ModContent.GetInstance<TheDestinyMod>(),
                 "Vault of Glass",
@@ -153,7 +153,6 @@ namespace TheDestinyMod
         }
 
         public static List<GenPass> VaultOfGlassGenPass() {
-            Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
             List<GenPass> list = new List<GenPass>
             {
 			    new PassLegacy("Adjusting",
@@ -170,7 +169,7 @@ namespace TheDestinyMod
                 delegate (GenerationProgress progress)
                 {
                     progress.Message = "Templar's Well";
-                    (int x, int y, Tile[,] tileData) tileData = RaidLoader.ReadRaid("Structures/TemplarsWell");
+                    (int x, int y, Tile[,] tileData, List<Chest> chestData) tileData = RaidLoader.ReadRaid("Structures/TemplarsWell");
                     float passes = 0;
                     for (int i = 0; i < tileData.tileData.GetLength(0); i++)
                     {
@@ -184,7 +183,7 @@ namespace TheDestinyMod
                 },
                 1f)
 		    };
-            subworldLibrary.Call("DrawUnderworldBackground", false);
+            SubworldLibrary.Call("DrawUnderworldBackground", false);
             return list;
         }
 
