@@ -47,8 +47,8 @@ namespace TheDestinyMod.NPCs
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GunsmithMaterials>());
                 }
             }
-            if (npc.friendly == false && npc.damage > 0 && npc.chaseable) {
-                if (Main.rand.NextBool(50) && !player.ancientShard || Main.rand.NextBool(25) && player.ancientShard) {
+            if (!npc.friendly && npc.damage > 0) {
+                if ((Main.rand.NextBool(50) && !player.ancientShard) || (Main.rand.NextBool(20) && player.ancientShard)) {
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<MoteOfDark>());
                 }
                 if (Main.rand.NextBool(65)) {

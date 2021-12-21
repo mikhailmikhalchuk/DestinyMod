@@ -35,5 +35,9 @@ Resprited the Hakke weapons
 Hakke weapons' bullets and Two-Tailed Fox's rockets now give off light
 Implemented Nemesis Star's exotic perk
 Decreased the ranged damage buffs Prodigal armor grants
+Reworked the Drifter
+Now grants Impact Shards every 10 Motes turned in
+Motes now have a 5% chance to drop from enemies after using an Impact Shard (up from 4%)
+Resprites Gjallarhorn
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

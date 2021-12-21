@@ -18,8 +18,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 		public override void SetDefaults() {
 			item.damage = 520;
 			item.ranged = true;
-			item.width = 98;
-			item.height = 34;
+			item.width = 86;
+			item.height = 38;
 			item.useTime = 35;
 			item.useAnimation = 35;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -32,18 +32,12 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shoot = 10;
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Rocket;
-			item.scale = .80f;
 		}
 		
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Projectile.NewProjectile(position.X, position.Y - 6, speedX, speedY, ModContent.ProjectileType<GjallarhornRocket>(), damage, knockBack, player.whoAmI);
 			return false;
 		}
-
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.8f;
-            return true;
-        }
 
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-50, -5);

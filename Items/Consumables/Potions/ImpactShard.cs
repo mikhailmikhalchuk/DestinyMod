@@ -12,9 +12,9 @@ namespace TheDestinyMod.Items.Consumables.Potions
         }
 
         public override void SetDefaults() {
-            item.width = 16;
-            item.height = 16;
-            item.useStyle = ItemUseStyleID.HoldingUp;
+            item.width = 20;
+            item.height = 32;
+            item.useStyle = ItemUseStyleID.EatingUsing;
             item.useAnimation = 15;
             item.useTime = 15;
             item.useTurn = true;
