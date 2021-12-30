@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using TheDestinyMod.Items;
 using TheDestinyMod.Items.Materials;
 using TheDestinyMod.Tiles;
-using TheDestinyMod.NPCs;
-using System;
+using System.Collections.Generic;
+using TheDestinyMod.NPCs.Data;
+using System.Linq;
 
 namespace TheDestinyMod.NPCs
 {
@@ -58,44 +59,20 @@ namespace TheDestinyMod.NPCs
                     Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Laurel>());
                 }
             }
+
+            if (npc.boss)
+            {
+                DownedBossData downedBossIndexer = new DownedBossData(npc.type);
+                if (DestinyWorld.DownedBoss.FirstOrDefault(downedBossData => downedBossData.Type == npc.type).Type == 0)
+                {
+                    Item.NewItem(npc.getRect(), ModContent.ItemType<Items.ExoticCipher>());
+                    DestinyWorld.DownedBoss.Add(downedBossIndexer);
+                }
+            }
         }
 
-        public override bool PreNPCLoot(NPC npc) {
-            bool WormSegmentsAlive() {
-                for (int i = 0; i < Main.maxNPCs; i++) {
-                    NPC check = Main.npc[i];
-                    if (check.active && check.lifeMax > 0 && check.whoAmI != npc.whoAmI && (check.type == NPCID.EaterofWorldsBody || check.type == NPCID.EaterofWorldsHead || check.type == NPCID.EaterofWorldsTail)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            switch (npc.type) {
-                case NPCID.KingSlime when !NPC.downedSlimeKing:
-                case NPCID.EyeofCthulhu when !NPC.downedBoss1:
-                case NPCID.BrainofCthulhu when !NPC.downedBoss2:
-                case NPCID.QueenBee when !NPC.downedQueenBee:
-                case NPCID.SkeletronHead when !NPC.downedBoss3:
-                case NPCID.WallofFlesh when !Main.hardMode:
-                case NPCID.Retinazer when !NPC.downedMechBoss2:
-                case NPCID.Spazmatism when !NPC.downedMechBoss2:
-                case NPCID.TheDestroyer when !NPC.downedMechBoss1:
-                case NPCID.SkeletronPrime when !NPC.downedMechBoss3:
-                case NPCID.Plantera when !NPC.downedPlantBoss:
-                case NPCID.Golem when !NPC.downedGolemBoss:
-                case NPCID.DukeFishron when !NPC.downedFishron:
-                case NPCID.CultistBoss when !NPC.downedAncientCultist:
-                case NPCID.MoonLordCore when !NPC.downedMoonlord:
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Items.ExoticCipher>());
-                    break;
-                case NPCID.EaterofWorldsBody when !NPC.downedBoss2:
-                case NPCID.EaterofWorldsHead when !NPC.downedBoss2:
-                case NPCID.EaterofWorldsTail when !NPC.downedBoss2:
-                    if (!WormSegmentsAlive()) {
-                        Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Items.ExoticCipher>());
-                    }
-                    break;
-            }
+        public override bool PreNPCLoot(NPC npc) 
+        {
             if (npc.type == NPCID.EyeofCthulhu && !NPC.downedBoss1) {
                 if (Main.netMode != NetmodeID.Server) {
                     Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.RelicShard"), new Color(200, 200, 55), false);

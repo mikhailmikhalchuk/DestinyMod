@@ -12,6 +12,8 @@ using TheDestinyMod.Tiles.Herbs;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using TheDestinyMod.NPCs.Data;
+using System.Linq;
 
 namespace TheDestinyMod
 {
@@ -28,6 +30,8 @@ namespace TheDestinyMod
         public static int checkpointVOG;
         public static int daysPassed;
 
+        public static List<DownedBossData> DownedBoss = new List<DownedBossData>();
+
         public override void Initialize() {
             AgentOfNine.spawnTime = double.MaxValue;
             downedPrime = false;
@@ -36,22 +40,30 @@ namespace TheDestinyMod
             daysPassed = 0;
         }
 
-        public override TagCompound Save() {
+        public override TagCompound Save()
+        {
             List<string> bossesKilled = new List<string>();
-            if (downedPrime) {
+            if (downedPrime)
+            {
                 bossesKilled.Add("downedPrime");
             }
-            return new TagCompound {
-                {"agentOfNine", AgentOfNine.Save()},
+
+            List<TagCompound> downedBossSave = DownedBoss.Select(bossData => bossData.Save()).ToList();
+
+            return new TagCompound 
+            {
+                {"agentOfNine", AgentOfNine.Save()},         
                 {"downed", bossesKilled},
                 {"claimedItemsGG", claimedItemsGG},
                 {"clearsVOG", clearsVOG},
                 {"checkpointVOG", checkpointVOG},
-                {"daysPassed", daysPassed}
+                {"daysPassed", daysPassed},
+                { "DownedBoss", downedBossSave },
             };
         }
 
-        public override void Load(TagCompound tag) {
+        public override void Load(TagCompound tag) 
+        {
             AgentOfNine.Load(tag.GetCompound("agentOfNine"));
             var bossesKilled = tag.GetList<string>("downed");
             downedPrime = bossesKilled.Contains("downedPrime");
@@ -59,6 +71,9 @@ namespace TheDestinyMod
             clearsVOG = tag.GetInt("clearsVOG");
             checkpointVOG = tag.GetInt("checkpointVOG");
             daysPassed = tag.GetInt("daysPassed");
+
+            List<TagCompound> downedBossSaved = tag.Get<List<TagCompound>>("DownedBoss");
+            DownedBoss = downedBossSaved.Select(savedData => DownedBossData.Load(savedData)).ToList();
         }
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
