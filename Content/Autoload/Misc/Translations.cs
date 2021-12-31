@@ -435,53 +435,65 @@ namespace TheDestinyMod.Content.Autoloading.Misc
             mod.AddTranslation(text);
 
             text = mod.CreateTranslation("DrifterMotes13");
+            text.SetDefault("Placeholder.");
+            mod.AddTranslation(text);
+
+            text = mod.CreateTranslation("DrifterNoMotes1");
             text.SetDefault("{0}, you gotta have those Motes on you! Come back when you got some.");
             text.AddTranslation(GameCulture.Spanish, "{0}, ¡tienes que tener las Motas contigo! Vuelve cuando tengas algunas.");
             text.AddTranslation(GameCulture.Polish, "{0}, you gotta have those Motes on you! Come back when you got some.");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterMotes14");
+            text = mod.CreateTranslation("DrifterNoMotes2");
             text.SetDefault("Thanks for the...huh? You don't have any Motes for me to unload off 'ya!");
             text.AddTranslation(GameCulture.Spanish, "Gracias por las... ¿Heh? ¡No tienes ningunas Motas para desocuparme de ti!");
             text.AddTranslation(GameCulture.Polish, "Thanks for the...huh? You don't have any Motes for me to unload off 'ya!");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterMotes15");
+            text = mod.CreateTranslation("DrifterNoMotes3");
             text.SetDefault("Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {0}.");
             text.AddTranslation(GameCulture.Spanish, "¡Hey, tienes que depositar las Motas en el deposito! ¿Estás intentando estafarme? Es broma, {0}.");
             text.AddTranslation(GameCulture.Polish, "Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {0}.");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterMotes16");
+            text = mod.CreateTranslation("DrifterCheckMotes1");
             text.SetDefault("Aw man, {0}, you haven't deposited any Motes yet!");
             text.AddTranslation(GameCulture.Spanish, "¡Cielos, {0}, no depositaste Motas todavia!");
             text.AddTranslation(GameCulture.Polish, "O człowieku, {0}, jeszcze nie zdepozytowałeś jeszcze żadnych okruchów.");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterMotes17");
+            text = mod.CreateTranslation("DrifterCheckMotes2");
             text.SetDefault("Woo, you've deposited {0} Motes! This is one heckuva collection, {1}.");
             text.AddTranslation(GameCulture.Spanish, "¡Woo, depositaste {0} Motas! Esta es una gran collección, {1}.");
             text.AddTranslation(GameCulture.Polish, "Woo, Zdepozytowałeś {0} okruchy. to jest jedna cholernie duża kolekcja {1}.");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterMotes18");
+            text = mod.CreateTranslation("DrifterCheckMotes3");
             text.SetDefault("You've deposited {0} Motes so far, {1}. Not bad.");
             text.AddTranslation(GameCulture.Spanish, "Depositaste {0} Motas por el momento, {1}. Nada mal.");
             text.AddTranslation(GameCulture.Polish, "Zdepozytowałeś {0} jak narazie, {1}. Nieźle.");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterMotes19");
+            text = mod.CreateTranslation("DrifterCheckMotes4");
             text.SetDefault("You've deposited a total of {0} Motes, {1}.");
             text.AddTranslation(GameCulture.Spanish, "Depositaste un total de {0} Motas, {1}.");
             text.AddTranslation(GameCulture.Polish, "Zdepozytowałeś w sumie {0} Okruchów, {1}.");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterRepeatable1");
+            text = mod.CreateTranslation("DrifterMotesRepeatable1");
             text.SetDefault("Here's your reward, {0}. Use it to get me more Motes!");
             mod.AddTranslation(text);
 
-            text = mod.CreateTranslation("DrifterRepeatable2");
+            text = mod.CreateTranslation("DrifterMotesRepeatable2");
             text.SetDefault("Awesome, {0}. This'll get you more Motes.");
+            mod.AddTranslation(text);
+
+            text = mod.CreateTranslation("DrifterMoneyRepeatable1");
+            text.SetDefault("Thanks, {0}. Here's a little something for your trouble.");
+            mod.AddTranslation(text);
+
+            text = mod.CreateTranslation("DrifterMoneyRepeatable2");
+            text.SetDefault("I made a little extra from last haul, {0}. What was I hauling? Well...");
             mod.AddTranslation(text);
 
             text = mod.CreateTranslation("Brother");

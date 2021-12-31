@@ -41,5 +41,6 @@ Fixed Motes of Dark dropping less than expected after using an Impact Shard
 Motes now have a 5% chance to drop from enemies after using an Impact Shard (up from 4%)
 Resprited Gjallarhorn and Impact Shard
 Removed the Hakke Fusion Rifle
+Fixed the class selection UI's Back button
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

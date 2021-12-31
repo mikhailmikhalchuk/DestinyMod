@@ -134,10 +134,15 @@ namespace TheDestinyMod.NPCs.Town
 						}
 					}
 					Main.PlaySound(SoundID.Grab);
-					int checkImpact = (player.motesGiven - motesPrior) / 10;
+                    int checkImpact = (player.motesGiven - motesPrior) / 10;
+					int checkMoney = (player.motesGiven - motesPrior) / 25;
 					if (checkImpact >= 1 && player.motesGiven > 20) {
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<ImpactShard>(), checkImpact);
-						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterRepeatable" + Main.rand.Next(1, 3), gender);
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotesRepeatable" + Main.rand.Next(1, 3), gender);
+					}
+					if (checkMoney >= 1 && player.motesGiven > 20) {
+						Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, checkImpact * 20);
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMoneyRepeatable" + Main.rand.Next(1, 3), gender);
 					}
 					if (player.motesGiven > 10 && motesPrior < 10) {
 						Main.LocalPlayer.QuickSpawnItem(ItemID.GoldCoin, 5);
@@ -167,34 +172,39 @@ namespace TheDestinyMod.NPCs.Town
 						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TrinarySystem>());
 						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes12", gender);
 					}
+					if (player.motesGiven > 100 && motesPrior < 100)
+                    {
+						Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<BorrowedTime>());
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes13", gender);
+					}
 					return;
 				}
                 else {
 					switch (Main.rand.Next(3)) {
 						case 1:
-							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes13", char.ToUpper(gender[0]) + gender.Substring(1));
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterNoMotes1", char.ToUpper(gender[0]) + gender.Substring(1));
 							return;
 						case 2:
-							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes14");
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterNoMotes2");
 							return;
 						default:
-							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes15", gender);
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterNoMotes3", gender);
 							return;
 					}
                 }
 			}
             else {
 				if (player.motesGiven == 0) {
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes16", gender);
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterCheckMotes1", gender);
 				}
 				else if (player.motesGiven > 200) {
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes17", player.motesGiven, gender);
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterCheckMotes2", player.motesGiven, gender);
 				}
                 else if (player.motesGiven > 100) {
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes18", player.motesGiven, gender);
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterCheckMotes3", player.motesGiven, gender);
 				}
 				else {
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterMotes19", player.motesGiven, gender);
+					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.DrifterCheckMotes4", player.motesGiven, gender);
 				}
 				return;
             }

@@ -5,7 +5,7 @@ using TheDestinyMod.Buffs;
 
 namespace TheDestinyMod.Items.Consumables
 {
-    public class ClassChangeToken : ModItem
+    public class GuardianCrest : ModItem
     {
         public override void SetStaticDefaults() {
             Tooltip.SetDefault("Grants the ability to switch to a different class");

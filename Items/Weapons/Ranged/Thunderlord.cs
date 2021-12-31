@@ -18,8 +18,8 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.ranged = true;
 			item.autoReuse = true;
 			item.channel = true;
-			item.width = 124;
-			item.height = 40;
+			item.width = 86;
+			item.height = 26;
 			item.useTime = 11;
 			item.useAnimation = 11;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -31,21 +31,15 @@ namespace TheDestinyMod.Items.Weapons.Ranged
 			item.shoot = 10;
 			item.shootSpeed = 18f;
 			item.useAmmo = AmmoID.Bullet;
-			item.scale = .80f;
 		}
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(4));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
-			Projectile.NewProjectile(new Vector2(position.X, position.Y - 7), new Vector2(speedX, speedY), ModContent.ProjectileType<Projectiles.Ranged.ThunderlordShot>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(new Vector2(position.X, position.Y - 5), new Vector2(speedX, speedY), ModContent.ProjectileType<Projectiles.Ranged.ThunderlordShot>(), damage, knockBack, player.whoAmI);
 			return false;
         }
-
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			scale *= 0.8f;
-			return true;
-		}
 
         public override float UseTimeMultiplier(Player player) {
             return player.DestinyPlayer().thunderlordReduceUse;

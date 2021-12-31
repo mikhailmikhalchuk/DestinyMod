@@ -114,7 +114,7 @@ namespace TheDestinyMod.UI
             returnToMenu.OnMouseOver += ReturnToMenu_OnMouseOver;
             returnToMenu.OnMouseOut += ReturnToMenu_OnMouseOut;
 			returnToMenu.SetSnapPoint("Back", 0);
-			Append(returnToMenu);
+			wrapper.Append(returnToMenu);
 
 			Append(wrapper);
 		}
