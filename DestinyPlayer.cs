@@ -13,6 +13,7 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using TheDestinyMod.UI;
 using Terraria.Graphics.Effects;
+using System.IO;
 
 namespace TheDestinyMod
 {
@@ -82,6 +83,8 @@ namespace TheDestinyMod
 		private int countThunderlord = 0;
 		public bool isThundercrash = false;
 		private bool shouldBeThundercrashed = false;
+		private Vector2 firstSavePosition = Vector2.Zero;
+		private bool currentlySelectingSaves;
 		private DestinyDamageType elementAwaitingAssign;
 		private List<int> fragmentsAwaitingAssign;
 		private List<int> abilitiesAwaitingAssign;
@@ -296,22 +299,82 @@ namespace TheDestinyMod
 				thunderlordReduceUse = 1f;
 				nemesisPerk = 0;
 			}
-			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
+			if (PlayerInput.Triggers.JustPressed.QuickBuff)
+			{
 				//superActiveTime = 600;
 				//notifiedThatSuperIsReady = false;
 				//isThundercrash = true;
-				RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X, (int)Main.LocalPlayer.position.Y, 10, 10);
+				//RaidLoader.WriteRaid((int)Main.LocalPlayer.position.X / 16, (int)Main.LocalPlayer.position.Y / 16, 100, 100);
 			}
-			if (PlayerInput.Triggers.JustPressed.QuickHeal) {
-				(int, int, int[,]) tileData = RaidLoader.ReadRaid((int)Main.LocalPlayer.position.X, (int)Main.LocalPlayer.position.Y, @"C:/Users/Cuno/Documents/My Games/TheDestinyMod");
-				for (int i = tileData.Item1; i < tileData.Item3.GetLength(0); i++) {
-					for (int j = tileData.Item2; j < tileData.Item3.GetLength(1); j++) {
-						Main.NewText(tileData.Item3[i, j]);
-						WorldGen.PlaceTile((int)Main.LocalPlayer.position.X + i, (int)Main.LocalPlayer.position.Y + j, tileData.Item3[i, j], true, true);
+			if (PlayerInput.Triggers.JustPressed.QuickHeal)
+			{
+				/*(int x, int y, Tile[,] tileData) tileData = RaidLoader.ReadRaid("Structures/TemplarsWell");
+				for (int i = 0; i < tileData.tileData.GetLength(0); i++)
+				{
+					for (int j = 0; j < tileData.tileData.GetLength(1); j++)
+					{
+						Main.tile[i + (int)Main.LocalPlayer.position.X / 16, j + (int)Main.LocalPlayer.position.Y / 16] = tileData.tileData[i, j];
 					}
 				}
+
+				foreach (Chest chest in tileData.chestData)
+				{
+					int chestID = Chest.FindChest(chest.x + (int)Main.LocalPlayer.position.X / 16, chest.y + (int)Main.LocalPlayer.position.Y / 16);
+					if (chestID == -1)
+					{
+						for (int i = 0; i < 1000; i++)
+						{
+							if (Main.chest[i] != null)
+							{
+								continue;
+							}
+
+							Main.chest[i] = new Chest();
+							Main.chest[i].x = chest.x + (int)Main.LocalPlayer.position.X / 16;
+							Main.chest[i].y = chest.y + (int)Main.LocalPlayer.position.Y / 16;
+							Main.chest[i].item = chest.item;
+							break;
+						}
+					}
+					else
+					{
+						Main.chest[chestID] = chest;
+					}
+				}
+
+				WorldGen.EveryTileFrame();
+				}*/
+				Enter("TheDestinyMod_Vault of Glass");
 			}
+			HandleRaidWriter();
         }
+
+		private void HandleRaidWriter() {
+			if (PlayerInput.Triggers.JustPressed.QuickBuff) {
+				if (currentlySelectingSaves) {
+					Main.NewText("Deactivated raid writer!");
+					currentlySelectingSaves = false;
+					firstSavePosition = Vector2.Zero;
+				}
+				Main.NewText("Activated raid writer:");
+				Main.NewText("Press quick buff again to quit");
+				Main.NewText("Otherwise, hover over the first tile that should be written and right click");
+				currentlySelectingSaves = true;
+			}
+			if (PlayerInput.Triggers.JustPressed.MouseRight) {
+				if (currentlySelectingSaves && firstSavePosition == Vector2.Zero) {
+					firstSavePosition = Main.MouseWorld / 16;
+					Main.NewText("First tile position saved!");
+					Main.NewText("Hover over the second tile and right click");
+				}
+				else if (currentlySelectingSaves && firstSavePosition != Vector2.Zero) {
+					RaidLoader.WriteRaid((int)firstSavePosition.X, (int)firstSavePosition.Y, (int)(Main.MouseWorld.X / 16 - firstSavePosition.X), (int)(Main.MouseWorld.Y / 16 - firstSavePosition.Y), "SavedRaid");
+					Main.NewText("Saved!");
+					currentlySelectingSaves = false;
+					firstSavePosition = Vector2.Zero;
+				}
+			}
+		}
 
         public override void UpdateBadLifeRegen() { // lifeRegen deducts 1/2 of the value you give it!! (passing 8 as damage deducts 4 life per second)
 			void ApplyDebuff(bool debuff, int damage) {
@@ -335,16 +398,15 @@ namespace TheDestinyMod
         /// <param name="id">The subworld ID</param>
         /// <returns>True if the subworld was succesfully entered, otherwise false. Returns null by default.</returns>
         public static bool? Enter(string id) {
-            Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-			if (ModLoader.GetMod("StructureHelper") == null || subworldLibrary == null) {
-				Main.NewText("You must have the Subworld Library and Structure Helper mods enabled to enter a raid.", Color.Red);
+			if (TheDestinyMod.SubworldLibrary == null) {
+				Main.NewText("You must have the Subworld Library mod enabled to enter a raid.", Color.Red);
 			}
             else {
 				TheDestinyMod.currentSubworldID = id;
 				ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
 				try {
-					subworldLibrary.Call("DrawUnderworldBackground", false);
-					return subworldLibrary.Call("Enter", id) as bool?;
+					TheDestinyMod.SubworldLibrary.Call("DrawUnderworldBackground", false);
+					return TheDestinyMod.SubworldLibrary.Call("Enter", id) as bool?;
 				}
 				catch (Exception e) {
 					TheDestinyMod.Instance.Logger.Error($"TheDestinyMod: Got exception of type {e} while trying to enter raid: {TheDestinyMod.currentSubworldID.Substring(14)}.");
@@ -358,8 +420,7 @@ namespace TheDestinyMod
 		/// </summary>
 		/// <returns>True if the subworld was successfully exited, otherwise false. Returns null by default.</returns>
 		public static bool? Exit() {
-			Mod subworldLibrary = ModLoader.GetMod("SubworldLibrary");
-            return subworldLibrary?.Call("Exit") as bool?;
+            return TheDestinyMod.SubworldLibrary?.Call("Exit") as bool?;
         }
 
         public override void PostUpdateEquips() {

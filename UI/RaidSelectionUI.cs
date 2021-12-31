@@ -235,7 +235,7 @@ namespace TheDestinyMod.UI
 			}
 			if (canStart) {
 				bool result = DestinyPlayer.Enter("TheDestinyMod_Vault of Glass") ?? false;
-				if (!result && ModLoader.GetMod("StructureHelper") != null && ModLoader.GetMod("SubworldLibrary") != null)
+				if (!result && TheDestinyMod.SubworldLibrary != null)
 					Main.NewText($"Something went wrong while trying to enter the raid: {TheDestinyMod.currentSubworldID.Substring(14)}.", Color.Red);
 				
 				if (result)

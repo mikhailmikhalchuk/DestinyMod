@@ -1,5 +1,6 @@
 using TheDestinyMod.Core.Autoloading;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace TheDestinyMod.Content.Autoloading.Misc
 {
@@ -22,6 +23,8 @@ namespace TheDestinyMod.Content.Autoloading.Misc
 
             if (mod.FontExists("Fonts/FuturaBook"))
                 TheDestinyMod.fontFuturaBook = mod.GetFont("Fonts/FuturaBook");
+
+            TheDestinyMod.SubworldLibrary = ModLoader.GetMod("SubworldLibrary");
         }
 
         public void IAutoloadable_PostSetUpContent() { }
