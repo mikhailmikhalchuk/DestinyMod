@@ -3,11 +3,11 @@ using Terraria.UI;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace TheDestinyMod.Core.UI
+namespace DestinyMod.Core.UI
 {
 	public class UIHandler
 	{
-		public static IList<UIHandler> ProcessedUIs = new List<UIHandler>();
+		public static IList<UIHandler> ProcessedUIs { get; private set; } = new List<UIHandler>();
 
 		public UserInterface Interface;
 
