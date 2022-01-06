@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DestinyMod.Content.Items.Bossess.SepkisPrime
+namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 {
 	public class SepiksPrimeBag : TreasureBag
 	{

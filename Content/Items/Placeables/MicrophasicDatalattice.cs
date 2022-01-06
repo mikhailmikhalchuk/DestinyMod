@@ -1,7 +1,6 @@
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using DestinyMod.Common.Items.ItemTypes;
 
 namespace DestinyMod.Content.Items.Placeables

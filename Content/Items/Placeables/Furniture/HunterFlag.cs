@@ -1,25 +1,19 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria;
+using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.Localization;
+using DestinyMod.Common.Items.ItemTypes;
 
-namespace TheDestinyMod.Items.Placeables.Furniture
+namespace DestinyMod.Content.Items.Placeables.Furniture
 {
-	public class HunterFlag : ModItem
+	public class HunterFlag : TileItem
 	{
-		public override void SetDefaults() {
-			item.autoReuse = true;
-			item.useTurn = true;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.rare = ItemRarityID.White;
-			item.useAnimation = 15;
-			item.useTime = 10;
-			item.maxStack = 99;
-			item.consumable = true;
-			item.placeStyle = 0;
-			item.width = 30;
-			item.height = 32;
-			item.value = 80;
-			item.createTile = ModContent.TileType<Tiles.Furniture.HunterFlag>();
+		public override void DestinySetDefaults()
+		{
+			Item.rare = ItemRarityID.White;
+			Item.maxStack = 99;
+			Item.placeStyle = 0;
+			Item.value = Item.buyPrice(copper: 80);
+			Item.createTile = ModContent.TileType<Tiles.Furniture.HunterFlag>();
 		}
 	}
 }

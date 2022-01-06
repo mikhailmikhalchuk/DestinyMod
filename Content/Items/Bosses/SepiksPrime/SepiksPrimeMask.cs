@@ -2,7 +2,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using DestinyMod.Common.Items;
 
-namespace DestinyMod.Content.Items.Bossess.SepkisPrime
+namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 {
 	[AutoloadEquip(EquipType.Head)]
 	public class SepiksPrimeMask : DestinyModItem

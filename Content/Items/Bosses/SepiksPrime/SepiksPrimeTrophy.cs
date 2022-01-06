@@ -1,11 +1,11 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using DestinyMod.Common.Items.ItemTypes;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
-namespace DestinyMod.Content.Items.Placeables
+namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 {
-	public class Podium : TileItem
+	public class SepiksPrimeTrophy : TileItem
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Can be used to deposit Laurels");
 
@@ -14,8 +14,8 @@ namespace DestinyMod.Content.Items.Placeables
 			Item.rare = ItemRarityID.Blue;
 			Item.maxStack = 99;
 			Item.placeStyle = 0;
-			Item.value = Item.buyPrice(copper: 80);
-			Item.createTile = ModContent.TileType<Tiles.Podium>();
+			Item.value = Item.buyPrice(gold: 1);
+			Item.createTile = ModContent.TileType<Tiles.Trophies.SepiksPrimeTrophy>();
 		}
 	}
 }
