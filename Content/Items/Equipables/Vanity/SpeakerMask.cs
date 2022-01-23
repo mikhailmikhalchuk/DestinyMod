@@ -1,25 +1,23 @@
 ﻿using Terraria.ModLoader;
 using Terraria.ID;
+using DestinyMod.Common.Items;
 
-namespace TheDestinyMod.Items.Vanity
+namespace DestinyMod.Content.Items.Equipables.Vanity
 {
 	[AutoloadEquip(EquipType.Head)]
-	public class SpeakerMask : ModItem
+	public class SpeakerMask : DestinyModItem
 	{
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults()
+		{
 			DisplayName.SetDefault("Speaker's Mask");
-			Tooltip.SetDefault("\"Devotion, self sacrifice, death.\"");
+			Tooltip.SetDefault("Devotion, self sacrifice, death.");
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 		}
 
-        public override void SetDefaults() {
-			item.width = 18;
-			item.height = 22;
-			item.rare = ItemRarityID.Blue;
-			item.vanity = true;
-		}
-
-		public override bool DrawHead() {
-			return false;
+		public override void DestinySetDefaults()
+		{
+			Item.rare = ItemRarityID.Blue;
+			Item.vanity = true;
 		}
 	}
 }

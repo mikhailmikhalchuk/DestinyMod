@@ -7,6 +7,8 @@ namespace DestinyMod.Common.Items
 {
 	public abstract class DestinyModItem : ModItem
 	{
+		public int DestinyModReuseDelay;
+
 		public sealed override void SetDefaults()
 		{
 			AutomaticSetDefaults();

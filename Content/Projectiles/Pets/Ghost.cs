@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Projectiles.Pets
 			ProjectileID.Sets.LightPet[Projectile.type] = true;
 		}
 
-		public override void SetDefaults()
+		public override void DestinySetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.Wisp);
 			AIType = ProjectileID.Wisp;
