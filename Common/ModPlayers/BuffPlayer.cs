@@ -2,6 +2,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using DestinyMod.Common.Buffs;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Common.ModPlayers
 {
@@ -76,5 +77,22 @@ namespace DestinyMod.Common.ModPlayers
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) =>
 			ImplementBuffIteration(destinyModBuff => destinyModBuff.OnHitNPC(Player, item, target, damage, knockback, crit));
+
+		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		{
+			bool output = true;
+			for (int indexer = 0; indexer < Player.buffType.Length; indexer++)
+			{
+				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff 
+					&& destinyModBuff.PreKill(Player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource) == false)
+				{
+					output = false;
+				}
+			}
+			return output;
+		}
+
+		public override void UpdateBadLifeRegen() =>
+			ImplementBuffIteration(destinyModBuff => destinyModBuff.UpdateBadLifeRegen(Player));
 	}
 }

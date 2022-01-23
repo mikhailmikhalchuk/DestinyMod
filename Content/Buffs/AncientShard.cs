@@ -1,8 +1,8 @@
-using Terraria.ModLoader;
+using DestinyMod.Common.Buffs;
 
 namespace DestinyMod.Content.Buffs
 {
-    public class AncientShard : ModBuff
+    public class AncientShard : DestinyModBuff
     {
         public override void SetStaticDefaults()
         {
