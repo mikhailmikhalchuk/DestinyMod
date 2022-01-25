@@ -18,12 +18,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Player owner = Main.player[Projectile.owner];
             if (!target.friendly && target.damage > 0)
             {
-                OutbreakNPC outbreakNPC = target.GetGlobalNPC<OutbreakNPC>();
-                outbreakNPC.OutbreakHitCount++;
-                outbreakNPC.OutbreakInfectiousDuration = 60;
-                if ((crit && target.life <= 0) || outbreakNPC.OutbreakHitCount >= 12)
+                DebuffNPC debuffNPC = target.GetGlobalNPC<DebuffNPC>();
+                debuffNPC.OutbreakHitCount++;
+                debuffNPC.OutbreakInfectiousDuration = 60;
+                if ((crit && target.life <= 0) || debuffNPC.OutbreakHitCount >= 12)
                 {
-                    outbreakNPC.OutbreakHitCount = 0;
+                    debuffNPC.OutbreakHitCount = 0;
                     for (int k = 0; k < 4; k++)
                     {
                         Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 3f, 5f);

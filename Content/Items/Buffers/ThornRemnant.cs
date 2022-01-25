@@ -29,11 +29,11 @@ namespace DestinyMod.Content.Items.Buffers
 
         public override bool OnPickup(Player player)
         {
-            NecroticPlayer necroticPlayer = player.GetModPlayer<NecroticPlayer>();
-            necroticPlayer.NecroticDamageMult += 0.2f;
-            if (necroticPlayer.NecroticDamageMult > 1)
+            DebuffPlayer debuffPlayer = player.GetModPlayer<DebuffPlayer>();
+            debuffPlayer.NecroticDamageMult += 0.2f;
+            if (debuffPlayer.NecroticDamageMult > 1)
             {
-                necroticPlayer.NecroticDamageMult = 1f;
+                debuffPlayer.NecroticDamageMult = 1f;
             }
 
             player.AddBuff(ModContent.BuffType<Buffs.MarkOfTheDevourer>(), 600);

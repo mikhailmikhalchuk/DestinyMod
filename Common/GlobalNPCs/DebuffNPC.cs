@@ -3,11 +3,13 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Common.GlobalNPCs
 {
-	public class OutbreakNPC : GlobalNPC
+	public class DebuffNPC : GlobalNPC
 	{
 		public int OutbreakInfectiousDuration;
 
 		public int OutbreakHitCount;
+
+		public Player NecroticApplier;
 
 		public override void PostAI(NPC npc)
 		{

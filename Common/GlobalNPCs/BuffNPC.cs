@@ -2,6 +2,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using DestinyMod.Common.Buffs;
+using Microsoft.Xna.Framework;
 
 namespace DestinyMod.Common.GlobalNPCs
 {
@@ -39,6 +40,32 @@ namespace DestinyMod.Common.GlobalNPCs
 					destinyModBuff.UpdateLifeRegen(npc, ref damage);
 				}
 			}
+		}
+
+		public override void DrawEffects(NPC npc, ref Color drawColor)
+		{
+			for (int indexer = 0; indexer < npc.buffType.Length; indexer++)
+			{
+				if (IsBuffIndexDestinyModBuff(npc, indexer) is DestinyModBuff destinyModBuff)
+				{
+					destinyModBuff.DrawEffects(npc, ref drawColor);
+				}
+			}
+		}
+
+		public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			bool vanillaDamageFormula = true;
+			for (int indexer = 0; indexer < npc.buffType.Length; indexer++)
+			{
+				if (IsBuffIndexDestinyModBuff(npc, indexer) is DestinyModBuff destinyModBuff 
+					&& !destinyModBuff.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit))
+				{
+					vanillaDamageFormula = false;
+				}
+			}
+
+			return vanillaDamageFormula;
 		}
 	}
 }

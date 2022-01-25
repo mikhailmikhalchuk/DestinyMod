@@ -94,5 +94,16 @@ namespace DestinyMod.Common.ModPlayers
 
 		public override void UpdateBadLifeRegen() =>
 			ImplementBuffIteration(destinyModBuff => destinyModBuff.UpdateBadLifeRegen(Player));
+
+		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+		{
+			for (int indexer = 0; indexer < Player.buffType.Length; indexer++)
+			{
+				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
+				{
+					destinyModBuff.ModifyHitPvpWithProj(Player, proj, target, ref damage, ref crit); // Relegated to not simply code :penisive:
+				}
+			}
+		}
 	}
 }

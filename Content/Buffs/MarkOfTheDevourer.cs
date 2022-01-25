@@ -17,10 +17,10 @@ namespace DestinyMod.Content.Buffs
         {
             if (player.buffTime[buffIndex] <= 1)
             {
-                player.GetModPlayer<NecroticPlayer>().NecroticDamageMult = 0f;
+                player.GetModPlayer<DebuffPlayer>().NecroticDamageMult = 0f;
             }
         }
 
-		public override void ModifyBuffTip(ref string tip, ref int rare) => tip += Main.LocalPlayer.GetModPlayer<NecroticPlayer>().NecroticDamageMult * 100 + "%";
+		public override void ModifyBuffTip(ref string tip, ref int rare) => tip += Main.LocalPlayer.GetModPlayer<DebuffPlayer>().NecroticDamageMult * 100 + "%";
 	}
 }

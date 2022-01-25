@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -42,5 +43,11 @@ namespace DestinyMod.Common.Buffs
         }
 
         public virtual void UpdateLifeRegen(NPC npc, ref int damage) { }
+
+        public virtual void DrawEffects(Player player, PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) { }
+
+        public virtual void DrawEffects(NPC npc, ref Color drawColor) { }
+
+        public virtual bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) { }
     }
 }

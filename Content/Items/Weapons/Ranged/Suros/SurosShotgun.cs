@@ -6,36 +6,37 @@ using Terraria.ID;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Suros
 {
-	public class SurosGrenadeLauncher : Gun
+	public class SurosShotgun : Gun
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("SUROS Grenade Launcher");
-			Tooltip.SetDefault("Standard SUROS Grenade Launcher");
+			DisplayName.SetDefault("SUROS Shotgun");
+			Tooltip.SetDefault("Fires a spread of bullets"
+				+ "\nStandard SUROS Shotgun");
 		}
 
 		public override void DestinySetDefaults()
 		{
 			Item.damage = 35;
-			Item.useTime = 25;
-			Item.useAnimation = 25;
-			Item.autoReuse = true;
+			Item.useTime = 50;
+			Item.useAnimation = 50;
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = SoundID.Item61;
-			Item.shoot = ProjectileID.GrenadeI;
-			Item.shootSpeed = 8f;
-			Item.useAmmo = ItemID.Grenade;
+			Item.UseSound = SoundID.Item36;
+			Item.shootSpeed = 16f;
 		}
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 7), velocity, ProjectileID.GrenadeI, damage, knockback, player.whoAmI);
-			return false;
+			for (int count = 0; count < 4 + Main.rand.Next(2); count++)
+			{
+				Projectile.NewProjectile(source, position, velocity.RotatedByRandom(MathHelper.ToRadians(15)), type, damage, knockback, player.whoAmI);
+			}
+			return true;
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(-10, -5);
+		public override Vector2? HoldoutOffset() => new Vector2(-10, 0);
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ItemID.Obsidian, 20)
