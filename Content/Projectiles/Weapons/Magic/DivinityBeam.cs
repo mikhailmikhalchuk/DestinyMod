@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
@@ -10,24 +9,21 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Terraria.GameContent;
 using DestinyMod.Common.Projectiles;
+using DestinyMod.Content.Buffs.Debuffs;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Melee
 {
 	public class DivinityBeam : DestinyModProjectile
 	{
-		private bool done;
-
-		private int counter;
-
 		private static SoundEffectInstance fire; //thanks, solstice // WHO :Angery:
 
 		private static SoundEffectInstance start;
 
-		public float Distance
-		{
-			get => Projectile.ai[0];
-			set => Projectile.ai[0] = value;
-		}
+		public float Distance { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
+
+		public float Counter { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
+
+		public bool Done { get => Projectile.localAI[0] == 0; set => Projectile.localAI[0] = value ? 0 : 1; }
 
 		public override void DestinySetDefaults()
 		{
@@ -71,11 +67,11 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
-			float point = 0f;
 			Player player = Main.player[Projectile.owner];
 			Vector2 collisionBox = new Vector2(player.Center.X, player.Center.Y - 4) + (Distance + 10) * Projectile.velocity;
+			float discard = 0f;
 			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), collisionBox,
-				new Vector2(collisionBox.X + 22, collisionBox.Y + 26), 22, ref point);
+				new Vector2(collisionBox.X + 22, collisionBox.Y + 26), 22, ref discard);
 		}
 
 		public override void Kill(int timeLeft)
@@ -88,20 +84,19 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[Projectile.owner] = 5;
-			if (counter > 120)
+			if (Counter > 120)
 			{
-				target.AddBuff(ModContent.BuffType<Buffs.Debuffs.Judgment>(), 150);
-				counter = 0;
+				target.AddBuff(ModContent.BuffType<Judgement>(), 150);
+				Counter = 0;
 			}
 		}
 
 		public override void AI()
 		{
-			Projectile.localAI[1]++;
 			Player player = Main.player[Projectile.owner];
 			Projectile.position = player.Center + Projectile.velocity * 60;
 			Projectile.timeLeft = 4;
-			if (!done && start == null)
+			if (!Done && start == null)
 			{
 				if (Main.soundVolume <= 0)
 				{
@@ -113,12 +108,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 				{
 					start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/DivinityStart"), Projectile.Center);
 				}
-				done = true;
+				Done = true;
 			}
-			else if (!done && start != null)
+			else if (!Done && start != null)
 			{
 				start.Play();
-				done = true;
+				Done = true;
 			}
 
 			if (fire == null && start.State != SoundState.Playing)
@@ -140,7 +135,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 				fire.Play();
 			}
 
-			if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 == 0 && !player.CheckMana(player.inventory[player.selectedItem].mana, true) && player.whoAmI == Main.myPlayer)
+			if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 == 0 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
 			{
 				Projectile.Kill();
 			}
@@ -159,26 +154,47 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 			player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * dir, Projectile.velocity.X * dir);
 			for (Distance = 60; Distance <= 2200f; Distance += 5f)
 			{
-				var start = player.Center + Projectile.velocity * Distance;
+				Vector2 start = player.Center + Projectile.velocity * Distance;
 				if (!Collision.CanHitLine(player.Center, 1, 1, start, 1, 1))
 				{
 					Distance -= 5f;
-					counter = 0;
+					Counter = 0;
 					break;
 				}
-				if (Main.npc.Any(npc => npc.active && npc.Hitbox.Intersects(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && !npc.townNPC && !npc.dontTakeDamage) || Main.player.Any(playeR => playeR.active && playeR.Hitbox.Intersects(new Rectangle((int)start.X, (int)start.Y, 1, 1)) && playeR.team != player.team && playeR.hostile))
+
+				for (int npcCount = 0; npcCount < Main.maxNPCs; npcCount++)
 				{
-					counter++;
-					break;
+					NPC npc = Main.npc[npcCount];
+					if (npc.active && !npc.townNPC && !npc.dontTakeDamage && npc.Hitbox.Contains((int)start.X, (int)start.Y))
+					{
+						Counter++;
+						break;
+					}
+				}
+
+				for (int playerCount = 0; playerCount < Main.maxPlayers; playerCount++)
+				{
+					if (playerCount == Main.myPlayer)
+					{
+						continue;
+					}
+
+					Player otherPlayer = Main.player[playerCount];
+
+					if (otherPlayer.active && otherPlayer.team != player.team && otherPlayer.hostile && otherPlayer.Hitbox.Contains((int)start.X, (int)start.Y))
+					{
+						Counter++;
+						break;
+					}
 				}
 			}
 			Vector2 dustPos = player.Center + Projectile.velocity * Distance;
 
-			for (int i = 0; i < 2; ++i)
+			for (int i = 0; i < 2; i++)
 			{
-				float num1 = Projectile.velocity.ToRotation() + (Main.rand.NextBool() ? -MathHelper.PiOver2 : MathHelper.PiOver2);
-				float num2 = (float)(Main.rand.NextDouble() * 0.8f + 1.0f);
-				Vector2 dustVel = new Vector2((float)Math.Cos(num1) * num2, (float)Math.Sin(num1) * num2);
+				float velInput = Projectile.velocity.ToRotation() + (Main.rand.NextBool() ? -MathHelper.PiOver2 : MathHelper.PiOver2);
+				float velMultiplier = (float)(Main.rand.NextDouble() * 0.8f + 1.0f);
+				Vector2 dustVel = new Vector2((float)Math.Cos(velInput) * velMultiplier, (float)Math.Sin(velInput) * velMultiplier);
 				Dust dust = Main.dust[Dust.NewDust(dustPos, 0, 0, DustID.Electric, dustVel.X, dustVel.Y)];
 				dust.noGravity = true;
 				dust.scale = 1.2f;
@@ -186,13 +202,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 
 			if (Main.rand.NextBool(5))
 			{
-				Vector2 unit = dustPos - player.Center;
-				unit.Normalize();
-				Dust dust = Main.dust[Dust.NewDust(player.Center + 55 * unit, 8, 8, DustID.Electric, 0.0f, 0.0f, 100, new Color(), 1.5f)];
+				Dust dust = Main.dust[Dust.NewDust(player.Center + 55 * Vector2.Normalize(dustPos - player.Center), 8, 8, DustID.Electric, 0.0f, 0.0f, 100, new Color(), 1.5f)];
 				dust.noGravity = true;
 				dust.scale = 0.5f;
 			}
-			if (Projectile.localAI[1] > 1)
+
+			if (++Projectile.localAI[1] > 1)
 			{
 				DelegateMethods.v3_1 = new Vector3(0.8f, 0.8f, 1f);
 				Utils.PlotTileLine(Projectile.Center, Projectile.Center + Projectile.velocity * (Distance - 60), 26, DelegateMethods.CastLight);

@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.Items;
+using DestinyMod.Content.Projectiles.Weapons.Melee;
 
 namespace DestinyMod.Content.Items.Weapons.Magic
 {
