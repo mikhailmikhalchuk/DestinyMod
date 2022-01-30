@@ -53,5 +53,9 @@ namespace DestinyMod.Common.Buffs
         public virtual void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit) { }
 
         public virtual void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) { }
+
+        public virtual void ModifyHitByNPC(Player player, NPC npc, ref int damage, ref bool crit) { }
+
+        public virtual void ModifyHitByProjectile(Player player, Projectile proj, ref int damage, ref bool crit) { }
     }
 }

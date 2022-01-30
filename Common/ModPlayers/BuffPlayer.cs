@@ -101,7 +101,29 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
 				{
-					destinyModBuff.ModifyHitPvpWithProj(Player, proj, target, ref damage, ref crit); // Relegated to not simply code :penisive:
+					destinyModBuff.DrawEffects(Player, drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
+				}
+			}
+		}
+
+		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+		{
+			for (int indexer = 0; indexer < Player.buffType.Length; indexer++)
+			{
+				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
+				{
+					destinyModBuff.ModifyHitByNPC(Player, npc, ref damage, ref crit);
+				}
+			}
+		}
+
+		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+		{
+			for (int indexer = 0; indexer < Player.buffType.Length; indexer++)
+			{
+				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
+				{
+					destinyModBuff.ModifyHitByProjectile(Player, proj, ref damage, ref crit);
 				}
 			}
 		}
