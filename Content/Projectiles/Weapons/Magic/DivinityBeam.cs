@@ -11,7 +11,7 @@ using Terraria.GameContent;
 using DestinyMod.Common.Projectiles;
 using DestinyMod.Content.Buffs.Debuffs;
 
-namespace DestinyMod.Content.Projectiles.Weapons.Melee
+namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
 	public class DivinityBeam : DestinyModProjectile
 	{

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
 
-namespace DestinyMod.Content.Projectiles.Weapons.Melee
+namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
     public class JotunnShot : DestinyModProjectile
     {
