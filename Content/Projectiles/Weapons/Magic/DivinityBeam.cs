@@ -23,7 +23,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 
 		public float Counter { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
 
-		public bool Done { get => Projectile.localAI[0] == 0; set => Projectile.localAI[0] = value ? 0 : 1; }
+		public bool Done { get => Projectile.localAI[0] != 0; set => Projectile.localAI[0] = value ? 1 : 0; }
 
 		public override void DestinySetDefaults()
 		{
