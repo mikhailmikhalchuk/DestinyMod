@@ -127,5 +127,18 @@ namespace DestinyMod.Common.ModPlayers
 				}
 			}
 		}
+
+		public override float UseTimeMultiplier(Item item)
+		{
+			float outPut = 1f;
+			for (int indexer = 0; indexer < Player.buffType.Length; indexer++)
+			{
+				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
+				{
+					outPut *= destinyModBuff.UseTimeMultiplier(Player, item);
+				}
+			}
+			return outPut;
+		}
 	}
 }

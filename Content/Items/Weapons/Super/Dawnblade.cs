@@ -2,8 +2,9 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.Items.ItemTypes;
+using DestinyMod.Content.Projectiles.Weapons.Super;
 
-namespace DestinyMod.Content.Items.Weapons.Ranged
+namespace DestinyMod.Content.Items.Weapons.Super
 {
 	public class Dawnblade : SuperItem
 	{
@@ -15,9 +16,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 0;
 			Item.UseSound = SoundID.Item1;
-			Item.shoot = ModContent.ProjectileType<Projectiles.Super.DawnbladeShot>();
+			Item.shoot = ModContent.ProjectileType<DawnbladeShot>();
 			Item.shootSpeed = 30f;
 		}
 
