@@ -35,16 +35,16 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			StatsPlayer statsPlayer = player.GetModPlayer<StatsPlayer>();
+			ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
 			player.itemLocation = player.Center;
 			if (player.altFunctionUse == 2 && !player.mount.Active)
 			{
 				Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<AegisBlast>(), 20, 0, player.whoAmI);
 				Cooldown = 300;
-				statsPlayer.ChannelTime = 1;
+				itemPlayer.AegisCharge = 1;
 				return false;
 			}
-			return statsPlayer.ChannelTime <= 0;
+			return itemPlayer.AegisCharge <= 0;
 		}
 
 		public override void UpdateInventory(Player player)

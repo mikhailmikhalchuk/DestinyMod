@@ -16,6 +16,10 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				ChannelTime++;
 			}
+			else
+			{
+				ChannelTime = 0;
+			}
 		}
 	}
 }
