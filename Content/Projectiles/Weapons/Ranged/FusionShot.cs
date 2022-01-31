@@ -2,35 +2,42 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
+using DestinyMod.Common.Projectiles;
 
 // We need to talk babe...
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     //If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
-    public class FusionShot : ModProjectile
+    public class FusionShot : DestinyModProjectile
     {
-        private bool fired;
-
-        private int countFires;
-
-        private int delayFire;
-
         private static SoundEffectInstance ChargeSound;
 
-        public float ProjectileCount { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
+        public bool SwappedData;
 
-        public float ProjectileType { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
+        public int ProjectileCount
+		{
+            get => (int)(SwappedData ? Projectile.localAI[0] : Projectile.ai[0]);
+            set => Projectile.localAI[0] = value;
+		}
+
+        public int ProjectileType => (int)(SwappedData ? Projectile.localAI[1] : Projectile.ai[1]);
+
+        public int UtilisedProjectileType => ProjectileType > 0 ? ProjectileType : ProjectileID.Bullet;
+
+        private bool Fired;
+
+        private int FireDelay { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
+
+        private int CountFires { get => (int)Projectile.ai[1]; set => Projectile.ai[1] = value; }
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
         public override void SetStaticDefaults() => DisplayName.SetDefault("Bullet");
 
-        public override void SetDefaults()
+        public override void DestinySetDefaults()
         {
-            do this later god
             Projectile.CloneDefaults(ProjectileID.Bullet);
             AIType = ProjectileID.Bullet;
             Projectile.friendly = true;
@@ -40,29 +47,37 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.penetrate = -1;
         }
 
-        public override void ModifyDamageHitbox(ref Rectangle hitbox) => hitbox = Rectangle.Empty;
+		public override bool PreAI()
+		{
+            if (!SwappedData)
+			{
+                Projectile.localAI[0] = Projectile.ai[0];
+                Projectile.localAI[1] = Projectile.ai[1];
 
-        public override bool PreDraw(ref Color lightColor) => false;
+                if (ProjectileCount <= 0)
+                {
+                    ProjectileCount = 5;
+                }
 
-        public override void AI()
-        {
-            Projectile.localAI[0]++;
-            if (Projectile.ai[0] <= 0)
-            {
-                Projectile.ai[0] = 5;
+                SwappedData = true;
             }
+            return true;
+		}
 
-            if (ChargeSound == null && !fired)
+		public override void AI()
+        {
+            if (ChargeSound == null && !Fired)
             {
+                LegacySoundStyle fusionRifleCharge = SoundLoader.GetLegacySoundSlot("Sounds/Item/FusionRifleCharge");
                 if (Main.soundVolume <= 0)
                 {
-                    ChargeSound = SoundLoader.GetLegacySoundSlot("Sounds/Item/FusionRifleCharge").GetRandomSound().CreateInstance();
+                    ChargeSound = fusionRifleCharge.GetRandomSound().CreateInstance();
                     ChargeSound.Volume = 0;
                     ChargeSound.Play();
                 }
                 else
                 {
-                    ChargeSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/FusionRifleCharge"), Projectile.Center);
+                    ChargeSound = SoundEngine.PlaySound(fusionRifleCharge, Projectile.Center);
                 }
             }
 
@@ -81,54 +96,61 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             player.ChangeDir(dir);
             player.heldProj = Projectile.whoAmI;
             player.itemAnimation = player.itemTime = 2;
-            player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * dir, Projectile.velocity.X * dir);
+            player.itemRotation = (Projectile.velocity * dir).ToRotation();
 
             if (ChargeSound != null)
             {
-                if (ChargeSound.State == SoundState.Stopped && !fired)
+                if (ChargeSound.State == SoundState.Stopped && !Fired)
                 {
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/FusionRifleFire"), Projectile.Center);
-                    fired = true;
+                    Fired = true;
                     ChargeSound?.Stop();
                     ChargeSound = null;
-                    // player.channel = false;
-                    Vector2 perturbedSpeed = (10 * Projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
-                    Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), new Vector2(Projectile.position.X, Projectile.position.Y - 5), perturbedSpeed, (int)Projectile.ai[1] > 0 ? (int)Projectile.ai[1] : ProjectileID.Bullet, Projectile.damage, Projectile.knockBack, player.whoAmI);
-                    countFires = 1;
-                    delayFire = 4;
+
+                    FireProjectile();
+                    CountFires = 1;
                 }
-                else if (!player.channel && ChargeSound.State == SoundState.Playing && !fired && player.whoAmI == Main.myPlayer)
+                else if (!player.channel && ChargeSound.State == SoundState.Playing && !Fired)
                 {
                     Projectile.Kill();
                 }
             }
 
-            if (countFires >= 1)
+            if (CountFires >= 1)
             {
-                delayFire--;
-                if (delayFire <= 0 && countFires < Projectile.ai[0])
+                if (--FireDelay <= 0 && CountFires < ProjectileCount)
                 {
-                    Vector2 perturbedSpeed = (10 * Projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
-                    Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), new Vector2(Projectile.position.X, Projectile.position.Y - 5), perturbedSpeed, (int)Projectile.ai[1] > 0 ? (int)Projectile.ai[1] : ProjectileID.Bullet, Projectile.damage, Projectile.knockBack, player.whoAmI);
-                    countFires++;
-                    delayFire = 4;
-                }
-                if (countFires >= Projectile.ai[0] && player.whoAmI == Main.myPlayer)
-                {
-                    Projectile.Kill();
+                    FireProjectile();
+
+                    if (++CountFires >= ProjectileCount)
+                    {
+                        Projectile.Kill();
+                    }
                 }
             }
         }
 
+        public void FireProjectile()
+		{
+            Player player = Main.player[Projectile.owner];
+            Vector2 perturbedSpeed = (10 * Projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
+            Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), new Vector2(Projectile.position.X, Projectile.position.Y - 5), perturbedSpeed, UtilisedProjectileType, Projectile.damage, Projectile.knockBack, player.whoAmI);
+            FireDelay = 4;
+        }
+
         public override void Kill(int timeLeft)
         {
-            if (countFires < Projectile.ai[0])
+            if (CountFires < ProjectileCount)
             {
                 ChargeSound?.Stop();
                 ChargeSound = null;
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/FusionRifleRelease"), Projectile.Center);
             }
-            countFires = delayFire = 0;
+            CountFires = FireDelay = 0;
         }
+
+        public override void ModifyDamageHitbox(ref Rectangle hitbox) => hitbox = Rectangle.Empty;
+
+        public override bool PreDraw(ref Color lightColor) => false;
     }
 }

@@ -7,5 +7,21 @@ namespace DestinyMod.Common.ModPlayers
 		public int SuperChargeCurrent;
 
 		public int SuperActiveTime;
+
+		public float SuperDamageFlat;
+
+		public float SuperDamageMultiplier = 1f;
+
+		public float SuperKnockback;
+
+		public int SuperCrit = 4;
+
+		public override void ResetEffects()
+		{
+			SuperDamageFlat = 0f;
+			SuperDamageMultiplier = 1f;
+			SuperKnockback = 0;
+			SuperCrit = 4;
+		}
 	}
 }

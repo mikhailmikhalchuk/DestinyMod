@@ -90,8 +90,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
                 if (!Fired)
                 {
                     SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/JotunnCharge5"), Projectile.Center);
+                    Fired = true;
                 }
-                Fired = true;
 
                 Projectile.velocity = Projectile.velocity * 20f / 11f;
                 AdjustMagnitude(ref Projectile.velocity);
