@@ -1,16 +1,16 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Audio;
+using DestinyMod.Common.Projectiles;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
-	public class TelestoBullet : ModProjectile
+	public class TelestoBullet : DestinyModProjectile
 	{
 		public float ForceDetonationTimer { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
 
-		public override void SetDefaults()
+		public override void DestinySetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.Bullet);
 			AIType = ProjectileID.Bullet;
