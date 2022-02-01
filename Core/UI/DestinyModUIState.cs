@@ -1,7 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace DestinyMod
+namespace DestinyMod.Core.UI
 {
 	public abstract class DestinyModUIState : UIState
 	{

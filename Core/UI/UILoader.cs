@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Terraria.ModLoader;
 
-namespace DestinyMod
+namespace DestinyMod.Core.UI
 {
 	public class UILoader : ModSystem
 	{
