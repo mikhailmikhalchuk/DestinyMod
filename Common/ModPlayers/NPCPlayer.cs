@@ -17,6 +17,10 @@ namespace DestinyMod.Common.ModPlayers
 
 		public int MotesGiven;
 
+		public int ZavalaBountyProgress;
+
+		public int ZavalaEnemies;
+
 		public override void ResetEffects()
 		{
 			BoughtEngramCommon = false;
@@ -35,13 +39,13 @@ namespace DestinyMod.Common.ModPlayers
 				{
 					shopInventory.FirstOrDefault(i => i.type == item.type)?.TurnToAir();
 					BoughtEngramUncommon = true;
-					DestinyWorld.daysPassed = 0;
+					//DestinyWorld.daysPassed = 0;
 				}
 				else if (item.type == ModContent.ItemType<RareEngram>())
 				{
 					shopInventory.FirstOrDefault(i => i.type == item.type)?.SetDefaults();
 					BoughtEngramRare = true;
-					DestinyWorld.daysPassed = 0;
+					//DestinyWorld.daysPassed = 0;
 				}
 			}
 		}

@@ -19,12 +19,12 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
             Item.useStyle = ItemUseStyleID.HoldUp;
         }
 
-        public override bool CanUseItem(Player player) => !NPC.AnyNPCs(ModContent.NPCType<SepiksPrime>());
+        public override bool CanUseItem(Player player) => !NPC.AnyNPCs(ModContent.NPCType<Content.NPCs.SepiksPrime.SepiksPrime>());
 
         public override bool? UseItem(Player player)
         {
             SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
-            NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<SepiksPrime>());
+            NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<Content.NPCs.SepiksPrime.SepiksPrime>());
             return true;
         }
 

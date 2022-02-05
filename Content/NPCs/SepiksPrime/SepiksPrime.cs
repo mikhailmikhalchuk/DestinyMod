@@ -10,7 +10,7 @@ using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using DestinyMod.Content.Items.Bosses.SepiksPrime;
 
-namespace TheDestinyMod.NPCs.SepiksPrime
+namespace DestinyMod.Content.NPCs.SepiksPrime
 {
 	[AutoloadBossHead]
     public class SepiksPrime : ModNPC

@@ -7,12 +7,19 @@ using System.IO;
 using System;
 using DestinyMod.Common.ModPlayers;
 using Terraria.ModLoader.IO;
+using DestinyMod.Content.Items.Misc;
 
 namespace DestinyMod.Common.ModSystems
 {
 	public class GuardianGames : ModSystem
 	{
+		public static bool Active;
+
 		public static int DepositCooldown;
+
+		public static int WinningTeam;
+
+		public static bool ClaimedItem;
 
 		public static bool TryDeposit(Player player)
 		{
@@ -24,7 +31,7 @@ namespace DestinyMod.Common.ModSystems
 			try
 			{
 				int laurelCount = 0;
-				int laurelType = ModContent.ItemType<Items.Laurel>();
+				int laurelType = ModContent.ItemType<Laurel>();
 				foreach (Item item in player.inventory)
 				{
 					if (item.type == laurelType)
@@ -111,6 +118,6 @@ namespace DestinyMod.Common.ModSystems
 
 		public override void SaveWorldData(TagCompound tag) => tag.Add("Cooldown", DepositCooldown);
 
-		public override void LoadWorldData(TagCompound tag) => DepositCooldown => tag.Get<int>("Cooldown");
+		public override void LoadWorldData(TagCompound tag) => DepositCooldown = tag.Get<int>("Cooldown");
 	}
 }

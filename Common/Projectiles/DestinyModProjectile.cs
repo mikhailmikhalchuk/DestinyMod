@@ -1,3 +1,4 @@
+using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
