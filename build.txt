@@ -1,0 +1,3 @@
+displayName = Destiny Mod
+author = Cuno & Co
+version = 0.1
