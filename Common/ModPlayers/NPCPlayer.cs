@@ -17,6 +17,10 @@ namespace DestinyMod.Common.ModPlayers
 
 		public int MotesGiven;
 
+		public int ZavalaBountyProgress;
+
+		public int ZavalaEnemies;
+
 		public override void ResetEffects()
 		{
 			BoughtEngramCommon = false;

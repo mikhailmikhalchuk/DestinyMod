@@ -12,6 +12,7 @@ using DestinyMod.Content.Items.Placeables.Furniture;
 using DestinyMod.Content.Items.Equipables.Dyes;
 using DestinyMod.Content.Items.Placeables;
 using DestinyMod.Common.ModSystems;
+using DestinyMod.Common.ModPlayers;
 
 namespace DestinyMod.Content.NPCs.Town
 {
@@ -61,7 +62,7 @@ namespace DestinyMod.Content.NPCs.Town
 			{
 				if (!DestinyWorld.claimedItemsGG)
 				{
-					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.WarlockFlag>());
+					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<WarlockFlag>());
 				}
 				return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesWarlockWin");
 			}
@@ -81,24 +82,28 @@ namespace DestinyMod.Content.NPCs.Town
 			{
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.AfterML"));
 			}
-			int theDrifter = NPC.FindFirstNPC(ModContent.NPCType<Drifter>());
-			if (theDrifter >= 0)
+
+			if (NPC.FindFirstNPC(ModContent.NPCType<Drifter>()) >= 0)
 			{
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Chatter_1"));
 			}
+
 			if (BirthdayParty.PartyIsUp)
 			{
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Party"));
 			}
+
 			if (Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneCrimson)
 			{
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Evil"));
 			}
+
 			if (Main.LocalPlayer.ZoneHallow)
 			{
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Hallow"));
 			}
-			if (TheDestinyMod.guardianGames)
+
+			if (GuardianGames.Active)
 			{
 				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGames"));
 			}
@@ -124,45 +129,51 @@ namespace DestinyMod.Content.NPCs.Town
 			}
 			else
 			{
-				DestinyPlayer player = Main.LocalPlayer.DestinyPlayer();
-				if (player.zavalaBounty == 0)
+				NPCPlayer player = Main.LocalPlayer.GetModPlayer<NPCPlayer>();
+				switch (player.ZavalaBountyProgress)
 				{
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyRequisition1");
-					player.zavalaBounty = 1;
-				}
-				else if (player.zavalaBounty == 1 && player.zavalaEnemies == 100)
-				{
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyComplete1");
-					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TheThirdAxiom>());
-					player.zavalaBounty = 2;
-					player.zavalaEnemies = 0;
-				}
-				else if (player.zavalaBounty == 2)
-				{
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyRequisition2");
-					player.zavalaBounty = 3;
-				}
-				else if (player.zavalaBounty == 3 && player.zavalaEnemies == 50)
-				{
-					Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyComplete2");
-					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<LastWord>());
-					player.zavalaBounty = 4;
-					player.zavalaEnemies = 0;
-				}
-				else if (player.zavalaBounty == 4)
-				{
-					Main.npcChatText = "I've got nothing for you right now, Guardian.";
-				}
-				else
-				{
-					if (player.zavalaBounty == 1)
-					{
-						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyProgress1", player.zavalaEnemies);
-					}
-					else if (player.zavalaBounty == 3)
-					{
-						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyProgress2", player.zavalaEnemies);
-					}
+					case 0:
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaBounty1");
+						player.ZavalaBountyProgress = 1;
+						break;
+
+					case 1:
+						if (player.ZavalaEnemies == 100)
+						{
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyComplete1");
+							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TheThirdAxiom>());
+							player.ZavalaBountyProgress = 2;
+							player.ZavalaEnemies = 0;
+						}
+						else
+						{
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyProgress1", player.ZavalaEnemies);
+						}
+						break;
+
+					case 2:
+						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyRequisition2");
+						player.ZavalaBountyProgress = 3;
+						break;
+
+					case 3:
+						if (player.ZavalaEnemies == 50)
+						{
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyComplete2");
+							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<LastWord>());
+							player.ZavalaBountyProgress = 4;
+							player.ZavalaEnemies = 0;
+						}
+						else
+						{
+							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyProgress2", player.ZavalaBountyProgress);
+						}
+						break;
+
+					case 4:
+					default:
+						Main.npcChatText = "I've got nothing for you right now, Guardian.";
+						break;
 				}
 			}
 		}
@@ -172,7 +183,7 @@ namespace DestinyMod.Content.NPCs.Town
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AceOfSpades>());
 			shop.item[nextSlot].shopCustomPrice = 1000000;
 			nextSlot++;
-			if (GuardianGames)
+			if (GuardianGames.Active)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Podium>());
 				shop.item[nextSlot].shopCustomPrice = 50000;
@@ -192,70 +203,11 @@ namespace DestinyMod.Content.NPCs.Town
 			}
 		}
 
-		public override bool CanGoToStatue(bool toKingStatue)
-		{
-			return true;
-		}
-
-		public override void OnGoToStatue(bool toKingStatue)
-		{
-			if (Main.netMode == NetmodeID.Server)
-			{
-				ModPacket packet = Mod.GetPacket();
-				packet.Write((byte)NPC.whoAmI);
-				packet.Send();
-			}
-			else
-			{
-				StatueTeleport();
-			}
-		}
-
-		public void StatueTeleport()
-		{
-			for (int i = 0; i < 30; i++)
-			{
-				Vector2 position = Main.rand.NextVector2Square(-20, 21);
-				if (Math.Abs(position.X) > Math.Abs(position.Y))
-				{
-					position.X = Math.Sign(position.X) * 20;
-				}
-				else
-				{
-					position.Y = Math.Sign(position.Y) * 20;
-				}
-			}
-		}
-
-		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
-		{
-			damage = 20;
-			knockback = 4f;
-		}
-
-		public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
-		{
-			cooldown = 30;
-			randExtraCooldown = 30;
-		}
-
 		public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)
 		{
 			scale = 0.7f;
 			item = ModContent.ItemType<TheThirdAxiom>();
 			closeness = 20;
-		}
-
-		public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
-		{
-			projType = ProjectileID.Bullet;
-			attackDelay = 1;
-		}
-
-		public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
-		{
-			multiplier = 12f;
-			randomOffset = 2f;
 		}
 	}
 }
