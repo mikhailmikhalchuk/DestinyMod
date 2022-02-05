@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "VErVWfP6qIVqKsk2gZAexbhTiI70atpwBw5UkRQoLBPz+a4i/kycfTx9fWdyukXxLBt/DWb3n0dGfP8h/BeJ3A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Cuno\\Documents\\My Games\\Terraria\\ModLoader\\Beta\\Mod Sources\\TheDestinyMod\\TheDestinyMod.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Cuno\\.nuget\\packages\\tmodloader.codeassist\\0.1.3\\tmodloader.codeassist.0.1.3.nupkg.sha512"
+  ],
+  "logs": []
+}

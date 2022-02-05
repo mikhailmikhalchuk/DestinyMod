@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "0cc320ea-e167-43eb-8f86-4b42109e22ae": {
+      "ProjectGuid": "0cc320ea-e167-43eb-8f86-4b42109e22ae",
+      "DisplayName": "TheDestinyMod",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
