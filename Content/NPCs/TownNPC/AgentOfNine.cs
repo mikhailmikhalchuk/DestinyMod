@@ -9,74 +9,62 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Chat;
 using DestinyMod.Content.Items.Weapons.Ranged;
+using DestinyMod.Common.NPCs.Data;
+using DestinyMod.Common.NPCs.NPCTypes;
 
-namespace TheDestinyMod.NPCs.Town
+namespace DestinyMod.Content.NPCs.Town
 {
 	[AutoloadHead]
-	public class AgentOfNine : ModNPC
+	public class AgentOfNine : GenericTownNPC
 	{
-		public static double spawnTime = double.MaxValue;
+		public static double SpawnTime = double.MaxValue;
 
-		public static List<Item> shopItems = new List<Item>();
+		public static List<NPCShopData> Shop = new List<NPCShopData>();
 
-		public static List<int> itemPrices = new List<int>();
+		public override void DestinySetStaticDefaults() => DisplayName.SetDefault("Agent of the Nine");
 
-		public static List<int> itemCurrency = new List<int>();
-
-		public override void SetStaticDefaults()
+		public override void DestinySetDefaults()
 		{
-			DisplayName.SetDefault("Agent of the Nine");
-			Main.npcFrameCount[NPC.type] = 26;
-			NPCID.Sets.AttackFrameCount[NPC.type] = 4;
-			NPCID.Sets.ExtraFramesCount[NPC.type] = 10;
-			NPCID.Sets.DangerDetectRange[NPC.type] = 700;
-			NPCID.Sets.AttackType[NPC.type] = 1;
-			NPCID.Sets.AttackTime[NPC.type] = 30;
-			NPCID.Sets.AttackAverageChance[NPC.type] = 30;
-			NPCID.Sets.HatOffsetY[NPC.type] = 8;
-		}
-
-		public override void SetDefaults()
-		{
-			NPC.townNPC = true;
-			NPC.friendly = true;
 			NPC.width = 20;
 			NPC.height = 46;
-			NPC.aiStyle = 7;
-			NPC.damage = 10;
-			NPC.defense = 15;
-			NPC.lifeMax = 250;
-			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.knockBackResist = 0.5f;
-			AnimationType = NPCID.Guide;
 		}
 
 		public static void UpdateTravelingMerchant()
 		{
-			NPC agentOfNine = Main.npc.FirstOrDefault(npc => npc.type == ModContent.NPCType<AgentOfNine>() && npc.active);
+			NPC agentOfNine = null;
+			for (int npcCount = 0; npcCount < Main.maxNPCs; npcCount++)
+			{
+				NPC allNPC = Main.npc[npcCount];
+				if (allNPC.active && allNPC.type == ModContent.NPCType<AgentOfNine>())
+				{
+					agentOfNine = allNPC;
+					break;
+				}
+			}
+
 			DateTime now = DateTime.Now;
 			DayOfWeek day = now.DayOfWeek;
-			if (agentOfNine != null && day != DayOfWeek.Friday && !IsNpcOnscreen(agentOfNine.Center))
+			if (agentOfNine != null && day != DayOfWeek.Friday && !IsNPCOnScreen(agentOfNine.Center))
 			{
-				if (Main.netMode == NetmodeID.SinglePlayer) Main.NewText(agentOfNine.FullName + " has departed!", 50, 125, 255);
-				else ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(agentOfNine.FullName + " has departed!"), new Color(50, 125, 255));
+				if (Main.netMode == NetmodeID.SinglePlayer)
+				{
+					Main.NewText(agentOfNine.FullName + " has departed!", 50, 125, 255);
+				}
+				else
+				{
+					ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(agentOfNine.FullName + " has departed!"), new Color(50, 125, 255));
+				}
 				// agentOfNine.active = false;
 				agentOfNine.netSkip = -1;
 				agentOfNine.life = 0;
 				agentOfNine = null;
 			}
+
 			if (!Main.dayTime && Main.time == 0)
 			{
-				if (agentOfNine == null && Main.rand.NextBool(10))
-				{
-					spawnTime = GetRandomSpawnTime(5400, 8100);
-				}
-				else
-				{
-					spawnTime = double.MaxValue;
-				}
+				SpawnTime = (agentOfNine == null && Main.rand.NextBool(10)) ? GetRandomSpawnTime(5400, 8100) : double.MaxValue;
 			}
+
 			if (agentOfNine == null && CanSpawnNow())
 			{
 				int newAgentOfNine = NPC.NewNPC(Main.spawnTileX * 16, Main.spawnTileY * 16, ModContent.NPCType<AgentOfNine>(), 1);
@@ -84,93 +72,83 @@ namespace TheDestinyMod.NPCs.Town
 				agentOfNine.homeless = true;
 				agentOfNine.direction = Main.spawnTileX >= WorldGen.bestX ? -1 : 1;
 				agentOfNine.netUpdate = true;
-				shopItems = CreateNewShop();
-				spawnTime = double.MaxValue;
-				if (Main.netMode == NetmodeID.SinglePlayer) Main.NewText(Language.GetTextValue("Announcement.HasArrived", agentOfNine.FullName), 50, 125, 255);
-				else ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasArrived", agentOfNine.GetFullNetName()), new Color(50, 125, 255));
+				CreateNewShop();
+				SpawnTime = double.MaxValue;
+
+				if (Main.netMode == NetmodeID.SinglePlayer)
+				{
+					Main.NewText(Language.GetTextValue("Announcement.HasArrived", agentOfNine.FullName), 50, 125, 255);
+				}
+				else
+				{
+					ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasArrived", agentOfNine.GetFullNetName()), new Color(50, 125, 255));
+				}
 			}
 		}
 
-		private static bool CanSpawnNow()
-		{
-			DateTime now = DateTime.Now;
-			DayOfWeek day = now.DayOfWeek;
-			if (Main.eclipse || Main.fastForwardTime || !Main.hardMode || Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0)
-				return false;
+		private static bool CanSpawnNow() => DateTime.Now.DayOfWeek == DayOfWeek.Friday 
+			&& !Main.eclipse && !Main.fastForwardTime && Main.hardMode 
+			&& (Main.invasionType <= 0 || Main.invasionDelay != 0 || Main.invasionSize <= 0);
 
-			return day == DayOfWeek.Friday;
-		}
-
-		private static bool IsNpcOnscreen(Vector2 center)
+		private static bool IsNPCOnScreen(Vector2 center)
 		{
-			int w = NPC.sWidth + NPC.safeRangeX * 2;
-			int h = NPC.sHeight + NPC.safeRangeY * 2;
-			Rectangle npcScreenRect = new Rectangle((int)center.X - w / 2, (int)center.Y - h / 2, w, h);
-			foreach (Player player in Main.player)
+			int width = NPC.sWidth + NPC.safeRangeX * 2;
+			int height = NPC.sHeight + NPC.safeRangeY * 2;
+			Rectangle npcScreenRect = new Rectangle((int)center.X - width / 2, (int)center.Y - height / 2, width, height);
+
+			for (int playerCount = 0; playerCount < Main.maxPlayers; playerCount++)
 			{
-				if (player.active && player.getRect().Intersects(npcScreenRect))
+				Player player = Main.player[playerCount];
+				if (player.active && player.Hitbox.Intersects(npcScreenRect))
+				{
 					return true;
+				}
 			}
 			return false;
 		}
 
-		public static double GetRandomSpawnTime(double minTime, double maxTime)
-		{
-			return (maxTime - minTime) * Main.rand.NextDouble() + minTime;
-		}
+		public static double GetRandomSpawnTime(double minTime, double maxTime) => (maxTime - minTime) * Main.rand.NextDouble() + minTime;
 
-		public static List<Item> CreateNewShop()
+		public static void CreateNewShop()
 		{
-			var itemIds = new List<int>();
-			itemCurrency.Clear();
-			itemPrices.Clear();
-			switch (Main.rand.Next(2))
+			NPCShopData shopData = new NPCShopData();
+			switch (Main.rand.Next(3))
 			{
 				case 0:
-					itemIds.Add(ModContent.ItemType<BorealisRanged>());
-					itemPrices.Add(3);
-					itemCurrency.Add(TheDestinyMod.CipherCustomCurrencyId);
+					shopData.ItemType = ModContent.ItemType<BorealisRanged>();
+					shopData.ItemCurrency = TheDestinyMod.CipherCustomCurrencyId;
+					shopData.ItemPrice = 3;
 					break;
+
 				case 1:
-					itemIds.Add(ItemID.MythrilAnvil);
-					itemPrices.Add(10000);
-					itemCurrency.Add(TheDestinyMod.CipherCustomCurrencyId);
+					shopData.ItemType = ItemID.MythrilAnvil;
+					shopData.ItemCurrency = TheDestinyMod.CipherCustomCurrencyId;
+					shopData.ItemPrice = 10000;
 					break;
+
 				default:
-					itemIds.Add(ModContent.ItemType<SweetBusiness>());
-					itemPrices.Add(1);
-					itemCurrency.Add(TheDestinyMod.CipherCustomCurrencyId);
+					shopData.ItemType = ModContent.ItemType<SweetBusiness>();
+					shopData.ItemCurrency = TheDestinyMod.CipherCustomCurrencyId;
+					shopData.ItemPrice = 1;
 					break;
 			}
-			TheDestinyMod.Instance.Logger.Debug($"Selected Weapon: {itemIds[0]}");
-			var items = new List<Item>();
-			foreach (int itemId in itemIds)
-			{
-				Item item = new Item();
-				item.SetDefaults(itemId);
-				items.Add(item);
-				TheDestinyMod.Instance.Logger.Debug($"Item ID: {itemId}");
-			}
-			return items;
+			Shop.Add(shopData);
+			DestinyMod.Instance.Logger.Debug($"Selected Weapon: {Shop[0]}");
 		}
 
 		public static TagCompound Save()
 		{
 			return new TagCompound 
 			{
-				{"spawnTime", spawnTime},
-				{"shopItems", shopItems},
-				{"itemPrices", itemPrices},
-				{"itemCurrency", itemCurrency}
+				{ "spawnTime", SpawnTime },
+				{ "Shop", Shop.Select(shopData => shopData.Save()).ToList() },
 			};
 		}
 
 		public static void Load(TagCompound tag)
 		{
-			spawnTime = tag.GetDouble("spawnTime");
-			shopItems = tag.Get<List<Item>>("shopItems");
-			itemPrices = tag.Get<List<int>>("itemPrices");
-			itemCurrency = tag.Get<List<int>>("itemCurrency");
+			SpawnTime = tag.GetDouble("spawnTime");
+			Shop = tag.Get<List<TagCompound>>("Shop").Select(tagCompound => NPCShopData.Load(tagCompound)).ToList();
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
@@ -199,17 +177,18 @@ namespace TheDestinyMod.NPCs.Town
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			foreach (Item item in shopItems)
+			foreach (NPCShopData shopItemData in Shop)
 			{
-				if (item == null || item.type == ItemID.None)
+				if (shopItemData.ItemType == ItemID.None)
 				{
-					TheDestinyMod.Instance.Logger.Debug("The item just checked in SetupShop was either null or had type 0");
+					DestinyMod.Instance.Logger.Debug("The item just checked in SetupShop was either null or had type 0");
 					continue;
 				}
-				shop.item[nextSlot].SetDefaults(item.type);
-				shop.item[nextSlot].shopCustomPrice = itemPrices[nextSlot];
-				shop.item[nextSlot].shopSpecialCurrency = itemCurrency[nextSlot];
-				TheDestinyMod.Instance.Logger.Debug($"The item just checked in SetupShop was just added: {shop.item[nextSlot].Name}");
+
+				shop.item[nextSlot].SetDefaults(shopItemData.ItemType);
+				shop.item[nextSlot].shopSpecialCurrency = shopItemData.ItemCurrency;
+				shop.item[nextSlot].shopCustomPrice = shopItemData.ItemPrice;
+				DestinyMod.Instance.Logger.Debug($"The item just checked in SetupShop was just added: {shop.item[nextSlot].Name}");
 				nextSlot++;
 			}
 		}
@@ -218,35 +197,13 @@ namespace TheDestinyMod.NPCs.Town
 
 		public override void AI() => NPC.homeless = true;
 
-		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
-		{
-			damage = 20;
-			knockback = 4f;
-		}
-
-		public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
-		{
-			cooldown = 30;
-			randExtraCooldown = 30;
-		}
+		public override bool CanGoToStatue(bool toKingStatue) => false;
 
 		public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)
 		{
 			scale = 0.5f;
 			item = ModContent.ItemType<UniversalRemote>();
 			closeness = 20;
-		}
-
-		public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
-		{
-			projType = ProjectileID.Bullet;
-			attackDelay = 1;
-		}
-
-		public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
-		{
-			multiplier = 12f;
-			randomOffset = 2f;
 		}
 	}
 }

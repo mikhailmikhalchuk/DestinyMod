@@ -1,7 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace DestinyMod.Common.NPCs
+namespace DestinyMod.Common.NPCs.Data
 {
     public struct DownedBossData
     {
