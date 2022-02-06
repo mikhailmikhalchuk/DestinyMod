@@ -136,19 +136,16 @@ namespace DestinyMod.Content.NPCs.Town
 			DestinyMod.Instance.Logger.Debug($"Selected Weapon: {Shop[0]}");
 		}
 
-		public static TagCompound Save()
+		public override void Save(TagCompound tagCompound)
 		{
-			return new TagCompound 
-			{
-				{ "spawnTime", SpawnTime },
-				{ "Shop", Shop.Select(shopData => shopData.Save()).ToList() },
-			};
+			tagCompound.Add("SpawnTime", SpawnTime);
+			tagCompound.Add("Shop", Shop.Select(shopData => shopData.Save()).ToList());
 		}
 
-		public static void Load(TagCompound tag)
+		public override void Load(TagCompound tagCompound)
 		{
-			SpawnTime = tag.GetDouble("spawnTime");
-			Shop = tag.Get<List<TagCompound>>("Shop").Select(tagCompound => NPCShopData.Load(tagCompound)).ToList();
+			SpawnTime = tagCompound.GetDouble("SpawnTime");
+			Shop = tagCompound.Get<List<TagCompound>>("Shop").Select(tag => NPCShopData.Load(tag)).ToList();
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
