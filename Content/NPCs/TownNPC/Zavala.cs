@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -41,30 +39,32 @@ namespace DestinyMod.Content.NPCs.Town
 
 		public override string GetChat()
 		{
-			DestinyWorld.claimedItemsGG = hasClosedCeremony = true;
-			if (TheDestinyMod.guardianWinner == 1 && !hasClosedCeremony)
+			GuardianGames.ClaimedItem = hasClosedCeremony = true;
+			if (!hasClosedCeremony)
 			{
-				if (!DestinyWorld.claimedItemsGG)
+				switch (GuardianGames.WinningTeam)
 				{
-					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.TitanFlag>());
+					case 1:
+						if (!GuardianGames.ClaimedItem)
+						{
+							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
+						}
+						return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesTitanWin");
+
+					case 2:
+						if (!GuardianGames.ClaimedItem)
+						{
+							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
+						}
+						return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesHunterWin");
+
+					case 3:
+						if (!GuardianGames.ClaimedItem)
+						{
+							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
+						}
+						return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesWarlockWin");
 				}
-				return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesTitanWin");
-			}
-			else if (TheDestinyMod.guardianWinner == 2 && !hasClosedCeremony)
-			{
-				if (!DestinyWorld.claimedItemsGG)
-				{
-					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.Placeables.Furniture.HunterFlag>());
-				}
-				return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesHunterWin");
-			}
-			else if (TheDestinyMod.guardianWinner == 3 && !hasClosedCeremony)
-			{
-				if (!DestinyWorld.claimedItemsGG)
-				{
-					Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<WarlockFlag>());
-				}
-				return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesWarlockWin");
 			}
 
 			if (Main.rand.NextBool(100))

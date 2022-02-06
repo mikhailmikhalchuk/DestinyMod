@@ -21,9 +21,22 @@ namespace DestinyMod.Common.ModPlayers
 
 		public int ZavalaEnemies;
 
+		public bool SpottedGorgon;
+
+		public int SpottedGorgonTimer;
+
 		public override void ResetEffects()
 		{
 			BoughtEngramCommon = false;
+		}
+
+		public override void ModifyScreenPosition()
+		{
+			if (SpottedGorgon)
+			{
+				Main.screenPosition.X += Main.rand.NextFloat(0, SpottedGorgonTimer / 300);
+				SpottedGorgonTimer++;
+			}
 		}
 
 		public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)

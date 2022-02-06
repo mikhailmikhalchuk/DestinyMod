@@ -19,6 +19,8 @@ namespace DestinyMod.Common.ModSystems
 
 		public static int WinningTeam;
 
+		public static bool ClaimedItem;
+
 		public static bool TryDeposit(Player player)
 		{
 			if (DepositCooldown > 0)
