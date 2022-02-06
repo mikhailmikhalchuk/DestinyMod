@@ -16,12 +16,15 @@ namespace DestinyMod.Common.ModPlayers
 
 		public int SuperCrit = 4;
 
+		public int OrbOfPowerAdd = 0;
+
 		public override void ResetEffects()
 		{
 			SuperDamageFlat = 0f;
 			SuperDamageMultiplier = 1f;
 			SuperKnockback = 0;
 			SuperCrit = 4;
+			OrbOfPowerAdd = 0;
 		}
 	}
 }

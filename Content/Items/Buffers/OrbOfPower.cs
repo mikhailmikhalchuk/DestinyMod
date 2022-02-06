@@ -35,7 +35,7 @@ namespace DestinyMod.Content.Items.Buffers
         public override bool OnPickup(Player player)
         {
             SuperPlayer superPlayer = player.GetModPlayer<SuperPlayer>();
-            superPlayer.SuperChargeCurrent += 4 + superPlayer.orbOfPowerAdd;
+            superPlayer.SuperChargeCurrent += 4 + superPlayer.OrbOfPowerAdd;
             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/OrbOfPower"), player.Center);
             return false;
         }

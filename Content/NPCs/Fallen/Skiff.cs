@@ -43,7 +43,7 @@ namespace DestinyMod.Content.NPCs.Fallen
                     NPC.life = 0;
                 }
             }
-            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && (MotherNPC.position - new Vector2(0, 100)) - NPC.Center).Length() > 208)
+            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && ((MotherNPC.position - new Vector2(0, 100)) - NPC.Center).Length() > 208)
             {
                 Vector2 delta = (Main.npc[(int)NPC.ai[0]].position - new Vector2(0, 100)) - NPC.Center;
                 float magnitude = (float)Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
@@ -57,7 +57,7 @@ namespace DestinyMod.Content.NPCs.Fallen
                 }
                 NPC.velocity.X = delta.X;
             }
-            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && (MotherNPC.position - new Vector2(0, 100)) - NPC.Center).Length() <= 208)
+            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && ((MotherNPC.position - new Vector2(0, 100)) - NPC.Center).Length() <= 208)
             {
                 if (Timer >= 200f)
                 {

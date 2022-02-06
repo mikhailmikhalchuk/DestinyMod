@@ -26,14 +26,14 @@ namespace DestinyMod.Content.Tiles.MusicBoxes
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) =>
-			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeables.MusicBoxes.SepiksPrimeBox>());
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Bosses.SepiksPrime.SepiksPrimeBox>());
 
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<Items.Placeables.MusicBoxes.SepiksPrimeBox>();
+			player.cursorItemIconID = ModContent.ItemType<Items.Bosses.SepiksPrime.SepiksPrimeBox>();
 		}
 	}
 }

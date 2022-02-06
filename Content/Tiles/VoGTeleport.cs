@@ -21,7 +21,7 @@ namespace DestinyMod.Content.Tiles
             SoundType = SoundID.Tink;
         }
 
-        Come back to this
+        //Come back to this
 		/*public override bool RightClick(int i, int j)
 		{
             if (ModContent.GetInstance<TheDestinyMod>().raidInterface.CurrentState == null)

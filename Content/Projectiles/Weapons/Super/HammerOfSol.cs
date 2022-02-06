@@ -55,7 +55,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Super
                 for (int projectileCount = 0; projectileCount < Main.maxProjectiles; projectileCount++)
                 {
                     Projectile otherProjectile = Main.projectile[projectileCount];
-                    if (!otherProjectile.active || otherProjectile.type != ModContent.ProjectileType<Sunspot>())
+                    if (!otherProjectile.active || otherProjectile.type != ModContent.ProjectileType<Sunshot>())
                     {
                         continue;
                     }

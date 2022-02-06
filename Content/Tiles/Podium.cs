@@ -44,7 +44,7 @@ namespace DestinyMod.Content.Tiles
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<Items.Laurel>();
+			player.cursorItemIconID = ModContent.ItemType<Items.Misc.Laurel>();
 		}
 
 		public override bool RightClick(int i, int j) => GuardianGames.TryDeposit(Main.LocalPlayer);
