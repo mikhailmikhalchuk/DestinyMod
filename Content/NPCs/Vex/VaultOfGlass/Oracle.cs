@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.NPCs;
+using DestinyMod.Common.ModSystems;
 
 namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 {
@@ -24,54 +25,59 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             // npc.chaseable = false;
         }
 
+        public static void HandleOnHit(Player striker)
+		{
+            Main.NewText($"[c/3EAD5C:{striker.name}] has destroyed an Oracle");
+            if (VaultOfGlassSystem.OraclesKilledOrder == 4 && VaultOfGlassSystem.OraclesTimesRefrained == 0
+                || VaultOfGlassSystem.OraclesKilledOrder == 6 && VaultOfGlassSystem.OraclesTimesRefrained == 1
+                || VaultOfGlassSystem.OraclesKilledOrder == 8 && VaultOfGlassSystem.OraclesTimesRefrained == 2)
+            {
+                Main.NewText("The Oracles recognize their refrain");
+            }
+        }
+
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
         {
             if (NPC.life <= 0 && player.active)
             {
-                Main.NewText($"[c/3EAD5C:{player.name}] has destroyed an Oracle");
-                if (DestinyWorld.oraclesKilledOrder == 4 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 1 || DestinyWorld.oraclesKilledOrder == 8 && DestinyWorld.oraclesTimesRefrained == 2)
-                {
-                    Main.NewText("The Oracles recognize their refrain");
-                }
+                HandleOnHit(player);
             }
         }
 
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            if (NPC.life <= 0 && Main.player[projectile.owner].active)
+            Player player = Main.player[projectile.owner];
+            if (NPC.life <= 0 && player.active)
             {
-                Main.NewText($"[c/3EAD5C:{Main.player[projectile.owner].name}] has destroyed an Oracle");
-                if (DestinyWorld.oraclesKilledOrder == 4 && DestinyWorld.oraclesTimesRefrained == 0 || DestinyWorld.oraclesKilledOrder == 6 && DestinyWorld.oraclesTimesRefrained == 1 || DestinyWorld.oraclesKilledOrder == 8 && DestinyWorld.oraclesTimesRefrained == 2)
-                {
-                    Main.NewText("The Oracles recognize their refrain");
-                }
+                HandleOnHit(player);
             }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            if (DestinyWorld.oraclesKilledOrder == NPC.ai[0])
+            if (VaultOfGlassSystem.OraclesKilledOrder == NPC.ai[0])
             {
-                DestinyWorld.oraclesKilledOrder++;
+                VaultOfGlassSystem.OraclesKilledOrder++;
+                return;
             }
-            else
+
+            Main.NewText("MARKED BY AN ORACLE!");
+            for (int playerCount = 0; playerCount < Main.maxPlayers; playerCount++)
             {
-                Main.NewText("MARKED BY AN ORACLE!");
-                foreach (Player player in Main.player)
+                Player player = Main.player[playerCount];
+                if (player.active && !player.HasBuff<MarkedForNegation>())
                 {
-                    if (player.active && !player.DestinyPlayer().markedForNegation)
-                    {
-                        player.AddBuff(ModContent.BuffType<Buffs.Debuffs.MarkedForNegation>(), 1);
-                    }
-                }
-                foreach (NPC npcE in Main.npc)
-                {
-                    if (npcE.type == NPC.type)
-                    {
-                        // npcE.active = false;
-                    }
+                    player.AddBuff(ModContent.BuffType<MarkedForNegation>(), 1);
                 }
             }
+
+            /*foreach (NPC npcE in Main.npc)
+            {
+                if (npcE.type == NPC.type)
+                {
+                    // npcE.active = false;
+                }
+            }*/
         }
     }
 }
