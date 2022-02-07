@@ -1,63 +1,85 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using DestinyMod.Common.NPCs;
+using DestinyMod.Content.Buffs.Debuffs;
 
-namespace TheDestinyMod.NPCs.Vex.VaultOfGlass
+namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 {
-    public class Templar : ModNPC
+    public class Templar : DestinyModNPC
     {
-        private int counter;
+        public int Counter { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 
-        private float progress = 0;
+        public float Progress { get => NPC.ai[1]; set => NPC.ai[1] = value; }
 
-        public override string Texture => "Terraria/NPC_" + NPCID.DemonEye;
+        public override string Texture => "Terraria/Images/NPC_" + NPCID.DemonEye;
 
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("The Templar");
+        public override void SetStaticDefaults() => DisplayName.SetDefault("The Templar");
+
+        public override void DestinySetDefaults()
+        {
+            NPC.CloneDefaults(NPCID.DemonEye);
+            AIType = 0;
+            NPC.aiStyle = -1;
+            NPC.damage = 0;
+            NPC.lifeMax = 200;
+            NPC.defense = 2;
+            NPC.noGravity = true;
+            NPC.dontTakeDamage = true;
+            NPC.knockBackResist = 0f;
+            // npc.chaseable = false;
         }
 
-        public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.DemonEye);
-            aiType = 0;
-            npc.aiStyle = -1;
-            npc.damage = 0;
-            npc.lifeMax = 200;
-            npc.defense = 2;
-            npc.noGravity = true;
-            npc.dontTakeDamage = true;
-            npc.knockBackResist = 0f;
-            npc.chaseable = false;
-        }
-
-        public override void AI() {
-            counter++;
-            if (counter == 600) {
+        public override void AI()
+        {
+            Counter++;
+            if (Counter == 600)
+            {
                 Main.NewText("The Templar prepares the Ritual of Negation");
             }
-            if (Main.netMode != NetmodeID.Server && !Filters.Scene["TheDestinyMod:Shockwave"].IsActive() && counter > 900) {
-                Main.NewText("RITUAL OF NEGATION!", new Color(255, 255, 0));
-                Filters.Scene.Activate("TheDestinyMod:Shockwave", npc.Center).GetShader().UseColor(1, 7, 15).UseTargetPosition(npc.Center);
-            }
-            if (Main.netMode != NetmodeID.Server && Filters.Scene["TheDestinyMod:Shockwave"].IsActive()) {
-                progress += 0.01f;
-                Filters.Scene["TheDestinyMod:Shockwave"].GetShader().UseProgress(progress).UseOpacity(100f * (1 - progress / 3f));
-                if (progress >= 2.5f) {
-                    Filters.Scene["TheDestinyMod:Shockwave"].Deactivate();
-                    foreach (Player player in Main.player) {
-                        if (player.active && player.DestinyPlayer().markedForNegation) {
-                            PlayerDeathReason deathReason = new PlayerDeathReason
+
+            if (Main.netMode != NetmodeID.Server)
+			{
+                Filter shockwave = Filters.Scene["TheDestinyMod:Shockwave"];
+                if (!shockwave.IsActive() && Counter > 900)
+                {
+                    Main.NewText("RITUAL OF NEGATION!", new Color(255, 255, 0));
+                    Filters.Scene.Activate("TheDestinyMod:Shockwave", NPC.Center).GetShader()
+                        .UseColor(1, 7, 15)
+                        .UseTargetPosition(NPC.Center);
+                }
+
+                if (shockwave.IsActive())
+                {
+                    Progress += 0.01f;
+
+                    shockwave.GetShader()
+                        .UseProgress(Progress)
+                        .UseOpacity(100f * (1 - Progress / 3f));
+
+                    if (Progress >= 2.5f)
+                    {
+                        shockwave.Deactivate();
+
+                        for (int playerCount = 0; playerCount < Main.maxPlayers; playerCount++)
+						{
+                            Player allPlayers = Main.player[playerCount];
+                            if (allPlayers.active && allPlayers.HasBuff<MarkedForNegation>())
                             {
-                                SourceCustomReason = player.name + " was negated.",
-                                SourceNPCIndex = npc.type
-                            };
-                            player.KillMe(deathReason, 0, 0);
+                                PlayerDeathReason deathReason = new PlayerDeathReason
+                                {
+                                    SourceCustomReason = allPlayers.name + " was negated.",
+                                    SourceNPCIndex = NPC.type
+                                };
+                                allPlayers.KillMe(deathReason, 0, 0);
+                            }
                         }
+                        
+                        Counter = 0;
+                        Progress = 0;
                     }
-                    counter = 0;
-                    progress = 0;
                 }
             }
         }

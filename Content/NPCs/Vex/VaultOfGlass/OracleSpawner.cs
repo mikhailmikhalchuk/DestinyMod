@@ -15,13 +15,13 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
     {
         public override string Texture => "Terraria/Images/NPC_" + NPCID.DemonEye;
 
-        public int timesShown;
-
         public int Counter { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 
         public bool SummonedOracle { get => NPC.ai[1] != 0; set => NPC.ai[1] = value ? 1 : 0; }
 
-        private int oracleOrder;
+        public int TimesShown { get => (int)NPC.ai[2]; set => NPC.ai[2] = value; }
+
+        public int OracleOrder { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
         public List<int> OracleIndexes = new List<int>();
 
@@ -44,12 +44,12 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             void SetFirstKill()
             {
                 Counter = -200;
-                timesShown = 0;
+                TimesShown = 0;
                 VaultOfGlassSystem.OraclesKilledOrder = 1;
                 SummonedOracle = false;
                 AlreadyCalled.Clear();
                 OracleIndexes.Clear();
-                oracleOrder = 0;
+                OracleOrder = 0;
             }
 
             int GetOracleSpawnCount() => VaultOfGlassSystem.OraclesTimesRefrained == 1 ? 5 : VaultOfGlassSystem.OraclesTimesRefrained == 2 ? 7 : 3;
@@ -85,7 +85,7 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             else if (SummonedOracle)
             {
                 if (Counter > 90 && (AlreadyCalled.Count < 3 && VaultOfGlassSystem.OraclesTimesRefrained == 0 || AlreadyCalled.Count < 5 && VaultOfGlassSystem.OraclesTimesRefrained == 1 || AlreadyCalled.Count < 7 && VaultOfGlassSystem.OraclesTimesRefrained == 2)
-                    && timesShown == 0)
+                    && TimesShown == 0)
                 {
                     //show oracles randomly
                     int spawnLimit = GetOracleSpawnCount();
@@ -102,14 +102,14 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
                     Counter = 0;
                 }
                 if (Counter > 90 && (AlreadyCalled.Count <= 3 && VaultOfGlassSystem.OraclesTimesRefrained == 0 || AlreadyCalled.Count <= 5 && VaultOfGlassSystem.OraclesTimesRefrained == 1 || AlreadyCalled.Count <= 7 && VaultOfGlassSystem.OraclesTimesRefrained == 2)
-                    && AlreadyCalled.Count > 0 && timesShown == 1)
+                    && AlreadyCalled.Count > 0 && TimesShown == 1)
                 {
                     //reshow oracles
-                    oracleOrder++;
+                    OracleOrder++;
                     for (int npcCount = 0; npcCount < Main.maxNPCs; npcCount++)
                     {
                         NPC allNPC = Main.npc[npcCount];
-                        if (allNPC.active && allNPC.type == ModContent.NPCType<Oracle>() && allNPC.ai[0] == oracleOrder)
+                        if (allNPC.active && allNPC.type == ModContent.NPCType<Oracle>() && allNPC.ai[0] == OracleOrder)
                         {
                             // npc.hide = false;
                             SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/NPC/Oracle" + (AlreadyCalled[0] + 1)), NPC.position);
@@ -120,17 +120,17 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
                     Counter = 0;
                 }
                 else if (Counter > 90 && (AlreadyCalled.Count == 3 && VaultOfGlassSystem.OraclesTimesRefrained == 0 || AlreadyCalled.Count == 5 && VaultOfGlassSystem.OraclesTimesRefrained == 1 || AlreadyCalled.Count == 7 && VaultOfGlassSystem.OraclesTimesRefrained == 2)
-                    && timesShown == 0 || SummonedOracle && Counter > 120 && AlreadyCalled.Count == 0 && timesShown == 1)
+                    && TimesShown == 0 || SummonedOracle && Counter > 120 && AlreadyCalled.Count == 0 && TimesShown == 1)
                 {
                     //hide them after first and second show
-                    timesShown++;
+                    TimesShown++;
                     foreach (int oracle in OracleIndexes)
                     {
                         Main.npc[oracle].hide = true;
                     }
                     Counter = 0;
                 }
-                else if (Counter == 120 && AlreadyCalled.Count == 0 && timesShown == 2)
+                else if (Counter == 120 && AlreadyCalled.Count == 0 && TimesShown == 2)
                 {
                     //summon and show oracles
                     Main.NewText("The Templar summons the Oracles");
@@ -140,7 +140,7 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
                         // Main.npc[oracle].dontTakeDamage = false;
                     }
                 }
-                else if (SummonedOracle && Counter > 600 && AlreadyCalled.Count == 0 && timesShown == 2)
+                else if (SummonedOracle && Counter > 600 && AlreadyCalled.Count == 0 && TimesShown == 2)
                 {
                     //debuff players if they failed
                     Main.NewText("MARKED BY AN ORACLE!");
