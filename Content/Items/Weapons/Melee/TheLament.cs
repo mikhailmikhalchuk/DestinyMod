@@ -67,16 +67,9 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 		public override bool? UseItem(Player player)
 		{
             StatsPlayer statsPlayer = player.GetModPlayer<StatsPlayer>();
-            if (statsPlayer.ChannelTime > 0 && statsPlayer.ChannelTime < 90)
+            if (statsPlayer.ChannelTime > 0 && statsPlayer.ChannelTime < 90 && statsPlayer.ChannelTime % 5 == 0)
             {
-                if (statsPlayer.ChannelTime % 5 == 0)
-                {
-                    SoundEngine.PlaySound(SoundID.Item22);
-                }
-
-                player.maxRunSpeed /= 2;
-                player.accRunSpeed /= 2;
-                player.dashDelay = 10;
+                SoundEngine.PlaySound(SoundID.Item22);
             }
 
             if (statsPlayer.ChannelTime == 92)
@@ -105,6 +98,20 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             return base.CanUseItem(player);
         }
 
-        public override Vector2? HoldoutOffset() => new Vector2(3, -17);
+        public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+
+        public override void PostUpdateRunSpeeds(Player player)
+		{
+			if (!Main.mouseRight || player.GetModPlayer<StatsPlayer>().ChannelTime > 90)
+			{
+                return;
+			}
+
+            player.maxRunSpeed /= 2;
+            player.accRunSpeed /= 2;
+            player.dashDelay = 10;
+        }
+
+		public override Vector2? HoldoutOffset() => new Vector2(3, -17);
     }
 }

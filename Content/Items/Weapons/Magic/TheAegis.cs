@@ -6,6 +6,7 @@ using DestinyMod.Common.Items;
 using Terraria.DataStructures;
 using DestinyMod.Common.ModPlayers;
 using Terraria.Audio;
+using DestinyMod.Content.Projectiles.Weapons.Magic;
 
 namespace DestinyMod.Content.Items.Weapons.Magic
 {
@@ -58,5 +59,17 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 		public override bool AltFunctionUse(Player player) => true;
 
 		public override bool CanUseItem(Player player) => !(player.altFunctionUse == 2 && Cooldown > 0);
+
+		public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+
+		public override void PostUpdateRunSpeeds(Player player)
+		{
+			if (player.channel)
+			{
+				player.maxRunSpeed /= 2;
+				player.accRunSpeed /= 2;
+				player.dashDelay = 10;
+			}
+		}
 	}
 }
