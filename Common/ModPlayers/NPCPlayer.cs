@@ -63,11 +63,45 @@ namespace DestinyMod.Common.ModPlayers
 			}
 		}
 
+		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item)
+		{
+			if (vendor.type == ModContent.NPCType<Cryptarch>())
+			{
+				if (item.type == ModContent.ItemType<CommonEngram>())
+				{
+					BoughtEngramCommon = false;
+				}
+				else if (item.type == ModContent.ItemType<UncommonEngram>())
+				{
+					BoughtEngramUncommon = false;
+				}
+				else if (item.type == ModContent.ItemType<RareEngram>())
+				{
+					BoughtEngramRare = false;
+				}
+			}
+		}
+
+		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+		{
+			if (target.TypeName == "Zombie" && ZavalaBountyProgress == 1 && ZavalaEnemies < 100 && target.life <= 0)
+			{
+				ZavalaEnemies++;
+			}
+
+			if (target.TypeName == "Skeleton" && ZavalaBountyProgress == 3 && ZavalaEnemies < 50 && target.life <= 0)
+			{
+				ZavalaEnemies++;
+			}
+		}
+
 		public override void SaveData(TagCompound tag)
 		{
 			tag.Add("BoughtEngramUncommon", BoughtEngramUncommon);
 			tag.Add("BoughtEngramRare", BoughtEngramRare);
 			tag.Add("MotesGiven", MotesGiven);
+			tag.Add("ZavalaBountyProgress", ZavalaBountyProgress);
+			tag.Add("ZavalaEnemies", ZavalaEnemies);
 		}
 
 		public override void LoadData(TagCompound tag)
@@ -75,6 +109,8 @@ namespace DestinyMod.Common.ModPlayers
 			BoughtEngramUncommon = tag.Get<bool>("BoughtEngramUncommon");
 			BoughtEngramRare = tag.Get<bool>("BoughtEngramRare");
 			MotesGiven = tag.Get<int>("MotesGiven");
+			ZavalaBountyProgress = tag.Get<int>("ZavalaBountyProgress");
+			ZavalaEnemies = tag.Get<int>("ZavalaEnemies");
 		}
 	}
 }
