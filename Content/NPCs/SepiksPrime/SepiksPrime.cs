@@ -9,11 +9,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using DestinyMod.Content.Items.Bosses.SepiksPrime;
+using DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime;
+using DestinyMod.Common.NPCs;
+using Terraria.ModLoader.IO;
+using DestinyMod.Content.Items.Misc;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
 	[AutoloadBossHead]
-    public class SepiksPrime : ModNPC
+    public class SepiksPrime : DestinyModNPC
     {
         private int timesFiredThisCycle;
 
@@ -34,12 +38,14 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 
         private int rad = 120;
 
+        public static bool DownSepiksPrime;
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
         }
 
-        public override void SetDefaults()
+        public override void DestinySetDefaults()
         {
             NPC.aiStyle = -1;
             NPC.noGravity = true;
@@ -461,16 +467,16 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(BossBag));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Placeables.SepiksPrimeTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SepiksPrimeTrophy>(), 1));
 
             LeadingConditionRule notExpert = new LeadingConditionRule(new Conditions.NotExpert());
-            notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Vanity.SepiksPrimeMask>(), 7));
+            notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SepiksPrimeMask>(), 7));
             npcLoot.Add(notExpert);
 
-            if (!DestinyWorld.downedPrime)
+            if (!DownSepiksPrime)
             {
-                DestinyWorld.downedPrime = true;
-                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<Items.ExoticCipher>());
+                DownSepiksPrime = true;
+                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ExoticCipher>());
                 if (Main.netMode == NetmodeID.Server)
                 {
                     NetMessage.SendData(MessageID.WorldData);
@@ -492,7 +498,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                     NPC.dontTakeDamage = reader.ReadBoolean();
                     break;
                 default:
-                    TheDestinyMod.Instance.Logger.Error($"Sepiks Prime Packet Handler: Encountered unknown packet of type {type}");
+                    DestinyMod.Instance.Logger.Error($"Sepiks Prime Packet Handler: Encountered unknown packet of type {type}");
                     break;
             }
         }
@@ -500,11 +506,15 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         private ModPacket GetPacket(SepiksBossMessageType type)
         {
             ModPacket packet = Mod.GetPacket();
-            packet.Write((byte)DestinyModMessageType.SepiksPrime);
+            // packet.Write((byte)DestinyModMessageType.SepiksPrime);
             packet.Write(NPC.whoAmI);
             packet.Write((byte)type);
             return packet;
         }
+
+        public override void Save(TagCompound tagCompound) => tagCompound.Add("Downed", DownSepiksPrime);
+
+        public override void Load(TagCompound tagCompound) => DownSepiksPrime = tagCompound.Get<bool>("Downed");
     }
 
     internal enum SepiksBossMessageType : byte

@@ -31,7 +31,7 @@ namespace DestinyMod.Content.Tiles
 			Tile tile = Framing.GetTileSafely(i, j);
 			Vector2 drawOffSet = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
 			Vector2 screenPosition = new Vector2(i, j).ToWorldCoordinates().ToScreenPosition();
-			spriteBatch.Draw(TextureAssets.Tile[Type].Value, screenPosition + drawOffSet, new Rectangle(tile.frameX, tile.frameY, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(TextureAssets.Tile[Type].Value, screenPosition + drawOffSet, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 			return false;
 		}
 

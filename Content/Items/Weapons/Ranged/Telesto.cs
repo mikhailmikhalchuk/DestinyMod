@@ -1,5 +1,6 @@
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.Projectiles;
+using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -28,7 +29,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			DestinyModProjectile.FireFusionProjectile(player, source, new Vector2(position.X, position.Y - 2), velocity, damage, knockback, 7, ModContent.ProjectileType<TelestoBullet>());
+			DestinyModProjectile.FireFusionProjectile(player, source, position + new Vector2(0, -2), velocity, damage, knockback, 7, ModContent.ProjectileType<TelestoBullet>());
 			return false;
 		}
 

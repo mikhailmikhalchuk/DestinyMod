@@ -55,7 +55,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Super
                 for (int projectileCount = 0; projectileCount < Main.maxProjectiles; projectileCount++)
                 {
                     Projectile otherProjectile = Main.projectile[projectileCount];
-                    if (!otherProjectile.active || otherProjectile.type != ModContent.ProjectileType<Sunshot>())
+                    if (!otherProjectile.active || otherProjectile.type != ModContent.ProjectileType<SunspotSummon>())
                     {
                         continue;
                     }
@@ -68,7 +68,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Super
 
                 if (!youFailed)
                 {
-                    Projectile.NewProjectile(player.GetProjectileSource_Misc(0), new Vector2(Projectile.position.X, Projectile.position.Y + 40), Vector2.Zero, ModContent.ProjectileType<Sunspot>(), 0, 0, Projectile.owner);
+                    Projectile.NewProjectile(player.GetProjectileSource_Misc(0), Projectile.position + new Vector2(0, 40), Vector2.Zero, ModContent.ProjectileType<SunspotSummon>(), 0, 0, Projectile.owner);
                 }
             }
             return true;

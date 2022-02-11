@@ -23,7 +23,7 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 			switch (Main.rand.Next(4))
 			{
 				case 0:
-					player.QuickSpawnItem(ModContent.ItemType<Weapons.Summon.ServitorStaff>());
+					// player.QuickSpawnItem(ModContent.ItemType<Weapons.Summon.ServitorStaff>());
 					break;
 
 				default:

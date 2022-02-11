@@ -1,4 +1,5 @@
 using DestinyMod.Common.Items.ItemTypes;
+using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -30,7 +31,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 3), velocity, ModContent.ProjectileType<DeathBullet>(), damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position + new Vector2(0, -3), velocity, ModContent.ProjectileType<DeathBullet>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 

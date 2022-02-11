@@ -63,7 +63,7 @@ namespace DestinyMod.Content.Tiles.Herbs
 			HerbStages stage = GetStage(i, j);
 			if (stage != HerbStages.Grown)
 			{
-				tile.frameX += FrameWidth;
+				tile.TileFrameX += FrameWidth;
 				if (Main.netMode != NetmodeID.SinglePlayer)
 				{
 					NetMessage.SendTileSquare(-1, i, j, 1);
@@ -74,7 +74,7 @@ namespace DestinyMod.Content.Tiles.Herbs
 		public static HerbStages GetStage(int i, int j)
 		{
 			Tile tile = Framing.GetTileSafely(i, j);
-			return (HerbStages)(tile.frameX / FrameWidth);
+			return (HerbStages)(tile.TileFrameX / FrameWidth);
 		}
 	}
 }

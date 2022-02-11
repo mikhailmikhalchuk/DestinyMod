@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.NPCs;
 using DestinyMod.Common.ModSystems;
+using DestinyMod.Content.Buffs.Debuffs;
 
 namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 {

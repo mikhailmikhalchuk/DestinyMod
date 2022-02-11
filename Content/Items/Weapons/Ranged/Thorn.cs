@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using DestinyMod.Content.Projectiles.Weapons.Ranged;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -28,7 +29,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 2), velocity, ModContent.ProjectileType<ThornBullet>(), damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position + new Vector2(0, -2), velocity, ModContent.ProjectileType<ThornBullet>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 
