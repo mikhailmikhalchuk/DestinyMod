@@ -11,6 +11,7 @@ using Terraria.Chat;
 using DestinyMod.Content.Items.Weapons.Ranged;
 using DestinyMod.Common.NPCs.Data;
 using DestinyMod.Common.NPCs.NPCTypes;
+using DestinyMod.Content.Currency;
 
 namespace DestinyMod.Content.NPCs.Town
 {
@@ -116,19 +117,19 @@ namespace DestinyMod.Content.NPCs.Town
 			{
 				case 0:
 					shopData.ItemType = ModContent.ItemType<BorealisRanged>();
-					shopData.ItemCurrency = TheDestinyMod.CipherCustomCurrencyId;
+					shopData.ItemCurrency = ExoticCipher.ID;
 					shopData.ItemPrice = 3;
 					break;
 
 				case 1:
 					shopData.ItemType = ItemID.MythrilAnvil;
-					shopData.ItemCurrency = TheDestinyMod.CipherCustomCurrencyId;
+					shopData.ItemCurrency = ExoticCipher.ID;
 					shopData.ItemPrice = 10000;
 					break;
 
 				default:
 					shopData.ItemType = ModContent.ItemType<SweetBusiness>();
-					shopData.ItemCurrency = TheDestinyMod.CipherCustomCurrencyId;
+					shopData.ItemCurrency = ExoticCipher.ID;
 					shopData.ItemPrice = 1;
 					break;
 			}

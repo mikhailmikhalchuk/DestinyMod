@@ -7,7 +7,7 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 {
 	public class SepiksPrimeBag : TreasureBag
 	{
-		public override int BossBagNPC => ModContent.NPCType<SepiksPrime>();
+		public override int BossBagNPC => ModContent.NPCType<NPCs.SepiksPrime.SepiksPrime>();
 
 		public override void DestinySetDefaults() => Item.rare = ItemRarityID.Orange;
 

@@ -39,7 +39,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					for (int j = projectileTilePosition.Y; j < projectileTileDimensions.Y; j++)
 					{
 						Tile tile = Framing.GetTileSafely(i, j);
-						if (!tile.IsActiveUnactuated || !Main.tileSolid[tile.type] || (Main.tileSolidTop[tile.type] && tile.frameY != 0))
+						if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || (Main.tileSolidTop[tile.TileType] && tile.TileFrameY != 0))
 						{
 							continue;
 						}

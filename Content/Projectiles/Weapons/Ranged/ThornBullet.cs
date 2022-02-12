@@ -2,9 +2,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
 using DestinyMod.Common.Projectiles.ProjectileType;
 using DestinyMod.Content.Items.Buffers;
+using DestinyMod.Content.Buffs.Debuffs;
+using DestinyMod.Common.ModPlayers;
+using DestinyMod.Common.GlobalNPCs;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
@@ -23,8 +25,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Debuffs.NecroticRot>(), 120);
-            target.DestinyNPC().necroticApplier = Main.player[Projectile.owner];
+            target.AddBuff(ModContent.BuffType<NecroticRot>(), 120);
+            Player applier = Main.player[Projectile.owner];
+            target.GetGlobalNPC<DebuffNPC>().NecroticApplier = applier;
+
             for (int i = 0; i < Main.rand.Next(15, 31); i++)
             {
                 Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.PoisonStaff, 0f, 0f, Alpha: 100, Scale: 0.8f);
@@ -33,10 +37,11 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 dust.velocity += Projectile.velocity;
                 dust.noGravity = true;
             }
+
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                int i = Item.NewItem(target.Hitbox, ModContent.ItemType<Items.Buffers.ThornRemnant>());
-                (Main.item[i].ModItem as Items.Buffers.ThornRemnant).RemnantOwner = Main.player[Projectile.owner];
+                ThornRemnant thornRemnant = Main.item[Item.NewItem(target.Hitbox, ModContent.ItemType<ThornRemnant>())].ModItem as ThornRemnant;
+                thornRemnant.RemnantOwner = applier;
             }
         }
 
@@ -44,7 +49,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             Player player = Main.player[Projectile.owner];
             target.AddBuff(ModContent.BuffType<NecroticRot>(), 120);
-            target.DestinyPlayer().necroticApplier = player;
+            target.GetModPlayer<DebuffPlayer>().NecroticApplier = player;
+
             for (int i = 0; i < Main.rand.Next(15, 31); i++)
             {
                 Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.PoisonStaff, 0f, 0f, Alpha: 100, Scale: 0.8f);

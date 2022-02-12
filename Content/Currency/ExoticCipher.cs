@@ -2,12 +2,19 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Currency
 {
-	public class ExoticCipher : CustomCurrencySingleCoin
+	public class ExoticCipher : CustomCurrencySingleCoin, ILoadable
 	{
 		public ExoticCipher(int coinItemID, long currencyCap) : base(coinItemID, currencyCap) { }
+
+		public static int ID { get; private set; }
+
+		public void Load(Mod mod) => ID = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.Misc.ExoticCipher>(), 999L));
+
+		public void Unload() { }
 
 		public override void GetPriceText(string[] lines, ref int currentLine, int price)
 		{
@@ -19,7 +26,7 @@ namespace DestinyMod.Content.Currency
 					color.B,
 					Language.GetTextValue("LegacyTooltip.50"),
 					price,
-					$"cipher{(price > 1 ? "s" : "")}"
+					"cipher" + (price > 1 ? "s" : string.Empty)
 				}
 			);
 		}
