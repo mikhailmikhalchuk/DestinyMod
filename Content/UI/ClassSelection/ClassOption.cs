@@ -27,7 +27,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public override void OnInitialize()
 		{
-			HAlign = 0.5f
+			HAlign = 0.5f;
 			Width.Pixels = 200;
 			Height.Pixels = 114;
 
@@ -60,7 +60,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			SoundEngine.PlaySound(SoundID.MenuOpen);
 			Main.menuMode = 2;
 			Main.LocalPlayer.GetModPlayer<ClassPlayer>().ClassType = ClassType;
-			ModContent.GetInstance<TheDestinyMod>().classSelectionInterface?.SetState(null);
+			ModContent.GetInstance<ClassSelectionUI>().UserInterface?.SetState(null);
 		}
 
 		private void MouseOver(UIMouseEvent evt, UIElement listeningElement)
