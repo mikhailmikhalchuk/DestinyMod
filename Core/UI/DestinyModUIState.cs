@@ -1,26 +1,37 @@
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DestinyMod.Core.UI
 {
 	public abstract class DestinyModUIState : UIState
 	{
-		public string Name;
+		public string Name { get; internal set; }
 
-		protected bool AutoCreateInterface;
+		public string LayerName => "DestinyMod: " + Name;
+
+		public bool AutoSetState { get; protected set; }
+
+		public bool AutoAddHandler { get; protected set; }
 
 		public UserInterface UserInterface { get; private set; }
 
-		public virtual void PreLoad()
+		public UIHandler UIHandler { get; internal set; }
+
+		public virtual void PreLoad(ref string name)
 		{
-			Name = GetType().Name;
-			AutoCreateInterface = true;
+			AutoSetState = true;
+			AutoAddHandler = true;
 		}
 
-		public virtual void Load(DestinyModUIState uiState)
+		public abstract UIHandler Load();
+
+		internal void DefaultSetUpInterface()
 		{
 			UserInterface = new UserInterface();
-			UserInterface.SetState(uiState);
+
+			if (AutoSetState)
+			{
+				UserInterface.SetState(this);
+			}
 		}
 	}
 }

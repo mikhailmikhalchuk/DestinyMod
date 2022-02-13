@@ -26,7 +26,6 @@ namespace DestinyMod.Core.UI
 			LayerName = layerName;
 			DelegateDraw = delegateDraw;
 			InterfaceScaleType = interfaceScaleType;
-			ProcessedUIs.Add(this);
 		}
 
 		public virtual void Update(GameTime gameTime) => Interface?.Update(gameTime);
@@ -44,7 +43,7 @@ namespace DestinyMod.Core.UI
 
 		public bool DefaultDraw()
 		{
-			Interface.Draw(Main.spriteBatch, new GameTime());
+			Interface?.Draw(Main.spriteBatch, new GameTime());
 			return true;
 		}
 
