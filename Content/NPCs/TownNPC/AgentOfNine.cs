@@ -13,7 +13,7 @@ using DestinyMod.Common.NPCs.Data;
 using DestinyMod.Common.NPCs.NPCTypes;
 using DestinyMod.Content.Currency;
 
-namespace DestinyMod.Content.NPCs.Town
+namespace DestinyMod.Content.NPCs.TownNPC
 {
 	[AutoloadHead]
 	public class AgentOfNine : GenericTownNPC
@@ -157,10 +157,10 @@ namespace DestinyMod.Content.NPCs.Town
 		{
 			if (Main.LocalPlayer.ZoneHallow && Main.rand.NextBool(10))
 			{
-				return Language.GetTextValue("Mods.TheDestinyMod.AgentOfNine.Hallow");
+				return Language.GetTextValue("Mods.DestinyMod.AgentOfNine.Hallow");
 			}
 
-			return Language.GetTextValue("Mods.TheDestinyMod.AgentOfNine.Chatter_" + Main.rand.Next(1, 11));
+			return Language.GetTextValue("Mods.DestinyMod.AgentOfNine.Chatter_" + Main.rand.Next(1, 11));
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2) => button = Language.GetTextValue("LegacyInterface.28");

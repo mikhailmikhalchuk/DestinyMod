@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DestinyMod.Content.Items.Armor
+namespace DestinyMod.Content.Items.Equipables.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
 	public class ProdigalHood : ClassArmor

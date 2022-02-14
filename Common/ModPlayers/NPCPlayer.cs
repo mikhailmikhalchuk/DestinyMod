@@ -1,5 +1,5 @@
 using DestinyMod.Content.Items.Engrams;
-using DestinyMod.Content.NPCs.Town;
+using DestinyMod.Content.NPCs.TownNPC;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -102,7 +102,7 @@ namespace DestinyMod.Common.ModPlayers
 		{
 			tag.Add("BoughtEngramUncommon", BoughtEngramUncommon);
 			tag.Add("BoughtEngramRare", BoughtEngramRare);
-			tag.Add("DecryptedItems", DecryptedItems.Select(type =>
+			tag.Add("DecryptedItems", DecryptedItems?.Select(type =>
 			{
 				Item item = new Item();
 				item.SetDefaults(type);

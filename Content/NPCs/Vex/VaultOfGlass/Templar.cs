@@ -42,11 +42,11 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 
             if (Main.netMode != NetmodeID.Server)
 			{
-                Filter shockwave = Filters.Scene["TheDestinyMod:Shockwave"];
+                Filter shockwave = Filters.Scene["DestinyMod:Shockwave"];
                 if (!shockwave.IsActive() && Counter > 900)
                 {
                     Main.NewText("RITUAL OF NEGATION!", new Color(255, 255, 0));
-                    Filters.Scene.Activate("TheDestinyMod:Shockwave", NPC.Center).GetShader()
+                    Filters.Scene.Activate("DestinyMod:Shockwave", NPC.Center).GetShader()
                         .UseColor(1, 7, 15)
                         .UseTargetPosition(NPC.Center);
                 }

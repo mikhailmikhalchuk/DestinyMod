@@ -18,6 +18,8 @@ namespace DestinyMod.Common.GlobalNPCs
 {
     public class DestinyGlobalNPC : GlobalNPC
     {
+        public override bool InstancePerEntity => true;
+
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (npc.TypeName == "Zombie")
@@ -55,11 +57,11 @@ namespace DestinyMod.Common.GlobalNPCs
             {
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.RelicShard"), new Color(200, 200, 55));
+                    Main.NewText(Language.GetTextValue("Mods.DestinyMod.RelicShard"), new Color(200, 200, 55));
                 }
                 else
                 {
-                    NetworkText text = NetworkText.FromLiteral(Language.GetTextValue("Mods.TheDestinyMod.RelicShard"));
+                    NetworkText text = NetworkText.FromLiteral(Language.GetTextValue("Mods.DestinyMod.RelicShard"));
                     ChatHelper.BroadcastChatMessage(text, new Color(200, 200, 55));
                 }
 

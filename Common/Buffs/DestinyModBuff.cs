@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Common.Buffs
 {
-    public class DestinyModBuff : ModBuff
+    public abstract class DestinyModBuff : ModBuff
     {
         public virtual void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit) { }
 

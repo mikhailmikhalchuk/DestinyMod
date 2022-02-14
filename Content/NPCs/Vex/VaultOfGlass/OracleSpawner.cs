@@ -15,13 +15,29 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
     {
         public override string Texture => "Terraria/Images/NPC_" + NPCID.DemonEye;
 
-        public int Counter { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
+        public int Counter
+        {
+            get => (int)NPC.ai[0];
+            set => NPC.ai[0] = value;
+        }
 
-        public bool SummonedOracle { get => NPC.ai[1] != 0; set => NPC.ai[1] = value ? 1 : 0; }
+        public bool SummonedOracle
+        {
+            get => NPC.ai[1] != 0;
+            set => NPC.ai[1] = value ? 1 : 0;
+        }
 
-        public int TimesShown { get => (int)NPC.ai[2]; set => NPC.ai[2] = value; }
+        public int TimesShown
+        {
+            get => (int)NPC.ai[2];
+            set => NPC.ai[2] = value;
+        }
 
-        public int OracleOrder { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+        public int OracleOrder
+        {
+            get => (int)NPC.ai[3];
+            set => NPC.ai[3] = value;
+        }
 
         public List<int> OracleIndexes = new List<int>();
 

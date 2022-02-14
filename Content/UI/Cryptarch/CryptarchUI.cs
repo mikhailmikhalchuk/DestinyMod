@@ -14,7 +14,7 @@ using ReLogic.Graphics;
 using DestinyMod.Content.Items.Weapons.Ranged.Omolon;
 using DestinyMod.Content.Items.Weapons.Ranged.Suros;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
-using DestinyMod.Content.NPCs.Town;
+using DestinyMod.Content.NPCs.TownNPC;
 using DestinyMod.Core.UI;
 using DestinyMod.Content.Items.Engrams;
 using Terraria.GameContent.UI;
@@ -41,7 +41,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 
 		public override void OnInitialize()
 		{
-			InputSlot = new VanillaItemSlotWrapper(Terraria.UI.ItemSlot.Context.PrefixItem, Terraria.UI.ItemSlot.Context.BankItem, 0.85f)
+			InputSlot = new VanillaItemSlotWrapper(ItemSlot.Context.PrefixItem, ItemSlot.Context.BankItem, 0.85f)
 			{
 				ValidItemFunc = item => item.IsAir
 				|| !item.IsAir && (item.type == ModContent.ItemType<CommonEngram>()

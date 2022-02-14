@@ -1,5 +1,5 @@
 Mods: {
-	TheDestinyMod: {
+	DestinyMod: {
 		Drifter: {
 			Chatter_1: How you livin'?
 			Chatter_2: '''Get me those Motes and I'll make you rich, {0}, I promise.'''

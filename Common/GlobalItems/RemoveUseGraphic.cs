@@ -9,7 +9,14 @@ namespace DestinyMod.Common.GlobalItems
 	{
 		public int ItemReuse = 0;
 
-		public override void SetDefaults(Item item)
+        public override bool InstancePerEntity => true;
+
+        public override GlobalItem Clone(Item item, Item itemClone)
+        {
+            return base.Clone(item, itemClone);
+        }
+
+        public override void SetDefaults(Item item)
 		{
 			if (item.ModItem is DestinyModItem destinyModItem)
 			{

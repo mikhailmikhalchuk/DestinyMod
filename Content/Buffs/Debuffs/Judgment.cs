@@ -3,7 +3,7 @@ using DestinyMod.Common.Buffs;
 
 namespace DestinyMod.Content.Buffs.Debuffs
 {
-    public class Judgement : DestinyModBuff
+    public class Judgment : DestinyModBuff
     {
 		public override void SetStaticDefaults()
 		{

@@ -11,6 +11,8 @@ namespace DestinyMod.Common.GlobalNPCs
 
 		public Player NecroticApplier;
 
+		public override bool InstancePerEntity => true;
+
 		public override void PostAI(NPC npc)
 		{
 			if (--OutbreakHitCount <= 0)

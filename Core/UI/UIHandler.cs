@@ -33,6 +33,7 @@ namespace DestinyMod.Core.UI
 		public virtual void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals(DrawLayer));
+
 			if (inventoryIndex == -1)
 			{
 				return;

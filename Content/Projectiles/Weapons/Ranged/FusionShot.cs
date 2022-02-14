@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
 
-// We need to talk babe...
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     //If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
@@ -28,9 +27,17 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         private bool Fired;
 
-        private int FireDelay { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
+        private int FireDelay
+        {
+            get => (int)Projectile.ai[0];
+            set => Projectile.ai[0] = value;
+        }
 
-        private int CountFires { get => (int)Projectile.ai[1]; set => Projectile.ai[1] = value; }
+        private int CountFires
+        {
+            get => (int)Projectile.ai[1];
+            set => Projectile.ai[1] = value;
+        }
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 

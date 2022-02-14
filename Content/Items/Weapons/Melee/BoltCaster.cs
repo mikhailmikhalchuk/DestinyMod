@@ -6,7 +6,7 @@ using DestinyMod.Content.Projectiles.Weapons.Melee;
 
 namespace DestinyMod.Content.Items.Weapons.Melee
 {
-    public class BoltCatser : DestinyModItem
+    public class BoltCaster : DestinyModItem
     {
         public override void DestinySetDefaults()
         {

@@ -5,7 +5,7 @@ using Terraria.Audio;
 
 namespace DestinyMod.Common.Projectiles.ProjectileType
 {
-	public class Bullet : DestinyModProjectile
+	public abstract class Bullet : DestinyModProjectile
 	{
 		public override void AutomaticSetDefaults()
 		{

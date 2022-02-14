@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 {
-	public class OmolonWeapon : Gun
+	public abstract class OmolonWeapon : Gun
 	{
 		public virtual string GlowTexturePath => Texture + "_Glow";
 

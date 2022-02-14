@@ -9,7 +9,7 @@ using DestinyMod.Common.Projectiles;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Melee
 {
-    public class AnimatedSwordProjectile : DestinyModProjectile
+    public abstract class AnimatedSwordProjectile : DestinyModProjectile
     {
         public override void SetStaticDefaults() => Main.projFrames[Projectile.type] = 14;
 
@@ -69,17 +69,19 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
             {
                 spriteEffects = SpriteEffects.FlipHorizontally;
             }
+
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+
             int frameHeight = texture.Height / Main.projFrames[Projectile.type];
             int startY = frameHeight * Projectile.frame;
+
             Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
             Vector2 origin = sourceRectangle.Size() / 2f;
             origin.X = (Projectile.spriteDirection == 1) ? (sourceRectangle.Width - 80) : 80;
 
-            Color drawColor = Projectile.GetAlpha(lightColor);
             Main.spriteBatch.Draw(texture,
             Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
-            sourceRectangle, drawColor, Projectile.rotation, origin, Projectile.scale, spriteEffects, 0f);
+            sourceRectangle, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0f);
 
             return false;
         }

@@ -98,7 +98,7 @@ namespace DestinyMod.Content.UI.RaidSelection
 				raidDragable.Append(clearCheckpoint);
 			}
 
-			Asset<Texture2D> buttonDeleteTexture = ModContent.Request<Texture2D>("TheDestinyMod/UI/ButtonCancel");
+			Asset<Texture2D> buttonDeleteTexture = ModContent.Request<Texture2D>("DestinyMod/UI/ButtonCancel");
 			UIImageButton closeButton = new UIImageButton(buttonDeleteTexture);
 			closeButton.Left.Set(370, 0f);
 			closeButton.Top.Set(10, 0f);

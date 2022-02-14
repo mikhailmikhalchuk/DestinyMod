@@ -26,7 +26,10 @@ namespace DestinyMod.Core.UI
 				{
 					UIHandler.ProcessedUIs.Add(uiState.UIHandler);
 				}
+
+				ContentInstance.Register(uiState);
 			}
+			DestinyMod.Instance.Logger.Info(ModContent.GetInstance<Content.UI.CryptarchUI.CryptarchUI>());
 		}
 
 		public override void Unload() => UIHandler.Unload();

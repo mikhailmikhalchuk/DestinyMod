@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using DestinyMod.Common.Items.ItemTypes;
-using DestinyMod.Common.Utils;
 
 namespace DestinyMod.Content.Items.Materials
 {

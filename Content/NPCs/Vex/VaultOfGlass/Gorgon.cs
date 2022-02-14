@@ -11,11 +11,23 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
     {
         public override string Texture => "Terraria/Images/NPC_" + NPCID.DemonEye;
 
-        public int StepsTaken { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
+        public int StepsTaken
+        {
+            get => (int)NPC.ai[0];
+            set => NPC.ai[0] = value;
+        }
 
-        public bool Forward { get => NPC.ai[1] == 0; set => NPC.ai[1] = value ? 0 : 1; }
+        public bool Forward
+        {
+            get => NPC.ai[1] == 0;
+            set => NPC.ai[1] = value ? 0 : 1;
+        }
 
-        public int TimeUntilEveryoneIsDead { get => (int)NPC.ai[2]; set => NPC.ai[2] = value; }
+        public int TimeUntilEveryoneIsDead
+        {
+            get => (int)NPC.ai[2];
+            set => NPC.ai[2] = value;
+        }
 
         public override void DestinySetDefaults()
         {

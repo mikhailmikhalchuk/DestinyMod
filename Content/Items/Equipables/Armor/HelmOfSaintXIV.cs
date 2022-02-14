@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.Items.ItemTypes;
 
-namespace DestinyMod.Content.Items.Armor
+namespace DestinyMod.Content.Items.Equipables.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
 	public class HelmOfSaintXIV : ExoticArmor

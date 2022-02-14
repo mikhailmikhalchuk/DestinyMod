@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Common.Items.ItemTypes
 {
-	public class Gun : DestinyModItem
+	public abstract class Gun : DestinyModItem
 	{
 		public override void AutomaticSetDefaults()
 		{

@@ -7,7 +7,7 @@ using DestinyMod.Common.Items.ItemTypes;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
-	public class FateBringer : Gun
+	public class Fatebringer : Gun
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("\"Delivering the inevitable, one pull at a time.\"");
 

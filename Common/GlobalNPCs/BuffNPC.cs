@@ -8,7 +8,7 @@ namespace DestinyMod.Common.GlobalNPCs
 {
 	public class BuffNPC : GlobalNPC
 	{
-		public DestinyModBuff IsBuffIndexDestinyModBuff(NPC npc, int index)
+		public static DestinyModBuff IsBuffIndexDestinyModBuff(NPC npc, int index)
 		{
 			int buffType = npc.buffType[index];
 			ModBuff modBuff = ModContent.GetModBuff(buffType);
@@ -20,7 +20,7 @@ namespace DestinyMod.Common.GlobalNPCs
 			return destinyModBuff;
 		}
 
-		public void ImplementBuffIteration(NPC npc, Action<DestinyModBuff> onSuccessfulIteration)
+		public static void ImplementBuffIteration(NPC npc, Action<DestinyModBuff> onSuccessfulIteration)
 		{
 			for (int indexer = 0; indexer < npc.buffType.Length; indexer++)
 			{

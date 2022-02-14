@@ -8,7 +8,11 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     public class SIVANanite : DestinyModProjectile
     {
-        public float AITimer { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
+        public float AITimer
+        {
+            get => Projectile.ai[0];
+            set => Projectile.ai[0] = value;
+        }
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.SnowBallFriendly;
 

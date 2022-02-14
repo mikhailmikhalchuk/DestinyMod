@@ -8,6 +8,8 @@ namespace DestinyMod.Common.GlobalNPCs
 	{
 		public int HighlightDuration;
 
+		public override bool InstancePerEntity => true;
+
 		public override void PostAI(NPC npc)
 		{
 			if (--HighlightDuration <= 0)

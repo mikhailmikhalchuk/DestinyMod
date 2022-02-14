@@ -7,11 +7,23 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 {
 	public class SepiksHoming : DestinyModNPC
     {
-        public int CurrentFrame { get => (int)NPC.localAI[0]; set => NPC.localAI[0] = value; }
+        public int CurrentFrame
+        {
+            get => (int)NPC.localAI[0];
+            set => NPC.localAI[0] = value;
+        }
 
-        public bool Initialized { get => NPC.ai[0] != 0; set => NPC.ai[0] = value ? 1 : 0; }
+        public bool Initialized
+        {
+            get => NPC.ai[0] != 0;
+            set => NPC.ai[0] = value ? 1 : 0;
+        }
 
-        public int Timer { get => (int)NPC.ai[1]; set => NPC.ai[1] = value; }
+        public int Timer
+        {
+            get => (int)NPC.ai[1];
+            set => NPC.ai[1] = value;
+        }
 
         public override void SetStaticDefaults()
         {

@@ -8,7 +8,11 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
 	public class TelestoBullet : DestinyModProjectile
 	{
-		public float ForceDetonationTimer { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
+		public float ForceDetonationTimer
+		{
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
+		}
 
 		public override void DestinySetDefaults()
 		{

@@ -24,9 +24,17 @@ namespace DestinyMod.Content.NPCs.Fallen
             NPC.frameCounter = 0;
         }
 
-        public bool Walking { get => NPC.ai[0] != 0; set => NPC.ai[0] = value ? 1 : 0; }
+        public bool Walking
+        {
+            get => NPC.ai[0] != 0;
+            set => NPC.ai[0] = value ? 1 : 0;
+        }
 
-        public int ProjectileTimer { get => (int)NPC.ai[1]; set => NPC.ai[1] = value; }
+        public int ProjectileTimer
+        {
+            get => (int)NPC.ai[1];
+            set => NPC.ai[1] = value;
+        }
 
         public int CurrentFrame = 5;
 

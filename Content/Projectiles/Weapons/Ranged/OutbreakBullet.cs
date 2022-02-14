@@ -9,7 +9,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     public class OutbreakBullet : Bullet
     {
-        public override string Texture => "Terraria/Projectile_" + ProjectileID.ExplosiveBullet;
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.ExplosiveBullet;
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.5f, lightColor.B * 0.1f, lightColor.A);
 

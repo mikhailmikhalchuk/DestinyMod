@@ -9,11 +9,19 @@ namespace DestinyMod.Content.NPCs.Fallen
 {
     public class Skiff : DestinyModNPC
     {
-        public NPC MotherNPC { get => Main.npc[(int)NPC.ai[0]]; }
+        public NPC MotherNPC => Main.npc[(int)NPC.ai[0]];
 
-        public float Timer { get => NPC.ai[1]; set => NPC.ai[1] = value; }
+        public float Timer
+        {
+            get => NPC.ai[1];
+            set => NPC.ai[1] = value;
+        }
 
-        public float Phase { get => NPC.ai[2]; set => NPC.ai[2] = value; }
+        public float Phase
+        {
+            get => NPC.ai[2];
+            set => NPC.ai[2] = value;
+        }
 
         public override void SetStaticDefaults() => DisplayName.SetDefault("Fallen Skiff");
 

@@ -10,9 +10,17 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 {
     public class SepiksServitor : DestinyModNPC
     {
-        public int Timer { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
+        public int Timer
+        {
+            get => (int)NPC.ai[0];
+            set => NPC.ai[0] = value;
+        }
 
-        public int RandomFireTime { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
+        public int RandomFireTime
+        {
+            get => (int)NPC.ai[0];
+            set => NPC.ai[0] = value;
+        }
 
         public override void DestinySetDefaults()
         {

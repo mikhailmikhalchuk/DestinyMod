@@ -12,7 +12,7 @@ using DestinyMod.Content.Items.Placeables;
 using DestinyMod.Common.ModSystems;
 using DestinyMod.Common.ModPlayers;
 
-namespace DestinyMod.Content.NPCs.Town
+namespace DestinyMod.Content.NPCs.TownNPC
 {
 	[AutoloadHead]
 	public class Zavala : GenericTownNPC
@@ -49,21 +49,21 @@ namespace DestinyMod.Content.NPCs.Town
 						{
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
 						}
-						return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesTitanWin");
+						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesTitanWin");
 
 					case 2:
 						if (!GuardianGames.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
 						}
-						return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesHunterWin");
+						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesHunterWin");
 
 					case 3:
 						if (!GuardianGames.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
 						}
-						return Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGamesWarlockWin");
+						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesWarlockWin");
 				}
 			}
 
@@ -74,43 +74,43 @@ namespace DestinyMod.Content.NPCs.Town
 
 			if (NPC.AnyDanger())
 			{
-				return Language.GetTextValue("Mods.TheDestinyMod.Zavala.Boss" + Main.rand.Next(1, 4));
+				return Language.GetTextValue("Mods.DestinyMod.Zavala.Boss" + Main.rand.Next(1, 4));
 			}
 
 			List<string> dialogue = new List<string>();
 			if (NPC.downedMoonlord)
 			{
-				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.AfterML"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.AfterML"));
 			}
 
 			if (NPC.FindFirstNPC(ModContent.NPCType<Drifter>()) >= 0)
 			{
-				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Chatter_1"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.Chatter_1"));
 			}
 
 			if (BirthdayParty.PartyIsUp)
 			{
-				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Party"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.Party"));
 			}
 
 			if (Main.LocalPlayer.ZoneCorrupt || Main.LocalPlayer.ZoneCrimson)
 			{
-				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Evil"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.Evil"));
 			}
 
 			if (Main.LocalPlayer.ZoneHallow)
 			{
-				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Hallow"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.Hallow"));
 			}
 
 			if (GuardianGames.Active)
 			{
-				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.GuardianGames"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGames"));
 			}
 
 			for (int dialogueCount = 2; dialogueCount < 6; dialogueCount++)
 			{
-				dialogue.Add(Language.GetTextValue("Mods.TheDestinyMod.Zavala.Chatter_" + dialogueCount));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.Chatter_" + dialogueCount));
 			}
 			return Main.rand.Next(dialogue);
 		}
@@ -118,7 +118,7 @@ namespace DestinyMod.Content.NPCs.Town
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
 			button = Language.GetTextValue("LegacyInterface.28");
-			button2 = Language.GetTextValue("Mods.TheDestinyMod.Common.Bounty");
+			button2 = Language.GetTextValue("Mods.DestinyMod.Common.Bounty");
 		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -133,40 +133,40 @@ namespace DestinyMod.Content.NPCs.Town
 				switch (player.ZavalaBountyProgress)
 				{
 					case 0:
-						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.ZavalaBounty1");
+						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.ZavalaBounty1");
 						player.ZavalaBountyProgress = 1;
 						break;
 
 					case 1:
 						if (player.ZavalaEnemies == 100)
 						{
-							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyComplete1");
+							Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyComplete1");
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TheThirdAxiom>());
 							player.ZavalaBountyProgress = 2;
 							player.ZavalaEnemies = 0;
 						}
 						else
 						{
-							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyProgress1", player.ZavalaEnemies);
+							Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyProgress1", player.ZavalaEnemies);
 						}
 						break;
 
 					case 2:
-						Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyRequisition2");
+						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyRequisition2");
 						player.ZavalaBountyProgress = 3;
 						break;
 
 					case 3:
 						if (player.ZavalaEnemies == 50)
 						{
-							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyComplete2");
+							Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyComplete2");
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<LastWord>());
 							player.ZavalaBountyProgress = 4;
 							player.ZavalaEnemies = 0;
 						}
 						else
 						{
-							Main.npcChatText = Language.GetTextValue("Mods.TheDestinyMod.Zavala.BountyProgress2", player.ZavalaBountyProgress);
+							Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyProgress2", player.ZavalaBountyProgress);
 						}
 						break;
 

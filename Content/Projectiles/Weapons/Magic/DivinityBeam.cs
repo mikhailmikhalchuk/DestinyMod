@@ -86,7 +86,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			target.immune[Projectile.owner] = 5;
 			if (Counter > 120)
 			{
-				target.AddBuff(ModContent.BuffType<Judgement>(), 150);
+				target.AddBuff(ModContent.BuffType<Judgment>(), 150);
 				Counter = 0;
 			}
 		}

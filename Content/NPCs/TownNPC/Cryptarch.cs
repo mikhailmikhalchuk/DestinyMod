@@ -6,8 +6,9 @@ using DestinyMod.Content.Items.Engrams;
 using DestinyMod.Content.Items.Weapons.Ranged.Khvostov;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.NPCs.NPCTypes;
+using DestinyMod.Content.UI.CryptarchUI;
 
-namespace DestinyMod.Content.NPCs.Town
+namespace DestinyMod.Content.NPCs.TownNPC
 {
 	[AutoloadHead]
 	public class Cryptarch : GenericTownNPC
@@ -41,21 +42,21 @@ namespace DestinyMod.Content.NPCs.Town
 		{
 			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(9))
 			{
-				return Language.GetTextValue("Mods.TheDestinyMod.Cryptarch.Party");
+				return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Party");
 			}
 
 			if (Main.eclipse && Main.rand.NextBool(9))
 			{
-				return Language.GetTextValue("Mods.TheDestinyMod.Cryptarch.Eclipse");
+				return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Eclipse");
 			}
 
-			return Language.GetTextValue("Mods.TheDestinyMod.Cryptarch.Chatter_" + Main.rand.Next(1, 7));
+			return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Chatter_" + Main.rand.Next(1, 7));
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
 			button = Language.GetTextValue("LegacyInterface.28");
-			button2 = Language.GetTextValue("Mods.TheDestinyMod.Common.Decrypt");
+			button2 = Language.GetTextValue("Mods.DestinyMod.Common.Decrypt");
 		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -68,7 +69,7 @@ namespace DestinyMod.Content.NPCs.Town
 			{
 				Main.playerInventory = true;
 				Main.npcChatText = string.Empty;
-				DestinyMod.Instance.CryptarchUserInterface.SetState(new UI.CryptarchUI());
+				ModContent.GetInstance<CryptarchUI>().UserInterface.SetState(new CryptarchUI());
 			}
 		}
 

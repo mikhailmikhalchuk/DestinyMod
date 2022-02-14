@@ -9,9 +9,17 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
     public class JotunnShot : DestinyModProjectile
     {
-        public bool Fired { get => (int)Projectile.ai[0] != 0; set => Projectile.ai[0] = value ? 1 : 0; }
+        public bool Fired
+        {
+            get => (int)Projectile.ai[0] != 0;
+            set => Projectile.ai[0] = value ? 1 : 0;
+        }
 
-        public int Charge { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
+        public int Charge
+        {
+            get => (int)Projectile.ai[0];
+            set => Projectile.ai[0] = value;
+        }
 
         public override void SetStaticDefaults()
         {

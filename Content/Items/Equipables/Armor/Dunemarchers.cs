@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Content.Buffs;
 
-namespace DestinyMod.Content.Items.Armor
+namespace DestinyMod.Content.Items.Equipables.Armor
 {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Dunemarchers : ClassArmor

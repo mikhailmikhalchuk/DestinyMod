@@ -9,7 +9,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Misc
 {
     public class BorealisProjectile : DestinyModProjectile
     {
-        public override string Texture => "Terraria/Projectile_" + ProjectileID.Bullet;
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
         public override void DestinySetDefaults()
         {
