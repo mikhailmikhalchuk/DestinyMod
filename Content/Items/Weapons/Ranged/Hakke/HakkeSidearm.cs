@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using DestinyMod.Content.Items.Materials;
 using DestinyMod.Content.Recipes.RecipeGroups;
 
-namespace DestinyMod.Content.Items.Weapons.Ranged
+namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
 	public class HakkeSidearm : HakkeCraftsmanshipWeapon
 	{

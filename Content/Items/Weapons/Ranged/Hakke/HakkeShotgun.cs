@@ -7,7 +7,7 @@ using DestinyMod.Content.Recipes.RecipeGroups;
 using Terraria.DataStructures;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 
-namespace DestinyMod.Content.Items.Weapons.Ranged
+namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
 	public class HakkeShotgun : HakkeCraftsmanshipWeapon
 	{

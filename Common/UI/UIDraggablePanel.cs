@@ -1,15 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DestinyMod.Common.UI
 {
-	internal class UIDraggablePanel : UIPanel
+	public class UIDraggablePanel : UIPanel
 	{
-		private Vector2 offset;
+		public Vector2 Offset { get; private set; }
 
 		public bool Dragging;
 
@@ -27,7 +25,7 @@ namespace DestinyMod.Common.UI
 
 		private void DragStart(UIMouseEvent evt)
 		{
-			offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
+			Offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
 			Dragging = true;
 		}
 
@@ -36,8 +34,8 @@ namespace DestinyMod.Common.UI
 			Vector2 end = evt.MousePosition;
 			Dragging = false;
 
-			Left.Set(end.X - offset.X, 0f);
-			Top.Set(end.Y - offset.Y, 0f);
+			Left.Set(end.X - Offset.X, 0f);
+			Top.Set(end.Y - Offset.Y, 0f);
 
 			Recalculate();
 		}
@@ -53,8 +51,8 @@ namespace DestinyMod.Common.UI
 
 			if (Dragging)
 			{
-				Left.Set(Main.mouseX - offset.X, 0f);
-				Top.Set(Main.mouseY - offset.Y, 0f);
+				Left.Set(Main.mouseX - Offset.X, 0f);
+				Top.Set(Main.mouseY - Offset.Y, 0f);
 				Recalculate();
 			}
 

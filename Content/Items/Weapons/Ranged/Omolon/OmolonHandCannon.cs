@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 {
-	public class OmolonHandCannon : OmolonWeapon
+	public class OmolonHandcannon : OmolonWeapon
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Standard Omolon Handcannon");
 

@@ -1,6 +1,6 @@
 using Terraria.Localization;
 
-namespace DestinyMod.Common.Utils
+namespace DestinyMod.Core.Utils
 {
 	public static class LanguageUtils
 	{

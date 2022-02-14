@@ -1,5 +1,6 @@
 using DestinyMod.Content.Items.Engrams;
 using DestinyMod.Content.NPCs.Town;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
@@ -14,6 +15,8 @@ namespace DestinyMod.Common.ModPlayers
 		public bool BoughtEngramUncommon;
 
 		public bool BoughtEngramRare;
+
+		public List<int> DecryptedItems;
 
 		public int MotesGiven;
 
@@ -99,6 +102,12 @@ namespace DestinyMod.Common.ModPlayers
 		{
 			tag.Add("BoughtEngramUncommon", BoughtEngramUncommon);
 			tag.Add("BoughtEngramRare", BoughtEngramRare);
+			tag.Add("DecryptedItems", DecryptedItems.Select(type =>
+			{
+				Item item = new Item();
+				item.SetDefaults(type);
+				return ItemIO.Save(item);
+			}).ToList());
 			tag.Add("MotesGiven", MotesGiven);
 			tag.Add("ZavalaBountyProgress", ZavalaBountyProgress);
 			tag.Add("ZavalaEnemies", ZavalaEnemies);
@@ -108,6 +117,7 @@ namespace DestinyMod.Common.ModPlayers
 		{
 			BoughtEngramUncommon = tag.Get<bool>("BoughtEngramUncommon");
 			BoughtEngramRare = tag.Get<bool>("BoughtEngramRare");
+			DecryptedItems = tag.Get<List<Item>>("DecryptedItems").Select(item => item.type).ToList();
 			MotesGiven = tag.Get<int>("MotesGiven");
 			ZavalaBountyProgress = tag.Get<int>("ZavalaBountyProgress");
 			ZavalaEnemies = tag.Get<int>("ZavalaEnemies");

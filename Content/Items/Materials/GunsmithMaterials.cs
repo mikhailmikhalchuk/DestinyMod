@@ -1,6 +1,5 @@
 using Terraria;
 using DestinyMod.Common.Items;
-using DestinyMod.Common.Utils;
 
 namespace DestinyMod.Content.Items.Materials
 {
@@ -8,7 +7,6 @@ namespace DestinyMod.Content.Items.Materials
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.AddTranslation(LanguageUtils.Polish, "Materiały Rusznikarskie");
 			Tooltip.SetDefault("Used to craft guns");
 		}
 

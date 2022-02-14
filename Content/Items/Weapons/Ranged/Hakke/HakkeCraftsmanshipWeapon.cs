@@ -6,7 +6,7 @@ using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using DestinyMod.Content.Buffs;
 
-namespace DestinyMod.Content.Items.Weapons.Ranged
+namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
 	public abstract class HakkeCraftsmanshipWeapon : Gun
 	{
