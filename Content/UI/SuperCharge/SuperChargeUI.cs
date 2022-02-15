@@ -26,7 +26,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			AutoAddHandler = true;
 		}
 
-		public override UIHandler Load() => new UIHandler(UserInterface, string.Empty, LayerName);
+		public override UIHandler Load() => new UIHandler(UserInterface, "Vanilla: Resource Bars", LayerName);
 
 		public override void OnInitialize()
 		{

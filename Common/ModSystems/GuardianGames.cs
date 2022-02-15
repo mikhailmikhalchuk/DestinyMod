@@ -8,6 +8,9 @@ using System;
 using DestinyMod.Common.ModPlayers;
 using Terraria.ModLoader.IO;
 using DestinyMod.Content.Items.Misc;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace DestinyMod.Common.ModSystems
 {
@@ -28,6 +31,12 @@ namespace DestinyMod.Common.ModSystems
 				return false;
 			}
 
+			if (!DestinyClientConfig.Instance.GuardianGamesConfig)
+            {
+				Main.NewText("You must opt-in to the Guardian Games from the config menu.", Color.Red);
+				return true;
+            }
+
 			try
 			{
 				int laurelCount = 0;
@@ -43,24 +52,27 @@ namespace DestinyMod.Common.ModSystems
 				}
 
 				ClassPlayer classPlayer = player.GetModPlayer<ClassPlayer>();
-				HttpWebRequest request = WebRequest.Create("https://DestinyModServer.mikhailmcraft.repl.co") as HttpWebRequest;
-				string postData = Uri.EscapeDataString(laurelCount.ToString());
-				byte[] data = System.Text.Encoding.ASCII.GetBytes(postData);
+				HttpClient client = new HttpClient();
+				client.BaseAddress = new Uri("https://DestinyModServer.mikhailmcraft.repl.co");
+				HttpRequestMessage request = new HttpRequestMessage();
+				request.Method = HttpMethod.Post;
+				request.Headers.Add("VERIFY-MOD", "a7rg53F435h4Ff2fhjWa33gH6j54ag2G");
+				request.Headers.Add("CLASS", classPlayer.ClassType.ToString().ToUpper());
+				request.Headers.Add("DUPLICATE-CHECK", Steamworks.SteamUser.GetSteamID().ToString());
+				HttpResponseMessage response = client.Send(request);
+				/*
 				request.Method = "POST";
 				request.ContentType = "application/x-www-form-urlencoded";
-				request.ContentLength = data.Length;
-				request.Headers["VERIFY-MOD"] = "a7rg53F435h4Ff2fhjWa33gH6j54ag2G";
-				request.Headers["CLASS"] = classPlayer.ClassType.ToString().ToUpper();
-				request.Headers["DUPLICATE-CHECK"] = Steamworks.SteamUser.GetSteamID().ToString();
-				request.Timeout = 1500;
+				request.ContentLength = data.Length;*/
 
-				using (var stream = request.GetRequestStream())
+				string postData = Uri.EscapeDataString(laurelCount.ToString());
+				byte[] data = System.Text.Encoding.ASCII.GetBytes(postData);
+
+				using (var stream = request.Content.ReadAsStream())
 				{
 					stream.Write(data, 0, data.Length);
 				}
-
-				HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-				string responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+				string responseString = new StreamReader(response.Content.ReadAsStream()).ReadToEnd();
 
 				if (responseString == "TOOMUCH")
 				{

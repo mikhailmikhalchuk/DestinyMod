@@ -23,13 +23,13 @@ namespace DestinyMod.Content.UI.RaidSelection
 
 		private UITextPanel<string> clearCheckpoint;
 
-		private string Raid;
+		public string Raid;
 
-		private int Clears;
+		public int Clears;
 
-		private bool DownedRequirement;
+		public bool DownedRequirement;
 
-		private string DownedName;
+		public string DownedName;
 
 		public override void PreLoad(ref string name)
 		{
@@ -37,15 +37,7 @@ namespace DestinyMod.Content.UI.RaidSelection
 			AutoAddHandler = true;
 		}
 
-		public override UIHandler Load() => new UIHandler(UserInterface, string.Empty, LayerName);
-
-		public RaidSelectionUI(string raid, int clears, bool downedRequirement, string downedName)
-		{
-			Raid = raid;
-			Clears = clears;
-			DownedRequirement = downedRequirement;
-			DownedName = downedName;
-		}
+		public override UIHandler Load() => new UIHandler(UserInterface, "Vanilla: Mouse Text", LayerName);
 
 		public override void OnInitialize()
 		{

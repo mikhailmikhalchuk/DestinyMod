@@ -60,10 +60,10 @@ namespace DestinyMod.Content.UI.CryptarchUI
 			base.Update(gameTime);
 
 			Player player = Main.LocalPlayer;
-
-			if (player.talkNPC == -1 || Main.npc[player.talkNPC].type != ModContent.NPCType<Cryptarch>())
+			
+			if (player.talkNPC == -1 || Main.npc[player.talkNPC]?.type != ModContent.NPCType<Cryptarch>())
 			{
-				UserInterface.SetState(null);
+				ModContent.GetInstance<CryptarchUI>().UserInterface.SetState(null);
 			}
 		}
 

@@ -11,10 +11,14 @@ namespace DestinyMod.Core.UI
 	{
 		public override void Load()
 		{
-			foreach (Type type in DestinyMod.Instance.Code.GetTypes().Where(t => t.IsSubclassOf(typeof(DestinyModUIState)) 
-			&& !t.IsAbstract 
-			&& t.GetConstructor(Type.EmptyTypes) != null))
+			foreach (Type type in DestinyMod.Instance.Code.GetTypes().Where(t => t.IsSubclassOf(typeof(DestinyModUIState)) && !t.IsAbstract))
 			{
+				if (type.GetConstructor(Type.EmptyTypes) == null)
+                {
+					DestinyMod.Instance.Logger.Warn($"DestinyMod UIImplementer: DestinyModUIState {type.Name} had constructor parameters and was ignored");
+					continue;
+				}
+
 				DestinyModUIState uiState = Activator.CreateInstance(type) as DestinyModUIState;
 				string uiStateName = type.Name;
 				uiState.PreLoad(ref uiStateName);
@@ -29,7 +33,6 @@ namespace DestinyMod.Core.UI
 
 				ContentInstance.Register(uiState);
 			}
-			DestinyMod.Instance.Logger.Info(ModContent.GetInstance<Content.UI.CryptarchUI.CryptarchUI>());
 		}
 
 		public override void Unload() => UIHandler.Unload();

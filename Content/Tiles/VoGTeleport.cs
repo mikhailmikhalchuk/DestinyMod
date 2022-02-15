@@ -5,6 +5,8 @@ using Terraria.UI;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.Audio;
+using DestinyMod.Content.UI.RaidSelection;
+using DestinyMod.Common.ModSystems;
 
 namespace DestinyMod.Content.Tiles
 {
@@ -21,22 +23,25 @@ namespace DestinyMod.Content.Tiles
             SoundType = SoundID.Tink;
         }
 
-        //Come back to this
-		/*public override bool RightClick(int i, int j)
+		public override bool RightClick(int i, int j)
 		{
-            if (ModContent.GetInstance<TheDestinyMod>().raidInterface.CurrentState == null)
+            if (ModContent.GetInstance<RaidSelectionUI>().UserInterface.CurrentState == null)
             {
-                ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(new UI.RaidSelectionUI(Language.GetTextValue("Mods.TheDestinyMod.VaultOfGlass"), DestinyWorld.clearsVOG, NPC.downedBoss3, Language.GetTextValue("NPCName.SkeletronHead")));
+                ModContent.GetInstance<RaidSelectionUI>().UserInterface.SetState(new RaidSelectionUI());
+                ModContent.GetInstance<RaidSelectionUI>().Raid = Language.GetTextValue("Mods.DestinyMod.Common.VaultOfGlass");
+                ModContent.GetInstance<RaidSelectionUI>().Clears = VaultOfGlassSystem.RaidClears;
+                ModContent.GetInstance<RaidSelectionUI>().DownedRequirement = NPC.downedBoss3;
+                ModContent.GetInstance<RaidSelectionUI>().DownedName = Language.GetTextValue("NPCName.SkeletronHead");
                 SoundEngine.PlaySound(SoundID.MenuOpen);
-                DestinyWorld.vogPosition = new Vector2(i, j);
+                VaultOfGlassSystem.TilePosition = new Vector2(i, j);
             }
             else
             {
-                ModContent.GetInstance<TheDestinyMod>().raidInterface.SetState(null);
+                ModContent.GetInstance<RaidSelectionUI>().UserInterface.SetState(null);
                 SoundEngine.PlaySound(SoundID.MenuClose);
             }
 
             return base.RightClick(i, j);
-        }*/
+        }
     }
 }
