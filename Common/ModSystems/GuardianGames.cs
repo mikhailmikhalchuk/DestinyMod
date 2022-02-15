@@ -24,6 +24,8 @@ namespace DestinyMod.Common.ModSystems
 
 		public static bool ClaimedItem;
 
+		public static bool GameError;
+
 		public static bool TryDeposit(Player player)
 		{
 			if (DepositCooldown > 0)

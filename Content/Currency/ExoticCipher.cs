@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Currency
 
 		public static int ID { get; private set; }
 
-		public void Load(Mod mod) => ID = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.Misc.ExoticCipher>(), 999L));
+		public void Load(Mod mod) => ID = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.Misc.ExoticCipher>(), 30));
 
 		public void Unload() { }
 
