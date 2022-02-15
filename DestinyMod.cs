@@ -8,5 +8,7 @@ namespace DestinyMod
 		public static DestinyMod Instance { get; set; }
 
 		public DestinyMod() => Instance = this;
-	}
+
+		public override void Unload() => Instance = null;
+    }
 }

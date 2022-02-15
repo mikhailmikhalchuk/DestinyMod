@@ -31,7 +31,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
             Item.knockBack = 0;
             Item.useTime = 18;
             Item.crit = 10;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/VexMythoclast"); //thanks, fillinek // WHO :angery:
+            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/VexMythoclast"); //thanks, fillinek
             Item.useAnimation = 18;
             Item.value = Item.buyPrice(gold: 1);
         }
@@ -86,7 +86,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
             SwapCooldown--;
         }
-
 
         public override bool AltFunctionUse(Player player) => true;
 

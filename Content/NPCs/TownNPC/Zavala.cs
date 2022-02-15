@@ -27,6 +27,8 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			NPCID.Sets.AttackFrameCount[NPC.type] = 4;
 		}
 
+		public override string TownNPCName() => "Zavala";
+
 		public override void DestinySetDefaults()
 		{
 			NPC.width = 18;
@@ -35,8 +37,6 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) => NPC.downedSlimeKing;
 
-		public override string TownNPCName() => "Zavala";
-
 		public override string GetChat()
 		{
 			GuardianGames.ClaimedItem = hasClosedCeremony = true;
@@ -44,21 +44,21 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			{
 				switch (GuardianGames.WinningTeam)
 				{
-					case 1:
+					case DestinyClassType.Titan:
 						if (!GuardianGames.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
 						}
 						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesTitanWin");
 
-					case 2:
+					case DestinyClassType.Hunter:
 						if (!GuardianGames.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
 						}
 						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesHunterWin");
 
-					case 3:
+					case DestinyClassType.Warlock:
 						if (!GuardianGames.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());

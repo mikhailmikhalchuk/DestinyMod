@@ -20,7 +20,9 @@ namespace DestinyMod.Content.NPCs.TownNPC
 	{
 		public override void DestinySetStaticDefaults() => DisplayName.SetDefault("Dredgen");
 
-		public override void AutomaticSetDefaults()
+		public override string TownNPCName() => "The Drifter";
+
+		public override void DestinySetDefaults()
 		{
 			NPC.width = 26;
 			NPC.height = 46;
@@ -39,61 +41,6 @@ namespace DestinyMod.Content.NPCs.TownNPC
 				return true;
 			}
 			return false;
-		}
-
-		public override string TownNPCName() => "The Drifter";
-
-		public override string GetChat()
-		{
-			int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
-			bool xur = NPC.AnyNPCs(ModContent.NPCType<AgentOfNine>());
-			string gender = Main.LocalPlayer.Male ? Language.GetTextValue("Mods.DestinyMod.Common.Brother") : Language.GetTextValue("Mods.DestinyMod.Common.Sister");
-			List<string> dialogue = new List<string>();
-			if (taxCollector >= 0)
-			{
-				string taxCollectorName = Main.npc[taxCollector].GivenName;
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_" + (NPC.AnyNPCs(ModContent.NPCType<Zavala>()) ? 14 : 15), taxCollectorName, gender));
-			}
-
-			if (xur)
-			{
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_13", gender));
-			}
-
-			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(6))
-			{
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Party", gender));
-			}
-
-			if (Main.eclipse)
-			{
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Eclipse"));
-			}
-
-			if (Main.hardMode)
-			{
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_10"));
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_11"));
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_12"));
-			}
-
-			if (Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0)
-			{
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Invasion"));
-			}
-
-			for (int dialogueCount = 1; dialogueCount < 9; dialogueCount++)
-			{
-				if (dialogueCount == 2)
-				{
-					dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_2", gender));
-					continue;
-				}
-
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_" + dialogueCount));
-			}
-
-			return Main.rand.Next(dialogue);
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2)
@@ -236,6 +183,59 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			{
 				Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.CheckMotes2", npcPlayer.MotesGiven, gender);
 			}
+		}
+
+		public override string GetChat()
+		{
+			int taxCollector = NPC.FindFirstNPC(NPCID.TaxCollector);
+			bool xur = NPC.AnyNPCs(ModContent.NPCType<AgentOfNine>());
+			string gender = Main.LocalPlayer.Male ? Language.GetTextValue("Mods.DestinyMod.Common.Brother") : Language.GetTextValue("Mods.DestinyMod.Common.Sister");
+			List<string> dialogue = new List<string>();
+			if (taxCollector >= 0)
+			{
+				string taxCollectorName = Main.npc[taxCollector].GivenName;
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_" + (NPC.AnyNPCs(ModContent.NPCType<Zavala>()) ? 14 : 15), taxCollectorName, gender));
+			}
+
+			if (xur)
+			{
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_13", gender));
+			}
+
+			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(6))
+			{
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Party", gender));
+			}
+
+			if (Main.eclipse)
+			{
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Eclipse"));
+			}
+
+			if (Main.hardMode)
+			{
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_10"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_11"));
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_12"));
+			}
+
+			if (Main.invasionType > 0 && Main.invasionDelay == 0 && Main.invasionSize > 0)
+			{
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Invasion"));
+			}
+
+			for (int dialogueCount = 1; dialogueCount < 9; dialogueCount++)
+			{
+				if (dialogueCount == 2)
+				{
+					dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_2", gender));
+					continue;
+				}
+
+				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Drifter.Chatter_" + dialogueCount));
+			}
+
+			return Main.rand.Next(dialogue);
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)

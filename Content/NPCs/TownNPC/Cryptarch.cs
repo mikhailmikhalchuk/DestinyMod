@@ -15,6 +15,8 @@ namespace DestinyMod.Content.NPCs.TownNPC
 	{
 		public override void DestinySetStaticDefaults() => DisplayName.SetDefault("Cryptarch");
 
+		public override string TownNPCName() => "Master Rahool";
+
 		public override void DestinySetDefaults()
 		{
 			NPC.width = 26;
@@ -36,23 +38,6 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			return false;
 		}
 
-		public override string TownNPCName() => "Master Rahool";
-
-		public override string GetChat()
-		{
-			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(9))
-			{
-				return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Party");
-			}
-
-			if (Main.eclipse && Main.rand.NextBool(9))
-			{
-				return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Eclipse");
-			}
-
-			return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Chatter_" + Main.rand.Next(1, 7));
-		}
-
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
 			button = Language.GetTextValue("LegacyInterface.28");
@@ -71,6 +56,21 @@ namespace DestinyMod.Content.NPCs.TownNPC
 				Main.npcChatText = string.Empty;
 				ModContent.GetInstance<CryptarchUI>().UserInterface.SetState(new CryptarchUI());
 			}
+		}
+
+		public override string GetChat()
+		{
+			if (BirthdayParty.PartyIsUp && Main.rand.NextBool(9))
+			{
+				return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Party");
+			}
+
+			if (Main.eclipse && Main.rand.NextBool(9))
+			{
+				return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Eclipse");
+			}
+
+			return Language.GetTextValue("Mods.DestinyMod.Cryptarch.Chatter_" + Main.rand.Next(1, 7));
 		}
 
 		public override void SetupShop(Chest shop, ref int nextSlot)

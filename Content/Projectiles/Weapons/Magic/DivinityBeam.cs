@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
 	public class DivinityBeam : DestinyModProjectile
 	{
-		private static SoundEffectInstance fire; //thanks, solstice // WHO :Angery:
+		private static SoundEffectInstance fire; //thanks, solstice
 
 		private static SoundEffectInstance start;
 

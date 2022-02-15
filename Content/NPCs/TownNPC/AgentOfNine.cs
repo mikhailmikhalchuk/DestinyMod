@@ -24,11 +24,15 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override void DestinySetStaticDefaults() => DisplayName.SetDefault("Agent of the Nine");
 
+		public override string TownNPCName() => "Xûr";
+
 		public override void DestinySetDefaults()
 		{
 			NPC.width = 20;
 			NPC.height = 46;
 		}
+
+		public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
 
 		public static void UpdateTravelingMerchant()
 		{
@@ -137,21 +141,15 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			DestinyMod.Instance.Logger.Debug($"Selected Weapon: {Shop[0]}");
 		}
 
-		public override void Save(TagCompound tagCompound)
+		public override void SetChatButtons(ref string button, ref string button2) => button = Language.GetTextValue("LegacyInterface.28");
+
+		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
 		{
-			tagCompound.Add("SpawnTime", SpawnTime);
-			tagCompound.Add("Shop", Shop.Select(shopData => shopData.Save()).ToList());
+			if (firstButton)
+			{
+				shop = true;
+			}
 		}
-
-		public override void Load(TagCompound tagCompound)
-		{
-			SpawnTime = tagCompound.GetDouble("SpawnTime");
-			Shop = tagCompound.Get<List<TagCompound>>("Shop").Select(tag => NPCShopData.Load(tag)).ToList();
-		}
-
-		public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
-
-		public override string TownNPCName() => "Xûr";
 
 		public override string GetChat()
 		{
@@ -161,16 +159,6 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			}
 
 			return Language.GetTextValue("Mods.DestinyMod.AgentOfNine.Chatter_" + Main.rand.Next(1, 11));
-		}
-
-		public override void SetChatButtons(ref string button, ref string button2) => button = Language.GetTextValue("LegacyInterface.28");
-
-		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
-		{
-			if (firstButton)
-			{
-				shop = true;
-			}
 		}
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
@@ -202,6 +190,18 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			scale = 0.5f;
 			item = ModContent.ItemType<UniversalRemote>();
 			closeness = 20;
+		}
+
+		public override void Save(TagCompound tagCompound)
+		{
+			tagCompound.Add("SpawnTime", SpawnTime);
+			tagCompound.Add("Shop", Shop.Select(shopData => shopData.Save()).ToList());
+		}
+
+		public override void Load(TagCompound tagCompound)
+		{
+			SpawnTime = tagCompound.GetDouble("SpawnTime");
+			Shop = tagCompound.Get<List<TagCompound>>("Shop").Select(tag => NPCShopData.Load(tag)).ToList();
 		}
 	}
 }

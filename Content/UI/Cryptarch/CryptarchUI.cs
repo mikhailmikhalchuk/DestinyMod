@@ -72,7 +72,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 			List<int> output = new List<int>();
 			if (engramType == ModContent.ItemType<CommonEngram>())
 			{
-				output.AddMass(ModContent.ItemType<HakkeAutoRifle>(),
+				output.Add(ModContent.ItemType<HakkeAutoRifle>(),
 					ModContent.ItemType<HakkePulseRifle>(),
 					ModContent.ItemType<HakkeScoutRifle>(),
 					ModContent.ItemType<HakkeShotgun>(),
@@ -84,7 +84,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 			}
 			else if (engramType == ModContent.ItemType<UncommonEngram>())
 			{
-				output.AddMass(ModContent.ItemType<OmolonAutoRifle>(),
+				output.Add(ModContent.ItemType<OmolonAutoRifle>(),
 					ModContent.ItemType<OmolonPulseRifle>(),
 					ModContent.ItemType<OmolonScoutRifle>(),
 					ModContent.ItemType<OmolonShotgun>(),
@@ -96,7 +96,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 			}
 			else if (engramType == ModContent.ItemType<RareEngram>())
 			{
-				output.AddMass(ModContent.ItemType<SurosAutoRifle>(),
+				output.Add(ModContent.ItemType<SurosAutoRifle>(),
 					ModContent.ItemType<SurosPulseRifle>(),
 					ModContent.ItemType<SurosScoutRifle>(),
 					ModContent.ItemType<SurosShotgun>(),

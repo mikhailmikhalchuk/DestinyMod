@@ -20,7 +20,7 @@ namespace DestinyMod.Common.ModSystems
 
 		public static int DepositCooldown;
 
-		public static int WinningTeam;
+		public static DestinyClassType WinningTeam;
 
 		public static bool ClaimedItem;
 
@@ -30,14 +30,41 @@ namespace DestinyMod.Common.ModSystems
 		{
 			if (DepositCooldown > 0)
 			{
+				Main.NewText("Please wait to deposit Laurels again.", Color.Red);
 				return false;
 			}
+			ClassPlayer classPlayer = player.GetModPlayer<ClassPlayer>();
 
 			if (!DestinyClientConfig.Instance.GuardianGamesConfig)
             {
 				Main.NewText("You must opt-in to the Guardian Games from the config menu.", Color.Red);
 				return true;
             }
+			if (GameError)
+            {
+				Main.NewText("Couldn't connect to the internet to deposit Laurels. Try restarting the mod.", Color.Red);
+				return true;
+			}
+			if (!player.HasItem(ModContent.ItemType<Laurel>()))
+            {
+				Main.NewText("You have no Laurels to deposit.", Color.Red);
+				return true;
+			}
+			if (classPlayer.ClassType == DestinyClassType.None)
+            {
+				Main.NewText("Your character does not have a class.", Color.Red);
+				return true;
+			}
+			if (!Active)
+            {
+				Main.NewText("The Guardian Games have ended!", Color.Red);
+				return true;
+			}
+			if (WinningTeam != DestinyClassType.None)
+            {
+				Main.NewText("The Guardian Games have ended. Speak to Zavala for the closing statement.", new Color(0, 170, 255));
+				return true;
+			}
 
 			try
 			{
@@ -52,9 +79,9 @@ namespace DestinyMod.Common.ModSystems
 
 					item.SetDefaults();
 				}
-
-				ClassPlayer classPlayer = player.GetModPlayer<ClassPlayer>();
+				
 				HttpClient client = new HttpClient();
+				client.Timeout = TimeSpan.FromSeconds(1.5);
 				client.BaseAddress = new Uri("https://DestinyModServer.mikhailmcraft.repl.co");
 				HttpRequestMessage request = new HttpRequestMessage();
 				request.Method = HttpMethod.Post;
@@ -78,7 +105,7 @@ namespace DestinyMod.Common.ModSystems
 
 				if (responseString == "TOOMUCH")
 				{
-					Main.NewText("You've already deposited 30 Laurels today! Try again tomorrow.", new Color(255, 0, 0));
+					Main.NewText("You've already deposited 30 Laurels today! Try again tomorrow.", Color.Red);
 					player.QuickSpawnItem(laurelType, laurelCount);
 				}
 				else

@@ -2,6 +2,7 @@ using DestinyMod.Common.ModSystems;
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,44 +17,41 @@ namespace DestinyMod.Content.Load
                 return;
             }
 
-            GuardianGames guardianGames = ModContent.GetInstance<GuardianGames>();
-
             if (DestinyClientConfig.Instance.GuardianGamesConfig)
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://DestinyModServer.mikhailmcraft.repl.co");
-                    request.Method = "GET";
-                    request.Headers["VERIFY-MOD"] = "a7rg53F435h4Ff2fhjWa33gH6j54ag2G";
-                    request.Headers["DUPLICATE-CHECK"] = Steamworks.SteamUser.GetSteamID().ToString();
-                    request.Timeout = 1500;
+                    HttpClient client = new HttpClient();
+                    client.Timeout = TimeSpan.FromSeconds(3);
+                    client.BaseAddress = new Uri("https://DestinyModServer.mikhailmcraft.repl.co/");
+                    HttpRequestMessage request = new HttpRequestMessage();
+                    request.Method = HttpMethod.Get;
+                    request.Headers.Add("VERIFY-MOD", "a7rg53F435h4Ff2fhjWa33gH6j54ag2G");
+                    request.Headers.Add("DUPLICATE-CHECK", Steamworks.SteamUser.GetSteamID().ToString());
+                    HttpResponseMessage response = client.Send(request);
 
-#pragma warning disable IDE0063
-                    using (Stream s = request.GetResponse().GetResponseStream())
+                    using Stream s = response.Content.ReadAsStream();
+                    using StreamReader sr = new StreamReader(s);
+
+                    var jsonResponse = sr.ReadToEnd();
+                    if (jsonResponse.Remove(2) == "ON")
                     {
-                        using (StreamReader sr = new StreamReader(s))
-                        {
-                            var jsonResponse = sr.ReadToEnd();
-                            if (jsonResponse.Remove(2) == "ON")
-                            {
-                                GuardianGames.Active = true;
-                            }
-
-                            if (jsonResponse.Contains("T"))
-                            {
-                                GuardianGames.WinningTeam = 1;
-                            }
-                            else if (jsonResponse.Contains("H"))
-                            {
-                                GuardianGames.WinningTeam = 2;
-                            }
-                            else if (jsonResponse.Contains("W"))
-                            {
-                                GuardianGames.WinningTeam = 3;
-                            }
-                        }
+                        GuardianGames.Active = true;
                     }
-#pragma warning restore IDE0063
+
+                    if (jsonResponse.Contains('T'))
+                    {
+                        GuardianGames.WinningTeam = DestinyClassType.Titan;
+                    }
+                    if (jsonResponse.Contains('H'))
+                    {
+                        GuardianGames.WinningTeam = DestinyClassType.Hunter;
+                    }
+                    if (jsonResponse.Contains('W'))
+                    {
+                        GuardianGames.WinningTeam = DestinyClassType.Warlock;
+                    }
+                    DestinyMod.Instance.Logger.Info(GuardianGames.WinningTeam);
                 }
                 catch (Exception exception)
                 {
