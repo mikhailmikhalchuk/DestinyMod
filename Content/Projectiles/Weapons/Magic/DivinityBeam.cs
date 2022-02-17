@@ -1,15 +1,15 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
-using System;
-using Terraria;
-using Terraria.ID;
-using Terraria.Enums;
-using Terraria.ModLoader;
-using Terraria.Audio;
-using Terraria.GameContent;
 using DestinyMod.Common.Projectiles;
 using DestinyMod.Content.Buffs.Debuffs;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.Enums;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
@@ -68,10 +68,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			Player player = Main.player[Projectile.owner];
-			Vector2 collisionBox = new Vector2(player.Center.X, player.Center.Y - 4) + (Distance + 10) * Projectile.velocity;
+			Vector2 collisionBox = new Vector2(player.Center.X, player.Center.Y - 4) + Projectile.velocity * (Distance + 10);
 			float discard = 0f;
-			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), collisionBox,
-				new Vector2(collisionBox.X + 22, collisionBox.Y + 26), 22, ref discard);
+			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), player.Center,
+				collisionBox, 22, ref discard);
 		}
 
 		public override void Kill(int timeLeft)
@@ -116,7 +116,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 				Done = true;
 			}
 
-			if (fire == null && start.State != SoundState.Playing)
+			if (fire == null && start != null && start.State != SoundState.Playing)
 			{
 				if (Main.soundVolume <= 0)
 				{
@@ -130,7 +130,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 					fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/DivinityFire"), Projectile.Center);
 				}
 			}
-			else if (fire != null && start.State != SoundState.Playing && fire.State == SoundState.Stopped)
+			else if (fire != null && start != null && start.State != SoundState.Playing && fire.State == SoundState.Stopped)
 			{
 				fire.Play();
 			}

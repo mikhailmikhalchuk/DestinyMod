@@ -1,3 +1,4 @@
+using DestinyMod.Content.Items.Bosses.SepiksPrime;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,7 +13,7 @@ namespace DestinyMod.Content.Load
                 return;
             }
 
-            MusicLoader.AddMusicBox(mod, MusicLoader.GetMusicSlot("Sounds/Music/SepiksPrime"), ModContent.ItemType<SepiksPrimeBox>(), ModContent.TileType<Tiles.MusicBoxes.SepiksPrimeBox>());
+            //MusicLoader.AddMusicBox(mod, MusicLoader.GetMusicSlot("Sounds/Music/SepiksPrime"), ModContent.ItemType<SepiksPrimeBox>(), ModContent.TileType<Tiles.MusicBoxes.SepiksPrimeBox>());
         }
 
         public void Unload() { }
