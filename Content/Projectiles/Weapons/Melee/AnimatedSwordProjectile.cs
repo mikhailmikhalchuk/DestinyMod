@@ -26,6 +26,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
             Projectile.ownerHitCheck = true;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.soundDelay = int.MaxValue;
+            Projectile.tileCollide = false;
             FrameCycleSound = SoundID.Item1;
         }
 
@@ -39,11 +40,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 
             Projectile.velocity *= 0.70f;
 
-            if (++Projectile.frameCounter % 3 == 0)
+            if (Projectile.frameCounter % 3 == 0)
             {
-                if (++Projectile.frame % Main.projFrames[Projectile.type] == 0)
+                if (++Projectile.frame >= Main.projFrames[Projectile.type])
                 {
                     SoundEngine.PlaySound(FrameCycleSound, player.position);
+                    Projectile.frame = 0;
                 }
             }
 
@@ -82,7 +84,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
             Main.spriteBatch.Draw(texture,
             Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
             sourceRectangle, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0f);
-
             return false;
         }
     }
