@@ -10,6 +10,8 @@ namespace DestinyMod.Common.Items
 	{
 		public int DestinyModReuseDelay;
 
+		public bool DestinyModChannel;
+
 		public sealed override void SetDefaults()
 		{
 			AutomaticSetDefaults();

@@ -10,6 +10,8 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 {
     public class TheLament : DestinyModItem
     {
+        public int RevUp;
+
         public override void SetStaticDefaults() => Tooltip.SetDefault("Hold right-click to rev up the blade"
             + "\nWhile revving the blade, movement is inhibited"
             + "\nRevving the blade fully increases swing damage for a short time"
@@ -30,56 +32,74 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             Item.autoReuse = true;
         }
 
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-        {
-            if (target.damage > 0 && !target.friendly)
-            {
-                int heal = 5;
-                player.statLife += heal;
-                player.HealEffect(heal);
-            }
-        }
-
-        public override void OnHitPvp(Player player, Player target, int damage, bool crit)
-        {
+        public static void HealBack(Player player)
+		{
             int heal = 5;
             player.statLife += heal;
             player.HealEffect(heal);
         }
 
+        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        {
+            if (target.damage > 0 && !target.friendly)
+            {
+                HealBack(player);
+            }
+        }
+
+        public override void OnHitPvp(Player player, Player target, int damage, bool crit) => HealBack(player);
+
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {
-            if (player.GetModPlayer<StatsPlayer>().ChannelTime > 90)
+            if (RevUp > 90)
             {
                 damage += 0.1f;
             }
         }
 
-        public override void MeleeEffects(Player player, Rectangle hitbox)
-        {
-            Item.color = default;
-            if (player.GetModPlayer<StatsPlayer>().ChannelTime > 90)
-            {
-                Item.color = Color.LightPink;
-            }
-        }
+        public override void MeleeEffects(Player player, Rectangle hitbox) => Item.color = RevUp > 90 ? Color.LightPink : default;
 
-		public override bool? UseItem(Player player)
+        public override bool? UseItem(Player player)
 		{
             StatsPlayer statsPlayer = player.GetModPlayer<StatsPlayer>();
-            if (statsPlayer.ChannelTime > 0 && statsPlayer.ChannelTime < 90 && statsPlayer.ChannelTime % 5 == 0)
+            Main.NewText(statsPlayer.DestinyChannelTime + " | " + RevUp);
+            if (statsPlayer.DestinyChannelTime > 0)
             {
-                SoundEngine.PlaySound(SoundID.Item22);
+                player.itemAnimation = 2;
+                player.itemTime = 0;
+
+                if (statsPlayer.DestinyChannelTime < 90)
+                {
+                    if (RevUp < 90)
+                    {
+                        RevUp = statsPlayer.DestinyChannelTime;
+                    }
+
+                    if (statsPlayer.DestinyChannelTime % 5 == 0)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item22);
+                    }
+                }
+                else
+                {
+                    RevUp = statsPlayer.DestinyChannelTime;
+
+                    if (RevUp >= 300)
+                    {
+                        RevUp = 0;
+                        statsPlayer.DestinyChannelTime = 0;
+                    }
+                }
             }
 
-            if (statsPlayer.ChannelTime == 92)
+            if (statsPlayer.DestinyChannelTime == 92)
             {
                 SoundEngine.PlaySound(SoundID.Item23);
             }
             return base.UseItem(player);
 		}
 
-		public override bool AltFunctionUse(Player player) => player.GetModPlayer<StatsPlayer>().ChannelTime <= 90;
+		public override bool AltFunctionUse(Player player) => player.GetModPlayer<StatsPlayer>().DestinyChannelTime <= 90;
 
         public override bool CanUseItem(Player player)
         {
@@ -88,12 +108,14 @@ namespace DestinyMod.Content.Items.Weapons.Melee
                 Item.useStyle = ItemUseStyleID.Shoot;
                 Item.UseSound = null;
                 Item.noMelee = true;
-                Item.channel = true;
+                DestinyModChannel = true;
             }
             else
             {
                 Item.useStyle = ItemUseStyleID.Swing;
                 Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/RazeLighter");
+                Item.noMelee = false;
+                DestinyModChannel = false;
             }
             return base.CanUseItem(player);
         }
@@ -102,7 +124,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 
         public override void PostUpdateRunSpeeds(Player player)
 		{
-			if (!Main.mouseRight || player.GetModPlayer<StatsPlayer>().ChannelTime > 90)
+			if (!Main.mouseRight || player.GetModPlayer<StatsPlayer>().DestinyChannelTime > 90)
 			{
                 return;
 			}
