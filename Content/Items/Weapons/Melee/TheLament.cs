@@ -12,6 +12,10 @@ namespace DestinyMod.Content.Items.Weapons.Melee
     {
         public int RevUp;
 
+        public bool OldRightClickTest;
+
+        public bool RightClickTest;
+
         public override void SetStaticDefaults() => Tooltip.SetDefault("Hold right-click to rev up the blade"
             + "\nWhile revving the blade, movement is inhibited"
             + "\nRevving the blade fully increases swing damage for a short time"
@@ -61,63 +65,60 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 
         public override bool? UseItem(Player player)
 		{
+            if (Main.mouseRightRelease || Main.mouseLeft)
+			{
+                return base.UseItem(player);
+            }
+
             StatsPlayer statsPlayer = player.GetModPlayer<StatsPlayer>();
-            Main.NewText(statsPlayer.DestinyChannelTime + " | " + RevUp);
             if (statsPlayer.DestinyChannelTime > 0)
             {
-                player.itemAnimation = 2;
+                player.itemAnimation = player.itemAnimationMax;
                 player.itemTime = 0;
-
-                if (statsPlayer.DestinyChannelTime < 90)
+                RevUp = statsPlayer.DestinyChannelTime;
+                if (RevUp < 90 && RevUp % 5 == 0)
                 {
-                    if (RevUp < 90)
-                    {
-                        RevUp = statsPlayer.DestinyChannelTime;
-                    }
-
-                    if (statsPlayer.DestinyChannelTime % 5 == 0)
-                    {
-                        SoundEngine.PlaySound(SoundID.Item22);
-                    }
+                    SoundEngine.PlaySound(SoundID.Item22);
                 }
-                else
+                
+                if (RevUp >= 92)
                 {
-                    RevUp = statsPlayer.DestinyChannelTime;
-
-                    if (RevUp >= 300)
-                    {
-                        RevUp = 0;
-                        statsPlayer.DestinyChannelTime = 0;
-                    }
+                    player.itemAnimation = 0;
+                    player.itemTime = 0;
+                    SoundEngine.PlaySound(SoundID.Item23);
+                    return true;
                 }
             }
 
-            if (statsPlayer.DestinyChannelTime == 92)
-            {
-                SoundEngine.PlaySound(SoundID.Item23);
-            }
             return base.UseItem(player);
 		}
 
-		public override bool AltFunctionUse(Player player) => player.GetModPlayer<StatsPlayer>().DestinyChannelTime <= 90;
+		public override bool AltFunctionUse(Player player) => RevUp <= 90;
 
         public override bool CanUseItem(Player player)
         {
+            OldRightClickTest = RightClickTest;
             if (player.altFunctionUse == 2)
             {
                 Item.useStyle = ItemUseStyleID.Shoot;
+                Item.useTime = 5;
+                Item.useAnimation = 5;
                 Item.UseSound = null;
                 Item.noMelee = true;
                 DestinyModChannel = true;
+                RightClickTest = true;
             }
             else
             {
                 Item.useStyle = ItemUseStyleID.Swing;
+                Item.useTime = 20;
+                Item.useAnimation = 20;
                 Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/RazeLighter");
                 Item.noMelee = false;
                 DestinyModChannel = false;
+                RightClickTest = false;
             }
-            return base.CanUseItem(player);
+            return OldRightClickTest == RightClickTest;
         }
 
         public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
