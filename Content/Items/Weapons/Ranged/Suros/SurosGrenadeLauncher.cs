@@ -26,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Suros
 			Item.UseSound = SoundID.Item61;
 			Item.shoot = ProjectileID.GrenadeI;
 			Item.shootSpeed = 8f;
-			Item.useAmmo = ItemID.Grenade;
+			Item.useAmmo = AmmoID.Rocket;
 		}
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

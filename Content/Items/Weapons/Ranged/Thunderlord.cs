@@ -37,7 +37,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override float UseTimeMultiplier(Player player) => 1 + Utils.Clamp(player.GetModPlayer<StatsPlayer>().ChannelTime / 30f * 0.05f, 0, 0.5f);
+		public override float UseTimeMultiplier(Player player) => 1 - Utils.Clamp(player.GetModPlayer<StatsPlayer>().ChannelTime / 30f * 0.05f, 0, 0.5f);
 
 		public override Vector2? HoldoutOffset() => new Vector2(-15, -3);
 

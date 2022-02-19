@@ -67,7 +67,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				Projectile.Center = Projectile.position;
 				Projectile.damage = 150;
 				Projectile.knockBack = 10f;
-				Projectile.timeLeft = 0;
+				Projectile.timeLeft = 3;
+				Projectile.Kill();
 			}
 			else if (Main.rand.NextBool())
 			{

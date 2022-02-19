@@ -42,8 +42,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (Charge == null && !Fired)
             {
-                Charge = SoundLoader.GetLegacySoundSlot("Sounds/Item/VexMythoclastStart").GetRandomSound().CreateInstance();
-                Charge.Play();
+                Charge = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Sounds/Item/VexMythoclastStart"));
             }
 
             Player player = Main.player[Projectile.owner];
@@ -84,7 +83,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Overcharge>(), 10);
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Overcharge>(), 60);
 
         public override void Kill(int timeLeft)
         {

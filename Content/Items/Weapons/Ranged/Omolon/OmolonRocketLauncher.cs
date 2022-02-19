@@ -26,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/RocketLauncher");
 			Item.shoot = ProjectileID.RocketI;
 			Item.shootSpeed = 16f;
-			Item.useAmmo = ItemID.Grenade;
+			Item.useAmmo = AmmoID.Rocket;
 			Item.reuseDelay = 30;
 		}
 

@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public int Shot;
 
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Three round burst"
-			+ "Second shot of a burst deals double damage"
+			+ "\nSecond shot of a burst deals double damage"
 			+ "\nKills with this shot summon a seeking projectile"
 			+ "\n\"Think of space-time as a tapestry on a loom. This weapon is the needle.\"");
 
@@ -32,7 +32,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			if (++Shot + 1 % 3 == 0)
+			if ((++Shot + 1) % 3 == 0)
 			{
 				type = ModContent.ProjectileType<GravitonBullet>();
 				damage *= 3;

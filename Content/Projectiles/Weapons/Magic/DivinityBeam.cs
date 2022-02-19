@@ -15,9 +15,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
 	public class DivinityBeam : DestinyModProjectile
 	{
-		private static SoundEffectInstance fire; //thanks, solstice
+		private SoundEffectInstance Fire; //thanks, solstice
 
-		private static SoundEffectInstance start;
+		private SoundEffectInstance Start;
 
 		public float Distance { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
 
@@ -76,9 +76,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 
 		public override void Kill(int timeLeft)
 		{
-			fire?.Stop(true);
-			start?.Stop(true);
-			SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/DivinityStop"), Projectile.Center);
+			Fire?.Stop(true);
+			Start?.Stop(true);
+			SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/DivinityStop"), Projectile.Center);
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -96,43 +96,43 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			Player player = Main.player[Projectile.owner];
 			Projectile.position = player.Center + Projectile.velocity * 60;
 			Projectile.timeLeft = 4;
-			if (!Done && start == null)
+			if (!Done && Start == null)
 			{
 				if (Main.soundVolume <= 0)
 				{
-					start = SoundLoader.GetLegacySoundSlot("Sounds/Item/DivinityStart").GetRandomSound().CreateInstance();
-					start.Volume = 0;
-					start.Play();
+					Start = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Sounds/Item/DivinityStart"));
+					Start.Volume = 0;
+					Start.Play();
 				}
 				else
 				{
-					start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/DivinityStart"), Projectile.Center);
+					Start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/DivinityStart"), Projectile.Center);
 				}
 				Done = true;
 			}
-			else if (!Done && start != null)
+			else if (!Done && Start != null)
 			{
-				start.Play();
+				Start.Play();
 				Done = true;
 			}
 
-			if (fire == null && start != null && start.State != SoundState.Playing)
+			if (Fire == null && Start != null && Start.State != SoundState.Playing)
 			{
 				if (Main.soundVolume <= 0)
 				{
-					fire = SoundLoader.GetLegacySoundSlot("Sounds/Item/DivinityFire").GetRandomSound().CreateInstance();
-					fire.IsLooped = true;
-					fire.Volume = 0;
-					fire.Play();
+					Fire = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Sounds/Item/DivinityFire"));
+					Fire.IsLooped = true;
+					Fire.Volume = 0;
+					Fire.Play();
 				}
 				else
 				{
-					fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/DivinityFire"), Projectile.Center);
+					Fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/DivinityFire"), Projectile.Center);
 				}
 			}
-			else if (fire != null && start != null && start.State != SoundState.Playing && fire.State == SoundState.Stopped)
+			else if (Fire != null && Start.State != SoundState.Playing && Fire.State == SoundState.Stopped)
 			{
-				fire.Play();
+				Fire.Play();
 			}
 
 			if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 == 0 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))

@@ -34,7 +34,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override float UseTimeMultiplier(Player player) => 1f + Utils.Clamp(player.GetModPlayer<StatsPlayer>().ChannelTime * 0.05f, 1f, 1.3f);
+		public override float UseTimeMultiplier(Player player) => 1f - Utils.Clamp(player.GetModPlayer<StatsPlayer>().ChannelTime * 0.005f, 0, 0.3f);
 
 		public override bool CanConsumeAmmo(Player player) => Main.rand.NextBool(3, 4);
 
