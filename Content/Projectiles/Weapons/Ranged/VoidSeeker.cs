@@ -17,7 +17,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.width = 12;
             Projectile.height = 12;
             Projectile.scale = 1.5f;
-            Projectile.timeLeft = 500;
+            Projectile.timeLeft = 360;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = -1;
@@ -30,7 +30,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 Projectile.velocity.X *= 0.98f;
             }
 
-            if (HomeInOnNPC(200f, 15f) == -1)
+            if (GradualHomeInOnNPC(200f, 15f) == -1)
             {
                 Projectile.velocity.Y += 0.2f;
             }

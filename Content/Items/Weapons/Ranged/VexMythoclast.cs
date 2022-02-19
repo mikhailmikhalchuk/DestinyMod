@@ -56,6 +56,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
         {
             if (player.altFunctionUse == 2 && !UsingAltFunction && SwapCooldown <= 0 && player.HasBuff<Overcharge>())
             {
+                CombatText.NewText(player.getRect(), Color.Gold, "Charge Mode!");
                 UsingAltFunction = true;
                 Item.UseSound = null;
                 SoundEngine.PlaySound(SoundID.Item101);
@@ -64,6 +65,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
             }
             else if (player.altFunctionUse == 2 && UsingAltFunction && SwapCooldown <= 0)
             {
+                CombatText.NewText(player.getRect(), Color.Gold, "Normal Mode!");
                 UsingAltFunction = false;
                 Item.autoReuse = true;
                 Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/VexMythoclast");

@@ -23,7 +23,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 			Item.UseSound = SoundID.Item61;
 			Item.shoot = ProjectileID.GrenadeI;
 			Item.shootSpeed = 6f;
-			Item.useAmmo = AmmoID.Rocket;
+			Item.useAmmo = ItemID.Grenade;
 		}
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

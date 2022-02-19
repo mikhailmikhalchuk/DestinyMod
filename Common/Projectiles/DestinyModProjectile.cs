@@ -49,6 +49,35 @@ namespace DestinyMod.Common.Projectiles
             return target;
         }
 
+        public int GradualHomeInOnNPC(float distance, float speed, float scale = 0.025f, bool checkTiles = true)
+        {
+            int target = -1;
+            for (int indexer = 0; indexer < Main.maxNPCs; indexer++)
+            {
+                NPC npc = Main.npc[indexer];
+                if (npc.CanBeChasedBy(Projectile) && npc.damage > 0)
+                {
+                    if (checkTiles && !Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, 1, 1))
+                    {
+                        continue;
+                    }
+
+                    if (Projectile.DistanceSQ(npc.Center) <= Math.Pow(distance, 2))
+                    {
+                        target = indexer;
+                        break;
+                    }
+                }
+            }
+
+            if (target >= 0)
+            {
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, Projectile.DirectionTo(Main.npc[target].Center) * speed, scale);
+            }
+
+            return target;
+        }
+
         /// <summary>
         /// Fires a fusion rifle bullet, causing the current weapon to act like a fusion rifle. Should be called within <c>ModItem.Shoot()</c>
         /// </summary>
