@@ -46,9 +46,9 @@ namespace DestinyMod.Content.UI.CryptarchUI
 				ValidItemFunc = item => item.IsAir
 				|| !item.IsAir && (item.type == ModContent.ItemType<CommonEngram>()
 					|| item.type == ModContent.ItemType<UncommonEngram>()
-					|| item.type == ModContent.ItemType<RareEngram>()
-					|| item.type == ModContent.ItemType<LegendaryEngram>()
-					|| item.type == ModContent.ItemType<ExoticEngram>())
+					|| item.type == ModContent.ItemType<RareEngram>())
+					// || item.type == ModContent.ItemType<LegendaryEngram>() 
+					// || item.type == ModContent.ItemType<ExoticEngram>())
 			};
 			Left.Pixels = 50;
 			Top.Pixels = 270;
@@ -63,6 +63,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 			
 			if (player.talkNPC == -1 || Main.npc[player.talkNPC]?.type != ModContent.NPCType<Cryptarch>())
 			{
+				player.QuickSpawnItem(InputSlot.Item.type, InputSlot.Item.stack);
 				ModContent.GetInstance<CryptarchUI>().UserInterface.SetState(null);
 			}
 		}
@@ -194,8 +195,13 @@ namespace DestinyMod.Content.UI.CryptarchUI
 
 			player.mouseInterface = true;
 
-			void GiveEngramItem()
+			bool GiveEngramItem()
 			{
+				if (InputSlot.Item.stack-- <= 0)
+				{
+					return false;
+				}
+
 				if (Main.rand.Next(20) > lootTable.Count)
 				{
 					GenerateCoins(InputSlot.Item.type);
@@ -204,17 +210,22 @@ namespace DestinyMod.Content.UI.CryptarchUI
 				{
 					int random = Main.rand.Next(lootTable);
 					player.QuickSpawnItem(random);
-					npcPlayer.DecryptedItems.Add(random);
+					if (!npcPlayer.DecryptedItems.Contains(random))
+					{
+						npcPlayer.DecryptedItems.Add(random);
+					}
 				}
-				InputSlot.Item.stack--;
+
+				return true;
 			}
 
 			if (Main.mouseLeftRelease && Main.mouseLeft)
 			{
-				while (InputSlot.Item.stack > 0)
+				while (GiveEngramItem())
 				{
-					GiveEngramItem();
+
 				}
+
 				InputSlot.Item.TurnToAir();
 				SoundEngine.PlaySound(SoundID.Item37, -1, -1);
 			}
