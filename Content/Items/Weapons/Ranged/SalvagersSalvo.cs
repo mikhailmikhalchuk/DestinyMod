@@ -34,7 +34,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 7), velocity, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 7), velocity, ModContent.ProjectileType<SalvoGrenade>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 

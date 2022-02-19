@@ -59,7 +59,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
 			Player player = Main.player[Projectile.owner];
 			player.itemAnimation = player.itemTime = 10;
-			if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3 || player.GetModPlayer<StatsPlayer>().ChannelTime <= 0 && Projectile.timeLeft <= 370)
+			if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3 || player.GetModPlayer<StatsPlayer>().ChannelTime <= 0 && Projectile.timeLeft <= 390)
 			{
 				Projectile.alpha = 255;
 				Projectile.position = Projectile.Center;
@@ -67,8 +67,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				Projectile.Center = Projectile.position;
 				Projectile.damage = 150;
 				Projectile.knockBack = 10f;
-				Projectile.timeLeft = 3;
-				Projectile.Kill();
+				if (Projectile.timeLeft > 3)
+				{
+					Projectile.timeLeft = 3;
+				}
 			}
 			else if (Main.rand.NextBool())
 			{
