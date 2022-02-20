@@ -6,6 +6,7 @@ using DestinyMod.Common.ModPlayers;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Terraria.Localization;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
@@ -14,6 +15,8 @@ namespace DestinyMod.Content.UI.ClassSelection
 		public Player Player;
 
 		public DestinyClassType ClassType;
+
+		public UITextPanel<LocalizedText> CreateButton;
 
 		public Asset<Texture2D> BaseTexture;
 
@@ -27,10 +30,11 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public bool SoundedHovered;
 
-		public ClassOption(Player player, DestinyClassType classType)
+		public ClassOption(Player player, DestinyClassType classType, UITextPanel<LocalizedText> createButton)
 		{
 			Player = player;
 			ClassType = classType;
+			CreateButton = createButton;
 
 			BaseTexture = Main.Assets.Request<Texture2D>("Images/UI/CharCreation/PanelGrayscale");
 			SelectedBorderTexture = Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelHighlight");
@@ -95,6 +99,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 		{
 			base.MouseDown(evt);
 			Player.GetModPlayer<ClassPlayer>().ClassType = ClassType;
+			CreateButton.BackgroundColor = new Color(63, 82, 151) * 0.8f;
 			SoundEngine.PlaySound(12);
 		}
 

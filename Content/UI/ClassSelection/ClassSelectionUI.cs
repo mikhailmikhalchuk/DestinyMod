@@ -4,12 +4,15 @@ using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using DestinyMod.Common.ModPlayers;
+using Terraria.Localization;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
 	public class ClassSelectionUI : UIElement
 	{
 		public Player Player;
+
+		public UITextPanel<LocalizedText> CreateButton;
 
 		public UISlicedImage DescriptionBackground;
 
@@ -21,9 +24,10 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public ClassOption Warlock;
 
-		public ClassSelectionUI(Player player)
+		public ClassSelectionUI(Player player, UITextPanel<LocalizedText> createButton)
 		{
 			Player = player;
+			CreateButton = createButton;
 
 			DescriptionBackground = new UISlicedImage(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelHighlight"))
 			{
@@ -51,7 +55,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			Description.PaddingRight = 20f;
 			DescriptionBackground.Append(Description);
 
-			Titan = new ClassOption(Player, DestinyClassType.Titan)
+			Titan = new ClassOption(Player, DestinyClassType.Titan, CreateButton)
 			{
 				Left = StyleDimension.FromPixels(2),
 				Top = StyleDimension.FromPixels(4),
@@ -60,7 +64,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			};
 			Append(Titan);
 
-			Hunter = new ClassOption(Player, DestinyClassType.Hunter)
+			Hunter = new ClassOption(Player, DestinyClassType.Hunter, CreateButton)
 			{
 				Left = StyleDimension.FromPixels(2),
 				Top = StyleDimension.FromPixelsAndPercent(6, 0.333f),
@@ -69,7 +73,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			};
 			Append(Hunter);
 
-			Warlock = new ClassOption(Player, DestinyClassType.Warlock)
+			Warlock = new ClassOption(Player, DestinyClassType.Warlock, CreateButton)
 			{
 				Left = StyleDimension.FromPixels(2),
 				Top = StyleDimension.FromPixelsAndPercent(8, 0.666f),

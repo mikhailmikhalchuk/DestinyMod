@@ -13,8 +13,12 @@ using DestinyMod.Common.ModPlayers;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
-	public class LoadClassSelection : ILoadable
+	public partial class LoadClassSelection : ILoadable
 	{
+		public Player Player;
+
+		public DestinyClassType PlayerClassType => Player.GetModPlayer<ClassPlayer>().ClassType;
+
 		public UIElement MiddlePannel;
 
 		public MethodInfo UnselectAllCategories;
@@ -40,15 +44,19 @@ namespace DestinyMod.Content.UI.ClassSelection
 			IL.Terraria.GameContent.UI.States.UICharacterCreation.MakeCategoriesBar += ModifyMakeCategoriesBar;
 			On.Terraria.GameContent.UI.States.UICharacterCreation.MakeCategoriesBar += InsertDestinyModOption;
 			On.Terraria.GameContent.UI.States.UICharacterCreation.ctor += ImplementClassSelectionUI;
+			On.Terraria.GameContent.UI.States.UICharacterCreation.Click_NamingAndCreating += DetectClassSelected;
+			IL.Terraria.GameContent.UI.States.UICharacterCreation.MakeBackAndCreatebuttons += WhyIsButtonsLowerCase;
 		}
+
+		public void Unload() { }
 
 		private void ImplementClassSelectionUI(On.Terraria.GameContent.UI.States.UICharacterCreation.orig_ctor orig, UICharacterCreation self, Player player)
 		{
 			orig.Invoke(self, player);
 
-			// player.GetModPlayer<ClassPlayer>().ClassType = DestinyClassType.None;
+			Player = player;
 
-			ClassSelection = new ClassSelectionUI(player)
+			ClassSelection = new ClassSelectionUI(Player, CreateButton)
 			{
 				Width = StyleDimension.FromPixelsAndPercent(-10f, 1f),
 				Height = StyleDimension.FromPixelsAndPercent(0f, 1f),
@@ -58,26 +66,11 @@ namespace DestinyMod.Content.UI.ClassSelection
 			ClassSelection.SetPadding(0f);
 		}
 
-		public void Unload() { }
-
 		private void InsertDeselectDestinyModOptionsButton(On.Terraria.GameContent.UI.States.UICharacterCreation.orig_UnselectAllCategories orig, UICharacterCreation self)
 		{
 			orig.Invoke(self);
 			DestinyModOptionsButton.SetSelected(false);
 			ClassSelection?.Remove();
-		}
-
-		private void ModifyMakeCategoriesBar(ILContext il)
-		{
-			ILCursor cursor = new ILCursor(il);
-
-			if (!cursor.TryGotoNext(MoveType.After, i => i.MatchLdcR4(-240)))
-			{
-				DestinyMod.Instance.Logger.Error("Failed to match first target in ClassSelectionUI.ModifyMakeCategoriesBar(ILContext il)");
-				return;
-			}
-			cursor.Emit(OpCodes.Pop);
-			cursor.Emit(OpCodes.Ldc_R4, -264f);
 		}
 
 		private void InsertDestinyModOption(On.Terraria.GameContent.UI.States.UICharacterCreation.orig_MakeCategoriesBar orig, Terraria.GameContent.UI.States.UICharacterCreation self, UIElement categoryContainer)
@@ -92,6 +85,19 @@ namespace DestinyMod.Content.UI.ClassSelection
 			UnselectAllCategories.Invoke(Main.MenuUI.CurrentState, null);
 			MiddlePannel.Append(ClassSelection);
 			DestinyModOptionsButton.SetSelected(selected: true);
+		}
+
+		private void ModifyMakeCategoriesBar(ILContext il)
+		{
+			ILCursor cursor = new ILCursor(il);
+
+			if (!cursor.TryGotoNext(MoveType.After, i => i.MatchLdcR4(-240)))
+			{
+				DestinyMod.Instance.Logger.Error("Failed to match first target in ClassSelectionUI.ModifyMakeCategoriesBar(ILContext il)");
+				return;
+			}
+			cursor.Emit(OpCodes.Pop);
+			cursor.Emit(OpCodes.Ldc_R4, -264f);
 		}
 
 		private void ModifyBuildPage(ILContext il)
