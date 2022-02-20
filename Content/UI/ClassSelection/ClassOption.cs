@@ -1,83 +1,113 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader.UI;
-using Terraria.ModLoader;
 using Terraria.Audio;
 using DestinyMod.Common.ModPlayers;
+using ReLogic.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
 	public class ClassOption : UIElement
 	{
-		public UITextPanel<string> Select;
-
-		public UIText Description;
+		public Player Player;
 
 		public DestinyClassType ClassType;
 
-		public string ClassDescription;
+		public Asset<Texture2D> BaseTexture;
 
-		public ClassOption(DestinyClassType classType, string classDescription)
+		public Asset<Texture2D> SelectedBorderTexture;
+
+		public Asset<Texture2D> HoveredBorderTexture;
+
+		public Color Color;
+
+		public bool Hovered;
+
+		public bool SoundedHovered;
+
+		public ClassOption(Player player, DestinyClassType classType)
 		{
+			Player = player;
 			ClassType = classType;
-			ClassDescription = classDescription;
-		}
 
-		public override void OnInitialize()
-		{
-			HAlign = 0.5f;
-			Width.Pixels = 200;
-			Height.Pixels = 114;
+			BaseTexture = Main.Assets.Request<Texture2D>("Images/UI/CharCreation/PanelGrayscale");
+			SelectedBorderTexture = Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelHighlight");
+			HoveredBorderTexture = Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelBorder");
 
-			string className = ClassType.ToString();
-			Select = new UITextPanel<string>(ClassType.ToString(), 0.7f, true)
+			switch (ClassType)
 			{
-				HAlign = 0.5f
-			};
-			Description.Top.Pixels = 50;
-			Select.Width.Pixels = 200;
-			Select.Height.Pixels = 50;
-			Select.OnClick += Click;
-			Select.OnMouseOver += MouseOver;
-			Select.OnMouseOut += MouseOut;
-			Select.SetSnapPoint(ClassType.ToString(), 0);
-			Append(Select);
+				case DestinyClassType.Titan:
+					Color = Color.Red;
+					break;
 
-			Description = new UIText(string.Empty)
-			{
-				HAlign = 0.5f,
-			};
-			Description.Top.Pixels = 64; 
-			Description.Width.Pixels = 100;
-			Description.Height.Pixels = 50;
-			Append(Description);
-		}
+				case DestinyClassType.Hunter:
+					Color = Color.Aqua;
+					break;
 
-		private void Click(UIMouseEvent evt, UIElement listeningElement)
-		{
-			SoundEngine.PlaySound(SoundID.MenuOpen);
-			Main.menuMode = 2;
-			Main.LocalPlayer.GetModPlayer<ClassPlayer>().ClassType = ClassType;
-			ModContent.GetInstance<ClassSelectionUI>().UserInterface?.SetState(null);
-		}
-
-		private void MouseOver(UIMouseEvent evt, UIElement listeningElement)
-		{
-			if (Main.PendingResolutionHeight > 750)
-			{
-				Description.SetText(ClassDescription);
+				case DestinyClassType.Warlock:
+					Color = Color.Gold;
+					break;
 			}
 
-			SoundEngine.PlaySound(SoundID.MenuTick);
-			Select.BackgroundColor = UICommon.DefaultUIBlue;
+			UIText element = new UIText(ClassType.ToString(), 0.9f)
+			{
+				HAlign = 0.5f,
+				VAlign = 0.5f,
+				Width = StyleDimension.FromPixelsAndPercent(-10f, 1f),
+				Top = StyleDimension.FromPixels(0),
+				TextOriginY = 0.5f
+			};
+			Append(element);
 		}
 
-		private void MouseOut(UIMouseEvent evt, UIElement listeningElement)
+		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
-			Description.SetText(string.Empty);
-			Select.BackgroundColor = UICommon.DefaultUIBlueMouseOver;
+			if (Hovered)
+			{
+				if (!SoundedHovered)
+				{
+					SoundEngine.PlaySound(12);
+				}
+
+				SoundedHovered = true;
+			}
+			else
+			{
+				SoundedHovered = false;
+			}
+
+			CalculatedStyle dimensions = GetDimensions();
+			Utils.DrawSplicedPanel(spriteBatch, BaseTexture.Value, (int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height, 10, 10, 10, 10, Color.Lerp(Color.Black, Color, 0.8f) * 0.5f);
+			if (ClassType == Player.GetModPlayer<ClassPlayer>().ClassType)
+			{
+				Utils.DrawSplicedPanel(spriteBatch, BaseTexture.Value, (int)dimensions.X + 5, (int)dimensions.Y + 5, (int)dimensions.Width - 10, (int)dimensions.Height - 10, 10, 10, 10, 10, Color.Lerp(Color, Color.White, 0.7f) * 0.5f);
+			}
+
+			if (Hovered)
+			{
+				Utils.DrawSplicedPanel(spriteBatch, HoveredBorderTexture.Value, (int)dimensions.X, (int)dimensions.Y, (int)dimensions.Width, (int)dimensions.Height, 10, 10, 10, 10, Color.White);
+			}
+		}
+
+		public override void MouseDown(UIMouseEvent evt)
+		{
+			base.MouseDown(evt);
+			Player.GetModPlayer<ClassPlayer>().ClassType = ClassType;
+			SoundEngine.PlaySound(12);
+		}
+
+		public override void MouseOver(UIMouseEvent evt)
+		{
+			base.MouseOver(evt);
+			Hovered = true;
+		}
+
+		public override void MouseOut(UIMouseEvent evt)
+		{
+			base.MouseOut(evt);
+			Hovered = false;
 		}
 	}
 }

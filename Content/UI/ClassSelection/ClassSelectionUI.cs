@@ -1,22 +1,19 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.UI;
-using Terraria.UI.Gamepad;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
-using DestinyMod.Core.UI;
-using Terraria.GameInput;
+using DestinyMod.Common.ModPlayers;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
-	public class ClassSelectionUI : DestinyModUIState
+	public class ClassSelectionUI : UIElement
 	{
-		public UIPanel Wrapper;
+		public Player Player;
 
-		public UIText Title;
+		public UISlicedImage DescriptionBackground;
+
+		public UIText Description;
 
 		public ClassOption Titan;
 
@@ -24,125 +21,104 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public ClassOption Warlock;
 
-		public UITextPanel<string> Back;
-
-		public override void PreLoad(ref string name)
+		public ClassSelectionUI(Player player)
 		{
-			AutoSetState = false;
-			AutoAddHandler = true;
-		}
+			Player = player;
 
-		public override UIHandler Load() => new UIHandler(UserInterface, string.Empty, LayerName);
+			DescriptionBackground = new UISlicedImage(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/CategoryPanelHighlight"))
+			{
+				HAlign = 1f,
+				VAlign = 1f,
+				Left = StyleDimension.FromPixels(-4),
+				Top = StyleDimension.FromPixels(4),
+				Width = StyleDimension.FromPixelsAndPercent(-8, 0.6f),
+				Height = StyleDimension.FromPixelsAndPercent(0, 1)
+			};
+			DescriptionBackground.SetSliceDepths(10);
+			DescriptionBackground.Color = Color.LightGray * 0.7f;
+			Append(DescriptionBackground);
 
-		public override void OnInitialize()
-		{
-			Width.Percent = 1f;
-			Height.Set(-220f, 1f);
-			HAlign = 0.5f;
-			VAlign = 0.5f;
-
-			Wrapper = new UIPanel
+			Description = new UIText("Select a class")
 			{
 				HAlign = 0.5f,
-				VAlign = 0.5f
+				Top = StyleDimension.FromPixelsAndPercent(0, 0.1f),
+				Width = StyleDimension.FromPercent(1f),
+				Height = StyleDimension.FromPercent(1f),
+				TextOriginY = 0.5f,
+				IsWrapped = true,
 			};
-			Wrapper.Width.Pixels = 600;
-			Wrapper.Height.Pixels = 800;
-			Wrapper.BackgroundColor = UICommon.MainPanelBackground;
+			Description.PaddingLeft = 20f;
+			Description.PaddingRight = 20f;
+			DescriptionBackground.Append(Description);
 
-			Title = new UIText("Select Class", 0.7f, true)
+			Titan = new ClassOption(Player, DestinyClassType.Titan)
 			{
-				HAlign = 0.5f
+				Left = StyleDimension.FromPixels(2),
+				Top = StyleDimension.FromPixels(4),
+				Width = StyleDimension.FromPixelsAndPercent(-4, 0.4f),
+				Height = StyleDimension.FromPixelsAndPercent(-2, 0.333f)
 			};
-			Title.Top.Pixels = 10;
-			Title.Width.Pixels = 50;
-			Title.Height.Pixels = 30;
-			Wrapper.Append(Title);
+			Append(Titan);
 
-			Titan = new ClassOption(DestinyClassType.Titan, "Disciplined and proud, Titans are capable of both"
-				+ "\naggressive assaults and stalwart defenses");
-			Titan.Top.Percent = 0.14f;
-			Wrapper.Append(Titan);
-
-			Hunter = new ClassOption(DestinyClassType.Hunter, "Agile and daring, Hunters are quick on their feet and"
-				+ "\nquicker on the draw");
-			Hunter.Top.Percent = 0.39f;
-			Wrapper.Append(Hunter);
-
-			Hunter = new ClassOption(DestinyClassType.Warlock, "Warlocks weaponize the mysteries of the universe to"
-				+ "\nsustain themselves and devastate their foes");
-			Hunter.Top.Percent = 0.65f;
-			Wrapper.Append(Hunter);
-
-			Back = new UITextPanel<string>("Back", 0.7f, true)
+			Hunter = new ClassOption(Player, DestinyClassType.Hunter)
 			{
-				HAlign = 0.5f
+				Left = StyleDimension.FromPixels(2),
+				Top = StyleDimension.FromPixelsAndPercent(6, 0.333f),
+				Width = StyleDimension.FromPixelsAndPercent(-3, 0.4f),
+				Height = StyleDimension.FromPixelsAndPercent(-2, 0.333f)
 			};
-			Back.Top.Percent = 0.86f;
-			Back.Width.Pixels = 250;
-			Back.Height.Pixels = 50;
-			Back.OnClick += ReturnToMenu;
-			Back.OnMouseOver += ReturnToMenu_OnMouseOver;
-			Back.OnMouseOut += ReturnToMenu_OnMouseOut;
-			Back.SetSnapPoint("Back", 0);
-			Wrapper.Append(Back);
+			Append(Hunter);
 
-			Append(Wrapper);
+			Warlock = new ClassOption(Player, DestinyClassType.Warlock)
+			{
+				Left = StyleDimension.FromPixels(2),
+				Top = StyleDimension.FromPixelsAndPercent(8, 0.666f),
+				Width = StyleDimension.FromPixelsAndPercent(-3, 0.4f),
+				Height = StyleDimension.FromPixelsAndPercent(-2f, 0.333f)
+			};
+			Append(Warlock);
 		}
 
 		public override void Update(GameTime gameTime)
 		{
-			base.Update(gameTime);
-
-			if (PlayerInput.Triggers.JustPressed.Inventory)
+			static string GetDescription(DestinyClassType classType)
 			{
-				ReturnToMenu();
-			}
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			base.Draw(spriteBatch);
-
-			UILinkPointNavigator.Shortcuts.BackButtonCommand = 1;
-			UILinkPointNavigator.SetPosition(3000, Titan.Select.GetInnerDimensions().Center());
-			UILinkPointNavigator.SetPosition(3001, Hunter.Select.GetInnerDimensions().Center());
-			UILinkPointNavigator.SetPosition(3002, Warlock.Select.GetInnerDimensions().Center());
-			UILinkPointNavigator.SetPosition(3003, Back.GetInnerDimensions().Center());
-
-			for (int index = 3000; index <= 3003; index++)
-			{
-				UILinkPoint uiLinkPoint = UILinkPointNavigator.Points[index];
-				uiLinkPoint.Unlink();
-
-				int previous = index - 1;
-				if (previous >= 3000)
+				switch (classType)
 				{
-					uiLinkPoint.Up = previous;
-				}
+					case DestinyClassType.Titan:
+						return "Disciplined and proud, Titans are capable of both aggressive assaults and stalwart defenses";
 
-				int next = index + 1;
-				if (next <= 3003)
-				{
-					uiLinkPoint.Down = next;
+					case DestinyClassType.Hunter:
+						return "Agile and daring, Hunters are quick on their feet and quicker on the draw";
+
+					case DestinyClassType.Warlock:
+						return "Warlocks weaponize the mysteries of the universe to sustain themselves and devastate their foes";
+
+					case DestinyClassType.None:
+					default:
+						return "Select a class to proceed";
 				}
 			}
-		}
 
-		private void ReturnToMenu(UIMouseEvent evt = null, UIElement listeningElement = null)
-		{
-			DestinyMod.Instance.Logger.Info(Main.menuMode);
-			SoundEngine.PlaySound(SoundID.MenuClose);
-			Main.menuMode = 1;
-			UIHandler.Interface.SetState(null);
-		}
+			if (Titan.ContainsPoint(Main.MouseScreen))
+			{
+				Description.SetText(GetDescription(DestinyClassType.Titan));
+				return;
+			}
 
-		private void ReturnToMenu_OnMouseOver(UIMouseEvent evt, UIElement listeningElement)
-		{
-			SoundEngine.PlaySound(SoundID.MenuTick);
-			Back.BackgroundColor = UICommon.DefaultUIBlue;
-		}
+			if (Hunter.ContainsPoint(Main.MouseScreen))
+			{
+				Description.SetText(GetDescription(DestinyClassType.Hunter));
+				return;
+			}
 
-		private void ReturnToMenu_OnMouseOut(UIMouseEvent evt, UIElement listeningElement) => Back.BackgroundColor = UICommon.DefaultUIBlueMouseOver;
+			if (Warlock.ContainsPoint(Main.MouseScreen))
+			{
+				Description.SetText(GetDescription(DestinyClassType.Warlock));
+				return;
+			}
+
+			Description.SetText(GetDescription(Player.GetModPlayer<ClassPlayer>().ClassType));
+		}
 	}
 }

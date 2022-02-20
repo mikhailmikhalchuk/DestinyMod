@@ -8,10 +8,10 @@ using DestinyMod.Common.Projectiles;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
-    //If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
+    // If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
     public class FusionShot : DestinyModProjectile
     {
-        private static SoundEffectInstance ChargeSound;
+        public SoundEffectInstance ChargeSound;
 
         public bool SwappedData;
 
@@ -25,15 +25,15 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public int UtilisedProjectileType => ProjectileType > 0 ? ProjectileType : ProjectileID.Bullet;
 
-        private bool Fired;
+        public bool Fired;
 
-        private int FireDelay
+        public int FireDelay
         {
             get => (int)Projectile.ai[0];
             set => Projectile.ai[0] = value;
         }
 
-        private int CountFires
+        public int CountFires
         {
             get => (int)Projectile.ai[1];
             set => Projectile.ai[1] = value;
