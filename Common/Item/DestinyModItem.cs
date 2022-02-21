@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using static DestinyMod.Common.ModPlayers.ItemPlayer;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Common.Items
 {
@@ -20,7 +21,7 @@ namespace DestinyMod.Common.Items
 
 		public virtual void AutomaticSetDefaults()
 		{
-			Texture2D itemTexture = TextureAssets.Item[Item.type].Value;
+			Texture2D itemTexture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			Item.width = itemTexture.Width;
 			Item.height = itemTexture.Height;
 		}
@@ -32,5 +33,13 @@ namespace DestinyMod.Common.Items
 		public virtual IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => IterationContext.None;
 
 		public virtual void PostUpdateRunSpeeds(Player player) { }
+
+		public virtual IterationContext DetermineModifyDrawInfoContext(Player player) => IterationContext.None;
+
+		public virtual void ModifyDrawInfo(Player player, ref PlayerDrawSet drawInfo) { }
+
+		public virtual IterationContext DetermineHideDrawLayersContext(Player player) => IterationContext.None;
+
+		public virtual void HideDrawLayers(Player player, PlayerDrawSet drawInfo) { }
 	}
 }

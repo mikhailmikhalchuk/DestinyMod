@@ -7,16 +7,26 @@ using Terraria.DataStructures;
 using DestinyMod.Common.ModPlayers;
 using Terraria.Audio;
 using DestinyMod.Content.Projectiles.Weapons.Magic;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace DestinyMod.Content.Items.Weapons.Magic
 {
 	public class TheAegis : DestinyModItem
 	{
-		private int Cooldown;
+		public int Cooldown;
 
-		public override void SetStaticDefaults() => Tooltip.SetDefault("A timelost relic, with the power to protect Guardians from being erased from existence"
+		public static Asset<Texture2D> ShieldTexture { get; private set; }
+
+		public override void Unload() { }
+
+		public override void SetStaticDefaults()
+		{
+			ShieldTexture = ModContent.Request<Texture2D>("DestinyMod/Content/Items/Weapons/Magic/TheAegis_Shield");
+			Tooltip.SetDefault("A timelost relic, with the power to protect Guardians from being erased from existence"
 			+ "\nLeft click to summon a protective shield"
 			+ "\nRight click to fire a powerful blast");
+		}
 
 		public override void DestinySetDefaults()
 		{
@@ -70,6 +80,36 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 				player.accRunSpeed /= 2;
 				player.dashDelay = 10;
 			}
+		}
+
+		public override ItemPlayer.IterationContext DetermineModifyDrawInfoContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+
+		public override void ModifyDrawInfo(Player player, ref PlayerDrawSet drawInfo)
+		{
+			ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
+			if (player.channel && itemPlayer.AegisCharge > 0)
+			{
+				player.headRotation = player.direction * 0.3f;
+				Texture2D shieldTexture = ShieldTexture.Value;
+				drawInfo.DrawDataCache.Add(new DrawData(
+							shieldTexture,
+							drawInfo.ItemLocation - Main.screenPosition + new Vector2(drawInfo.drawPlayer.direction == 1 ? 4 : -4, 20),
+							shieldTexture.Frame(),
+							new Color(Lighting.GetSubLight(drawInfo.drawPlayer.Center)),
+							player.GetModPlayer<ItemPlayer>().AegisCharge > 0 ? 0f : drawInfo.drawPlayer.headRotation - (drawInfo.drawPlayer.direction == 1 ? 0.1f : -0.1f),
+							new Vector2(drawInfo.drawPlayer.direction == 1 ? 0 : shieldTexture.Frame().Width, shieldTexture.Frame().Height),
+							drawInfo.drawPlayer.HeldItem.scale * 0.8f,
+							drawInfo.itemEffect,
+							0));
+			}
+		}
+
+		public override ItemPlayer.IterationContext DetermineHideDrawLayersContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+
+		public override void HideDrawLayers(Player player, PlayerDrawSet drawInfo)
+		{
+			PlayerDrawLayers.Shield.Hide();
+			PlayerDrawLayers.SolarShield.Hide();
 		}
 	}
 }
