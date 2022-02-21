@@ -96,6 +96,6 @@ namespace DestinyMod.Common.ModPlayers
 		}
 
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) =>
-			ImplementItemIteration(destinyModItem => destinyModItem.DeterminePostUpdateRunSpeedsContext(Player), destinyModItem => destinyModItem.PostUpdateRunSpeeds(Player));
+			ImplementItemIteration(destinyModItem => destinyModItem.DetermineHideDrawLayersContext(Player), destinyModItem => destinyModItem.HideDrawLayers(Player, drawInfo));
 	}
 }

@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using static DestinyMod.Common.ModPlayers.ItemPlayer;
 using Terraria.DataStructures;
 

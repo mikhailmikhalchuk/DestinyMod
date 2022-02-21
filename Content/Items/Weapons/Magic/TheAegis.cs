@@ -108,8 +108,12 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 
 		public override void HideDrawLayers(Player player, PlayerDrawSet drawInfo)
 		{
-			PlayerDrawLayers.Shield.Hide();
-			PlayerDrawLayers.SolarShield.Hide();
+			ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
+			if (player.channel && itemPlayer.AegisCharge > 0)
+			{
+				PlayerDrawLayers.Shield.Hide();
+				PlayerDrawLayers.SolarShield.Hide();
+			}
 		}
 	}
 }
