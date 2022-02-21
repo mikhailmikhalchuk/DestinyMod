@@ -12,7 +12,7 @@ namespace DestinyMod.Common.Items.ItemTypes
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (Main.LocalPlayer.GetModPlayer<ClassPlayer>().ClassType == ArmorClassType || !DestinyClientConfig.Instance.RestrictClassItems)
+            if (!DestinyClientConfig.Instance.RestrictClassItems || Main.LocalPlayer.GetModPlayer<ClassPlayer>().ClassType == ArmorClassType)
             {
                 return;
             }
@@ -24,5 +24,5 @@ namespace DestinyMod.Common.Items.ItemTypes
         }
 
 		public override bool CanEquip(Player player) => !DestinyClientConfig.Instance.RestrictClassItems || player.GetModPlayer<ClassPlayer>().ClassType == ArmorClassType;
-	}
+    }
 }
