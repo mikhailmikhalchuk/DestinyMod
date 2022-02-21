@@ -19,14 +19,15 @@ namespace DestinyMod.Content.Items.Equipables.Pets
 			Item.value = Item.sellPrice(gold: 5, silver: 50);
 			Item.shoot = ModContent.ProjectileType<Projectiles.Pets.Ghost>();
 			Item.buffType = ModContent.BuffType<Buffs.Pets.Ghost>();
+			Item.buffTime = 3600;
 			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/Ghost");
 		}
 
-		public override void UseStyle(Player player, Rectangle heldItemFrame)
+		public override void UseAnimation(Player player)
 		{
-			if (player.whoAmI == Main.myPlayer && player.itemTime == 0)
+			if (player.whoAmI == Main.myPlayer)
 			{
-				player.AddBuff(Item.buffType, 3600, true);
+				player.AddBuff(Item.buffType, Item.buffTime);
 			}
 		}
 	}
