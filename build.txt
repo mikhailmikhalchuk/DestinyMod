@@ -1,3 +1,8 @@
-displayName = Destiny Mod
-author = Cuno & Co.
-version = 0.1
+displayName = Destiny
+author = MikhailMCraft & Co.
+version = 0.0.8.5
+buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*, Properties\*
+hideCode = true
+hideResources = true
+includeSource = false
+homepage = https://discord.gg/ZrjsCq96zM

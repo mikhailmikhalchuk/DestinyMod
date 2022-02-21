@@ -31,7 +31,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			PlayerPanel = typeof(UICharacterListItem).GetField("_playerPanel", BindingFlags.NonPublic | BindingFlags.Instance);
 			Data = typeof(UICharacterListItem).GetField("_data", BindingFlags.NonPublic | BindingFlags.Instance);
 
-			IL.Terraria.GameContent.UI.States.UICharacterSelect.OnInitialize += ResizeCharacterSelect;
+			// IL.Terraria.GameContent.UI.States.UICharacterSelect.OnInitialize += ResizeCharacterSelect;
 			IL.Terraria.GameContent.UI.Elements.UICharacterListItem.DrawSelf += InsertClassIndicator;
 		}
 
@@ -70,6 +70,17 @@ namespace DestinyMod.Content.UI.ClassSelection
 			cursor.Emit(OpCodes.Ldarg_1);
 			cursor.EmitDelegate<Action<UICharacterListItem, SpriteBatch>>((character, spriteBatch) =>
 			{
+				UIElement innerCharacterList = character.Parent;
+				UIElement characterList = innerCharacterList.Parent;
+				UIElement backgroundPanel = characterList.Parent;
+				UIElement trueBackground = backgroundPanel.Parent;
+				if (trueBackground.MaxWidth.Pixels == 650)
+				{
+					DestinyMod.Instance.Logger.Info("Attempted to update MaxWidth");
+					trueBackground.MaxWidth.Pixels = 800;
+					trueBackground.Parent.Recalculate();
+				}
+				
 				// A travesty
 				UICharacter playerPanel = PlayerPanel.GetValue(character) as UICharacter;
 				PlayerFileData data = Data.GetValue(character) as PlayerFileData;
