@@ -24,13 +24,7 @@ namespace DestinyMod.Common.GlobalItems
 			}
 		}
 
-		public override void UseAnimation(Item item, Player player)
-		{
-			if (item.useAnimation == 1)
-			{
-				player.GetModPlayer<StatsPlayer>().ItemReuse += ItemReuse;
-			}
-		}
+		public override void UseAnimation(Item item, Player player) => player.GetModPlayer<StatsPlayer>().ItemReuse = ItemReuse + player.itemAnimation + 1;
 
 		public override bool CanUseItem(Item item, Player player) => player.GetModPlayer<StatsPlayer>().ItemReuse <= 0;
 	}

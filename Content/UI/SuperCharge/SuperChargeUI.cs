@@ -16,7 +16,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public override void PreLoad(ref string name)
 		{
-			AutoSetState = true;
+			AutoSetState = false;
 			AutoAddHandler = true;
 		}
 

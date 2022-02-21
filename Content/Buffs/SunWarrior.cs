@@ -14,6 +14,6 @@ namespace DestinyMod.Content.Buffs
             Main.buffNoTimeDisplay[Type] = true;
         }
 
-		public override float UseTimeMultiplier(Player player, Item item) => item.type == ModContent.ItemType<HammerOfSol>() ? 2f : 1f;
+		public override float UseTimeMultiplier(Player player, Item item) => item.type == ModContent.ItemType<HammerOfSol>() ? 0.5f : 1f;
 	}
 }

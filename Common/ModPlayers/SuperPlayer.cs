@@ -83,7 +83,7 @@ namespace DestinyMod.Common.ModPlayers
 				NotifiedThatSuperIsReady = true;
 			}
 
-			SuperRegenTimer++;
+			// SuperRegenTimer++;
 			SuperChargeCurrent = Utils.Clamp(SuperChargeCurrent, 0, 100);
 			if (SuperRegenTimer > 360)
 			{
