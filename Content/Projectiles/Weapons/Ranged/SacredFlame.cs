@@ -33,7 +33,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			}
 		}
 
-		public override void AI() => HomeInOnNPC(400, 15f);
+		public override void AI() => GradualHomeInOnNPC(400, 15f, 0.1f);
 
 		public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.75f, lightColor.B * 0.55f, lightColor.A);
 	}
