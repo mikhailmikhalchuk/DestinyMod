@@ -22,12 +22,16 @@ namespace DestinyMod.Common.Items
 		{
 			Texture2D itemTexture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			Item.width = itemTexture.Width;
-			Item.height = itemTexture.Height;
+			Item.height = utilisedHeight;
 		}
 
 		public virtual void DestinySetDefaults() { }
 
 		public virtual bool CanEquip(Player player) => true;
+
+		public virtual void OnHold(Player player) { }
+
+		public virtual void OnRelease(Player player) { }
 
 		public virtual IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => IterationContext.None;
 

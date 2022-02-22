@@ -21,6 +21,31 @@ namespace DestinyMod.Common.ModPlayers
 			Armor = 4
 		}
 
+		public override void PostUpdate()
+		{
+			for (int inventoryCount = 0; inventoryCount < Player.inventory.Length - 1; inventoryCount++)
+			{
+				if (Player.selectedItem == inventoryCount)
+				{
+					continue;
+				}
+
+				Item inventoryItem = Player.inventory[inventoryCount];
+				if (inventoryItem == null || inventoryItem.IsAir || inventoryItem.ModItem is not DestinyModItem inventoryDestinyModItem)
+				{
+					continue;
+				}
+
+				inventoryDestinyModItem.OnRelease(Player);
+			}
+
+			Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+			if (heldItem.ModItem is DestinyModItem destinyModItem)
+			{
+				destinyModItem.OnHold(Player);
+			}
+		}
+
 		// Perhaps we should not for performance?
 		public void ImplementItemIteration(Func<DestinyModItem, IterationContext> determineContext, Action<DestinyModItem> onSuccessfulIteration)
 		{
@@ -37,6 +62,11 @@ namespace DestinyMod.Common.ModPlayers
 
 			for (int inventoryCount = 0; inventoryCount < Player.inventory.Length - 1; inventoryCount++)
 			{
+				if (Player.selectedItem == inventoryCount)
+				{
+					continue;
+				}
+
 				Item inventoryItem = Player.inventory[inventoryCount];
 				if (inventoryItem == null || inventoryItem.IsAir || inventoryItem.ModItem is not DestinyModItem inventoryDestinyModItem
 					|| !determineContext(inventoryDestinyModItem).HasFlag(IterationContext.Inventory))
@@ -47,7 +77,7 @@ namespace DestinyMod.Common.ModPlayers
 				onSuccessfulIteration(inventoryDestinyModItem);
 			}
 
-			Item heldItem = Main.mouseItem.IsAir ? Player.inventory[Player.selectedItem] : Main.mouseItem;
+			Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
 			if (heldItem == null || heldItem.IsAir || heldItem.ModItem is not DestinyModItem heldDestinyModItem
 				|| !determineContext(heldDestinyModItem).HasFlag(IterationContext.HeldItem))
 			{

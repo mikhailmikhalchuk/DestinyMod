@@ -16,6 +16,7 @@ namespace DestinyMod.Content.Items.Engrams
 		public override void AutomaticSetDefaults()
 		{
 			base.AutomaticSetDefaults();
+			Item.height = 42;
 			Item.maxStack = 99;
 		}
 
