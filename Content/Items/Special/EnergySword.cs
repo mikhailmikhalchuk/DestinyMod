@@ -9,6 +9,8 @@ using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using System;
 using System.Reflection;
+using DestinyMod.Common.ModPlayers;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.Items.Special
 {
@@ -16,9 +18,15 @@ namespace DestinyMod.Content.Items.Special
     {
         public static Asset<Texture2D> SwordTexture { get; private set; }
 
+        public static Asset<Texture2D> HeldSwordTexture { get; private set; }
+
         public static Asset<Texture2D> OutlineTexture { get; private set; }
 
+        public static Asset<Texture2D> HeldOutlineTexture { get; private set; }
+
         public static Asset<Texture2D> HandleTexture { get; private set; }
+
+        public static Asset<Texture2D> HeldHandleTexture { get; private set; }
 
         public static Asset<Texture2D> Noise { get; private set; }
 
@@ -31,13 +39,21 @@ namespace DestinyMod.Content.Items.Special
         public override void Load()
         {
             if (Main.dedServ)
-			{
+            {
                 return;
-			}
+            }
 
             SwordTexture = ModContent.Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad);
-            OutlineTexture = ModContent.Request<Texture2D>(Texture + "_Outline", AssetRequestMode.ImmediateLoad);
-            HandleTexture = ModContent.Request<Texture2D>(Texture + "_Handle", AssetRequestMode.ImmediateLoad);
+            HeldSwordTexture = ModContent.Request<Texture2D>(Texture + "_Held", AssetRequestMode.ImmediateLoad);
+
+            string outlinePath = Texture + "_Outline";
+            OutlineTexture = ModContent.Request<Texture2D>(outlinePath, AssetRequestMode.ImmediateLoad);
+            HeldOutlineTexture = ModContent.Request<Texture2D>(outlinePath + "_Held", AssetRequestMode.ImmediateLoad);
+
+            string handlePath = Texture + "_Handle";
+            HandleTexture = ModContent.Request<Texture2D>(handlePath, AssetRequestMode.ImmediateLoad);
+            HeldHandleTexture = ModContent.Request<Texture2D>(handlePath + "_Held", AssetRequestMode.ImmediateLoad);
+
             Noise = ModContent.Request<Texture2D>("DestinyMod/Assets/Noise/EnergySwordNoise", AssetRequestMode.ImmediateLoad);
             Asset<Effect> energySwordEffect = Mod.Assets.Request<Effect>("Assets/Effects/Shaders/EnergySword", AssetRequestMode.ImmediateLoad);
             Ref<Effect> refEnergySwordEffect = new Ref<Effect>(energySwordEffect.Value);
@@ -46,39 +62,48 @@ namespace DestinyMod.Content.Items.Special
             GameShaders.Misc["DestinyMod:EnergySword"] = energySwordShaderData;
         }
 
-		public override void SetStaticDefaults()
-		{
+        public override void SetStaticDefaults()
+        {
             DisplayName.SetDefault("Type-I Energy Sword");
             Tooltip.SetDefault("Ignores enemy defense"
+                + "\nGreatly increases maximum running speed when held"
                 + "\n\"A noble and ancient weapon, wielded by the strongest of Sangheili.\""
                 + "\n\"Requires great skill and bravery to use, and inspires fear in those who face its elegant plasma blade.\"");
-		}
+        }
 
-		public override void DestinySetDefaults()
+        public override void DestinySetDefaults()
         {
             Item.damage = 100;
             Item.DamageType = DamageClass.Melee;
             Item.useTime = 30;
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.Rapier;
+            Item.useStyle = ItemUseStyleID.Thrust;
             Item.knockBack = 2;
             Item.rare = ItemRarityID.Master;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
         }
 
-		public override void OnHold(Player player)
-		{
-            if (++PulloutTimer == PulloutReach - 5)
-			{
+        public override void OnHold(Player player)
+        {
+            if (++PulloutTimer == PulloutReach - 2)
+            {
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Special/EnergySword/Ready"), player.Center);
             }
-		}
+        }
 
         public override void OnRelease(Player player) => PulloutTimer = 0;
 
+        public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+
+        public override void PostUpdateRunSpeeds(Player player)
+        {
+            player.maxRunSpeed *= 1.5f;
+            player.accRunSpeed *= 1.5f;
+        }
+
         public void ApplyEnergySwordShader()
-		{
+        {
             ShaderOffset += 0.5f / 512f;
             if (ShaderOffset > 1)
             {
@@ -93,14 +118,22 @@ namespace DestinyMod.Content.Items.Special
             energySwordShader.Apply();
         }
 
+        public override ItemPlayer.IterationContext DetermineHideDrawLayersContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+
+        public override void HideDrawLayers(Player player, PlayerDrawSet drawInfo)
+        {
+            PlayerDrawLayers.HeldItem.Hide();
+            PlayerDrawLayers.ArmOverItem.Hide();
+        }
+
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-		{
+        {
             spriteBatch.Draw(HandleTexture.Value, position, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 
             if (PulloutTimer == 0)
-			{
+            {
                 return false;
-			}
+            }
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
@@ -118,10 +151,10 @@ namespace DestinyMod.Content.Items.Special
 
             spriteBatch.Draw(OutlineTexture.Value, swordPosition, swordSourceRectangle, drawColor * 0.75f, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
-		}
+        }
 
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
             spriteBatch.Draw(HandleTexture.Value, Item.position - Main.screenPosition, HandleTexture.Value.Bounds, lightColor, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
             spriteBatch.End();
@@ -135,9 +168,9 @@ namespace DestinyMod.Content.Items.Special
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            
+
             spriteBatch.Draw(OutlineTexture.Value, Item.position - Main.screenPosition, HandleTexture.Value.Bounds, lightColor * 0.75f, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             return false;
         }
-	}
+    }
 }
