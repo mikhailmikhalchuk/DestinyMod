@@ -87,7 +87,9 @@ namespace DestinyMod.Content.Items.Special
             MiscShaderData energySwordShader = GameShaders.Misc["DestinyMod:EnergySword"];
             double blueIntensityWave = Math.Sin(Main.GameUpdateCount / 60f * Math.PI);
             float blueIntensity = (float)(blueIntensityWave / 5f + 0.5f);
-            energySwordShader.UseShaderSpecificData(new Vector4(blueIntensity, ShaderOffset, ShaderOffset, 0));
+            double noiseIntensityWave = Math.Sin(Main.GameUpdateCount / 40f * Math.PI);
+            float noiseIntensity = (float)(noiseIntensityWave / 8f + 0.625f);
+            energySwordShader.UseShaderSpecificData(new Vector4(blueIntensity, ShaderOffset, ShaderOffset, noiseIntensity));
             energySwordShader.Apply();
         }
 
@@ -114,7 +116,7 @@ namespace DestinyMod.Content.Items.Special
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
 
-            spriteBatch.Draw(OutlineTexture.Value, swordPosition, swordSourceRectangle, drawColor * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(OutlineTexture.Value, swordPosition, swordSourceRectangle, drawColor * 0.75f, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
 		}
 
@@ -134,7 +136,7 @@ namespace DestinyMod.Content.Items.Special
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             
-            spriteBatch.Draw(OutlineTexture.Value, Item.position - Main.screenPosition, HandleTexture.Value.Bounds, lightColor * 0.5f, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(OutlineTexture.Value, Item.position - Main.screenPosition, HandleTexture.Value.Bounds, lightColor * 0.75f, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             return false;
         }
 	}

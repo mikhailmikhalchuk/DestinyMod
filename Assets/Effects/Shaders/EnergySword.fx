@@ -28,9 +28,9 @@ float4 EnergySword(float4 position : SV_POSITION, float2 coords : TEXCOORD0) : C
         return color;
     }
     float4 noise = tex2D(uImage1, coords.xy + float2(-uShaderSpecificData.y, uShaderSpecificData.z));
-    float4 colorTintedBlue = Tint(color, float4(0, 0, 1, 1) * color.a, uShaderSpecificData.x);
-    float4 colorsAdjustedForNoise = Tint(color, noise * color.a, uShaderSpecificData.x);
-    return colorsAdjustedForNoise * color.a;
+    float4 colorTintedBlue = Tint(color, float4(0, 0, 1, 1), uShaderSpecificData.x);
+    float4 colorsAdjustedForNoise = Tint(color, noise, uShaderSpecificData.x);
+    return colorsAdjustedForNoise * uShaderSpecificData.w;
 
 }
 
