@@ -22,7 +22,7 @@ namespace DestinyMod.Common.Items
 		{
 			Texture2D itemTexture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			Item.width = itemTexture.Width;
-			Item.height = utilisedHeight;
+			Item.height = itemTexture.Height;
 		}
 
 		public virtual void DestinySetDefaults() { }
