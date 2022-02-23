@@ -11,19 +11,6 @@ namespace DestinyMod.Common.GlobalItems
 
         public override bool InstancePerEntity => true;
 
-        public override GlobalItem Clone(Item item, Item itemClone)
-        {
-            return base.Clone(item, itemClone);
-        }
-
-        public override void SetDefaults(Item item)
-		{
-			if (item.ModItem is DestinyModItem destinyModItem)
-			{
-				ItemReuse = destinyModItem.DestinyModReuseDelay;
-			}
-		}
-
 		public override void UseAnimation(Item item, Player player)
 		{
 			int itemReuse = 0;
