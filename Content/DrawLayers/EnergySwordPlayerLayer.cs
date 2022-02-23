@@ -40,7 +40,7 @@ namespace DestinyMod.Content.DrawLayers
 			bool faceLeft = player.direction < 0;
 			float pulloutProgress = Utils.Clamp((float)energySword.PulloutTimer / EnergySword.PulloutReach, 0f, 1f);
 			int posModBasedOnPullout = faceLeft ? (int)(EnergySword.HeldSwordTexture.Width() * (1 - pulloutProgress)) : 0;
-			Vector2 handPosition = playerScreenPosition + new Vector2(faceLeft ? -46 : -2, 4) + new Vector2(posModBasedOnPullout, 0);
+			Vector2 handPosition = playerScreenPosition + new Vector2(faceLeft ? -42 : -2, 4) + new Vector2(posModBasedOnPullout, 0);
 			Rectangle swordSourceRectangle = new Rectangle(0, 0, (int)(EnergySword.HeldSwordTexture.Width() * pulloutProgress), EnergySword.HeldSwordTexture.Height());
 			Vector2 handleOrigin = new Vector2(12, 15);
 			SpriteEffects swordSpriteEffects = faceLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
@@ -60,7 +60,7 @@ namespace DestinyMod.Content.DrawLayers
 		{
 			Player player = drawInfo.drawPlayer;
 			Vector2 playerScreenPosition = player.Center - Main.screenPosition;
-			Vector2 handPosition = playerScreenPosition + new Vector2(player.direction < 0 ? -46 : -2, 4);
+			Vector2 handPosition = playerScreenPosition + new Vector2(player.direction < 0 ? -42 : -2, 4);
 			Vector2 handleOrigin = new Vector2(12, 15);
 			SpriteEffects swordSpriteEffects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			DrawData energySwordHandle = new DrawData(EnergySword.HeldHandleTexture.Value, handPosition, null, Color.White, 0f, handleOrigin, 1f, swordSpriteEffects, 0);

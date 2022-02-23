@@ -11,6 +11,7 @@ using System;
 using System.Reflection;
 using DestinyMod.Common.ModPlayers;
 using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Audio;
 
 namespace DestinyMod.Content.Items.Special
 {
@@ -35,6 +36,8 @@ namespace DestinyMod.Content.Items.Special
         public static int PulloutReach { get; private set; } = 10;
 
         public float ShaderOffset;
+
+        public SoundEffectInstance Hum { get; private set; }
 
         public override void Load()
         {
@@ -89,10 +92,24 @@ namespace DestinyMod.Content.Items.Special
             if (++PulloutTimer == PulloutReach - 2)
             {
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Special/EnergySword/Ready"), player.Center);
+                Hum = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Special/EnergySword/Hum").AsAmbient(), player.Center);
+            }
+
+            if (Hum != null && PulloutTimer >= PulloutReach - 2 && Hum.State == SoundState.Stopped)
+			{
+                Hum.Play();
             }
         }
 
-        public override void OnRelease(Player player) => PulloutTimer = 0;
+        public override void OnRelease(Player player)
+        {
+            PulloutTimer = 0;
+
+            if (Hum != null && Hum.State != SoundState.Stopped)
+			{
+                Hum.Stop();
+			}
+        }
 
         public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
 
