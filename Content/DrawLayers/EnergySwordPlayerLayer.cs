@@ -20,7 +20,7 @@ namespace DestinyMod.Content.DrawLayers
 
 			Player player = drawInfo.drawPlayer;
 
-			if (player == null)
+			if (player == null || player.itemAnimation > 0)
 			{
 				return;
 			}
@@ -59,6 +59,10 @@ namespace DestinyMod.Content.DrawLayers
 		protected override void Draw(ref PlayerDrawSet drawInfo)
 		{
 			Player player = drawInfo.drawPlayer;
+			if (player.itemAnimation > 0)
+			{
+				return;
+			}
 			Vector2 playerScreenPosition = player.Center - Main.screenPosition;
 			Vector2 handPosition = playerScreenPosition + new Vector2(player.direction < 0 ? -42 : -2, 4);
 			Vector2 handleOrigin = new Vector2(12, 15);

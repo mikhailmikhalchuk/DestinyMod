@@ -16,6 +16,7 @@ namespace DestinyMod.Content.Items.Buffers
         {
             DisplayName.SetDefault("Orb of Power");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 19));
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
         public override void DestinySetDefaults()

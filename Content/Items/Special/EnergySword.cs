@@ -70,6 +70,7 @@ namespace DestinyMod.Content.Items.Special
             DisplayName.SetDefault("Type-I Energy Sword");
             Tooltip.SetDefault("Ignores enemy defense"
                 + "\nGreatly increases maximum running speed when held"
+                + "\nRight click to lunge"
                 + "\n\"A noble and ancient weapon, wielded by the strongest of Sangheili.\""
                 + "\n\"Requires great skill and bravery to use, and inspires fear in those who face its elegant plasma blade.\"");
         }
@@ -78,16 +79,43 @@ namespace DestinyMod.Content.Items.Special
         {
             Item.damage = 100;
             Item.DamageType = DamageClass.Melee;
-            Item.useTime = 30;
+            Item.useTime = 10;
             Item.useAnimation = 30;
-            Item.useStyle = ItemUseStyleID.Thrust;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 2;
             Item.rare = ItemRarityID.Master;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
+            Item.useTurn = true;
         }
 
-        public override void OnHold(Player player)
+        public override bool AltFunctionUse(Player player) => true;
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                Item.useStyle = ItemUseStyleID.Thrust;
+                DestinyModReuseDelay = 120;
+            }
+            else
+			{
+                Item.useStyle = ItemUseStyleID.Swing;
+                DestinyModReuseDelay = 0;
+            }
+            return true;
+		}
+		public override void UseAnimation(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                Vector2 direction = player.DirectionTo(Main.MouseWorld);
+                player.velocity = direction * (20f + Math.Abs(player.velocity.Length()));
+                player.direction = Math.Sign(player.velocity.X);
+            }
+        }
+
+		public override void OnHold(Player player)
         {
             if (++PulloutTimer == PulloutReach - 2)
             {
@@ -119,7 +147,9 @@ namespace DestinyMod.Content.Items.Special
             player.accRunSpeed *= 1.5f;
         }
 
-        public void ApplyEnergySwordShader()
+		#region Drawing
+
+		public void ApplyEnergySwordShader()
         {
             ShaderOffset += 0.5f / 512f;
             if (ShaderOffset > 1)
@@ -139,8 +169,11 @@ namespace DestinyMod.Content.Items.Special
 
         public override void HideDrawLayers(Player player, PlayerDrawSet drawInfo)
         {
-            PlayerDrawLayers.HeldItem.Hide();
-            PlayerDrawLayers.ArmOverItem.Hide();
+            if (player.itemAnimation <= 0)
+            {
+                PlayerDrawLayers.HeldItem.Hide();
+                PlayerDrawLayers.ArmOverItem.Hide();
+            }
         }
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -189,5 +222,7 @@ namespace DestinyMod.Content.Items.Special
             spriteBatch.Draw(OutlineTexture.Value, Item.position - Main.screenPosition, HandleTexture.Value.Bounds, lightColor * 0.75f, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             return false;
         }
-    }
+
+		#endregion
+	}
 }

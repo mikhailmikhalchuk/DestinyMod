@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using DestinyMod.Common.Items;
 
 namespace DestinyMod.Content.Items.Engrams
@@ -11,6 +12,7 @@ namespace DestinyMod.Content.Items.Engrams
 			Tooltip.SetDefault("A highly advanced, encrypted storage unit"
 				+ "\nA cryptarch could probably break its encryption for you");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 12));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 		}
 
 		public override void AutomaticSetDefaults()
