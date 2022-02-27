@@ -30,6 +30,6 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 			Item.shootSpeed = 14f;
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(-20, 0);
+		public override Vector2? HoldoutOffset() => new Vector2(-13, -2);
 	}
 }
