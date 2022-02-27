@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crown of Tempests");
-			Tooltip.SetDefault("Mighty are they of the stormcloud thrones, and quick to anger");
+			Tooltip.SetDefault("\"Mighty are they of the stormcloud thrones, and quick to anger\"");
 		}
 
 		public override void DestinySetDefaults()

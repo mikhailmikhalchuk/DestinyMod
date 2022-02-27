@@ -32,7 +32,7 @@ namespace DestinyMod.Content.Buffs.Debuffs
 		{
             if (damage == 10 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
-                damageSource = PlayerDeathReason.ByCustomReason(player.name + " energy was dispersed.");
+                damageSource = PlayerDeathReason.ByCustomReason(player.name + "'s energy was dispersed.");
             }
             return base.PreKill(player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}

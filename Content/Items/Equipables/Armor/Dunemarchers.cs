@@ -17,7 +17,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 		{
 			Tooltip.SetDefault("Increases maximum running speed"
 				+ "\nRunning for more than 5 seconds straight will grant the Linear Actuators buff" 
-				+ "\nWhether on solid rock or shifting sand dune, the inexorable Sand Eaters never slow their pace.");
+				+ "\n\"Whether on solid rock or shifting sand dune, the inexorable Sand Eaters never slow their pace.\"");
 		}
 
 		public override void DestinySetDefaults()

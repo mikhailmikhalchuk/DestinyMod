@@ -3,11 +3,10 @@ Adds items and such from the Bungie video game Destiny and its sequel Destiny 2.
 Developers
 ---------
 Cuno - Programmer
-Smug - Trial Programmer
+Smug - Programmer
 Brent dya - Spriter
 ghost - Spriter
 Aeterna - Spriter
-chis - Trial Spriter
 
 Special Thanks
 ---------
@@ -28,6 +27,15 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
+Ported the mod to 1.4!
+NOTE THAT THE MOD IS STILL IN A PRE-RELEASE STATE:
+Issues we are aware of:
+- Most items are no longer scaled down and some are massive
+- Animated items have a mouse text hover well above their intended sprite (this is a tModLoader issue and we are waiting for a patch)
+
+__DO NOT DELETE YOUR UNLOADED ITEMS__
+__Instead, use the /portItems command to convert all unloaded TheDestinyMod items to DestinyMod items__
+
 Xur now appears every Friday if the world is in Hardmode
 Gave all modded rocket launchers the generic rocket launcher sound
 Monte Carlo now has its own sound effect

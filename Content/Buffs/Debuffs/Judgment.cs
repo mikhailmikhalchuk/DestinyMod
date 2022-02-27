@@ -8,7 +8,7 @@ namespace DestinyMod.Content.Buffs.Debuffs
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Judgment");
-            Description.SetDefault("20% reduced applied defense");
+            Description.SetDefault("20% reduced defense");
             Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
         }

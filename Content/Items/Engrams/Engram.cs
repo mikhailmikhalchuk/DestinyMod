@@ -11,14 +11,15 @@ namespace DestinyMod.Content.Items.Engrams
 		{
 			Tooltip.SetDefault("A highly advanced, encrypted storage unit"
 				+ "\nA cryptarch could probably break its encryption for you");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 12));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 12, true));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 		}
 
 		public override void AutomaticSetDefaults()
 		{
-			base.AutomaticSetDefaults();
-			Item.height = 42;
+			//base.AutomaticSetDefaults();
+			Item.width = 38;
+			Item.height = 40;
 			Item.maxStack = 99;
 		}
 
