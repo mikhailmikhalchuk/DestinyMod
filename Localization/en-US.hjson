@@ -1,0 +1,120 @@
+Mods: {
+	DestinyMod: {
+		Drifter: {
+			Chatter_1: How you livin'?
+			Chatter_2: '''Get me those Motes and I'll make you rich, {0}, I promise.'''
+			Chatter_3: Call me Drifter.
+			Chatter_4: Ready to bang knuckles?
+			Chatter_5: Transmat firing!
+			Chatter_6: Let's be bad guys.
+			Chatter_7: Motes of Light have always been a thing. Motes of Dark? I had to make 'em. One day, I may have to answer for that.
+			Chatter_8: I see you lookin' at me like I'm nuts. You think all this is for nothing? That I do this cause I like it? You don't know the half of it.
+			Chatter_9: Ah, all the stars in heaven! I am so... hungry.
+			Chatter_10: You think 'cause you released some fancy spirits, you're too good for me? Come on. Drifter needs his Motes.
+			Chatter_11: Light isn't the only source of power out here.
+			Chatter_12: Light, Dark... Let me tell you, the only thing that matters is the hand holding the gun.
+			Chatter_13: '''Oh, no, no, no, that CREEP is here again. When will him and these..."Nine" stop botherin' us, {0}?'''
+			Chatter_14: '''Gah, what's with {0}, {1}? He reminds me of ol' Zavala back at the Tower...what do you mean Zavala is here?!'''
+			Chatter_15: '''Gah, what's with {0}, {1}? He reminds me of ol' Zavala back at the Tower, always killing all the fun...'''
+			Invasion: We're being invaded! Find them before they find us.
+			Eclipse: What happened? Did the Taken Take the sun or somethin'?!
+			Party: '''Hey, {0}, wanna top off this party with some Gambit?'''
+			Motes1: '''Thank you, {0}. I'll do something real special with these Motes, trust.'''
+			Motes2: Ooh, that's quite the haul you have there, thank you very much. I'ma do something real special with these Motes, somethin' that'll make you shiver.
+			Motes3: '''Thanks for the Motes, {0}.'''
+			Motes4: Nice work. The line between Light and Dark's gettin' thinner every day. Keep walking it.
+			Motes5: Keep choosing the winning side, kid, and you'll keep on winning. Simple as that.
+			MotesReward1: '''Hey {0}, thanks for the Motes. I said I'd make you rich, and I intend to keep that promise, unlike some others... Here, take this.'''
+			MotesReward2: '''Motes? Motes! Speaking of Motes, I've gotta way for you to get more, faster. This is for you, {0}.'''
+			MotesReward3: I'll never get sick of Motes. Never. Anyways, here's your reward.
+			MotesReward4: '''Mmm, Motes...ooh, I think you're gonna like this, {0}. Free merchandise, on the house!'''
+			MotesReward5: '''Thanks for the Motes! By the way, I found these parts lying around. Maybe you could put 'em to good use, {0}?'''
+			MotesReward6: '''These are some nice Motes...oh yeah, I found this Ghost on the ground. Not sure what use it may be to you, but, it's yours now, {0}.'''
+			MotesReward7: '''Motes, {0}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.'''
+			MotesReward8: Placeholder.
+			NoMotes1: '''{0}, you gotta have those Motes on you! Come back when you got some.'''
+			NoMotes2: Thanks for the...huh? You don't have any Motes for me to unload off 'ya!
+			NoMotes3: '''Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {0}.'''
+			CheckMotes1: '''Aw man, {0}, you haven't deposited any Motes yet!'''
+			CheckMotes2: '''Woo, you've deposited {0} Motes! This is one heckuva collection, {1}.'''
+			CheckMotes3: '''You've deposited {0} Motes so far, {1}. Not bad.'''
+			CheckMotes4: '''You've deposited a total of {0} Motes, {1}.'''
+			MotesRepeatable1: '''Here's your reward, {0}. Use it to get me more Motes!'''
+			MotesRepeatable2: '''Awesome, {0}. This'll get you more Motes.'''
+			MoneyRepeatable1: '''Thanks, {0}. Here's a little something for your trouble.'''
+			MoneyRepeatable2: '''I made a little extra from last haul, {0}. What was I hauling? Well...'''
+		}
+
+		AgentOfNine: {
+			Hallow: So much Light here, I suppose I feel...pain.
+			Chatter_1: I may be here when you return.
+			Chatter_2: These are from the Nine.
+			Chatter_3: My will is not my own. Is yours?
+			Chatter_4: The Traveler's song echoes on.
+			Chatter_5: I bring a message from the Nine.
+			Chatter_6: Do not be alarmed. I know no reason to cause you harm.
+			Chatter_7: To do what you say, is to speak in a language of pure meaning.
+			Chatter_8: Do not go looking for the Nine. They will come to you.
+			Chatter_9: You must stop eating salted popcorn.
+			Chatter_10: I am here for a reason, I just...cannot remember it.
+		}
+
+		Cryptarch: {
+			Party: A party, you say? I'm much too busy decrypting these Vex artifacts, thank you.
+			Eclipse: Ah! This lack of light makes it hard to do anything around here.
+			Chatter_1: Vex encryption. Unbreakable? Ha, so they say.
+			Chatter_2: What have you got for me, Guardian?
+			Chatter_3: Rasputin's fingerprints are all over this data. He doesn't even care if we know.
+			Chatter_4: What challenges have you brought today, Guardian?
+			Chatter_5: These are forgeries. Someone is wasting our time!
+			Chatter_6: '''Hmm, this one is labeled "Bigm55"...yes, Guardian?'''
+		}
+
+		Zavala: {
+			Boss1: Guardian! This is your chance to take down this profound threat, do not get distracted!
+			Boss2: Get back out there, Guardian, and eliminate this threat!
+			Boss3: Guardian, you can do this. I believe in you, as does the rest of the Vanguard.
+			Party: I didn't authorize any party...but I guess we can take advantage of the moment while it lasts.
+			AfterML: Guardian, you've slain some of the worst enemies the City and the Vanguard have ever seen, and for that, I thank you.
+			Evil: The Darkness is extremely strong here, Guardian.
+			Hallow: Do you feel that, Guardian? The Traveler's raw energies, scattered across this land.
+			Chatter_1: Guardian, it's been brought to my attention that you may be partaking in...unsolicited activities. As long as it's for the good of the City.
+			Chatter_2: Guardian.
+			Chatter_3: The Traveler graces us, Guardian.
+			Chatter_4: Let us begin.
+			Chatter_5: Report, Guardian.
+			Chatter_6: The Darkness approaches, Guardian. We must be ready.
+			BountyRequisition1: 
+					'''
+					I'm still setting up shop, Guardian, but you're eager to get out there, aren't you? Alright, let's see what I can find...
+					I need you to kill 100 Zombies, then report back to me for further orders.
+					'''
+			BountyRequisition2: 
+					'''
+					I've got another bounty for you, Guardian. The Dungeon is an evil place, filled with servants of the Darkness.
+					I need you to slay 50 Skeletons to purge this infestation.
+					'''
+			BountyComplete1: Excellent work, Guardian! Take this as my appreciation for your hard work.
+			BountyComplete2: I can feel the settling of the Darkness from here. You've done well, Guardian.
+			BountyProgress1: '''Let's see here, Guardian. You've killed {0}/100 Zombies.'''
+			BountyProgress2: '''Let's see here, Guardian. You've killed {0}/50 Skeletons.'''
+			GuardianGames: The Guardian Games are on, Guardian! Show everyone which class is the greatest.
+			GuardianGamesTitanWin: Through a fierce competition and defying all odds, my Titans have punched their way to victory in this year's Guardian Games. Make no mistake; the determination of both the Warlocks and Hunters were admirable. To commemorate, here is some Titan-themed decor. Stay strong, Guardian.
+			GuardianGamesHunterWin: Through a fierce competition and defying all odds, the Hunters have stealthily taken the win in this year's Guardian Games. Make no mistake; the determination of the Hunters was admirable, but us Titans will achieve victory next year. To commemorate, here is some Hunter-themed decor. Stay strong, Guardian.
+			GuardianGamesWarlockWin: Through a fierce competition and defying all odds, the Warlocks have outsmarted every other class in this year's Guardian Games. Make no mistake; the determination of the Warlocks was admirable, but us Titans will achieve victory next year. To commemorate, here is some Warlock-themed decor. Stay strong, Guardian.
+		}
+
+		Common: {
+			Brother: Brother
+			Sister: Sister
+			Bounty: Bounty
+			Decrypt: Decrypt
+			GiveMotes: Give Motes
+			CheckMotes: Check Motes
+			SuperCharge: Super charged!
+			SuperInventory: You must have an inventory slot free to activate your super.
+			VaultOfGlass: Vault of Glass
+			RelicShard: Relic Shards have begun to grow!
+		}
+	}
+}

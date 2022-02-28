@@ -1,9 +1,8 @@
 using System.ComponentModel;
-using System.Runtime.Serialization;
-using Terraria;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
-namespace TheDestinyMod
+namespace DestinyMod
 {
     [Label("Client Config")]
     [BackgroundColor(66, 109, 179, 216)]
@@ -11,7 +10,7 @@ namespace TheDestinyMod
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        public static DestinyClientConfig Instance;
+        public static DestinyClientConfig Instance => ModContent.GetInstance<DestinyClientConfig>();
 
         [Header("Super")]
         [Label("Super Bar Text")]

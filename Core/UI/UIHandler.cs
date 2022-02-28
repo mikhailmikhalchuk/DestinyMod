@@ -3,11 +3,11 @@ using Terraria.UI;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace TheDestinyMod.Core.UI
+namespace DestinyMod.Core.UI
 {
 	public class UIHandler
 	{
-		public static IList<UIHandler> ProcessedUIs = new List<UIHandler>();
+		public static IList<UIHandler> ProcessedUIs { get; private set; } = new List<UIHandler>();
 
 		public UserInterface Interface;
 
@@ -26,7 +26,6 @@ namespace TheDestinyMod.Core.UI
 			LayerName = layerName;
 			DelegateDraw = delegateDraw;
 			InterfaceScaleType = interfaceScaleType;
-			ProcessedUIs.Add(this);
 		}
 
 		public virtual void Update(GameTime gameTime) => Interface?.Update(gameTime);
@@ -34,6 +33,7 @@ namespace TheDestinyMod.Core.UI
 		public virtual void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals(DrawLayer));
+
 			if (inventoryIndex == -1)
 			{
 				return;
@@ -44,7 +44,7 @@ namespace TheDestinyMod.Core.UI
 
 		public bool DefaultDraw()
 		{
-			Interface.Draw(Main.spriteBatch, new GameTime());
+			Interface?.Draw(Main.spriteBatch, new GameTime());
 			return true;
 		}
 

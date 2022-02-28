@@ -1,0 +1,539 @@
+﻿Mods: {
+	DestinyMod: {
+		ItemName: {
+			Jotunn: Jotunn
+			BoltCaster: Bolt Caster
+			RazeLighter: Raze Lighter
+			TheLament: The Lament
+			AceOfSpades: As pików
+			BottomDollar: Último Centavo
+			FourthHorseman: The Fourth Horseman
+			Gjallarhorn: Gjallarhorn
+			HakkeAutoRifle: Karabin Automatyczny Hakke
+			HakkeGrenadeLauncher: Granatnik Hakke
+			HakkeHandcannon: Działo Ręczne Hakke
+			HakkePulseRifle: Karabin Pulsacyjny Hakke
+			HakkeRocketLauncher: Wyrzutnia Rakiet Hakke
+			HakkeScoutRifle: Karabin Zwiadowczy Hakke
+			HakkeShotgun: Strzelba Hakke
+			HakkeSidearm: Broń Boczna Hakke
+			HakkeSniper: Karabin Snajperski Hakke
+			Hawkmoon: Hawkmoon
+			JadeRabbit: Jade Rabbit
+			Khvostov7G02: Khvostov 7G-02
+			Khvostov7G0X: Khvostov 7G-0X
+			KhvostovGX: Khvostov G-X
+			KhvostovSupercell: Khvostov Supercell
+			LastWord: The Last Word
+			MidaMultiTool: Narzędzie Wielofunkcyjne MIDA
+			MonteCarlo: Monte Carlo
+			NoLandBeyond: Żadnej ziemi poza nią
+			NoTimeToExplain: No Time to Explain
+			OmolonAutoRifle: Karabin Automatyczny Omolon
+			OmolonGrenadeLauncher: Granatnik Omolon
+			OmolonHandcannon: Działo Ręczne Omolon
+			OmolonPulseRifle: Karabin Pulsacyjny Omolon
+			OmolonRocketLauncher: Wyrzutnia Rakiet Omolon
+			OmolonScoutRifle: Karabin Zwiadowczy Omolon
+			OmolonShotgun: Strzelba Omolon
+			OmolonSidearm: Broń Boczna Omolon
+			OmolonSniper: Karabin Snajperski Omolon
+			OutbreakPerfected: Outbreak Perfected
+			RedDeath: Czerwona Śmierć
+			Riskrunner: Ryzykant
+			SalvagersSalvo: Salvager's Salvo
+			SurosAutoRifle: Karabin Automatyczny SUROS
+			SurosGrenadeLauncher: Granatnik SUROS
+			SurosHandcannon: Działo Ręczne SUROS
+			SurosPulseRifle: Karabin Pulsacyjny SUROS
+			SurosRocketLauncher: Wyrzutnia Rakiet SUROS
+			SurosScoutRifle: Karabin Zwiadowczy SUROS
+			SurosShotgun: Strzelba SUROS
+			SurosSidearm: Broń Boczna SUROS
+			SurosSniper: Karabin Snajperski SUROS
+			SweetBusiness: Słodki Biznes
+			TheThirdAxiom: The Third Axiom
+			Thorn: Thorn
+			TicuusDivination: Ticuu's Divination
+			TrinarySystem: Trinary System
+			UniversalRemote: Pilot Universalny
+			VexMythoclast: Vex Mythoclast
+			WhisperOfTheWorm: Whisper of the Worm
+			BorealisRanged: Borealis
+			BorealisMagic: Borealis
+			BorealisMelee: Borealis
+			Divinity: Divinity
+			TheAegis: The Aegis
+			RatKing: Rat King
+			InsurmountableSkullfort: An Insurmountable Skullfort
+			SaintXIV: Helm of Saint-14
+			Armamentarium: Armamentarium
+			ProdigalCuirass: Prodigal Cuirass
+			ProdigalHelm: Prodigal Helm
+			ProdigalGreaves: Prodigal Greaves
+			ProdigalHood: Prodigal Hood
+			GambitDye: Barwnik Gambit
+			GunsmithMaterials: Materiały Rusznikarskie
+			HeliumFilaments: Helium Filaments
+			MoteOfDark: Odrobina ciemności
+			RelicIron: Reliktowe żelazo
+			Ghost: Duch
+			MicrophasicDatalattice: Mikrofazowe Dane
+			SepiksPrimeTrophy: Sepiks Prime Trophy
+			SpinmetalSeeds: Wierzbowy Metal Nasiona
+			SepiksPrimeBox: Music Box (Sepiks Prime)
+			ImpactShard: Impact Shard
+			GuardianSkull: Guardian Skull
+			SepiksPrimeMask: Sepiks Prime Mask
+			ServitorStaff: Servitor Staff
+			GoldenGun: Golden Gun
+			HammerOfSol: Hammer of Sol
+			CommonEngram: Pospolity Engram
+			UncommonEngram: Niepospolity Engram
+			RareEngram: Rzadki Engram
+			LegendaryEngram: Legendarny Engram
+			ExoticEngram: Egzotyczny Engram
+			ExoticCipher: Cifrado Exótico
+			OrbOfPower: Orb of Power
+			ShaxxHelmet: Shaxx's Helmet
+			SpeakerMask: Speaker's Mask
+			Ahamkara: Skull of Dire Ahamkara
+			CrownOfTempests: Crown of Tempests
+			Laurel: Laurel
+			Podium: Podium
+		}
+
+		ItemTooltip: {
+			Jotunn:
+				'''
+				Holding down the trigger charges up a tracking shot
+				"Untamed. Destructive. As forceful and chaotic as Ymir himself."
+				'''
+			AceOfSpades:
+				'''
+				Zabójstwa tą bronią powodują że cel wybucha
+				"Składanie nigdy nie wchodziło w grę"
+				'''
+			BottomDollar:
+				'''
+				Scales with world progression
+				"Never count yourself out."
+				'''
+			FourthHorseman: 
+				'''
+				Fires a spread of bullets
+				"It's not a holdout weapon; it's a pathfinder."
+				'''
+			Gjallarhorn:
+				'''
+				Wystrzeliwuje rakietę samonaprowadzającą ktora wybucha po uderzeniu zmienia się w mniejsze rakiety
+				"Skoro jest piękno w destrukcji dlaczego tego piękna nie ma w jaki sposób się je powoduje?"
+				'''
+			HakkeAutoRifle: Ma szansę zapewnić buff "Rzemiosło Hakke" po użyciu
+			HakkeFusionRifle:
+				'''
+				Ráfaga de tres disparos
+				Rifle de Fusión Hakke Estándar
+				'''
+			HakkeGrenadeLauncher: Lanzagranadas Hakke Estándar
+			HakkeHandcannon: Cañón de Mano Hakke Estándar
+			HakkePulseRifle:
+				'''
+				Seria trzech rund
+				Ma szansę zapewnić buff "Rzemiosło Hakke" po użyciu
+				'''
+			HakkeRocketLauncher: Lanzacohetes Hakke Estándar
+			HakkeScoutRifle: Ma szansę zapewnić buff "Rzemiosło Hakke" po użyciu
+			HakkeShotgun:
+				'''
+				Rozsyła serie kul
+				Ma szansę zapewnić buff "Rzemiosło Hakke" po użyciu
+				'''
+			HakkeSidearm: Ma szansę zapewnić buff "Rzemiosło Hakke" po użyciu
+			HakkeSniper: Ma szansę zapewnić buff "Rzemiosło Hakke" po użyciu
+			Hawkmoon:
+				'''
+				Kills with this weapon stack one second of Paracausal Charge
+				"Stalk thy prey and let loose thy talons upon the Darkness."
+				'''
+			JadeRabbit: '''"Jaki bezsensowny plan masz na myśli tym razem?"'''
+			LastWord: '''"Dopóki nie zgaśnie ostatni płomień i wszystkie słowa zostaną wypowiedziane."'''
+			MidaMultiTool: '''"Wybierz zastosowanie: Zaangażowanie balistyczne. Narzędzie do okopywania. Włok awioniki. Gwiezdny sekstant. A lista dalej się ciągnie."'''
+			MonteCarlo:
+				'''
+				Pokonanie przeciwnika korzystając z tej broni zapewnia jeden ładunek "Metody Monte Carlo"
+				"Zawsze będą dostępne ścieżki i metody do wybróbowania. Niech los zadecyduje."
+				'''
+			NoLandBeyond: '''"Każde trafienie przeciera drogę do naszego uzdrowienia."'''
+			NoTimeToExplain:
+				'''
+				Three round burst
+				"A single word etched onto the inside of the weapon's casing: Now."
+				'''
+			OmolonAutoRifle: Rifle Automático Omolon Estándar
+			OmolonGrenadeLauncher: Lanzagranadas Omolon Estándar
+			OmolonHandcannon: Cañón de Mano Omolon Estándar
+			OmolonPulseRifle:
+				'''
+				Ráfaga de tres disparos
+				Rifle de Pulsos Omolon Estándar
+				'''
+			OmolonRocketLauncher: Lanzacohetes Omolon Estándar
+			OmolonScoutRifle: Rifle de Explorador Omolon Estándar
+			OmolonShotgun:
+				'''
+				Dispara una ráfaga dispersa de balas
+				Escopeta Omolon Estándar
+				'''
+			OmolonSidearm: Pistola Omolon Estándar
+			OmolonSniper: Rifle de Francotirador Omolon Estandar
+			OutbreakPerfected:
+				'''
+				Three round burst
+				Creates nanite swarms on critical kills and rapid hits
+				"~directive = KILL while enemies = PRESENT: execute(directive)~"
+				'''
+			RedDeath:
+				'''
+				Seria trzech rund
+				Tylko pierwszy strzał używa ammunicji
+				"Polityka Straży Pierwotnej nakazuje Strażnikom zniszczenie tej broni. jest to zabójca Strażników"
+				'''
+			Riskrunner:
+				'''
+				33% na nie zużycie ammunicji
+				Zmienia zwykłe naboje na nano pociski
+				"Napełnia twoją duszę i pozwala elektroną śpiewać"
+				'''
+			SalvagersSalvo:
+				'''
+				Granadas disparadas explotaran cuando el gatillo se suelte
+				"La única salida a fuera es a través."
+				'''
+			SurosAutoRifle: Rifle Automatico SUROS Estándar
+			SurosGrenadeLauncher: Lanzagranadas SUROS Estándar
+			SurosHandcannon: Cañón de Mano SUROS Estándar
+			SurosPulseRifle:
+				'''
+				Ráfaga de tres disparos
+				Rifle de Pulsos SUROS Estándar
+				'''
+			SurosRocketLauncher: Lanzacohetes SUROS Estándar
+			SurosScoutRifle: Rifle de Explorador SUROS Estándar
+			SurosShotgun:
+				'''
+				Dispara una ráfaga dispersa de balas
+				Escopeta SUROS Estándar
+				'''
+			SurosSidearm: Pistola SUROS Estándar
+			SurosSniper: Francotirador SUROS Estándar
+			SweetBusiness:
+				'''
+				10% na nie zużycie ammunicji
+				Strzela szybciej im dłużej ta broń jest używana
+				"...Kocham moją robote"
+				'''
+			TheThirdAxiom:
+				'''
+				Three round burst
+				"Don't tell me the odds."
+				'''
+			Thorn:
+				'''
+				Rounds pierce and poison targets
+				Kills with this weapon drop Remnants
+				Picking up Remnants increases the damage of the poison
+				"To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning."
+				'''
+			TicuusDivination:
+				'''
+				Fires 3 homing arrows
+				Right click to fire a single, more powerful arrow
+				"Three points, pushed through forever."
+				'''
+			TrinarySystem:
+				'''
+				Hold down the trigger to fire
+				Scales with world progression
+				"The mathematics are quite complicated."
+				'''
+			UniversalRemote:
+				'''
+				Rozsyła serie kul
+				"Dla niewprawnego oka ta bestia to złodziej. Jednak dla wprawnego oka ten złodziej jest bestią"
+				'''
+			VexMythoclast: 
+				'''
+				Kills with this weapon grant stacks of Overcharge
+				Right-click with Overcharge to switch firing modes
+				Hold down the trigger in the alternative firing mode to fire a more powerful shot
+				"...a causal loop within the weapon's mechanism, suggesting that the firing process somehow binds space and time into..."
+				'''
+			WhisperOfTheWorm: '''"A Guardian's power makes a rich feeding ground. Do not be revolted."'''
+			BorealisRanged:
+				'''
+				Right click while holding this weapon to cycle between damage types
+				"Light is a spectrum. Why limit yourself to a single hue?"
+				'''
+			BorealisMagic:
+				'''
+				Right click while holding this weapon to cycle between damage types
+				"Light is a spectrum. Why limit yourself to a single hue?"
+				'''
+			BorealisMelee:
+				'''
+				Right click while holding this weapon to cycle between damage types
+				"Light is a spectrum. Why limit yourself to a single hue?"
+				'''
+			Divinity:
+				'''
+				Fires a solid beam
+				Sustained damage with the beam cuts the target's defense by 20%
+				"Calibrate reality. Seek inevitability. Embody divinity."
+				'''
+			TheAegis:
+				'''
+				A timelost relic, with the power to protect Guardians from being erased from existence
+				Left click to summon a protective shield
+				Right click to fire a powerful blast
+				'''
+			RatKing:
+				'''
+				Becomes stronger if nearby teammates are using this weapon
+				"We are small, but we are legion."
+				'''
+			InsurmountableSkullfort: '''"BRAINVAULT Sigma-ACTIUM-IX Cranial Dreadnought (Invincible Type)"'''
+			SaintXIV: '''"He walked out into the demon light. But at the end he was brightere"'''
+			Armamentarium:
+				'''
+				50% increased throwing damage when your Super bar is charged
+				"For this, there is one remedy"
+				'''
+			ProdigalCuirass: 5% increased ranged damage
+			ProdigalHelm: 7% increased ranged critical strike chance
+			GunsmithMaterials: Used to craft guns
+			HeliumFilaments: Filaments of helium-3 fusion fuel, gathered from the lunar regolith by a helium coil
+			MoteOfDark: Tajemniczy czworościenny obiekt. Dryfterowi może się to spodobać
+			RelicIron: Materiał zdobywany po rozpadzie o niezwykłej gęstości
+			Ghost: Przywołuje ducha zdrodzonego z Wędrowca i wierny towarzysz twojego Strażnika
+			ImpactShard: Allows you to find Motes off of enemies easier
+			GuardianSkull:
+				'''
+				An offering to the House of Devils' High Servitor
+				Summons Sepiks Prime
+				'''
+			ServitorStaff:
+				'''
+				Summons tiny servitors to protect you
+				For every 3 tiny servitors a larger servitor will appear
+				'''
+			CommonEngram:
+				'''
+				Wysoce zaawansowana zaszyfrowana jednostka przechowywania
+				Dekoder może prawdopodobnie złamać szyfrowania dla Ciebie
+				'''
+			UncommonEngram:
+				'''
+				Wysoce zaawansowana zaszyfrowana jednostka przechowywania
+				Dekoder może prawdopodobnie złamać szyfrowania dla Ciebie
+				'''
+			RareEngram:
+				'''
+				Wysoce zaawansowana zaszyfrowana jednostka przechowywania
+				Dekoder może prawdopodobnie złamać szyfrowania dla Ciebie
+				'''
+			LegendaryEngram:
+				'''
+				Wysoce zaawansowana zaszyfrowana jednostka przechowywania
+				Dekoder może prawdopodobnie złamać szyfrowania dla Ciebie
+				'''
+			ExoticEngram:
+				'''
+				Wysoce zaawansowana zaszyfrowana jednostka przechowywania
+				Dekoder może prawdopodobnie złamać szyfrowania dla Ciebie
+				'''
+			Ahamkara:
+				'''
+				Incrementa la velocidad de movimiento un 10%
+				"La realidad es una de las mas finas carnes, oh mi portador. Y tu no estas... hambriento?"
+				'''
+			CrownOfTempests: '''"Mighty are they of the stormcloud thrones, and quick to anger."'''
+			Laurel: Deposit this at the Podium to rep your class and earn rewards
+		}
+
+		BuffName: {
+			AncientShard: Ancient Shard
+			HakkeBuff: Artesanía Hakke
+			MonteCarloMethod: Metoda Monte Carlo
+			ParacausalCharge: ładunek Parakasualny
+			DeepFreeze: Deep Freeze
+			ServitorBuff: Servitor
+			Ghost: Małe światło
+			Judgment: Judgment
+			MarkedByVoid: Marked by the Void
+			MarkedForNegation: Marked for Negation
+			NecroticRot: Necrotic Rot
+			Detained: Detained
+			Overcharge: Overcharge
+			SunWarrior: Sun Warrior
+			Conducted: Conducted
+		}
+
+		BuffDescription: {
+			AncientShard: Zwiększa szanse na znalezienie okruchów z przeciwników
+			HakkeBuff: Niewielkie ulepszenie obrony, szybkości ruchu i obrażeń zasięgowych
+			MonteCarloMethod: Zwiększone obrażenia dla broni białej
+			ParacausalCharge: Zapewnia podwójne obrażenia podczas korzystania z Jastrzębiego Księżyca
+			DeepFreeze: You are frozen!
+			ServitorBuff: The servitor will fight for you
+			Ghost: '''"Wzrok w górę Strażniku"'''
+			Judgment: 20% reduced defense
+			MarkedByVoid: Time's Conflux blinds you
+			MarkedForNegation: You have been marked
+			NecroticRot: You are poisoned
+			Detained: You are trapped
+			Overcharge: Right-click with Vex Mythoclast to switch firing modes
+			SunWarrior: Increases throwing speed
+			Conducted: You are shocked
+		}
+
+		MapObject: {
+			Podium: Podium
+			MicrophasicDatalattice: Mikrofazowe Dane
+			HunterFlag: Hunter Flag
+			WarlockFlag: Warlock Flag
+			TitanFlag: Titan Flag
+			RelicShard: Odłamek Reliktu
+			Spinmetal: Wierzbowy Metal
+		}
+
+		Common: {
+			Brother: bracie
+			Sister: siostro
+			Bounty: Nagroda
+			Decrypt: Odszyfruj
+			GiveMotes: Daj okruchy
+			CheckMotes: Sprawdź okruchy
+			SuperCharge: ¡Súper cargada!
+			SuperInventory: You must have an inventory slot free to activate your super.
+			VaultOfGlass: Vault of Glass
+			RelicShard: Odłamki reliktów zaczęły rosnąć!
+		}
+
+		NPCName: {
+			AgentOfNine: Agent Dziewiątki
+			Cryptarch: Dekoder
+			Drifter: Dredgen
+			Zavala: Tytanowa Straż przednia
+			SepiksPrime: Sepiks Prime
+			SepiksHoming: Homing Eye Blast
+			SepiksServitor: Sepiks Servitor
+			Vandal: Vandal
+			Skiff: Skiff
+		}
+
+		Drifter: {
+			Chatter_1: Jak się miewasz?
+			Chatter_2: '''Daj mi te okruchy a ja zrobię z ciebie {0}, Obiecuje.'''
+			Chatter_3: Zwij mnie dryfterem.
+			Chatter_4: Gotowy na obijanie kostek?
+			Chatter_5: Wypalanie Transmatów!
+			Chatter_6: Bądźmy złymi chłopcami.
+			Chatter_7: Motes of Light have always been a thing. Motes of Dark? I had to make 'em. One day, I may have to answer for that.
+			Chatter_8: I see you lookin' at me like I'm nuts. You think all this is for nothing? That I do this cause I like it? You don't know the half of it.
+			Chatter_9: Ah, all the stars in heaven! I am so... hungry.
+			Chatter_10: You think 'cause you released some fancy spirits, you're too good for me? Come on. Drifter needs his Motes.
+			Chatter_11: Light isn't the only source of power out here.
+			Chatter_12: Light, Dark... Let me tell you, the only thing that matters is the hand holding the gun.
+			Chatter_13: '''Oh, no, no, no, that CREEP is here again. When will him and these..."Nine" stop botherin' us, {0}?'''
+			Chatter_14: '''Gah, what's with {0}, {1}? He reminds me of ol' Zavala back at the Tower...what do you mean Zavala is here?!'''
+			Chatter_15: '''Gah, what's with {0}, {1}? He reminds me of ol' Zavala back at the Tower, always killing all the fun...'''
+			Invasion: We're being invaded! Find them before they find us.
+			Eclipse: What happened? Did the Taken Take the sun or somethin'?!
+			Party: '''Hey, {0}, wanna top off this party with some Gambit?'''
+			Motes1: '''Dziękuję {0}. Zrobię z tymi okruchami coś naprawde specialnego Zaufaj mi.'''
+			Motes2: Oo To niezła zdobycz, Dziękuję bardzo. zrobię coś naprawdę wyjątkowego z tymi okruchami, coś, co przyprawi Cię o dreszcze.
+			Motes3: '''Dziękuję za okruchy {0}.'''
+			Motes4: Nice work. The line between Light and Dark's gettin' thinner every day. Keep walking it.
+			Motes5: Keep choosing the winning side, kid, and you'll keep on winning. Simple as that.
+			MotesReward1: '''Witaj {0}, dziękuję za okruchy. Mówiłem że zrobię cię bogatym i zamierzam dotrzymać tej obietnicy, nie tak jak niektórzy... Prosze weź to.'''
+			MotesReward2: '''Okruchy? Okruchy! Mówiąc okruchach mam dla ciebie sposób jak zdobyć więcej i to szybciej. To jest dla ciebie, {0}.'''
+			MotesReward3: I'll never get sick of Motes. Never. Anyways, here's your reward.
+			MotesReward4: '''Mmm okruchy, o myślę że to Ci się spodoba, {0}. Darmowy towar na koszt tego domu.'''
+			MotesReward5: '''Dzięki za okruchy! przy okazji znalazłem tę części po niewierające się tutaj. Może ty wykorzystasz je w sposób jaki zostały do tego stworzone {0}?'''
+			MotesReward6: '''To są niezłe okruchy, a znalazłem to leżące na ziemi. Nie jestem pewien co to jest ale teraz należy to do ciebie {0}.'''
+			MotesReward7: '''Motes, {0}, Motes! Gotta unique weapon I hand-crafted just for you. Take care of it.'''
+			MotesReward8: Placeholder.
+			NoMotes1: '''{0}, you gotta have those Motes on you! Come back when you got some.'''
+			NoMotes2: Thanks for the...huh? You don't have any Motes for me to unload off 'ya!
+			NoMotes3: '''Hey, you gotta have Motes to deposit! You tryna cheat me? Just kidding, {0}.'''
+			CheckMotes1: '''O człowieku, {0}, jeszcze nie zdepozytowałeś jeszcze żadnych okruchów.'''
+			CheckMotes2: '''Woo, Zdepozytowałeś {0} okruchy. to jest jedna cholernie duża kolekcja {1}.'''
+			CheckMotes3: '''Zdepozytowałeś {0} jak narazie, {1}. Nieźle.'''
+			CheckMotes4: '''Zdepozytowałeś w sumie {0} Okruchów, {1}.'''
+			MotesRepeatable1: '''Here's your reward, {0}. Use it to get me more Motes!'''
+			MotesRepeatable2: '''Awesome, {0}. This'll get you more Motes.'''
+			MoneyRepeatable1: '''Thanks, {0}. Here's a little something for your trouble.'''
+			MoneyRepeatable2: '''I made a little extra from last haul, {0}. What was I hauling? Well...'''
+		}
+
+		AgentOfNine: {
+			Hallow: So much Light here, I suppose I feel...pain.
+			Chatter_1: Będę tutaj jak powrócisz.
+			Chatter_2: Oni są z tej dziewiątki.
+			Chatter_3: Moja wola nie jest moją własną. A twoja?
+			Chatter_4: Pieśń Wędrowcy rozbrzmiewa echem.
+			Chatter_5: Przybywam z wiadomością od dziewiątki.
+			Chatter_6: Nie przejmuj się. Nie mam powodów żeby cię skrzywdzić.
+			Chatter_7: Robienie tego co mówisz to mówienie w języku o czystym znaczeniu.
+			Chatter_8: Nie szukaj dziewiątki. To ona znajdzie ciebie.
+			Chatter_9: Musisz przestać jeść ten słony popcorn.
+			Chatter_10: Jestem tutaj z powodu tylko nie pamiętam jakiego.
+		}
+
+		Cryptarch: {
+			Party: Impreza powiadasz? Jestem bardziej zajęty deszyfrowaniem tych artefaktów od Vexów, dziękuje.
+			Eclipse: Przez brak światła sprawia, że trudno tu co kolwiek zrobić.
+			Chatter_1: Szyfr Vexów nie do złamania? Ha tylko tak mówią.
+			Chatter_2: Co masz dla mnie, Strażniku?
+			Chatter_3: Odciski Rasputina są wszędzie. Go nie obchodzi że my wiemy.
+			Chatter_4: Jakie wyzwanie przyniosłeś dzisiaj, Strażniku?
+			Chatter_5: To są podróbki. Ktoś marnuje nasz czas!
+			Chatter_6: '''Hmm, this one is labeled "Bigm55"...yes, Guardian?'''
+		}
+
+		Zavala: {
+			Boss1: Strażniku! to jest twoja szansa na pokonanie tego gruntownego zagrożenia, nie rozpraszaj się!
+			Boss2: Wracaj tam strażniku i pozbądź się tego zagrożenia!
+			Boss3: Uda ci się strażniku, wierzę w ciebie tak samo jak cała reszta Straży przedniej.
+			Party: Nie autoryzowałem żadnej imprezy… ale myślę, że możemy wykorzystać ten moment, dopóki trwa.
+			AfterML: Strażniku, zabiłeś jednych z najgorszych wrogów jakich Miasto i Straż Przednia kiedykolwiek widziały i za to, Dziękuje tobie.
+			Evil: Ciemność jest tutaj wysoce silna Strażniku.
+			Hallow: Czujesz to Strażniku? Surowa energia Podróżnika, została rozproszona po całej tej krainie.
+			Chatter_1: Strażniku, zwrócono mi uwagę że możesz brać udział w niedozwolonych zajęć. O ile to dla dobra miasta.
+			Chatter_2: Strażnik.
+			Chatter_3: Podróżnik łaskawi nas, Strażniku.
+			Chatter_4: Zacznijmy zatem.
+			Chatter_5: Raportuj, Strażniku.
+			Chatter_6: Ciemność nadchodzi strażniku. Musimy być gotowi.
+			BountyRequisition1: 
+					'''
+					Nadal zakładam sklep, Strażniku ale nie możesz się doczekać żeby wyjść, prawda? W porządku, zobaczymy co uda mi się znaleźć...
+					Musisz zabić 100 Zombie a następnie zgłoś się do mnie w celu uzyskania dalszych rozkazów.
+					'''
+			BountyRequisition2: 
+					'''
+					I've got another bounty for you, Guardian. The Dungeon is an evil place, filled with servants of the Darkness.
+					I need you to slay 50 Skeletons to purge this infestation.
+					'''
+			BountyComplete1: Znakomita robota Strażniku! Weź to jako zapłatę za twoją ciężka prace.
+			BountyComplete2: I can feel the settling of the Darkness from here. You've done well, Guardian.
+			BountyProgress1: '''Zobaczmy, Strażniku. Jak dotychczas zabiłeś {0}/100 Zombie.'''
+			BountyProgress2: '''Zobaczmy, Strażniku. Jak dotychczas zabiłeś {0}/50 Skeleton.'''
+			GuardianGames: The Guardian Games are on, Guardian! Show everyone which class is the greatest.
+			GuardianGamesTitanWin: Through a fierce competition and defying all odds, my Titans have punched their way to victory in this year's Guardian Games. Make no mistake; the determination of both the Warlocks and Hunters were admirable. To commemorate, here is some Titan-themed decor. Stay strong, Guardian.
+			GuardianGamesHunterWin: Through a fierce competition and defying all odds, the Hunters have stealthily taken the win in this year's Guardian Games. Make no mistake; the determination of the Hunters was admirable, but us Titans will achieve victory next year. To commemorate, here is some Hunter-themed decor. Stay strong, Guardian.
+			GuardianGamesWarlockWin: Through a fierce competition and defying all odds, the Warlocks have outsmarted every other class in this year's Guardian Games. Make no mistake; the determination of the Warlocks was admirable, but us Titans will achieve victory next year. To commemorate, here is some Warlock-themed decor. Stay strong, Guardian.
+		}
+	}
+}

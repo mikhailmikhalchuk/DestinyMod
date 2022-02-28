@@ -2,7 +2,6 @@ displayName = Destiny
 author = MikhailMCraft & Co.
 version = 0.0.8.5
 buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*, Properties\*
-sortAfter = SubworldLibrary
 hideCode = true
 hideResources = true
 includeSource = false
