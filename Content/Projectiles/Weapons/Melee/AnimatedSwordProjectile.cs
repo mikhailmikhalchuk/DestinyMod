@@ -40,7 +40,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 
             Projectile.velocity *= 0.70f;
 
-            if (Projectile.frameCounter % 3 == 0)
+            if (Projectile.frameCounter % 8 == 0)
             {
                 if (++Projectile.frame >= Main.projFrames[Projectile.type])
                 {
