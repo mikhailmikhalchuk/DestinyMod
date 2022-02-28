@@ -57,11 +57,11 @@ namespace DestinyMod.Common.GlobalNPCs
             {
                 if (Main.netMode != NetmodeID.Server)
                 {
-                    Main.NewText(Language.GetTextValue("Mods.DestinyMod.RelicShard"), new Color(200, 200, 55));
+                    Main.NewText(Language.GetTextValue("Mods.DestinyMod.Common.RelicShard"), new Color(200, 200, 55));
                 }
                 else
                 {
-                    NetworkText text = NetworkText.FromLiteral(Language.GetTextValue("Mods.DestinyMod.RelicShard"));
+                    NetworkText text = NetworkText.FromLiteral(Language.GetTextValue("Mods.DestinyMod.Common.RelicShard"));
                     ChatHelper.BroadcastChatMessage(text, new Color(200, 200, 55));
                 }
 

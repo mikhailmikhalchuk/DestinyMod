@@ -11,6 +11,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 	{
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RocketI;
 
+		public int Target;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wolfpack Round");
@@ -27,21 +29,29 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.ai[0] = -1;
 		}
 
-		public override void AI() => HomeInOnNPC(400f, 20f);
+		public override void AI() => Target = HomeInOnNPC(400f, 20f);
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+			Projectile.Kill();
 			return true;
 		}
 
 		public override void OnHitNPC(NPC npc, int damage, float knockback, bool crit)
 		{
 			Player player = Main.player[Projectile.owner];
+
+			if (Target == -1)
+            {
+				return;
+            }
+
 			for (int i = 0; i < 5; i++)
 			{
 				Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), Projectile.position, Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f), ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, Projectile.owner);
 			}
+			Projectile.Kill();
 		}
 
 		public override void Kill(int timeLeft)

@@ -38,7 +38,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
         public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (!UsingAltFunction)
+            if (UsingAltFunction)
             {
                 type = ModContent.ProjectileType<VexChargeBullet>();
                 damage *= 2;
@@ -48,7 +48,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
                 Item.autoReuse = true;
                 type = ModContent.ProjectileType<VexBullet>();
             }
-            Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 2), velocity, type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 2), velocity, type, !UsingAltFunction ? damage * 2 : damage, knockback, player.whoAmI);
             return false;
         }
 
@@ -67,7 +67,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
             {
                 CombatText.NewText(player.getRect(), Color.Gold, "Normal Mode!");
                 UsingAltFunction = false;
-                Item.autoReuse = true;
                 Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/VexMythoclast");
                 SoundEngine.PlaySound(SoundID.Item101);
                 SwapCooldown = 15;
@@ -81,8 +80,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
             ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
             if (itemPlayer.OverchargeStacks <= 0 && UsingAltFunction)
             {
+                CombatText.NewText(player.getRect(), Color.Gold, "Overcharge Depleted!");
                 UsingAltFunction = false;
                 player.ClearBuff(ModContent.BuffType<Overcharge>());
+                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/VexMythoclast");
                 Item.color = default;
             }
 

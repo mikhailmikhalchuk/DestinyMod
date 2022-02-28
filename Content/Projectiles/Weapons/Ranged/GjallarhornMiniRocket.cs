@@ -42,6 +42,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+			Projectile.Kill();
 			return true;
 		}
 

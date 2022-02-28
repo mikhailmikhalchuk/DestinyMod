@@ -30,17 +30,20 @@ Added Titan, Warlock, and Hunter-themed decor
 Ported the mod to 1.4!
 NOTE THAT THE MOD IS STILL IN A PRE-RELEASE STATE:
 Issues we are aware of:
-- Most items are no longer scaled down and some are massive
-- Animated items have a mouse text hover well above their intended sprite (this is a tModLoader issue and we are waiting for a patch)
-- Firing soudns for items such as Nemesis Star are desynced from the bullets exiting the barrel (this is a tModLoader issue and we are waiting for a patch)
+- Most items are no longer scaled down, resulting in some unreasonably large sprites
+- Animated items have a mouse text hover well above their intended sprite (this is a tModLoader issue and we have a patch awaiting approval)
+- Firing sounds for items such as Sweet Business are desynced from the bullets exiting the barrel (this is a tModLoader issue and we are waiting for a patch)
+- Jotunn does not work as intended
+- Grenades fired by Salvager's Salvo do not explode upon contact with an enemy
 
 __DO NOT DELETE YOUR UNLOADED ITEMS__
 __Instead, use the /portItems command to convert all unloaded TheDestinyMod items to DestinyMod items__
 
+Additionally, the following changes were included in the 1.4 port:
 Xur now appears every Friday if the world is in Hardmode
 Gave all modded rocket launchers the generic rocket launcher sound
 Monte Carlo now has its own sound effect
-Resprited the Hakke weapons
+Resprited Divinity, Mote of Dark, Gjallarhorn, Impact Shard, and the Hakke weapons
 Hakke weapons' bullets and Two-Tailed Fox's rockets now give off light
 Implemented Nemesis Star's exotic perk
 Decreased the ranged damage buffs Prodigal armor grants
@@ -48,8 +51,6 @@ Reworked the Drifter
 Now grants Impact Shards every 10 Motes turned in
 Fixed Motes of Dark dropping less than expected after using an Impact Shard
 Motes now have a 5% chance to drop from enemies after using an Impact Shard (up from 4%)
-Resprited Gjallarhorn and Impact Shard
 Removed the Hakke Fusion Rifle
-Fixed the class selection UI's Back button
 
 © Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

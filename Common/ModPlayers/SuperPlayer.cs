@@ -79,7 +79,7 @@ namespace DestinyMod.Common.ModPlayers
 		{
 			if (!NotifiedThatSuperIsReady && SuperChargeCurrent == 100 && !Main.dedServ && DestinyClientConfig.Instance.NotifyOnSuper && SuperActiveTime == 0 && !Player.dead)
 			{
-				Main.NewText(Language.GetTextValue("Mods.TheDestinyMod.SuperCharge"), new Color(255, 255, 0));
+				Main.NewText(Language.GetTextValue("Mods.DestinyMod.Common.SuperCharge"), new Color(255, 255, 0));
 				NotifiedThatSuperIsReady = true;
 			}
 

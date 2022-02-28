@@ -39,7 +39,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];
-			DrawLaser(Main.spriteBatch, TextureAssets.Projectile[Projectile.type].Value, new Vector2(player.Center.X, player.Center.Y - 4),
+			DrawLaser(Main.spriteBatch, TextureAssets.Projectile[Projectile.type].Value, new Vector2(player.Center.X, player.Center.Y - 5),
 				Projectile.velocity, 10, Projectile.damage, -MathHelper.PiOver2, 1f, 60);
 			return false;
 		}
@@ -68,7 +68,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			Player player = Main.player[Projectile.owner];
-			Vector2 collisionBox = new Vector2(player.Center.X, player.Center.Y - 4) + Projectile.velocity * (Distance + 10);
+			Vector2 collisionBox = new Vector2(player.Center.X, player.Center.Y - 5) + Projectile.velocity * (Distance + 10);
 			float discard = 0f;
 			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), player.Center,
 				collisionBox, 22, ref discard);

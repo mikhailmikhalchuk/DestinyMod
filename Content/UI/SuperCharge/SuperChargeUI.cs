@@ -6,7 +6,7 @@ using DestinyMod.Core.UI;
 using Terraria.ModLoader;
 using DestinyMod.Common.ModPlayers;
 
-namespace DestinyMod.Content.UI.ClassSelection
+namespace DestinyMod.Content.UI.SuperCharge
 {
 	public class SuperChargeUI : DestinyModUIState
 	{
@@ -25,14 +25,14 @@ namespace DestinyMod.Content.UI.ClassSelection
 		public override void OnInitialize()
 		{
 			BarFrame = new UIImage(DestinyMod.Instance.Assets.Request<Texture2D>("Content/UI/SuperCharge/SuperChargeFrame"));
-			BarFrame.Left.Set(22, 0.8f);
-			BarFrame.Top.Set(0, 0.05f);
+			BarFrame.Left.Set(22, 0.7f);
+			BarFrame.Top.Set(0, 0.03f);
 			BarFrame.Width.Set(138, 0f);
 			BarFrame.Height.Set(34, 0f);
 
 			SuperText = new UIText(string.Empty, 0.8f);
-			SuperText.Left.Set(22, 0.8f);
-			SuperText.Top.Set(22, 0.1f);
+			SuperText.Left.Set(22, 0.7f);
+			SuperText.Top.Set(0, 0.03f);
 			SuperText.Width.Set(138, 0f);
 			SuperText.Height.Set(34, 0f);
 

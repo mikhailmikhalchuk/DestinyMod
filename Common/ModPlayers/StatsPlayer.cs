@@ -11,7 +11,7 @@ namespace DestinyMod.Common.ModPlayers
 
 		public int ChannelTime = 0;
 
-		public float BusinessReduceUse = 0.2f;
+		public float BusinessReduceUse = 2.5f;
 
 		public bool DestinyChannel = false;
 
@@ -32,7 +32,7 @@ namespace DestinyMod.Common.ModPlayers
 
 			if ((Player.HeldItem.type != ModContent.ItemType<SweetBusiness>() && Player.selectedItem != ModContent.ItemType<SweetBusiness>()) || ChannelTime == 0)
             {
-				BusinessReduceUse = 0.2f;
+				BusinessReduceUse = 2.5f;
             }
 
 			if (DestinyChannel)
