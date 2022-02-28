@@ -1,4 +1,5 @@
 using DestinyMod.Common.Items;
+using DestinyMod.Content.Items.Weapons.Ranged;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,6 +10,8 @@ namespace DestinyMod.Common.ModPlayers
 		public int ItemReuse = 0;
 
 		public int ChannelTime = 0;
+
+		public float BusinessReduceUse = 0.2f;
 
 		public bool DestinyChannel = false;
 
@@ -26,6 +29,11 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				ChannelTime = 0;
 			}
+
+			if ((Player.HeldItem.type != ModContent.ItemType<SweetBusiness>() && Player.selectedItem != ModContent.ItemType<SweetBusiness>()) || ChannelTime == 0)
+            {
+				BusinessReduceUse = 0.2f;
+            }
 
 			if (DestinyChannel)
 			{

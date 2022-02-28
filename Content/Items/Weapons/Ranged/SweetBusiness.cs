@@ -30,11 +30,15 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			if (player.GetModPlayer<StatsPlayer>().BusinessReduceUse < 1.3f)
+            {
+				player.GetModPlayer<StatsPlayer>().BusinessReduceUse += 0.05f;
+			}
 			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 5), velocity.RotatedByRandom(MathHelper.ToRadians(8)), type, damage, knockback, player.whoAmI);
 			return false;
 		}
 
-		public override float UseTimeMultiplier(Player player) => 1f - Utils.Clamp(player.GetModPlayer<StatsPlayer>().ChannelTime * 0.005f, 0, 0.3f);
+		public override float UseTimeMultiplier(Player player) => player.GetModPlayer<StatsPlayer>().BusinessReduceUse;
 
 		public override bool CanConsumeAmmo(Player player) => Main.rand.NextBool(3, 4);
 

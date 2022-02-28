@@ -11,7 +11,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jötunn");
+			DisplayName.SetDefault("Jotunn");
 			Tooltip.SetDefault("Holding down the trigger charges up a tracking shot"
 				+ "\n\"Untamed. Destructive. As forceful and chaotic as Ymir himself.\"");
 		}

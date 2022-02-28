@@ -32,6 +32,7 @@ NOTE THAT THE MOD IS STILL IN A PRE-RELEASE STATE:
 Issues we are aware of:
 - Most items are no longer scaled down and some are massive
 - Animated items have a mouse text hover well above their intended sprite (this is a tModLoader issue and we are waiting for a patch)
+- Firing soudns for items such as Nemesis Star are desynced from the bullets exiting the barrel (this is a tModLoader issue and we are waiting for a patch)
 
 __DO NOT DELETE YOUR UNLOADED ITEMS__
 __Instead, use the /portItems command to convert all unloaded TheDestinyMod items to DestinyMod items__

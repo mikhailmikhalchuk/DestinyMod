@@ -8,10 +8,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
 	public class TelestoBullet : DestinyModProjectile
 	{
-		public float ForceDetonationTimer
+		public float DetonationTimer
 		{
-			get => Projectile.ai[0];
-			set => Projectile.ai[0] = value;
+			get => Projectile.ai[1];
+			set => Projectile.ai[1] = value;
 		}
 
 		public override void DestinySetDefaults()
@@ -21,6 +21,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.height = 14;
 			Projectile.width = 14;
 			Projectile.penetrate = 5;
+			Projectile.tileCollide = false;
 		}
 
 		public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.1f, lightColor.B * 0.8f, lightColor.A);
@@ -34,16 +35,18 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			try
 			{
 				Point projectileTilePosition = Projectile.position.ToTileCoordinates() - new Point(1, 1);
-				Point projectileTileDimensions = Projectile.Size.ToTileCoordinates() + new Point(2, 2);
+				Point projectileTileDimensions = (Projectile.position.ToTileCoordinates() + Projectile.Size.ToTileCoordinates()) + new Point(2, 2);
 				projectileTilePosition.X = Utils.Clamp(projectileTilePosition.X, 0, Main.maxTilesX - projectileTileDimensions.X);
 				projectileTilePosition.Y = Utils.Clamp(projectileTilePosition.Y, 0, Main.maxTilesY - projectileTileDimensions.Y);
+				//projectileTileDimensions.X = Utils.Clamp(projectileTileDimensions.X, 0, Main.maxTilesX);
+				//projectileTileDimensions.Y = Utils.Clamp(projectileTileDimensions.Y, 0, Main.maxTilesY);
 
 				for (int i = projectileTilePosition.X; i < projectileTileDimensions.X; i++)
 				{
 					for (int j = projectileTilePosition.Y; j < projectileTileDimensions.Y; j++)
 					{
 						Tile tile = Framing.GetTileSafely(i, j);
-						if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || (Main.tileSolidTop[tile.TileType] && tile.TileFrameY != 0))
+						if(!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || (Main.tileSolidTop[tile.TileType] && tile.TileFrameY != 0))
 						{
 							continue;
 						}
@@ -53,17 +56,17 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 							&& Projectile.position.Y + Projectile.height - 4f > tileWorldPosition.Y && Projectile.position.Y + 4f < tileWorldPosition.Y + 16f)
 						{
 							Projectile.velocity = Vector2.Zero;
-							ForceDetonationTimer++;
+							DetonationTimer++;
 						}
 					}
 				}
 			}
 			catch
 			{
-				Main.NewText("Test");
+				Main.NewText("Error occurred at line 66 of TelestoBullet (this probably shouldn't ever happen)", Color.Red);
 			}
 
-			if (ForceDetonationTimer > 50)
+			if (DetonationTimer > 50)
 			{
 				Projectile.Kill();
 			}

@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires explosive rounds"
 			+ "\nRounds highlight enemies on contact"
-			+ "\n\"Can't outrun the sunrise.\" -Liu Feng"); // social credit score + 10000000
+			+ "\n\"Can't outrun the sunrise.\" -Liu Feng");
 
 		public override void DestinySetDefaults()
 		{
