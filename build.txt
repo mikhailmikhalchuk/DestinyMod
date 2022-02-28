@@ -1,6 +1,6 @@
-displayName = Destiny
+displayName = Destiny Mod
 author = MikhailMCraft & Co.
-version = 0.0.8.5
+version = 0.8.2
 buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*, Properties\*
 hideCode = true
 hideResources = true
