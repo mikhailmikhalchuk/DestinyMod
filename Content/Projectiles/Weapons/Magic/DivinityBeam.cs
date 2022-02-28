@@ -168,7 +168,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 					if (npc.active && !npc.townNPC && !npc.dontTakeDamage && npc.Hitbox.Contains((int)start.X, (int)start.Y))
 					{
 						Counter++;
-						break;
+						goto End;
 					}
 				}
 
@@ -184,10 +184,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 					if (otherPlayer.active && otherPlayer.team != player.team && otherPlayer.hostile && otherPlayer.Hitbox.Contains((int)start.X, (int)start.Y))
 					{
 						Counter++;
-						break;
+						goto End;
 					}
 				}
 			}
+			End:
+
 			Vector2 dustPos = player.Center + Projectile.velocity * Distance;
 
 			for (int i = 0; i < 2; i++)
