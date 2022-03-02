@@ -67,7 +67,6 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 NPC.buffImmune[k] = true;
             }
             Music = SoundLoader.GetSoundSlot("Sounds/Music/SepiksPrime");
-            BossBag = ModContent.ItemType<SepiksPrimeBag>();
         }
 
         /*public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
@@ -409,11 +408,11 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.NewNPC((int)NPC.Center.X + 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC((int)NPC.Center.X - 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC((int)NPC.Center.X + 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC((int)NPC.Center.X - 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC((int)NPC.Center.X + 500, (int)NPC.Center.Y - 100, ModContent.NPCType<Fallen.Skiff>(), 0, NPC.whoAmI);
+                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
+                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
+                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
+                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
+                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 500, (int)NPC.Center.Y - 100, ModContent.NPCType<Fallen.Skiff>(), 0, NPC.whoAmI);
             }
         }
 
@@ -435,7 +434,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 {
                     delta = new Vector2(0f, 5f);
                 }
-                Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, delta.RotatedByRandom(MathHelper.ToRadians(10)), ModContent.ProjectileType<SepiksBlast>(), 20, 5, Main.myPlayer, NPC.whoAmI);
+                Projectile.NewProjectile(NPC.GetSpawnSourceForProjectileNPC(), NPC.Center, delta.RotatedByRandom(MathHelper.ToRadians(10)), ModContent.ProjectileType<SepiksBlast>(), 20, 5, Main.myPlayer, NPC.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
                 NPC.netUpdate = true;
             }
@@ -448,7 +447,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SepiksHoming>(), ai0: NPC.whoAmI);
+                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SepiksHoming>(), ai0: NPC.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
                 NPC.netUpdate = true;
             }
@@ -466,7 +465,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(BossBag));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SepiksPrimeBag>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SepiksPrimeTrophy>(), 1));
 
             LeadingConditionRule notExpert = new LeadingConditionRule(new Conditions.NotExpert());
@@ -476,7 +475,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             if (!DownSepiksPrime)
             {
                 DownSepiksPrime = true;
-                Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ExoticCipher>());
+                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ExoticCipher>());
                 if (Main.netMode == NetmodeID.Server)
                 {
                     NetMessage.SendData(MessageID.WorldData);

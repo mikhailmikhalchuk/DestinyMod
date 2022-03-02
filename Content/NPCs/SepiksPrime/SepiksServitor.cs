@@ -48,7 +48,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             {
                 Vector2 deltaRing = target.Center - NPC.Center;
                 Vector2 velocity = 10 * deltaRing.SafeNormalize(new Vector2(0, 0.5f));
-                Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center, velocity, ModContent.ProjectileType<ServitorBlast>(), 20, 5, Main.myPlayer, NPC.whoAmI);
+                Projectile.NewProjectile(NPC.GetSpawnSourceForProjectileNPC(), NPC.Center, velocity, ModContent.ProjectileType<ServitorBlast>(), 20, 5, Main.myPlayer, NPC.whoAmI);
                 NPC.netUpdate = true;
                 RandomFireTime = Main.rand.Next(90, 200);
                 Timer = 0;

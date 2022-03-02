@@ -63,7 +63,7 @@ namespace DestinyMod.Content.Buffs.Debuffs
             DebuffNPC debuffNPC = npc.GetGlobalNPC<DebuffNPC>();
             if (damage >= npc.life && hitDirection == 0 && npc.damage > 0 && !npc.friendly)
             {
-                ThornRemnant thornRemnant = Main.item[Item.NewItem(npc.Hitbox, ModContent.ItemType<ThornRemnant>())].ModItem as ThornRemnant;
+                ThornRemnant thornRemnant = Main.item[Item.NewItem(npc.GetItemSource_Loot(), npc.Hitbox, ModContent.ItemType<ThornRemnant>())].ModItem as ThornRemnant;
                 thornRemnant.RemnantOwner = debuffNPC.NecroticApplier;
             }
 

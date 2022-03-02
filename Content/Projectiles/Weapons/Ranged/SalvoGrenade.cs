@@ -32,7 +32,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			}
 		}
 
-		public override bool OnTileCollide(Vector2 oldVelocity)
+        public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			if (Projectile.ai[1] != 0)
 			{
@@ -59,7 +59,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
 			Player player = Main.player[Projectile.owner];
 			player.itemAnimation = player.itemTime = 10;
-			if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3 || player.GetModPlayer<StatsPlayer>().ChannelTime <= 0 && Projectile.timeLeft <= 390)
+			if ((Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3) || (player.GetModPlayer<StatsPlayer>().ChannelTime <= 0 && Projectile.timeLeft <= 390))
 			{
 				Projectile.alpha = 255;
 				Projectile.position = Projectile.Center;

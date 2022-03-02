@@ -110,7 +110,7 @@ namespace DestinyMod.Common.ModSystems
 					if (responseString == "TOOMUCH")
 					{
 						Main.NewText("You've already deposited 30 Laurels today! Try again tomorrow.", Color.Red);
-						player.QuickSpawnItem(laurelType, laurelCount);
+						player.QuickSpawnItem(player.GetItemSource_Misc(laurelType), laurelType, laurelCount);
 					}
 					else
 					{
@@ -118,14 +118,14 @@ namespace DestinyMod.Common.ModSystems
 						if (string.IsNullOrEmpty(depositedLaurelsString))
 						{
 							int depositedLaurels = int.Parse(depositedLaurelsString);
-							player.QuickSpawnItem(laurelType, laurelCount - depositedLaurels);
+							player.QuickSpawnItem(player.GetItemSource_Misc(laurelType), laurelType, laurelCount - depositedLaurels);
 							Main.NewText("Deposited " + depositedLaurels + " Laurels!", new Color(255, 255, 0));
-							player.QuickSpawnItem(ItemID.GoldCoin, laurelCount - depositedLaurels);
+							player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.GoldCoin), ItemID.GoldCoin, laurelCount - depositedLaurels);
 						}
 						else
 						{
 							Main.NewText("Deposited " + laurelCount + "Laurels!", new Color(255, 255, 0));
-							player.QuickSpawnItem(ItemID.GoldCoin, laurelCount);
+							player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.GoldCoin), ItemID.GoldCoin, laurelCount);
 						}
 
 						int firedRocket = 0;

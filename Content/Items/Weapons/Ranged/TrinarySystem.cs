@@ -26,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.value = Item.buyPrice(gold: 1);
 		}
 
-		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			DestinyModProjectile.FireFusionProjectile(player, source, new Vector2(position.X, position.Y - 2), velocity, damage, knockback, 7, type);
 			return false;

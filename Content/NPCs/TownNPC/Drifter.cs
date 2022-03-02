@@ -12,6 +12,7 @@ using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Items.Equipables.Pets;
 using DestinyMod.Content.Items.Consumables.Potions;
 using DestinyMod.Content.Items.Equipables.Dyes;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
@@ -85,63 +86,64 @@ namespace DestinyMod.Content.NPCs.TownNPC
 					SoundEngine.PlaySound(SoundID.Grab);
 					int checkImpact = (npcPlayer.MotesGiven - oldMoteCount) / 10;
 					int checkMoney = (npcPlayer.MotesGiven - oldMoteCount) / 25;
+					EntitySource_Gift source = new EntitySource_Gift(NPC);
 					if (checkImpact >= 1 && npcPlayer.MotesGiven > 20)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<ImpactShard>(), checkImpact);
+						player.QuickSpawnItem(source, ModContent.ItemType<ImpactShard>(), checkImpact);
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesRepeatable" + Main.rand.Next(1, 3), gender);
 					}
 
 					if (checkMoney >= 1 && npcPlayer.MotesGiven > 20)
 					{
-						player.QuickSpawnItem(ItemID.GoldCoin, checkImpact * 20);
+						player.QuickSpawnItem(source, ItemID.GoldCoin, checkImpact * 20);
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MoneyRepeatable" + Main.rand.Next(1, 3), gender);
 					}
 
 					if (npcPlayer.MotesGiven > 10 && oldMoteCount < 10)
 					{
-						player.QuickSpawnItem(ItemID.GoldCoin, 5);
+						player.QuickSpawnItem(source, ItemID.GoldCoin, 5);
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward1", gender);
 					}
 
 					if (npcPlayer.MotesGiven > 20 && oldMoteCount < 20)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<ImpactShard>(), 5);
+						player.QuickSpawnItem(source, ModContent.ItemType<ImpactShard>(), 5);
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward2", gender);
 					}
 
 					if (npcPlayer.MotesGiven > 30 && oldMoteCount < 30)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<BottomDollar>());
+						player.QuickSpawnItem(source, ModContent.ItemType<BottomDollar>());
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward3");
 					}
 
 					if (npcPlayer.MotesGiven > 40 && oldMoteCount < 40)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<GambitDye>(), 3);
+						player.QuickSpawnItem(source, ModContent.ItemType<GambitDye>(), 3);
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward4", gender);
 					}
 
 					if (npcPlayer.MotesGiven > 50 && oldMoteCount < 50)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<GunsmithMaterials>(), 100);
+						player.QuickSpawnItem(source, ModContent.ItemType<GunsmithMaterials>(), 100);
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward5", gender);
 					}
 
 					if (npcPlayer.MotesGiven > 60 && oldMoteCount < 60)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<Ghost>());
+						player.QuickSpawnItem(source, ModContent.ItemType<Ghost>());
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward6", gender);
 					}
 
 					if (npcPlayer.MotesGiven > 70 && oldMoteCount < 70)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<TrinarySystem>());
+						player.QuickSpawnItem(source, ModContent.ItemType<TrinarySystem>());
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward7", gender);
 					}
 
 					if (npcPlayer.MotesGiven > 100 && oldMoteCount < 100)
 					{
-						player.QuickSpawnItem(ModContent.ItemType<BorrowedTime>());
+						player.QuickSpawnItem(source, ModContent.ItemType<BorrowedTime>());
 						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Drifter.MotesReward8", gender);
 					}
 					return;

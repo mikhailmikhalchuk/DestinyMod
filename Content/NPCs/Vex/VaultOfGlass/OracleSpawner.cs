@@ -91,7 +91,7 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
                 for (int spawnCounter = 0; spawnCounter < spawnLimit; spawnCounter++)
                 {
                     int rand = Main.rand.Next(localPositions.Count);
-                    int oracle = NPC.NewNPC((int)NPC.Center.X + localPositions[rand], (int)NPC.Center.Y - 50, ModContent.NPCType<Oracle>(), 0, spawnCounter);
+                    int oracle = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + localPositions[rand], (int)NPC.Center.Y - 50, ModContent.NPCType<Oracle>(), 0, spawnCounter);
                     Main.npc[oracle].hide = true;
                     OracleIndexes.Add(oracle);
                     localPositions.Remove(rand);

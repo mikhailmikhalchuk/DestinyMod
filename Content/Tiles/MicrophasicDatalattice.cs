@@ -5,6 +5,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.Tiles
 {
@@ -24,7 +25,7 @@ namespace DestinyMod.Content.Tiles
 			AddMapEntry(new Color(160, 231, 242), name);
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(i * 16, j * 16, 32, 48, ModContent.ItemType<Items.Placeables.MicrophasicDatalattice>());
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<Items.Placeables.MicrophasicDatalattice>());
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{

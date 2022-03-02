@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.GameContent.Events;
+using Terraria.DataStructures;
 using DestinyMod.Common.NPCs.NPCTypes;
 using DestinyMod.Content.Items.Weapons.Ranged;
 using DestinyMod.Content.Items.Placeables.Furniture;
@@ -42,26 +43,27 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			GuardianGames.ClaimedItem = hasClosedCeremony = true;
 			if (!hasClosedCeremony)
 			{
+				EntitySource_Gift source = new EntitySource_Gift(NPC);
 				switch (GuardianGames.WinningTeam)
 				{
 					case DestinyClassType.Titan:
 						if (!GuardianGames.ClaimedItem)
 						{
-							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
+							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<TitanFlag>());
 						}
 						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesTitanWin");
 
 					case DestinyClassType.Hunter:
 						if (!GuardianGames.ClaimedItem)
 						{
-							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
+							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<HunterFlag>());
 						}
 						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesHunterWin");
 
 					case DestinyClassType.Warlock:
 						if (!GuardianGames.ClaimedItem)
 						{
-							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TitanFlag>());
+							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<WarlockFlag>());
 						}
 						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesWarlockWin");
 				}
@@ -130,6 +132,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			else
 			{
 				NPCPlayer player = Main.LocalPlayer.GetModPlayer<NPCPlayer>();
+				EntitySource_Gift source = new EntitySource_Gift(NPC);
 				switch (player.ZavalaBountyProgress)
 				{
 					case 0:
@@ -141,7 +144,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 						if (player.ZavalaEnemies == 100)
 						{
 							Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyComplete1");
-							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<TheThirdAxiom>());
+							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<TheThirdAxiom>());
 							player.ZavalaBountyProgress = 2;
 							player.ZavalaEnemies = 0;
 						}
@@ -160,7 +163,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 						if (player.ZavalaEnemies == 50)
 						{
 							Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyComplete2");
-							Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<LastWord>());
+							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<LastWord>());
 							player.ZavalaBountyProgress = 4;
 							player.ZavalaEnemies = 0;
 						}

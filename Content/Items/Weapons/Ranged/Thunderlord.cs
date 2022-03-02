@@ -30,7 +30,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.shootSpeed = 18f;
 		}
 
-		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(4));
 			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 5), perturbedSpeed, ModContent.ProjectileType<ThunderlordShot>(), damage, knockback, player.whoAmI);
