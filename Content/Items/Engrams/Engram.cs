@@ -19,7 +19,7 @@ namespace DestinyMod.Content.Items.Engrams
 		{
 			//base.AutomaticSetDefaults();
 			Item.width = 22;
-			Item.height = 21;
+			Item.height = 22;
 			Item.maxStack = 99;
 		}
 
