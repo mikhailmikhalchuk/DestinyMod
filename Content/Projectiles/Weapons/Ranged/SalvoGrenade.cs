@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		public override void DestinySetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 1;
 			Projectile.timeLeft = 400;
 		}
 
