@@ -57,11 +57,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		public override void Kill(int timeLeft)
 		{
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-			Projectile.position = Projectile.Center;
-			Projectile.width = 22;
-			Projectile.height = 22;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Resize(22, 22);
 			for (int i = 0; i < 20; i++)
 			{
 				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);

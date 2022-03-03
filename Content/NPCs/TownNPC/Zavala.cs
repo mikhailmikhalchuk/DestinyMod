@@ -183,8 +183,8 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AceOfSpades>());
-			shop.item[nextSlot].shopCustomPrice = 1000000;
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SalvagersSalvo>());
+			shop.item[nextSlot].shopCustomPrice = 500000;
 			nextSlot++;
 			if (GuardianGames.Active)
 			{

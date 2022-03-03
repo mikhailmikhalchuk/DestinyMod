@@ -14,7 +14,7 @@ Solstice - SFX
 Fillinek - Building and SFX
 Black Snow - Sprites and Balancing
 
-[c/FF1919:We are currently looking for spriters,] if you are one and would like to help in the making of this mod please join the Discord and contact Cuno#9958
+We are currently looking for spriters, if you are one and would like to help in the making of this mod please join the Discord and contact Cuno#9958
 This mod is not finished! Do not expect weapons or armor to be balanced if you decide to use it in a playthrough
 
 Changelogs have been moved to the Discord, join it if you would like to see the content in the latest updates
@@ -27,6 +27,8 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
+Updated for compatibility with recent tModLoader updates
+Zavala now no longer sells Ace of Spades, instead offering Salvager's Salvo
+Downscaled many sprites
 
-
-© Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
+(Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
