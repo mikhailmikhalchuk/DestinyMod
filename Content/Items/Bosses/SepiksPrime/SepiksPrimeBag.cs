@@ -7,17 +7,15 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 {
 	public class SepiksPrimeBag : TreasureBag
 	{
-		public override int BossBagNPC => ModContent.NPCType<NPCs.SepiksPrime.SepiksPrime>();
-
 		public override void DestinySetDefaults() => Item.rare = ItemRarityID.Orange;
 
 		public override void OpenBossBag(Player player)
 		{
-			player.TryGettingDevArmor();
+			player.TryGettingDevArmor(player.GetItemSource_OpenItem(Type));
 
 			if (Main.rand.NextBool(7))
 			{
-				player.QuickSpawnItem(ModContent.ItemType<SepiksPrimeMask>());
+				player.QuickSpawnItem(player.GetItemSource_OpenItem(ModContent.ItemType<SepiksPrimeMask>()), ModContent.ItemType<SepiksPrimeMask>());
 			}
 
 			switch (Main.rand.Next(4))
@@ -27,7 +25,7 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 					break;
 
 				default:
-					player.QuickSpawnItem(ItemID.WaterBolt);
+					player.QuickSpawnItem(player.GetItemSource_OpenItem(ItemID.WaterBolt), ItemID.WaterBolt);
 					break;
 			}
 		}

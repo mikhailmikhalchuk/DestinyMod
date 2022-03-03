@@ -72,7 +72,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 			if (agentOfNine == null && CanSpawnNow())
 			{
-				int newAgentOfNine = NPC.NewNPC(Main.spawnTileX * 16, Main.spawnTileY * 16, ModContent.NPCType<AgentOfNine>(), 1);
+				int newAgentOfNine = NPC.NewNPC(NPC.GetSpawnSourceForTownSpawn(), Main.spawnTileX * 16, Main.spawnTileY * 16, ModContent.NPCType<AgentOfNine>(), 1);
 				agentOfNine = Main.npc[newAgentOfNine];
 				agentOfNine.homeless = true;
 				agentOfNine.direction = Main.spawnTileX >= WorldGen.bestX ? -1 : 1;

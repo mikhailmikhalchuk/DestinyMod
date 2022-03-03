@@ -71,7 +71,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			Vector2 collisionBox = new Vector2(player.Center.X, player.Center.Y - 5) + Projectile.velocity * (Distance + 10);
 			float discard = 0f;
 			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), player.Center,
-				collisionBox, 22, ref discard);
+				collisionBox, 8, ref discard);
 		}
 
 		public override void Kill(int timeLeft)

@@ -27,7 +27,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Suros
 			Item.shootSpeed = 16f;
 		}
 
-		public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			for (int count = 0; count < 4 + Main.rand.Next(2); count++)
 			{

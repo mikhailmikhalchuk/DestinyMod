@@ -89,7 +89,7 @@ namespace DestinyMod.Common.Projectiles
         /// <param name="bulletsToFire">The amount of bullets the fusion rifle should fire.</param>
         /// <param name="projectileType">The type of the projectile the fusion rifle should fire.</param>
         /// <returns>The <seealso cref="Projectile"/> fired.</returns>
-        public static Projectile FireFusionProjectile(Player owner, IProjectileSource source, Vector2 position, Vector2 velocity, 
+        public static Projectile FireFusionProjectile(Player owner, IEntitySource source, Vector2 position, Vector2 velocity, 
             int damage, float knockBack, int bulletsToFire = 6, int projectileType = ProjectileID.Bullet) => 
             Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<FusionShot>(), damage, knockBack, owner.whoAmI, bulletsToFire, projectileType);
     }

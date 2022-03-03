@@ -59,7 +59,7 @@ namespace DestinyMod.Content.NPCs.Fallen
                     Vector2 projectilePosition = new Vector2(NPC.Right.X, NPC.Center.Y - 20);
                     Vector2 projectileVelocity = 10 * (target.Center - projectilePosition).SafeNormalize(new Vector2(0, 0.5f));
                     SoundEngine.PlaySound(SoundID.Item11, projectilePosition);
-                    Projectile projectile = Projectile.NewProjectileDirect(NPC.GetProjectileSpawnSource(), projectilePosition, projectileVelocity, ProjectileID.Bullet, 5, 0);
+                    Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSpawnSourceForProjectileNPC(), projectilePosition, projectileVelocity, ProjectileID.Bullet, 5, 0);
                     projectile.hostile = true;
                     ProjectileTimer = 0;
                 }

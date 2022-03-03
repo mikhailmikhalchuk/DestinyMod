@@ -40,7 +40,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                ThornRemnant thornRemnant = Main.item[Item.NewItem(target.Hitbox, ModContent.ItemType<ThornRemnant>())].ModItem as ThornRemnant;
+                ThornRemnant thornRemnant = Main.item[Item.NewItem(Main.player[Projectile.owner].GetItemSource_Misc(ModContent.ItemType<ThornRemnant>()), target.Hitbox, ModContent.ItemType<ThornRemnant>())].ModItem as ThornRemnant;
                 thornRemnant.RemnantOwner = applier;
             }
         }
@@ -62,7 +62,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
             if (target.statLife <= 0)
             {
-                ThornRemnant thornRemnant = Main.item[Item.NewItem(target.Hitbox, ModContent.ItemType<ThornRemnant>())].ModItem as ThornRemnant;
+                ThornRemnant thornRemnant = Main.item[Item.NewItem(Main.player[Projectile.owner].GetItemSource_Misc(ModContent.ItemType<ThornRemnant>()), target.Hitbox, ModContent.ItemType<ThornRemnant>())].ModItem as ThornRemnant;
                 thornRemnant.RemnantOwner = player;
             }
         }

@@ -71,15 +71,15 @@ namespace DestinyMod.Content.NPCs.Fallen
                 {
                     if (Phase == 0f)
                     {
-                        NPC.NewNPC((int)NPC.Center.X / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>()); // What?
+                        NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>()); // What?
                     }
                     else if (Phase == 1f)
                     {
-                        NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                        NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
                     }
                     else
                     {
-                        NPC.NewNPC((int)NPC.Center.X + (int)NPC.Center.X / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                        NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + (int)NPC.Center.X / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
                     }
                     Timer = 0f;
                     Phase++;

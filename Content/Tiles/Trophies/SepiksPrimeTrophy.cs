@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.Tiles.Trophies
 {
@@ -26,6 +27,6 @@ namespace DestinyMod.Content.Tiles.Trophies
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) => 
-			Item.NewItem(i * 16, j * 16, 48, 48, ModContent.ItemType<Items.Bosses.SepiksPrime.SepiksPrimeTrophy>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<Items.Bosses.SepiksPrime.SepiksPrimeTrophy>());
 	}
 }

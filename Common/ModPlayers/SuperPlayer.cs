@@ -64,7 +64,7 @@ namespace DestinyMod.Common.ModPlayers
 						if (item.IsAir)
 						{
 							Projectile.NewProjectile(Player.GetProjectileSource_Misc(0), Player.position, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, Player.whoAmI);
-							Player.QuickSpawnItem(superItem);
+							Player.QuickSpawnItem(Player.GetItemSource_Misc(superItem), superItem);
 							return true;
 						}
 					}

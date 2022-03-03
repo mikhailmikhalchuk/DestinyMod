@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using DestinyMod.Content.Items.Placeables.Herbs;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.Tiles.Herbs
 {
@@ -52,7 +53,7 @@ namespace DestinyMod.Content.Tiles.Herbs
 
 			if (stage == HerbStages.Grown)
 			{
-				Item.NewItem(new Vector2(i, j).ToWorldCoordinates(), ModContent.ItemType<SpinmetalSeeds>());
+				Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j).ToWorldCoordinates(), ModContent.ItemType<SpinmetalSeeds>());
 			}
 			return false;
 		}
