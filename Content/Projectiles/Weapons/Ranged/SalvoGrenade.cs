@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		public override void DestinySetDefaults()
 		{
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.penetrate = 1;
+			Projectile.aiStyle = -1;
 			Projectile.timeLeft = 400;
 		}
 
@@ -53,7 +53,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			return false;
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Projectile.timeLeft = 2;
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Projectile.timeLeft = 3;
 
 		public override void AI()
 		{
