@@ -17,7 +17,7 @@ Black Snow - Sprites and Balancing
 We are currently looking for spriters, if you are one and would like to help in the making of this mod please join the Discord and contact Cuno#9958
 This mod is not finished! Do not expect weapons or armor to be balanced if you decide to use it in a playthrough
 
-Changelogs have been moved to the Discord, join it if you would like to see the content in the latest updates
+Changelogs can be found on the Discord, join it if you would like to see the content in the latest updates
 
 Support us on Patreon: https://patreon.com/destinymod
 
@@ -27,13 +27,6 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
-Updated for compatibility with recent tModLoader updates
-Zavala now no longer sells Ace of Spades, instead offering Salvager's Salvo
-Downscaled many sprites
-Resprited all engrams
-Fixed Jotunn not playing sounds or charging correctly
-Salvager's Salvo's grenades now explode on impact
-Gave all homing projectiles more aggressive tracking
-Projectiles that explode upon impact should now correctly do splash damage
+Fixed the super charge bar's text position
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

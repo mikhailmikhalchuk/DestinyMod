@@ -18,8 +18,8 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 
         public int RandomFireTime
         {
-            get => (int)NPC.ai[0];
-            set => NPC.ai[0] = value;
+            get => (int)NPC.ai[1];
+            set => NPC.ai[1] = value;
         }
 
         public override void DestinySetDefaults()

@@ -32,7 +32,7 @@ namespace DestinyMod.Content.UI.SuperCharge
 
 			SuperText = new UIText(string.Empty, 0.8f);
 			SuperText.Left.Set(22, 0.7f);
-			SuperText.Top.Set(0, 0.03f);
+			SuperText.Top.Set(0, 0.07f);
 			SuperText.Width.Set(138, 0f);
 			SuperText.Height.Set(34, 0f);
 

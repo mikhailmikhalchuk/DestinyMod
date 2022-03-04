@@ -12,6 +12,7 @@ namespace DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime
         {
             Projectile.CloneDefaults(ProjectileID.AmethystBolt);
             AIType = ProjectileID.AmethystBolt;
+            Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
         }

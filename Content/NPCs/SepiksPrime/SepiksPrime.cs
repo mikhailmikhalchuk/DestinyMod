@@ -19,9 +19,9 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 	[AutoloadBossHead]
     public class SepiksPrime : DestinyModNPC
     {
-        private int timesFiredThisCycle;
+        private int TimesFiredThisCycle;
 
-        private int phase = 1;
+        public int Phase = 1;
         //phases:
         //1 - initial
         //2 - 75% health shield
@@ -30,15 +30,15 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         //5 - 25% health shield
         //6 - last
 
-        private bool shielded = false;
+        private bool Shielded;
 
         private Vector2 NewCenter;
 
-        private List<Dust> velocityChanger = new List<Dust>();
+        private List<Dust> VelocityChanger = new List<Dust>();
 
-        private int rad = 120;
+        private int Rad = 120;
 
-        public static bool DownSepiksPrime;
+        public static bool DownedSepiksPrime;
 
         public override void SetStaticDefaults()
         {
@@ -97,7 +97,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             { //doesnt work with others
                 NPC.dontTakeDamage = true;
                 NPC.rotation += 1;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/NPC/SepiksDie"), NPC.Center);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/NPC/SepiksDie"), NPC.Center);
                 NPC.ai[0] = 0;
                 NPC.alpha = 0;
                 return;
@@ -139,17 +139,17 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                     {
                         double radius = Math.Sqrt(Main.rand.NextDouble());
                         double rand = Main.rand.NextDouble() * (Math.PI * 2);
-                        Vector2 vector = NPC.Center + new Vector2((float)(radius * Math.Cos(rand)), (float)(radius * Math.Sin(rand))) * ((NPC.width - rad) / 2);
+                        Vector2 vector = NPC.Center + new Vector2((float)(radius * Math.Cos(rand)), (float)(radius * Math.Sin(rand))) * ((NPC.width - Rad) / 2);
                         Dust dust = Dust.NewDustDirect(vector, 1, 1, DustID.WhiteTorch, Scale: 1.4f);
-                        velocityChanger.Add(dust);
+                        VelocityChanger.Add(dust);
                         dust.noGravity = true;
                         dust.velocity.X = num;
                         dust.velocity.Y = num2;
                     }
-                    rad -= 4;
+                    Rad -= 4;
                     //npc.scale -= 0.01f;
                 }
-                foreach (Dust dust in velocityChanger)
+                foreach (Dust dust in VelocityChanger)
                 {
                     dust.velocity *= 1.05f;
                 }
@@ -161,8 +161,8 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 if (NewCenter != Vector2.Zero)
                 {
                     NPC.Center = NewCenter;
-                    velocityChanger.Clear();
-                    rad = 120;
+                    VelocityChanger.Clear();
+                    Rad = 120;
                 }
                 NewCenter = Vector2.Zero;
                 if (NPC.alpha > 0)
@@ -175,7 +175,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                     NPC.ai[0] = 0;
                     NPC.alpha = 0;
                     NPC.ai[3] = 0;
-                    timesFiredThisCycle = 0;
+                    TimesFiredThisCycle = 0;
                     NPC.defense /= 3;
                     if (NPC.dontTakeDamage && NPC.life > 50)
                     {
@@ -190,13 +190,13 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             }
             if (NPC.dontTakeDamage && NPC.life > 50)
             {
-                if ((phase == 2 || phase == 5) && !CheckShieldedPhase())
+                if ((Phase == 2 || Phase == 5) && !CheckShieldedPhase())
                 {
-                    phase = phase == 2 ? 3 : 6;
-                    NPC.damage = Main.expertMode ? 20 : 10;
-                    // npc.dontTakeDamage = false;
-                    shielded = false;
+                    Phase = Phase == 2 ? 3 : 6;
                     NPC.ai[0] = 0f;
+                    Shielded = false;
+                    NPC.damage = Main.expertMode ? 20 : 10;
+                    NPC.dontTakeDamage = false;
                     TeleportNearTarget();
                     if (Main.netMode == NetmodeID.Server)
                     {
@@ -206,15 +206,15 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                     }
                 }
             }
-            if (phase == 1 && NPC.life <= NPC.lifeMax - NPC.lifeMax / 4 || phase == 4 && NPC.life <= NPC.lifeMax / 4)
+            if ((Phase == 1 && NPC.life <= NPC.lifeMax - NPC.lifeMax / 4) || (Phase == 4 && NPC.life <= NPC.lifeMax / 4))
             {
-                phase = phase == 1 ? 2 : 5;
-                shielded = true;
+                Phase = Phase == 1 ? 2 : 5;
+                Shielded = true;
                 NPC.damage = Main.expertMode ? 40 : 20;
                 NPC.dontTakeDamage = true;
                 TeleportNearTarget(target.Center.X + Main.rand.Next(-50, 50), target.Center.Y - 350);
                 SoundEngine.PlaySound(SoundID.Item78, NPC.Center);
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot($"Sounds/NPC/SepiksGroan{(Main.rand.NextBool() ? "1" : "2")}"), NPC.Center);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, $"Sounds/NPC/SepiksGroan{(Main.rand.NextBool() ? "1" : "2")}"), NPC.Center);
                 if (Main.netMode == NetmodeID.Server)
                 {
                     ModPacket netMessage = GetPacket(SepiksBossMessageType.DontTakeDamage);
@@ -222,67 +222,67 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                     netMessage.Send();
                 }
             }
-            else if (phase == 3 && NPC.life <= NPC.lifeMax / 2)
+            else if (Phase == 3 && NPC.life <= NPC.lifeMax / 2)
             {
-                phase = 4;
+                Phase = 4;
                 NPC.ai[0] = 0f;
-                timesFiredThisCycle = 0;
+                TimesFiredThisCycle = 0;
             }
-            if (phase == 1)
+            if (Phase == 1)
             {
                 if ((target.Center - NPC.Center).Length() > 1000)
                 {
                     TeleportNearTarget();
                     NPC.ai[0] = 0f;
-                    timesFiredThisCycle = 0;
+                    TimesFiredThisCycle = 0;
                 }
-                if (NPC.ai[0] > 50f && timesFiredThisCycle < 3)
+                if (NPC.ai[0] > 50f && TimesFiredThisCycle < 3)
                 {
                     FireBlastAtTarget();
                     NPC.ai[0] = 0f;
-                    timesFiredThisCycle++;
+                    TimesFiredThisCycle++;
                 }
-                if (NPC.ai[0] > 120f && timesFiredThisCycle >= 3)
+                if (NPC.ai[0] > 120f && TimesFiredThisCycle >= 3)
                 {
                     TeleportNearTarget();
-                    timesFiredThisCycle = 0;
+                    TimesFiredThisCycle = 0;
                     NPC.ai[0] = 0f;
                     Main.LocalPlayer.AddBuff(195, 3);
                 }
             }
-            else if (phase == 3)
+            else if (Phase == 3)
             {
                 if (NPC.ai[0] == 40f || NPC.ai[0] == 55f || NPC.ai[0] == 70f)
                 {
-                    if (timesFiredThisCycle >= 3)
+                    if (TimesFiredThisCycle >= 3)
                         return;
-                    timesFiredThisCycle++;
+                    TimesFiredThisCycle++;
                     FireBlastAtTarget();
                 }
-                else if (timesFiredThisCycle >= 3 && NPC.ai[0] > 130f)
+                else if (TimesFiredThisCycle >= 3 && NPC.ai[0] > 130f)
                 {
                     NPC.ai[0] = 0f;
-                    timesFiredThisCycle = 0;
+                    TimesFiredThisCycle = 0;
                     TeleportNearTarget();
                 }
             }
-            else if (phase == 4)
+            else if (Phase == 4)
             {
-                if (NPC.ai[0] == 100f && timesFiredThisCycle < 3 || NPC.ai[0] == 80f && timesFiredThisCycle < 3 && Main.expertMode)
+                if (NPC.ai[0] == 100f && TimesFiredThisCycle < 3 || NPC.ai[0] == 80f && TimesFiredThisCycle < 3 && Main.expertMode)
                 {
                     FireHomingAtTarget();
                     NPC.ai[0] = 0f;
-                    timesFiredThisCycle++;
+                    TimesFiredThisCycle++;
                 }
-                else if (NPC.ai[0] > 90f && timesFiredThisCycle >= 3 || NPC.ai[0] > 70f && timesFiredThisCycle >= 3 && Main.expertMode)
+                else if (NPC.ai[0] > 90f && TimesFiredThisCycle >= 3 || NPC.ai[0] > 70f && TimesFiredThisCycle >= 3 && Main.expertMode)
                 {
                     TeleportNearTarget(target.Center.X + Main.rand.Next(-50, 50), target.Center.Y - 250);
                     SoundEngine.PlaySound(SoundID.Item78, NPC.position);
                     NPC.ai[0] = 0f;
-                    timesFiredThisCycle = 0;
+                    TimesFiredThisCycle = 0;
                 }
             }
-            else if (phase == 6)
+            else if (Phase == 6)
             {
                 if (NPC.ai[0] == 30f)
                 {
@@ -294,7 +294,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                     TeleportNearTarget();
                 }
             }
-            if (shielded)
+            if (Shielded)
             {
                 if (NPC.ai[0] > 80f || NPC.ai[0] > 70f && Main.expertMode)
                 {
@@ -302,7 +302,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                     NPC.ai[0] = 0f;
                 }
             }
-            if ((target.Center - NPC.Center).Length() < 100 && !shielded)
+            if ((target.Center - NPC.Center).Length() < 100 && !Shielded)
             {
                 TeleportNearTarget();
                 NPC.ai[0] = 0f;
@@ -311,15 +311,15 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 
         public override void FindFrame(int frameHeight)
         {
-            if (phase == 2 || phase == 3)
+            if (Phase == 2 || Phase == 3)
             {
                 NPC.frame.Y = frameHeight;
             }
-            else if (phase == 4)
+            else if (Phase == 4)
             {
                 NPC.frame.Y = frameHeight * 2;
             }
-            else if (phase >= 5)
+            else if (Phase >= 5)
             {
                 NPC.frame.Y = frameHeight * 3;
             }
@@ -350,7 +350,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 {
                     attempts++;
                     Vector2 teleportTo = new Vector2(target.Center.X + Main.rand.Next(-200, 200), target.Center.Y - Main.rand.Next(50, 300));
-                    if (phase == 3 || phase == 6)
+                    if (Phase == 3 || Phase == 6)
                     { //because it's so spontaneous this gives the player more breathing room so sepiks isn't so close as he is normally
                         teleportTo = new Vector2(target.Center.X + Main.rand.Next(-300, 300), target.Center.Y - Main.rand.Next(50, 400));
                     }
@@ -381,7 +381,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         {
             if (NewCenter == Vector2.Zero)
             {
-                spriteBatch.Draw(Mod.Assets.Request<Texture2D>("NPCs/SepiksPrime/SepiksPrime_Glow").Value, NPC.Center - screenPos + new Vector2(0, 4), NPC.frame, Color.LightYellow, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Content/NPCs/SepiksPrime/SepiksPrime_Glow").Value, NPC.Center - screenPos + new Vector2(0, 4), NPC.frame, Color.LightYellow, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             }
         }
 
@@ -389,9 +389,9 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         /// Checks if Sepiks should have his shield up
         /// </summary>
         /// <returns>True if a Sepiks Servitor was found in the world. Otherwise returns false.</returns>
-        private bool CheckShieldedPhase()
+        private static bool CheckShieldedPhase()
         {
-            for (int k = 0; k < 200; k++)
+            for (int k = 0; k < Main.maxNPCs; k++)
             {
                 if (Main.npc[k].active && Main.npc[k].type == ModContent.NPCType<SepiksServitor>())
                 {
@@ -472,9 +472,9 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SepiksPrimeMask>(), 7));
             npcLoot.Add(notExpert);
 
-            if (!DownSepiksPrime)
+            if (!DownedSepiksPrime)
             {
-                DownSepiksPrime = true;
+                DownedSepiksPrime = true;
                 Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ExoticCipher>());
                 if (Main.netMode == NetmodeID.Server)
                 {
@@ -505,15 +505,14 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         private ModPacket GetPacket(SepiksBossMessageType type)
         {
             ModPacket packet = Mod.GetPacket();
-            // packet.Write((byte)DestinyModMessageType.SepiksPrime);
             packet.Write(NPC.whoAmI);
             packet.Write((byte)type);
             return packet;
         }
 
-        public override void Save(TagCompound tagCompound) => tagCompound.Add("Downed", DownSepiksPrime);
+        public override void Save(TagCompound tagCompound) => tagCompound.Add("Downed", DownedSepiksPrime);
 
-        public override void Load(TagCompound tagCompound) => DownSepiksPrime = tagCompound.Get<bool>("Downed");
+        public override void Load(TagCompound tagCompound) => DownedSepiksPrime = tagCompound.Get<bool>("Downed");
     }
 
     internal enum SepiksBossMessageType : byte

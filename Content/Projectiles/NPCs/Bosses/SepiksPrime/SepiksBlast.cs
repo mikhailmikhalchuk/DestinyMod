@@ -16,6 +16,7 @@ namespace DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime
         {
             Projectile.CloneDefaults(ProjectileID.EnchantedBoomerang);
             Projectile.aiStyle = 0;
+            Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
         }
