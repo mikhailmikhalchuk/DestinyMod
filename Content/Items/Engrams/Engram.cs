@@ -11,7 +11,7 @@ namespace DestinyMod.Content.Items.Engrams
 		{
 			Tooltip.SetDefault("A highly advanced, encrypted storage unit"
 				+ "\nA cryptarch could probably break its encryption for you");
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(10, 9));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(9, 6));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 		}
 

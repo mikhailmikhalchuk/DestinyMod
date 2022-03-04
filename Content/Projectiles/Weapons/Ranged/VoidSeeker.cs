@@ -30,7 +30,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 Projectile.velocity.X *= 0.98f;
             }
 
-            if (GradualHomeInOnNPC(200f, 15f) == -1)
+            if (GradualHomeInOnNPC(200f, 15f, 0.05f) == -1)
             {
                 Projectile.velocity.Y += 0.2f;
             }

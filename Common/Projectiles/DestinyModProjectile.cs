@@ -20,7 +20,14 @@ namespace DestinyMod.Common.Projectiles
 
 		public virtual void DestinySetDefaults() { }
 
-        public int HomeInOnNPC(float distance, float speed, bool checkTiles = true)
+        /// <summary>
+        /// Causes a <see cref="Projectile"/> to instantly home in on an <see cref="NPC"/>.
+        /// </summary>
+        /// <param name="distance">The distance before the <see cref="Projectile"/> homes in on an <see cref="NPC"/>.</param>
+        /// <param name="speed">The speed the <see cref="Projectile"/> travels when in range of an <see cref="NPC"/>.</param>
+        /// <param name="checkTiles">If <see langword="false"/>, ignores tiles when checking for an <see cref="NPC"/> to home into.</param>
+        /// <returns>The position of the target in <see cref="Main.npc"/>.</returns>
+        public int HomeInOnNPC(float distance, float speed, bool checkTiles = true) //this is literally useless
         {
             int target = -1;
             for (int indexer = 0; indexer < Main.maxNPCs; indexer++)
@@ -49,6 +56,14 @@ namespace DestinyMod.Common.Projectiles
             return target;
         }
 
+        /// <summary>
+        /// Causes a <see cref="Projectile"/> to gradually home in on an <see cref="NPC"/>.
+        /// </summary>
+        /// <param name="distance">The distance before the <see cref="Projectile"/> homes in on an <see cref="NPC"/>.</param>
+        /// <param name="speed">The speed the <see cref="Projectile"/> travels when in range of an <see cref="NPC"/>.</param>
+        /// <param name="scale">The amount to curve (more specifically, interpolate) the <see cref="Projectile"/> when in range of an <see cref="NPC"/>.</param>
+        /// <param name="checkTiles">If <see langword="false"/>, ignores tiles when checking for an <see cref="NPC"/> to home into.</param>
+        /// <returns>The position of the target in <see cref="Main.npc"/>.</returns>
         public int GradualHomeInOnNPC(float distance, float speed, float scale = 0.025f, bool checkTiles = true)
         {
             int target = -1;

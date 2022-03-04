@@ -30,5 +30,10 @@ Added Titan, Warlock, and Hunter-themed decor
 Updated for compatibility with recent tModLoader updates
 Zavala now no longer sells Ace of Spades, instead offering Salvager's Salvo
 Downscaled many sprites
+Resprited all engrams
+Fixed Jotunn not playing sounds or charging correctly
+Salvager's Salvo's grenades now explode on impact
+Gave all homing projectiles more aggressive tracking
+Projectiles that explode upon impact should now correctly do splash damage
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

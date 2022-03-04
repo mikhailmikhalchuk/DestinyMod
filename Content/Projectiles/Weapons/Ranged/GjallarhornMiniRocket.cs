@@ -35,14 +35,35 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			{
 				return;
 			}
+			if (Projectile.timeLeft <= 2)
+			{
+				Projectile.Resize(25, 25);
 
-			HomeInOnNPC(400f, 20f);
+				if (Projectile.timeLeft < 2)
+				{
+					return;
+				}
+				for (int i = 0; i < 20; i++)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
+					dust.noGravity = true;
+					dust.velocity *= 7f;
+					dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
+					dust.velocity *= 3f;
+				}
+			}
+			if (Projectile.timeLeft <= 3)
+			{
+				return;
+			}
+
+			GradualHomeInOnNPC(400f, 20f, 0.15f);
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-			Projectile.Kill();
+			Projectile.timeLeft = 3;
 			return true;
 		}
 
@@ -57,15 +78,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		public override void Kill(int timeLeft)
 		{
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-			Projectile.Resize(11, 11);
-			for (int i = 0; i < 20; i++)
-			{
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
-				dust.noGravity = true;
-				dust.velocity *= 7f;
-				dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
-				dust.velocity *= 3f;
-			}
+			Projectile.timeLeft = 3;
 		}
 	}
 }

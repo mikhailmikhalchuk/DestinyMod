@@ -4,26 +4,23 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
+using System.IO;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
     public class JotunnShot : DestinyModProjectile
     {
-        public bool Fired
-        {
-            get => (int)Projectile.ai[0] != 0;
-            set => Projectile.ai[0] = value ? 1 : 0;
-        }
+        public bool Fired;
 
         public int Charge
         {
-            get => (int)Projectile.ai[0];
-            set => Projectile.ai[0] = value;
+            get => (int)Projectile.ai[1];
+            set => Projectile.ai[1] = value;
         }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Jötunn Shot");
+            DisplayName.SetDefault("Jotunn Shot");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
 
@@ -43,7 +40,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
         {
             Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-            Projectile.Kill();
+            Projectile.timeLeft = 3;
             return true;
         }
 
@@ -52,6 +49,20 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
+            if (Projectile.timeLeft == 2)
+            {
+                Projectile.Resize(6, 6);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
+                    dust.noGravity = true;
+                    dust.velocity *= 7f;
+                    dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
+                    dust.velocity *= 3f;
+                }
+                return;
+            }
             if (player.channel && Charge < 80f && !Fired)
             {
                 Projectile.position = player.Center + Projectile.velocity;
@@ -63,17 +74,15 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
                 }
 
                 int dir = Projectile.direction;
-                player.ChangeDir(dir); // Set player direction to where we are shooting
-                player.heldProj = Projectile.whoAmI; // Update player's held projectile
-                player.itemTime = 2; // Set item time to 2 frames while we are used
-                player.itemAnimation = 2; // Set item animation time to 2 frames while we are used
-                player.itemRotation = new Vector2(Projectile.velocity.X * dir, Projectile.velocity.Y * dir).ToRotation(); // Set the item rotation to where we are shooting
+                player.ChangeDir(dir);
+                player.heldProj = Projectile.whoAmI;
+                player.itemTime = 2;
+                player.itemAnimation = 2;
+                player.itemRotation = new Vector2(Projectile.velocity.X * dir, Projectile.velocity.Y * dir).ToRotation();
                 Projectile.damage = ++Charge;
 
-                Vector2 offset = Projectile.velocity * 10f;
-                Vector2 pos = player.Center + offset - new Vector2(10);
-                Vector2 dustVelocity = (Vector2.UnitX * 18f).RotatedBy(Projectile.rotation - MathHelper.PiOver2);
-                Vector2 spawnPos = Projectile.Center + dustVelocity;
+                Vector2 pos = player.Center + Projectile.velocity * 10f - new Vector2(10);
+                Vector2 spawnPos = Projectile.Center + (Vector2.UnitX * 18f).RotatedBy(Projectile.rotation - MathHelper.PiOver2);
                 Vector2 spawn = spawnPos + (Main.rand.NextFloat() * MathHelper.TwoPi).ToRotationVector2() * (12f - Charge);
                 Dust dust = Dust.NewDustDirect(pos, 20, 20, DustID.Torch, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
                 dust.velocity = Vector2.Normalize(spawnPos - spawn) * 1.5f * (10f - Charge) / 10f;
@@ -85,9 +94,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
                 int chargeMagnitude = Utils.Clamp(Charge / 20 + 1, 1, 4);
                 if (!Fired)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/JotunnCharge" + chargeMagnitude), Projectile.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/JotunnCharge" + chargeMagnitude), Projectile.Center);
                 }
                 Fired = true;
+                Projectile.netUpdate = true;
 
                 Projectile.velocity = Projectile.velocity * 20f / 11f;
                 AdjustMagnitude(ref Projectile.velocity);
@@ -97,9 +107,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
             {
                 if (!Fired)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot("Sounds/Item/JotunnCharge5"), Projectile.Center);
-                    Fired = true;
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/JotunnCharge5"), Projectile.Center);
                 }
+                Fired = true;
+                Projectile.netUpdate = true;
 
                 Projectile.velocity = Projectile.velocity * 20f / 11f;
                 AdjustMagnitude(ref Projectile.velocity);
@@ -113,30 +124,28 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
                     }
                 }
 
-                HomeInOnNPC(400f, 20f);
+                GradualHomeInOnNPC(400f, 20f, 0.125f);
             }
         }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Projectile.timeLeft = 2;
 
         public override void Kill(int timeLeft)
         {
             if (Charge >= 80f)
             {
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-                Projectile.position = Projectile.Center;
-                Projectile.width = 11;
-                Projectile.height = 11;
-                Projectile.position.X -= Projectile.width / 2;
-                Projectile.position.Y -= Projectile.height / 2;
-
-                for (int i = 0; i < 20; i++)
-                {
-                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
-                    dust.noGravity = true;
-                    dust.velocity *= 7f;
-                    dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
-                    dust.velocity *= 3f;
-                }
             }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Fired);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Fired = reader.ReadBoolean();
         }
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.75f, lightColor.B * 0.55f, lightColor.A);

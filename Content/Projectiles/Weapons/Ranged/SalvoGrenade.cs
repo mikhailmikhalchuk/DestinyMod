@@ -62,9 +62,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			if ((Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3) || (player.GetModPlayer<StatsPlayer>().ChannelTime <= 0 && Projectile.timeLeft <= 390))
 			{
 				Projectile.alpha = 255;
-				Projectile.position = Projectile.Center;
-				Projectile.width = Projectile.height = 22;
-				Projectile.Center = Projectile.position;
+				Projectile.Resize(22, 22);
 				Projectile.damage = 150;
 				Projectile.knockBack = 10f;
 				if (Projectile.timeLeft > 3)
@@ -134,12 +132,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				}
 			}
 
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 10;
-			Projectile.height = 10;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Resize(10, 10);
 		}
 	}
 }
