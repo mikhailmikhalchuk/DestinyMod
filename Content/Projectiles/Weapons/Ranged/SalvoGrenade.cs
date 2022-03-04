@@ -85,6 +85,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				dust.position = Projectile.Center + new Vector2(0f, -(float)Projectile.height / 2 - 6).RotatedBy(Projectile.rotation) * 1.1f;
 			}
 
+			Projectile.rotation += Projectile.velocity.X * 0.1f;
+
 			if (++Projectile.ai[0] > 5f)
 			{
 				Projectile.ai[0] = 10f;
