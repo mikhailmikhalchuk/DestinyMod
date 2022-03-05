@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,5 +17,7 @@ namespace DestinyMod.Common.Items.ItemTypes
 			Item.shootSpeed = 10;
 			Item.useAmmo = AmmoID.Bullet;
 		}
+
+		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 	}
 }

@@ -7,6 +7,7 @@ using DestinyMod.Content.Items.Weapons.Ranged.Khvostov;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.NPCs.NPCTypes;
 using DestinyMod.Content.UI.CryptarchUI;
+using Terraria.GameContent.Bestiary;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
@@ -21,6 +22,15 @@ namespace DestinyMod.Content.NPCs.TownNPC
 		{
 			NPC.width = 26;
 			NPC.height = 46;
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+
+				new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Cryptarch")
+			});
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)

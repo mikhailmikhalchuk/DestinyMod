@@ -13,6 +13,8 @@ using DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime;
 using DestinyMod.Common.NPCs;
 using Terraria.ModLoader.IO;
 using DestinyMod.Content.Items.Misc;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
@@ -43,6 +45,17 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
+
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers(0) {
+                PortraitScale = 0.55f,
+                Position = new Vector2(-7, -70),
+                PortraitPositionYOverride = -50f,
+                PortraitPositionXOverride = 0f
+            });
         }
 
         public override void DestinySetDefaults()
@@ -66,7 +79,11 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             {
                 NPC.buffImmune[k] = true;
             }
-            Music = SoundLoader.GetSoundSlot("Sounds/Music/SepiksPrime");
+
+            if (!Main.dedServ)
+            {
+                Music = SoundLoader.GetSoundSlot("Sounds/Music/SepiksPrime");
+            }
         }
 
         /*public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
@@ -74,6 +91,15 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             NPC.defense = 25;
             NPC.damage = 20;
         }*/
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+
+                new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.SepiksPrime")
+            });
+        }
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
@@ -463,6 +489,8 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             return null;
         }
 
+        public override void OnKill() => NPC.SetEventFlagCleared(ref DownedSepiksPrime, -1);
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<SepiksPrimeBag>()));
@@ -472,15 +500,8 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SepiksPrimeMask>(), 7));
             npcLoot.Add(notExpert);
 
-            if (!DownedSepiksPrime)
-            {
-                DownedSepiksPrime = true;
-                Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ExoticCipher>());
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendData(MessageID.WorldData);
-                }
-            }
+            //Item.NewItem(NPC.GetItemSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ExoticCipher>());
+            //figure out b/c of OnKill replacement
         }
 
         public override void HitEffect(int hitDirection, double damage)

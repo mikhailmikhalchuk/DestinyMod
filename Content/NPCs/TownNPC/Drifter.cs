@@ -13,13 +13,23 @@ using DestinyMod.Content.Items.Equipables.Pets;
 using DestinyMod.Content.Items.Consumables.Potions;
 using DestinyMod.Content.Items.Equipables.Dyes;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Personalities;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
 	[AutoloadHead]
 	public class Drifter : GenericTownNPC
 	{
-		public override void DestinySetStaticDefaults() => DisplayName.SetDefault("Dredgen");
+		public override void DestinySetStaticDefaults()
+		{
+			DisplayName.SetDefault("Dredgen");
+
+			NPC.Happiness
+				.SetNPCAffection(ModContent.NPCType<Zavala>(), AffectionLevel.Hate)
+				.SetNPCAffection(NPCID.Pirate, AffectionLevel.Like)
+			;
+		}
 
 		public override string TownNPCName() => "The Drifter";
 
@@ -27,6 +37,15 @@ namespace DestinyMod.Content.NPCs.TownNPC
 		{
 			NPC.width = 26;
 			NPC.height = 46;
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+
+				new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Drifter")
+			});
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)

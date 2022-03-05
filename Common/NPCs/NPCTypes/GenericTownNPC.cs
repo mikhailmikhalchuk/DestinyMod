@@ -23,10 +23,10 @@ namespace DestinyMod.Common.NPCs.NPCTypes
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0.5f;
 			AnimationType = NPCID.Guide;
-			Male = true;
+            Male = true;
 		}
 
-		public sealed override void SetStaticDefaults()
+        public sealed override void SetStaticDefaults()
 		{
 			AutomaticSetStaticDefaults();
 			DestinySetStaticDefaults();
@@ -42,6 +42,8 @@ namespace DestinyMod.Common.NPCs.NPCTypes
 			NPCID.Sets.AttackTime[NPC.type] = 30;
 			NPCID.Sets.AttackAverageChance[NPC.type] = 30;
 			NPCID.Sets.HatOffsetY[NPC.type] = 8;
+
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers(0) { Velocity = 1f, Direction = -1 });
 		}
 
 		public virtual void DestinySetStaticDefaults() { }

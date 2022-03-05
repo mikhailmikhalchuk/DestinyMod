@@ -12,6 +12,7 @@ using DestinyMod.Content.Items.Weapons.Ranged;
 using DestinyMod.Common.NPCs.Data;
 using DestinyMod.Common.NPCs.NPCTypes;
 using DestinyMod.Content.Currency;
+using Terraria.GameContent.Bestiary;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
@@ -22,7 +23,13 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public static List<NPCShopData> Shop = new List<NPCShopData>();
 
-		public override void DestinySetStaticDefaults() => DisplayName.SetDefault("Agent of the Nine");
+		public override void DestinySetStaticDefaults()
+		{
+			DisplayName.SetDefault("Agent of the Nine");
+
+			NPCID.Sets.ActsLikeTownNPC[Type] = true;
+			NPCID.Sets.SpawnsWithCustomName[Type] = true;
+		}
 
 		public override string TownNPCName() => "Xûr";
 
@@ -32,7 +39,16 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			NPC.height = 46;
 		}
 
-		public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+
+				new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.AgentOfNine")
+			});
+		}
+
+        public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
 
 		public static void UpdateTravelingMerchant()
 		{

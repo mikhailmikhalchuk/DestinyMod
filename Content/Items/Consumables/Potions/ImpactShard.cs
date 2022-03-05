@@ -1,6 +1,7 @@
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Buffs;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,7 +9,12 @@ namespace DestinyMod.Content.Items.Consumables.Potions
 {
     public class ImpactShard : Consumable
     {
-        public override void SetStaticDefaults() => Tooltip.SetDefault("Allows you to find Motes off of enemies easier");
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Allows you to find Motes off of enemies easier");
+
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+        }
 
         public override void DestinySetDefaults()
         {

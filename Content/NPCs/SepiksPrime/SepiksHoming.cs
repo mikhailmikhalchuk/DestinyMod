@@ -30,6 +30,11 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             DisplayName.SetDefault("Homing Eye Blast");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ProjectileNPC[NPC.type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers(0) {
+                Hide = true,
+            });
         }
 
         public override void DestinySetDefaults()
@@ -102,7 +107,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             float length = velocity.Length();
             if (length > 20f)
             {
-                float speed = Main.expertMode ? 9f : 7f;
+                float speed = Main.masterMode ? 13f : Main.expertMode ? 11f : 9f;
                 velocity *= speed / length;
             }
         }

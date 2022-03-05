@@ -72,13 +72,13 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
                 }
             }
 
-            /*foreach (NPC npcE in Main.npc)
+            foreach (NPC npcE in Main.npc)
             {
                 if (npcE.type == NPC.type)
                 {
-                    // npcE.active = false;
+                    npcE.active = false;
                 }
-            }*/
+            }
         }
     }
 }

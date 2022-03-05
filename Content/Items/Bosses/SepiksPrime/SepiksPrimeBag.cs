@@ -1,5 +1,6 @@
 using DestinyMod.Common.Items.ItemTypes;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,13 +10,19 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 	{
 		public override void DestinySetDefaults() => Item.rare = ItemRarityID.Orange;
 
-		public override void OpenBossBag(Player player)
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
+		}
+
+        public override void OpenBossBag(Player player)
 		{
-			player.TryGettingDevArmor(player.GetItemSource_OpenItem(Type));
+			IEntitySource source = player.GetItemSource_OpenItem(Type);
 
 			if (Main.rand.NextBool(7))
 			{
-				player.QuickSpawnItem(player.GetItemSource_OpenItem(ModContent.ItemType<SepiksPrimeMask>()), ModContent.ItemType<SepiksPrimeMask>());
+				player.QuickSpawnItem(source, ModContent.ItemType<SepiksPrimeMask>());
 			}
 
 			switch (Main.rand.Next(4))
@@ -25,7 +32,7 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 					break;
 
 				default:
-					player.QuickSpawnItem(player.GetItemSource_OpenItem(ItemID.WaterBolt), ItemID.WaterBolt);
+					player.QuickSpawnItem(source, ItemID.WaterBolt);
 					break;
 			}
 		}

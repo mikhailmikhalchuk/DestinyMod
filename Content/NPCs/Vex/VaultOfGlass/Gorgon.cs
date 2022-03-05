@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using DestinyMod.Common.NPCs;
 using Terraria.DataStructures;
 using DestinyMod.Common.ModPlayers;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
 
 namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 {
@@ -29,6 +31,12 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             set => NPC.ai[2] = value;
         }
 
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
+        }
+
         public override void DestinySetDefaults()
         {
             NPC.CloneDefaults(NPCID.DemonEye);
@@ -36,6 +44,19 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             NPC.aiStyle = 0;
             NPC.lifeMax = 10000;
             NPC.defense = 50;
+
+            for (int k = 0; k < NPC.buffImmune.Length; k++)
+            {
+                NPC.buffImmune[k] = true;
+            }
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+                new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Gorgon")
+            });
         }
 
         public override void AI()

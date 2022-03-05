@@ -28,5 +28,8 @@ Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
 Fixed the super charge bar's text position
+Added Bestiary entries for town NPCs
+Added happiness qualifiers for town NPCs
+Added creative mode item research counts
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

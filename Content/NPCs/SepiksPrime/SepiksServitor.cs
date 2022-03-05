@@ -5,6 +5,8 @@ using DestinyMod.Common.NPCs;
 using Terraria.ModLoader;
 using System;
 using DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
@@ -22,6 +24,12 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             set => NPC.ai[1] = value;
         }
 
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+        }
+
         public override void DestinySetDefaults()
         {
             NPC.aiStyle = -1;
@@ -36,6 +44,16 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             NPC.lavaImmune = true;
             NPC.noTileCollide = true;
             RandomFireTime = 120;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<SepiksPrime>()], true);
+
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+				new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.SepiksServitor")
+            });
         }
 
         public override void AI()

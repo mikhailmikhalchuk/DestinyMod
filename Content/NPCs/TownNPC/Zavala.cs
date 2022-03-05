@@ -12,6 +12,8 @@ using DestinyMod.Content.Items.Equipables.Dyes;
 using DestinyMod.Content.Items.Placeables;
 using DestinyMod.Common.ModSystems;
 using DestinyMod.Common.ModPlayers;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Personalities;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
@@ -26,6 +28,12 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			Main.npcFrameCount[NPC.type] = 25;
 			NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
 			NPCID.Sets.AttackFrameCount[NPC.type] = 4;
+
+			NPC.Happiness
+				.SetBiomeAffection<SnowBiome>(AffectionLevel.Hate)
+				.SetNPCAffection(ModContent.NPCType<Drifter>(), AffectionLevel.Dislike)
+				.SetNPCAffection(NPCID.Guide, AffectionLevel.Like)
+			;
 		}
 
 		public override string TownNPCName() => "Zavala";
@@ -34,6 +42,15 @@ namespace DestinyMod.Content.NPCs.TownNPC
 		{
 			NPC.width = 18;
 			NPC.height = 40;
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+
+				new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Zavala")
+			});
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) => NPC.downedSlimeKing;

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using DestinyMod.Common.ModPlayers;
+using Terraria.GameContent.Creative;
 
 namespace DestinyMod.Common.Items.ItemTypes
 {
     public abstract class ClassArmor : DestinyModItem
     {
         public abstract DestinyClassType ArmorClassType { get; }
+
+        public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

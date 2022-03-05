@@ -391,18 +391,7 @@ Mods: {
 			Spinmetal: Girometal
 		}
 
-		Common: {
-			Brother: hermano
-			Sister: hermana
-			Bounty: Recompensa
-			Decrypt: Desencriptar
-			GiveMotes: Dar Motas
-			CheckMotes: Inspeccionar Motas
-			SuperCharge: ¡Súper cargada!
-			SuperInventory: Debes tener un espacio del inventario vacio para activar tu súper.
-			VaultOfGlass: Vault of Glass
-			RelicShard: ¡Fragmentos de Reliquia empezaron a aparecer!
-		}
+		
 
 		NPCName: {
 			AgentOfNine: Agente de los Nueve
@@ -518,6 +507,76 @@ Mods: {
 			GuardianGamesTitanWin: A través de una dura competición y desafiando todas las posibilidades, mis Titanes golpearon hasta la victoria en los Juegos de Guardianes este año. No te equivoques, la determinación de los Hechiceros y Cazadores fue admirable. Para conmemorar, aquí tienes un poco de decoración de Titán. Mantenete fuerte, Guardián.
 			GuardianGamesHunterWin: A través de una dura competición y desafiando todas las posibilidades, los Cazadores tomaron sigilosamente la victoria en los Juegos de Guardianes este año. No te equivoques, la determinación de los Hechiceros fue admirable, pero nosotros los Titanes alcanzaremos la victoria el proximo año. Para conmemorar, aquí tienes un poco de decoración de Cazador. Mantente fuerte, Guardián.
 			GuardianGamesWarlockWin: A través de una dura competición y desafiando todas las posibilidades, los Hechiceros han burlado las demas clases en los Juegos de Guardianes este año. No te equivoques, la determinación de los Cazadores fue admirable, pero nosotros los Titanes alcanzaremos la victoria el proximo año. Para conmemorar, aquí tienes un poco de decoración de Hechicero. Mantente fuerte, Guardián.
+		}
+
+		Common: {
+			Brother: hermano
+			Sister: hermana
+			Bounty: Recompensa
+			Decrypt: Desencriptar
+			GiveMotes: Dar Motas
+			CheckMotes: Inspeccionar Motas
+			SuperCharge: ¡Súper cargada!
+			SuperInventory: Debes tener un espacio del inventario vacio para activar tu súper.
+			VaultOfGlass: Vault of Glass
+			RelicShard: ¡Fragmentos de Reliquia empezaron a aparecer!
+		}
+
+		Bestiary: {
+			AgentOfNine: A peddler of strange curios, Xûr's motives are not his own. He bows to his distant masters, the Nine.
+			Cryptarch: A senior representative of the Cryptarchy, the Cryptarch decodes engrams and seeks the treasures of humanity's past.
+			Drifter: A rogue Lightbearer, the Drifter takes Motes of Dark in exchange for rewards.
+			Zavala: Leader of the Titans and head of the Vanguard, Commander Zavala offers bounties to complete for rewards.
+
+			SepiksPrime: The exalted Servitor of the Fallen House of Devils, Sepiks Prime is the central recipient of its house's worship.
+		}
+
+		TownNPCMood: {
+			Cryptarch: {
+				Content: Engram decryption efficiency is optimal.
+				NoHome: I have no residence to even begin to analyze all these documents, Guardian!
+				LoveSpace: This area will suit my research well.
+				FarFromHome: My residence and my research share something in common, they both seem to have eluded me...
+				DislikeCrowded: Having this many... distractions, around, is detrimental to my work.
+				LikeBiome: Unused
+				LoveBiome: Unused
+				DislikeBiome: Unused
+				HateBiome: Unused
+				LikeNPC: Unused
+				LoveNPC: Unused
+				DislikeNPC: Unused
+				HateNPC: Unused
+			}
+			Drifter: {
+				Content: I'm doin' just fine, brother.
+				NoHome: I got no place to sleep at night! What kinda system you runnin' here?!
+				LoveSpace: Ohhh yeah, I'm lovin' this space. Just imagine how many Motes you can store here!
+				FarFromHome: Brother, you think you could transmat me back home?
+				DislikeCrowded: This many people is bad for my business, brother. Don't wanna have too many people figure out what we're running, here...
+				LikeBiome: "{BiomeName} is nice and cozy... I wonder how many Motes it has."
+				LoveBiome: "{BiomeName} is great! Look how many Motes I found!"
+				DislikeBiome: "What's up with {BiomeName}... this ain't a good place to run my business, brother."
+				HateBiome: "Brother, {BiomeName} stinks. There ain't any Motes here!"
+				LikeNPC: "I like {NPCName}, he reminds me of myself..."
+				LoveNPC: Unused
+				DislikeNPC: Unused
+				HateNPC: "Ugh, Vanguard oversight under {NPCName} is the worst, brother."
+			}
+			Zavala: {
+				Content: I am well, Guardian.
+				NoHome: Guardian, I have no living quarters.
+				LoveSpace: This space is... acceptable.
+				FarFromHome: Could you point me in the correct direction to the Tower, Guardian?
+				DislikeCrowded: This area is certainly violating the Vanguard's overcrowding policy...
+				LikeBiome: Unused
+				LoveBiome: Unused
+				DislikeBiome: Unused
+				HateBiome: "{BiomeName}... this dreadful area reminds me of my past..."
+				LikeNPC: "I get along well with {NPCName}. We both have leadership experience."
+				LoveNPC: Unused
+				DislikeNPC: "Keep an eye on {NPCName} for me, will you, Guardian? I don't like his presence here..."
+				HateNPC: Unused
+			}
 		}
 	}
 }

@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using DestinyMod.Common.NPCs;
 using DestinyMod.Content.Buffs.Debuffs;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
 
 namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 {
@@ -16,7 +18,12 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 
         public override string Texture => "Terraria/Images/NPC_" + NPCID.DemonEye;
 
-        public override void SetStaticDefaults() => DisplayName.SetDefault("The Templar");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("The Templar");
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
+        }
 
         public override void DestinySetDefaults()
         {
@@ -29,7 +36,20 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             NPC.noGravity = true;
             NPC.dontTakeDamage = true;
             NPC.knockBackResist = 0f;
+
+            for (int k = 0; k < NPC.buffImmune.Length; k++)
+            {
+                NPC.buffImmune[k] = true;
+            }
             // npc.chaseable = false;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+                new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Templar")
+            });
         }
 
         public override void AI()
@@ -42,11 +62,11 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
 
             if (Main.netMode != NetmodeID.Server)
 			{
-                Filter shockwave = Filters.Scene["DestinyMod:Shockwave"];
+                Filter shockwave = Terraria.Graphics.Effects.Filters.Scene["DestinyMod:Shockwave"];
                 if (!shockwave.IsActive() && Counter > 900)
                 {
                     Main.NewText("RITUAL OF NEGATION!", new Color(255, 255, 0));
-                    Filters.Scene.Activate("DestinyMod:Shockwave", NPC.Center).GetShader()
+                    Terraria.Graphics.Effects.Filters.Scene.Activate("DestinyMod:Shockwave", NPC.Center).GetShader()
                         .UseColor(1, 7, 15)
                         .UseTargetPosition(NPC.Center);
                 }

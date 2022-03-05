@@ -12,6 +12,11 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
         {
             DisplayName.SetDefault("Detainment Bubble");
             NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[NPC.type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers(0) {
+                Hide = true,
+            });
         }
 
         public override void DestinySetDefaults()
