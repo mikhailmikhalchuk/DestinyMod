@@ -126,8 +126,11 @@ Mods: {
 			SepiksPrime: The exalted Servitor of the Fallen House of Devils, Sepiks Prime is the central recipient of its house's worship.
 			SepiksServitor: A servitor used by Sepiks Prime to activate and sustain his shield.
 
-			Templar: Defender of its Well, the Templar uses a wide array of attacks to combat intruders.
-			Gorgon: These creatures remove Guardians they spot from time itself. Engaging these Harpies is not advised.
+			Vandal: Soldiers, brawlers, assassins, and scouts, Vandals are the seasoned regulars who fill out the skilled roles within a Fallen crew.
+			Skiff: Slipping out of stealth only to offload a crew of Fallen, the Skiff is rarely seen; however, its rumbling, booming arrival is hard to miss.
+
+			Templar: Defender of the deeper Vault, the Templar uses a wide array of attacks to combat intruders.
+			Gorgon: Whatever these creatures perceive becomes subject to erasure at their will. Guardians must evade their gaze at all costs - or reply to any detection with immediate, overwhelming force.
 		}
 
 		TownNPCMood: {

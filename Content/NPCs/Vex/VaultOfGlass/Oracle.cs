@@ -23,17 +23,21 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             NPC.noGravity = true;
             NPC.dontTakeDamage = true;
             NPC.knockBackResist = 0f;
+
+            for (int k = 0; k < NPC.buffImmune.Length; k++)
+            {
+                NPC.buffImmune[k] = true;
+            }
             // npc.chaseable = false;
         }
 
-        public static void HandleOnHit(Player striker)
-		{
-            Main.NewText($"[c/3EAD5C:{striker.name}] has destroyed an Oracle");
-            if (VaultOfGlassSystem.OraclesKilledOrder == 4 && VaultOfGlassSystem.OraclesTimesRefrained == 0
-                || VaultOfGlassSystem.OraclesKilledOrder == 6 && VaultOfGlassSystem.OraclesTimesRefrained == 1
-                || VaultOfGlassSystem.OraclesKilledOrder == 8 && VaultOfGlassSystem.OraclesTimesRefrained == 2)
+        public override void AI()
+        {
+            if (NPC.ai[0] < 1)
             {
-                Main.NewText("The Oracles recognize their refrain");
+                NPC.active = false;
+                NPC.life = 0;
+                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
             }
         }
 
@@ -41,7 +45,7 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
         {
             if (NPC.life <= 0 && player.active)
             {
-                HandleOnHit(player);
+                Main.NewText($"[c/3EAD5C:{player.name}] has destroyed an Oracle");
             }
         }
 
@@ -50,35 +54,26 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             Player player = Main.player[projectile.owner];
             if (NPC.life <= 0 && player.active)
             {
-                HandleOnHit(player);
+                Main.NewText($"[c/3EAD5C:{player.name}] has destroyed an Oracle");
             }
         }
 
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        public override void OnKill()
         {
-            if (VaultOfGlassSystem.OraclesKilledOrder == NPC.ai[0])
+            if (VaultOfGlassSystem.NextOracleToKillInOrder == NPC.ai[0])
             {
-                VaultOfGlassSystem.OraclesKilledOrder++;
+                VaultOfGlassSystem.NextOracleToKillInOrder++;
+                if (VaultOfGlassSystem.NextOracleToKillInOrder == 4 && VaultOfGlassSystem.OracleStage == 0 ||
+                    VaultOfGlassSystem.NextOracleToKillInOrder == 6 && VaultOfGlassSystem.OracleStage == 1 ||
+                    VaultOfGlassSystem.NextOracleToKillInOrder == 8 && VaultOfGlassSystem.OracleStage == 2)
+                {
+                    Main.NewText("The Oracles recognize their refrain");
+                    VaultOfGlassSystem.ResetOracles(true);
+                }
                 return;
             }
 
-            Main.NewText("MARKED BY AN ORACLE!");
-            for (int playerCount = 0; playerCount < Main.maxPlayers; playerCount++)
-            {
-                Player player = Main.player[playerCount];
-                if (player.active && !player.HasBuff<MarkedForNegation>())
-                {
-                    player.AddBuff(ModContent.BuffType<MarkedForNegation>(), 1);
-                }
-            }
-
-            foreach (NPC npcE in Main.npc)
-            {
-                if (npcE.type == NPC.type)
-                {
-                    npcE.active = false;
-                }
-            }
+            VaultOfGlassSystem.FailOracles();
         }
     }
 }

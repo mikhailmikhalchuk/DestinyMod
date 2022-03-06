@@ -26,7 +26,12 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             NPC.lifeMax = 500;
             NPC.noGravity = true;
             NPC.knockBackResist = 0f;
-            // npc.chaseable = false;
+            //NPC.chaseable = false;
+
+            for (int k = 0; k < NPC.buffImmune.Length; k++)
+            {
+                NPC.buffImmune[k] = true;
+            }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

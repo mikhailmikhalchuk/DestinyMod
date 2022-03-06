@@ -15,6 +15,7 @@ using Terraria.ModLoader.IO;
 using DestinyMod.Content.Items.Misc;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using DestinyMod.Common.NPCs.Data;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
@@ -95,7 +96,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+                BestiaryData.CommonTags.Visuals.Cosmodrome,
 
                 new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.SepiksPrime")
             });

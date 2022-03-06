@@ -4,6 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.NPCs;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
+using DestinyMod.Common.NPCs.Data;
 
 namespace DestinyMod.Content.NPCs.Fallen
 {
@@ -40,6 +43,15 @@ namespace DestinyMod.Content.NPCs.Fallen
             NPC.HitSound = SoundID.NPCHit4;
         }
 
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                BestiaryData.CommonTags.Visuals.Cosmodrome,
+
+                new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Skiff")
+            });
+        }
+
         public override void AI()
         {
             Timer++;
@@ -51,7 +63,7 @@ namespace DestinyMod.Content.NPCs.Fallen
                     NPC.life = 0;
                 }
             }
-            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && ((MotherNPC.position - new Vector2(0, 100)) - NPC.Center).Length() > 208)
+            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && (MotherNPC.position - new Vector2(0, 100) - NPC.Center).Length() > 208)
             {
                 Vector2 delta = (Main.npc[(int)NPC.ai[0]].position - new Vector2(0, 100)) - NPC.Center;
                 float magnitude = (float)Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
@@ -65,7 +77,7 @@ namespace DestinyMod.Content.NPCs.Fallen
                 }
                 NPC.velocity.X = delta.X;
             }
-            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && ((MotherNPC.position - new Vector2(0, 100)) - NPC.Center).Length() <= 208)
+            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && (MotherNPC.position - new Vector2(0, 100) - NPC.Center).Length() <= 208)
             {
                 if (Timer >= 200f)
                 {

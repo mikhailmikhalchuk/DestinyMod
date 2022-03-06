@@ -22,8 +22,8 @@ namespace DestinyMod.Content.Load
                 .UseColor(2f, 2f, 0f)
                 .UseSecondaryColor(2f, 0.25f, 0.35f);
             Ref<Effect> screenRef = new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Shaders/ShockwaveEffect").Value);
-            Filters.Scene["TheDestinyMod:Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), EffectPriority.VeryHigh);
-            Filters.Scene["TheDestinyMod:Shockwave"].Load();
+            Filters.Scene["DestinyMod:Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), EffectPriority.VeryHigh);
+            Filters.Scene["DestinyMod:Shockwave"].Load();
         }
 
         public void Unload() { }

@@ -7,6 +7,7 @@ using System;
 using DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
+using DestinyMod.Common.NPCs.Data;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
@@ -51,7 +52,8 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<SepiksPrime>()], true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+                BestiaryData.CommonTags.Visuals.Cosmodrome,
+
 				new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.SepiksServitor")
             });
         }

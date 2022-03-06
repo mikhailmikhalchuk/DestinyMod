@@ -4,6 +4,9 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.NPCs;
 using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
+using System.Collections.Generic;
+using DestinyMod.Common.NPCs.Data;
 
 namespace DestinyMod.Content.NPCs.Fallen
 {
@@ -22,6 +25,15 @@ namespace DestinyMod.Content.NPCs.Fallen
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath8;
             NPC.frameCounter = 0;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                BestiaryData.CommonTags.Visuals.Cosmodrome,
+
+                new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Vandal")
+            });
         }
 
         public bool Walking

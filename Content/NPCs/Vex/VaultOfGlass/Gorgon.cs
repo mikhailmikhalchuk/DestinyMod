@@ -55,8 +55,32 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
+
                 new FlavorTextBestiaryInfoElement("Mods.DestinyMod.Bestiary.Gorgon")
             });
+        }
+
+        private void TriggerGorgons(Player player)
+        {
+            TimeUntilEveryoneIsDead++;
+            Main.NewText("A Gorgon has found its prey");
+            player.GetModPlayer<NPCPlayer>().SpottedGorgon = true;
+        }
+
+        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        {
+            if (TimeUntilEveryoneIsDead == 0)
+            {
+                TriggerGorgons(player);
+            }
+        }
+
+        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        {
+            if (TimeUntilEveryoneIsDead == 0)
+            {
+                TriggerGorgons(Main.player[projectile.owner]);
+            }
         }
 
         public override void AI()
@@ -93,9 +117,12 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
                 {
                     if (NPC.DistanceSQ(player.Center) < 10000 && player.active)
                     {
-                        TimeUntilEveryoneIsDead++;
-                        Main.NewText("A Gorgon has found its prey");
-                        player.GetModPlayer<NPCPlayer>().SpottedGorgon = true;
+                        if ((NPC.position.X - player.position.X) < 0 && NPC.spriteDirection == -1 ||
+                            (NPC.position.X - player.position.X) > 0 && NPC.spriteDirection == 1)
+                        {
+                            return;
+                        }
+                        TriggerGorgons(player);
                     }
                 }
             }
@@ -127,10 +154,10 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             }
         }
 
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        public override void OnKill()
         {
             for (int npcCount = 0; npcCount < Main.maxNPCs; npcCount++)
-			{
+            {
                 NPC npc = Main.npc[npcCount];
                 if (npc.active && npc.type == ModContent.NPCType<Gorgon>())
                 {

@@ -33,12 +33,18 @@ namespace DestinyMod.Common.ModPlayers
 			BoughtEngramCommon = false;
 		}
 
-		public override void ModifyScreenPosition()
+        public override void UpdateDead()
+        {
+            SpottedGorgon = false;
+			SpottedGorgonTimer = 0;
+        }
+
+        public override void ModifyScreenPosition()
 		{
 			if (SpottedGorgon)
 			{
 				Main.screenPosition.X += Main.rand.NextFloat(0, SpottedGorgonTimer / 300);
-				SpottedGorgonTimer++;
+				SpottedGorgonTimer += 4;
 			}
 		}
 
