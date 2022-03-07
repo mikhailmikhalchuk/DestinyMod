@@ -1,5 +1,6 @@
 using DestinyMod.Content.Items.Equipables.Dyes;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -9,6 +10,8 @@ namespace DestinyMod.Content.Load
 {
     public class Shaders : ILoadable
     {
+        public static Ref<Effect> ShockwaveEffect;
+
         public void Load(Mod mod)
         {
             if (Main.dedServ)
@@ -18,11 +21,13 @@ namespace DestinyMod.Content.Load
 
             GameShaders.Armor.BindShader(ModContent.ItemType<GambitDye>(), new ArmorShaderData(new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Dyes/Gambit").Value), "GambitDyePass"))
                 .UseColor(0, 1f, 0);
+
             GameShaders.Armor.BindShader(ModContent.ItemType<GuardianGamesDye>(), new ArmorShaderData(new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Dyes/GuardianGames").Value), "GuardianGamesDyePass"))
                 .UseColor(2f, 2f, 0f)
                 .UseSecondaryColor(2f, 0.25f, 0.35f);
-            Ref<Effect> screenRef = new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Shaders/ShockwaveEffect").Value);
-            Filters.Scene["DestinyMod:Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), EffectPriority.VeryHigh);
+
+            ShockwaveEffect = new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Shaders/Shockwave", AssetRequestMode.ImmediateLoad).Value);
+            Filters.Scene["DestinyMod:Shockwave"] = new Filter(new ScreenShaderData(ShockwaveEffect, "DestinyMod:Shockwave"), EffectPriority.VeryHigh);
             Filters.Scene["DestinyMod:Shockwave"].Load();
         }
 

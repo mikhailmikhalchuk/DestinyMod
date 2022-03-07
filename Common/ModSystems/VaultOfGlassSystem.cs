@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Common.ModSystems
 {
-	public class VaultOfGlassSystem : ModSystem
+    public class VaultOfGlassSystem : ModSystem
 	{
 		public static int Checkpoint;
 
