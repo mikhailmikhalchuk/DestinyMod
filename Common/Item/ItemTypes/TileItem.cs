@@ -19,7 +19,5 @@ namespace DestinyMod.Common.Items.ItemTypes
 			Item.consumable = true;
 			Item.createTile = TileType;
 		}
-
-		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 	}
 }

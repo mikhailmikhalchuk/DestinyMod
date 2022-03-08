@@ -31,5 +31,8 @@ Fixed the super charge bar's text position
 Added Bestiary entries for town NPCs
 Added happiness qualifiers for town NPCs
 Added creative mode item research counts
+Downscaled more sprites
+Adjusted bullet firing positions to more accurately come out of the muzzle
+Partially added a few translations
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

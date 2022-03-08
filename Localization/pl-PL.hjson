@@ -101,6 +101,8 @@
 			CrownOfTempests: Crown of Tempests
 			Laurel: Laurel
 			Podium: Podium
+
+			SepiksPrimeBag: Torba skarbów (Sepiks Prime)
 		}
 
 		ItemTooltip: {
@@ -121,7 +123,7 @@
 				'''
 			FourthHorseman: 
 				'''
-				Fires a spread of bullets
+				Rozsyła serie kul
 				"It's not a holdout weapon; it's a pathfinder."
 				'''
 			Gjallarhorn:
@@ -167,7 +169,7 @@
 			NoLandBeyond: '''"Każde trafienie przeciera drogę do naszego uzdrowienia."'''
 			NoTimeToExplain:
 				'''
-				Three round burst
+				Potrójna seria
 				"A single word etched onto the inside of the weapon's casing: Now."
 				'''
 			OmolonAutoRifle: Rifle Automático Omolon Estándar
@@ -189,7 +191,7 @@
 			OmolonSniper: Rifle de Francotirador Omolon Estandar
 			OutbreakPerfected:
 				'''
-				Three round burst
+				Potrójna seria
 				Creates nanite swarms on critical kills and rapid hits
 				"~directive = KILL while enemies = PRESENT: execute(directive)~"
 				'''
@@ -235,7 +237,7 @@
 				'''
 			TheThirdAxiom:
 				'''
-				Three round burst
+				Potrójna seria
 				"Don't tell me the odds."
 				'''
 			Thorn:
@@ -309,8 +311,8 @@
 				50% increased throwing damage when your Super bar is charged
 				"For this, there is one remedy"
 				'''
-			ProdigalCuirass: 5% increased ranged damage
-			ProdigalHelm: 7% increased ranged critical strike chance
+			ProdigalCuirass: 5% zwiększone obrażenia dystansowe
+			ProdigalHelm: 7% większa szansa na dystansowe trafienie krytyczne
 			GunsmithMaterials: Used to craft guns
 			HeliumFilaments: Filaments of helium-3 fusion fuel, gathered from the lunar regolith by a helium coil
 			MoteOfDark: Tajemniczy czworościenny obiekt. Dryfterowi może się to spodobać
@@ -320,7 +322,7 @@
 			GuardianSkull:
 				'''
 				An offering to the House of Devils' High Servitor
-				Summons Sepiks Prime
+				Przywołuje Sepiks Prime
 				'''
 			ServitorStaff:
 				'''

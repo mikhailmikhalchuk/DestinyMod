@@ -42,6 +42,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 			{
 				RunTime = 0;
 			}
+			base.UpdateEquip(player);
 		}
 
 		public override void AddRecipes() => CreateRecipe(1)

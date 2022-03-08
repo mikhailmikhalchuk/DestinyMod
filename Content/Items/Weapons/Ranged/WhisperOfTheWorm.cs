@@ -34,7 +34,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			{
 				Dust.NewDust(position += Vector2.Normalize(velocity) * 90f, 1, 1, DustID.WhiteTorch);
 			}
-			return true;
+			Projectile.NewProjectile(source, position + new Vector2(0, -2), velocity, type, damage, knockback, player.whoAmI);
+			return false;
 		}
 
 		public override Vector2? HoldoutOffset() => new Vector2(-10, -2);

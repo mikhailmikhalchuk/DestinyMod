@@ -16,6 +16,7 @@ using DestinyMod.Content.Items.Misc;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using DestinyMod.Common.NPCs.Data;
+using Terraria.Graphics.Shaders;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
@@ -76,6 +77,9 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             NPC.HitSound = SoundID.NPCHit4;
             NPC.lavaImmune = true;
             NPC.noTileCollide = true;
+
+            NPC.BossBar = ModContent.GetInstance<Common.BossBars.ShieldBossBar>();
+
             for (int k = 0; k < NPC.buffImmune.Length; k++)
             {
                 NPC.buffImmune[k] = true;
@@ -217,7 +221,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             }
             if (NPC.dontTakeDamage && NPC.life > 50)
             {
-                if ((Phase == 2 || Phase == 5) && !CheckShieldedPhase())
+                if ((Phase == 2 || Phase == 5) && !AnyServitorActive())
                 {
                     Phase = Phase == 2 ? 3 : 6;
                     NPC.ai[0] = 0f;
@@ -359,6 +363,18 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 drawColor = Color.White;
             }
         }
+        
+        private static bool AnyServitorActive()
+        {
+            for (int k = 0; k < Main.maxNPCs; k++)
+            {
+                if (Main.npc[k].active && Main.npc[k].type == ModContent.NPCType<SepiksServitor>())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// Teleports Sepiks near a target
@@ -410,22 +426,27 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             {
                 spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Content/NPCs/SepiksPrime/SepiksPrime_Glow").Value, NPC.Center - screenPos + new Vector2(0, 4), NPC.frame, Color.LightYellow, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0);
             }
-        }
 
-        /// <summary>
-        /// Checks if Sepiks should have his shield up
-        /// </summary>
-        /// <returns>True if a Sepiks Servitor was found in the world. Otherwise returns false.</returns>
-        private static bool CheckShieldedPhase()
-        {
-            for (int k = 0; k < Main.maxNPCs; k++)
+            if (AnyServitorActive())
             {
-                if (Main.npc[k].active && Main.npc[k].type == ModContent.NPCType<SepiksServitor>())
+                float servHealthCombined = 0f;
+                float servHealthMax = 0f;
+                for (int k = 0; k < Main.maxNPCs; k++)
                 {
-                    return true;
+                    NPC serv = Main.npc[k];
+                    if (serv.active && serv.type == ModContent.NPCType<SepiksServitor>())
+                    {
+                        servHealthCombined += serv.life;
+                        servHealthMax = serv.lifeMax * 4;
+                    }
                 }
+                DrawForcefield(spriteBatch, screenPos, Color.White * (servHealthCombined / servHealthMax * 0.6f + 0.2f), new Vector2(-2, -5), 0.65f);
+                ((Common.BossBars.ShieldBossBar)NPC.BossBar).ShieldPercentToSet = servHealthCombined / servHealthMax;
             }
-            return false;
+            else
+            {
+                ((Common.BossBars.ShieldBossBar)NPC.BossBar).ShieldPercentToSet = 0f;
+            }
         }
 
         /// <summary>

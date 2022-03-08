@@ -2,6 +2,7 @@ using DestinyMod.Common.Items.ItemTypes;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Items.Bosses.SepiksPrime
@@ -13,6 +14,8 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+			DisplayName.SetDefault("Treasure Bag (Sepiks Prime)");
+
 			ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 		}
 

@@ -33,7 +33,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				Projectile.NewProjectile(source, position, velocity.RotatedByRandom(MathHelper.ToRadians(20)), type, damage, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position + new Vector2(0, -2), velocity.RotatedByRandom(MathHelper.ToRadians(20)), type, damage, knockback, player.whoAmI);
 			}
 			return false;
 		}

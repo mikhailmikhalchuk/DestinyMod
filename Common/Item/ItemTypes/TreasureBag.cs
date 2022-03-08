@@ -11,7 +11,7 @@ namespace DestinyMod.Common.Items.ItemTypes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Treasure Bag");
+			DisplayName.SetDefault($"Treasure Bag");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
 			ItemID.Sets.BossBag[Type] = true;

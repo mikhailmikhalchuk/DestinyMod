@@ -5,7 +5,6 @@ using DestinyMod.Common.Items;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
-using DestinyMod.Content.Projectiles.Weapons.Misc;
 using DestinyMod.Content.Items.Weapons.Magic;
 
 namespace DestinyMod.Content.Items.Weapons.Melee
@@ -38,7 +37,9 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectileDirect(source, new Vector2(position.X, position.Y - 5), velocity, ModContent.ProjectileType<BorealisProjectile>(), damage, knockback, player.whoAmI, 0, type);
+			Projectile p = Projectile.NewProjectileDirect(source, new Vector2(position.X, position.Y - 5), velocity, type, damage, knockback, player.whoAmI);
+			p.DamageType = DamageClass.Melee;
+			p.netUpdate = true;
 			return false;
 		}
 

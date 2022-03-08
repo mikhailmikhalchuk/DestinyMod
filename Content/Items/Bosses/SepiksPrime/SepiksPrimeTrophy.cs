@@ -7,8 +7,6 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 {
 	public class SepiksPrimeTrophy : TileItem
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Can be used to deposit Laurels");
-
 		public override void DestinySetDefaults()
 		{
 			Item.rare = ItemRarityID.Blue;
