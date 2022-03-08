@@ -2,7 +2,7 @@ using System.ComponentModel;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
-namespace DestinyMod
+namespace DestinyMod.Common.Configs
 {
     [Label("Client Config")]
     [BackgroundColor(66, 109, 179, 216)]

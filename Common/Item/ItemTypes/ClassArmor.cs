@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using DestinyMod.Common.ModPlayers;
 using Terraria.GameContent.Creative;
+using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Common.Items.ItemTypes
 {

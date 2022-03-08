@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using DestinyMod.Core.UI;
 using Terraria.ModLoader;
 using DestinyMod.Common.ModPlayers;
+using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Content.UI.SuperCharge
 {

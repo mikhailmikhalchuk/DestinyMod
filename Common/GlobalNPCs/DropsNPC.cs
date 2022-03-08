@@ -7,7 +7,7 @@ using System.Linq;
 using Terraria.Chat;
 using Terraria.GameContent.ItemDropRules;
 using DestinyMod.Content.Items.Materials;
-using DestinyMod.Content.DropRules;
+using DestinyMod.Common.DropConditions;
 using DestinyMod.Content.Items.Engrams;
 using DestinyMod.Content.Items.Misc;
 using DestinyMod.Common.NPCs.Data;

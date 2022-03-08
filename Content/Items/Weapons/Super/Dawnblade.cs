@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Projectiles.Weapons.Super;
+using DestinyMod.Common.DamageClasses;
 
 namespace DestinyMod.Content.Items.Weapons.Super
 {
@@ -12,7 +13,6 @@ namespace DestinyMod.Content.Items.Weapons.Super
 		{
 			Item.damage = 100;
 			Item.noMelee = true;
-			Item.DamageType = DamageClass.Melee;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;

@@ -8,6 +8,7 @@ using DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using DestinyMod.Common.NPCs.Data;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
@@ -29,6 +30,8 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         {
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
+
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
         }
 
         public override void DestinySetDefaults()
@@ -45,6 +48,11 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             NPC.lavaImmune = true;
             NPC.noTileCollide = true;
             RandomFireTime = 120;
+
+            for (int k = 0; k < NPC.buffImmune.Length; k++)
+            {
+                NPC.buffImmune[k] = true;
+            }
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
+using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Content.Load
 {

@@ -17,6 +17,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using DestinyMod.Common.NPCs.Data;
 using Terraria.Graphics.Shaders;
+using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Content.NPCs.SepiksPrime
 {
@@ -460,7 +461,8 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
                 NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
                 NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 500, (int)NPC.Center.Y - 100, ModContent.NPCType<Fallen.Skiff>(), 0, NPC.whoAmI);
+                int skiff = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 500, (int)NPC.Center.Y - 100, ModContent.NPCType<Fallen.Skiff>());
+                ((Fallen.Skiff)Main.npc[skiff].ModNPC).PositionToDrop = new Vector2(NPC.Center.X, NPC.Center.Y - 300);
             }
         }
 

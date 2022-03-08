@@ -12,7 +12,7 @@ namespace DestinyMod.Content.NPCs.Fallen
 {
     public class Skiff : DestinyModNPC
     {
-        public NPC MotherNPC => Main.npc[(int)NPC.ai[0]];
+        public Vector2 PositionToDrop = Vector2.Zero;
 
         public float Timer
         {
@@ -35,8 +35,8 @@ namespace DestinyMod.Content.NPCs.Fallen
             NPC.noGravity = true;
             NPC.lifeMax = 1000;
             NPC.defense = 10;
-            NPC.width = 800;
-            NPC.height = 600;
+            NPC.width = 860;
+            NPC.height = 610;
             NPC.value = Item.buyPrice(gold: 1);
             NPC.lavaImmune = true;
             NPC.noTileCollide = true;
@@ -55,7 +55,7 @@ namespace DestinyMod.Content.NPCs.Fallen
         public override void AI()
         {
             Timer++;
-            if (Phase == 3f)
+            if (Phase == 2f)
             {
                 NPC.velocity = new Vector2(-10, -5);
                 if (Timer >= 500f)
@@ -63,43 +63,24 @@ namespace DestinyMod.Content.NPCs.Fallen
                     NPC.life = 0;
                 }
             }
-            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && (MotherNPC.position - new Vector2(0, 100) - NPC.Center).Length() > 208)
+            else if (PositionToDrop.Distance(NPC.Center) > 1f && Phase == 0f)
             {
-                Vector2 delta = (Main.npc[(int)NPC.ai[0]].position - new Vector2(0, 100)) - NPC.Center;
-                float magnitude = (float)Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y);
-                if (magnitude > 0)
-                {
-                    delta *= 10f / magnitude;
-                }
-                else
-                {
-                    delta = new Vector2(0f, 5f);
-                }
-                NPC.velocity.X = delta.X;
+                NPC.velocity = NPC.DirectionTo(PositionToDrop) * 5f;
             }
-            else if (NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()) && (MotherNPC.position - new Vector2(0, 100) - NPC.Center).Length() <= 208)
+            else if (PositionToDrop.Distance(NPC.Center) <= 1f && Phase < 2f)
             {
-                if (Timer >= 200f)
+                NPC.velocity = Vector2.Zero;
+                Phase = 1f;
+                if (Timer == 200f)
                 {
-                    if (Phase == 0f)
-                    {
-                        NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>()); // What?
-                    }
-                    else if (Phase == 1f)
-                    {
-                        NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
-                    }
-                    else
-                    {
-                        NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + (int)NPC.Center.X / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
-                    }
-                    Timer = 0f;
+                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - NPC.width / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + NPC.width / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                }
+                if (Timer >= 300f)
+                {
                     Phase++;
                 }
-            }
-            else if (!NPC.AnyNPCs(ModContent.NPCType<SepiksPrime.SepiksPrime>()))
-            {
-                NPC.life = 0;
             }
         }
     }

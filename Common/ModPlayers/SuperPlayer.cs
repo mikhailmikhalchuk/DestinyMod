@@ -8,6 +8,8 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Common.ModPlayers
 {
@@ -21,22 +23,10 @@ namespace DestinyMod.Common.ModPlayers
 
 		public int SuperRegenTimer;
 
-		public float SuperDamageFlat;
-
-		public float SuperDamageMultiplier = 1f;
-
-		public float SuperKnockback;
-
-		public int SuperCrit = 4;
-
-		public int OrbOfPowerAdd = 0;
+		public int OrbOfPowerAdd;
 
 		public override void ResetEffects()
 		{
-			SuperDamageFlat = 0f;
-			SuperDamageMultiplier = 1f;
-			SuperKnockback = 0;
-			SuperCrit = 4;
 			OrbOfPowerAdd = 0;
 		}
 
@@ -83,7 +73,7 @@ namespace DestinyMod.Common.ModPlayers
 				NotifiedThatSuperIsReady = true;
 			}
 
-			// SuperRegenTimer++;
+			SuperRegenTimer++;
 			SuperChargeCurrent = Utils.Clamp(SuperChargeCurrent, 0, 100);
 			if (SuperRegenTimer > 360)
 			{
@@ -113,5 +103,15 @@ namespace DestinyMod.Common.ModPlayers
 				}
 			}
 		}
-	}
+
+        public override void SaveData(TagCompound tag)
+        {
+			tag.Add("SuperChargeCurrent", SuperChargeCurrent);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+			SuperChargeCurrent = tag.Get<int>("SuperChargeCurrent");
+        }
+    }
 }

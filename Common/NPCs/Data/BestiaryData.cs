@@ -18,7 +18,7 @@ namespace DestinyMod.Common.NPCs.Data
         {
             public static class Visuals
             {
-                public static DestinySpawnConditionDecorativeOverlayInfoElement Cosmodrome = new DestinySpawnConditionDecorativeOverlayInfoElement("DestinyMod/Assets/Bestiary/Cosmodrome", Color.White)
+                public static DestinySpawnConditionDecorativeOverlayInfoElement Cosmodrome = new DestinySpawnConditionDecorativeOverlayInfoElement("DestinyMod/Assets/Textures/Bestiary/Cosmodrome", Color.White)
                 {
                     DisplayPriority = 1f
                 };

@@ -85,22 +85,18 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			NPCPlayer npcPlayer = Main.LocalPlayer.GetModPlayer<NPCPlayer>();
-			if (!npcPlayer.BoughtEngramCommon)
-			{
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<CommonEngram>());
-				shop.item[nextSlot].shopCustomPrice = Item.buyPrice(gold: 5);
-				nextSlot++;
-			}
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<CommonEngram>());
+			shop.item[nextSlot].shopCustomPrice = Item.buyPrice(gold: 5);
+			nextSlot++;
 
-			if (!npcPlayer.BoughtEngramUncommon && NPC.downedBoss2)
+			if (NPC.downedBoss2)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<UncommonEngram>());
 				shop.item[nextSlot].shopCustomPrice = Item.buyPrice(gold: 20);
 				nextSlot++;
 			}
 
-			if (!npcPlayer.BoughtEngramRare && NPC.downedMechBossAny)
+			if (NPC.downedMechBossAny)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<RareEngram>());
 				shop.item[nextSlot].shopCustomPrice = Item.buyPrice(platinum: 1);

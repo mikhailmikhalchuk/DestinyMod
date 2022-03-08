@@ -1,7 +1,7 @@
 using DestinyMod.Content.Buffs;
 using Terraria.GameContent.ItemDropRules;
 
-namespace DestinyMod.Content.DropRules
+namespace DestinyMod.Common.DropConditions
 {
     public class HasAncientShard : IItemDropRuleCondition, IProvideItemConditionDescription
     {

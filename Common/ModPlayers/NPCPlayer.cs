@@ -10,12 +10,6 @@ namespace DestinyMod.Common.ModPlayers
 {
 	public class NPCPlayer : ModPlayer
 	{
-		public bool BoughtEngramCommon;
-
-		public bool BoughtEngramUncommon;
-
-		public bool BoughtEngramRare;
-
 		public List<int> DecryptedItems;
 
 		public int MotesGiven;
@@ -27,11 +21,6 @@ namespace DestinyMod.Common.ModPlayers
 		public bool SpottedGorgon;
 
 		public int SpottedGorgonTimer;
-
-		public override void ResetEffects()
-		{
-			BoughtEngramCommon = false;
-		}
 
         public override void UpdateDead()
         {
@@ -45,49 +34,6 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				Main.screenPosition.X += Main.rand.NextFloat(0, SpottedGorgonTimer / 300);
 				SpottedGorgonTimer += 4;
-			}
-		}
-
-		public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)
-		{
-			if (vendor.type == ModContent.NPCType<Cryptarch>())
-			{
-				if (item.type == ModContent.ItemType<CommonEngram>())
-				{
-					shopInventory.FirstOrDefault(i => i.type == item.type)?.TurnToAir();
-					BoughtEngramCommon = true;
-				}
-				else if (item.type == ModContent.ItemType<UncommonEngram>())
-				{
-					shopInventory.FirstOrDefault(i => i.type == item.type)?.TurnToAir();
-					BoughtEngramUncommon = true;
-					//DestinyWorld.daysPassed = 0;
-				}
-				else if (item.type == ModContent.ItemType<RareEngram>())
-				{
-					shopInventory.FirstOrDefault(i => i.type == item.type)?.SetDefaults();
-					BoughtEngramRare = true;
-					//DestinyWorld.daysPassed = 0;
-				}
-			}
-		}
-
-		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item)
-		{
-			if (vendor.type == ModContent.NPCType<Cryptarch>())
-			{
-				if (item.type == ModContent.ItemType<CommonEngram>())
-				{
-					BoughtEngramCommon = false;
-				}
-				else if (item.type == ModContent.ItemType<UncommonEngram>())
-				{
-					BoughtEngramUncommon = false;
-				}
-				else if (item.type == ModContent.ItemType<RareEngram>())
-				{
-					BoughtEngramRare = false;
-				}
 			}
 		}
 
@@ -106,8 +52,6 @@ namespace DestinyMod.Common.ModPlayers
 
 		public override void SaveData(TagCompound tag)
 		{
-			tag.Add("BoughtEngramUncommon", BoughtEngramUncommon);
-			tag.Add("BoughtEngramRare", BoughtEngramRare);
 			tag.Add("DecryptedItems", DecryptedItems?.Select(type =>
 			{
 				Item item = new Item();
@@ -121,8 +65,6 @@ namespace DestinyMod.Common.ModPlayers
 
 		public override void LoadData(TagCompound tag)
 		{
-			BoughtEngramUncommon = tag.Get<bool>("BoughtEngramUncommon");
-			BoughtEngramRare = tag.Get<bool>("BoughtEngramRare");
 			DecryptedItems = tag.Get<List<Item>>("DecryptedItems").Select(item => item.type).ToList();
 			MotesGiven = tag.Get<int>("MotesGiven");
 			ZavalaBountyProgress = tag.Get<int>("ZavalaBountyProgress");

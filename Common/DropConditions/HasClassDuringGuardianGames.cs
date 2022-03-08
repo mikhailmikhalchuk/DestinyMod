@@ -2,7 +2,7 @@ using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.ModSystems;
 using Terraria.GameContent.ItemDropRules;
 
-namespace DestinyMod.Content.DropRules
+namespace DestinyMod.Common.DropConditions
 {
     public class HasClassDuringGuardianGames : IItemDropRuleCondition, IProvideItemConditionDescription
     {
