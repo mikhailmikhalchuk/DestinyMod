@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Load
 {
-    public class Shaders : ILoadable
+    public sealed class Shaders : ILoadable
     {
         public static Ref<Effect> ShockwaveEffect;
 

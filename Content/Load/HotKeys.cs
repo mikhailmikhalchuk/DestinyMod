@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Load
 {
-	public class HotKeys : ILoadable
+	public sealed class HotKeys : ILoadable
     {
         public static ModKeybind ActiveSuper { get; private set; }
 

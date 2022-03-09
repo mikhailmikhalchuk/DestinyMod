@@ -47,6 +47,6 @@ namespace DestinyMod.Content.Tiles
 			player.cursorItemIconID = ModContent.ItemType<Items.Misc.Laurel>();
 		}
 
-		public override bool RightClick(int i, int j) => GuardianGames.TryDeposit(Main.LocalPlayer);
+		public override bool RightClick(int i, int j) => GuardianGamesSystem.TryDeposit(Main.LocalPlayer);
 	}
 }

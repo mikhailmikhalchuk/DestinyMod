@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.1f, lightColor.B * 0.8f, lightColor.A);
 
-        public void HandleApplyingMonteCarloMethod()
+        private void HandleApplyingMonteCarloMethod()
         {
             Player player = Main.player[Projectile.owner];
             int monteCarloMethod = ModContent.BuffType<MonteCarloMethod>();

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Load
 {
-    public class FontLoading : ILoadable
+    public sealed class Fonts : ILoadable
     {
         public static DynamicSpriteFont FuturaBold { get; private set; }
 

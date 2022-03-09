@@ -6,7 +6,7 @@ using DestinyMod.Content.Items.Engrams;
 using DestinyMod.Content.Items.Weapons.Ranged.Khvostov;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.NPCs.NPCTypes;
-using DestinyMod.Content.UI.CryptarchUI;
+using DestinyMod.Content.UI.Cryptarch;
 using Terraria.GameContent.Bestiary;
 
 namespace DestinyMod.Content.NPCs.TownNPC

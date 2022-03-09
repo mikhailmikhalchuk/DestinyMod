@@ -16,7 +16,7 @@ using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Common.ModSystems
 {
-	public class GuardianGames : ModSystem
+	public sealed class GuardianGamesSystem : ModSystem
 	{
 		public static bool Active;
 

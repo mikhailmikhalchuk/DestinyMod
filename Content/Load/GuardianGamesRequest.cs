@@ -11,7 +11,7 @@ using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Content.Load
 {
-	public class GuardianGamesConfig : ILoadable
+	public sealed class GuardianGamesRequest : ILoadable
     {
         public void Load(Mod mod)
         {
@@ -50,38 +50,38 @@ namespace DestinyMod.Content.Load
                         var jsonResponse = sr.ReadToEnd();
                         if (jsonResponse.Remove(2) == "ON")
                         {
-                            GuardianGames.Active = true;
+                            GuardianGamesSystem.Active = true;
                         }
 
                         if (jsonResponse.Length >= 3)
                         {
-                            GuardianGames.WinningTeam = (DestinyClassType)(jsonResponse[2] - '0');
+                            GuardianGamesSystem.WinningTeam = (DestinyClassType)(jsonResponse[2] - '0');
                         }
                         /*if (jsonResponse.Contains('T'))
                         {
-                            GuardianGames.WinningTeam = DestinyClassType.Titan;
+                            GuardianGamesSystem.WinningTeam = DestinyClassType.Titan;
                         }
                         if (jsonResponse.Contains('H'))
                         {
-                            GuardianGames.WinningTeam = DestinyClassType.Hunter;
+                            GuardianGamesSystem.WinningTeam = DestinyClassType.Hunter;
                         }
                         if (jsonResponse.Contains('W'))
                         {
-                            GuardianGames.WinningTeam = DestinyClassType.Warlock;
+                            GuardianGamesSystem.WinningTeam = DestinyClassType.Warlock;
                         }*/
-                        DestinyMod.Instance.Logger.Info(GuardianGames.WinningTeam);
+                        DestinyMod.Instance.Logger.Info(GuardianGamesSystem.WinningTeam);
                     });
                     DestinyMod.Instance.Logger.Info("Test!");
                 }
                 catch (Exception exception)
                 {
                     mod.Logger.Error("Failed to receive a response from the server: " + exception.Message);
-                    GuardianGames.GameError = true;
+                    GuardianGamesSystem.GameError = true;
                 }
             }
             else
             {
-                GuardianGames.GameError = true;
+                GuardianGamesSystem.GameError = true;
             }
         }
 

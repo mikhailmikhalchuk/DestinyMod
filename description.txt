@@ -36,5 +36,6 @@ Adjusted bullet firing positions to more accurately come out of the muzzle
 Partially added a few translations
 Made super damage a new damage class
 Fixed the Cryptarch only selling one of each engram ever
+Added a Bestiary icon for the mod
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

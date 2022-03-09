@@ -14,7 +14,6 @@ using ReLogic.Graphics;
 using DestinyMod.Content.Items.Weapons.Ranged.Omolon;
 using DestinyMod.Content.Items.Weapons.Ranged.Suros;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
-using DestinyMod.Content.NPCs.TownNPC;
 using DestinyMod.Core.UI;
 using DestinyMod.Content.Items.Engrams;
 using Terraria.GameContent.UI;
@@ -23,7 +22,7 @@ using DestinyMod.Common.ModPlayers;
 using DestinyMod.Core.Extensions;
 using DestinyMod.Core.Utils;
 
-namespace DestinyMod.Content.UI.CryptarchUI
+namespace DestinyMod.Content.UI.Cryptarch
 {
 	public class CryptarchUI : DestinyModUIState
 	{
@@ -47,7 +46,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 				|| !item.IsAir && (item.type == ModContent.ItemType<CommonEngram>()
 					|| item.type == ModContent.ItemType<UncommonEngram>()
 					|| item.type == ModContent.ItemType<RareEngram>())
-					// || item.type == ModContent.ItemType<LegendaryEngram>() 
+					// || item.type == ModContent.ItemType<LegendaryEngram>()
 					// || item.type == ModContent.ItemType<ExoticEngram>())
 			};
 			Left.Pixels = 50;
@@ -61,7 +60,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 
 			Player player = Main.LocalPlayer;
 			
-			if (player.talkNPC == -1 || Main.npc[player.talkNPC]?.type != ModContent.NPCType<Cryptarch>())
+			if (player.talkNPC == -1 || Main.npc[player.talkNPC].type != ModContent.NPCType<NPCs.TownNPC.Cryptarch>())
 			{
 				player.QuickSpawnItem(player.GetItemSource_Misc(InputSlot.Item.type), InputSlot.Item.type, InputSlot.Item.stack);
 				ModContent.GetInstance<CryptarchUI>().UserInterface.SetState(null);
@@ -110,23 +109,6 @@ namespace DestinyMod.Content.UI.CryptarchUI
 			return output;
 		}
 
-		public static void GenerateCoins(int engramType)
-		{
-			Player player = Main.LocalPlayer;
-			if (engramType == ModContent.ItemType<CommonEngram>())
-			{
-				player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.SilverCoin), ItemID.SilverCoin, Main.rand.Next(1, 10));
-			}
-			else if (engramType == ModContent.ItemType<UncommonEngram>())
-			{
-				player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.SilverCoin), ItemID.SilverCoin, Main.rand.Next(10, 50));
-			}
-			else if (engramType == ModContent.ItemType<RareEngram>())
-			{
-				player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.GoldCoin), ItemID.GoldCoin, Main.rand.Next(1, 3));
-			}
-		}
-
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
 			base.DrawSelf(spriteBatch);
@@ -156,15 +138,10 @@ namespace DestinyMod.Content.UI.CryptarchUI
 				int itemType = lootTable[itemCount];
 				ModItem modItem = ModContent.GetModItem(itemType);
 				bool decrypted = npcPlayer.DecryptedItems.Contains(itemType);
-				string toParse = "???";
-				if (decrypted)
-				{
-					toParse = "[i:" + itemType + "] " + modItem.DisplayName.GetTranslation(Language.ActiveCulture);
-				}
 				int drawY = itemCount * 25 + 55;
-				int hoveredSnippet = -1;
-				TextSnippet[] text = ChatManager.ParseMessage(toParse, decrypted ? ItemRarity.GetColor(modItem.Item.rare) : Color.White).ToArray();
-				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, mouseFont, text, slotPosition + new Vector2(100, drawY), 0f, Vector2.Zero, Vector2.One, out hoveredSnippet);
+
+                TextSnippet[] text = ChatManager.ParseMessage(decrypted ? "[i:" + itemType + "] " + modItem.DisplayName.GetTranslation(Language.ActiveCulture) : "???", decrypted ? ItemRarity.GetColor(modItem.Item.rare) : Color.White).ToArray();
+                ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, mouseFont, text, slotPosition + new Vector2(100, drawY), 0f, Vector2.Zero, Vector2.One, out int hoveredSnippet);
 				if (hoveredSnippet > -1)
 				{
 					extSnip = text[0];
@@ -204,7 +181,19 @@ namespace DestinyMod.Content.UI.CryptarchUI
 
 				if (Main.rand.Next(20) > lootTable.Count)
 				{
-					GenerateCoins(InputSlot.Item.type);
+					Player player = Main.LocalPlayer;
+					if (InputSlot.Item.type == ModContent.ItemType<CommonEngram>())
+					{
+						player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.SilverCoin), ItemID.SilverCoin, Main.rand.Next(1, 10));
+					}
+					else if (InputSlot.Item.type == ModContent.ItemType<UncommonEngram>())
+					{
+						player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.SilverCoin), ItemID.SilverCoin, Main.rand.Next(10, 50));
+					}
+					else if (InputSlot.Item.type == ModContent.ItemType<RareEngram>())
+					{
+						player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.GoldCoin), ItemID.GoldCoin, Main.rand.Next(1, 3));
+					}
 				}
 				else
 				{
@@ -221,10 +210,7 @@ namespace DestinyMod.Content.UI.CryptarchUI
 
 			if (Main.mouseLeftRelease && Main.mouseLeft)
 			{
-				while (GiveEngramItem())
-				{
-
-				}
+				while (GiveEngramItem());
 
 				InputSlot.Item.TurnToAir();
 				SoundEngine.PlaySound(SoundID.Item37, -1, -1);

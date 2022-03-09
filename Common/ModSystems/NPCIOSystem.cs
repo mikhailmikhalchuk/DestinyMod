@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DestinyMod.Common.ModSystems
 {
-	public class DestinyModNPCIO : ModSystem
+	public sealed class NPCIOSystem : ModSystem
 	{
 		public static List<DownedBossData> DownedBoss = new List<DownedBossData>();
 
@@ -45,16 +45,6 @@ namespace DestinyMod.Common.ModSystems
 					destinyModNPC.Load(tag.Get<TagCompound>(npc.Name));
 				}
 			}
-		}
-
-        public override void OnWorldLoad()
-        {
-            ModContent.GetInstance<Content.UI.SuperCharge.SuperChargeUI>().UserInterface.SetState(new Content.UI.SuperCharge.SuperChargeUI());
-        }
-
-        public override void OnWorldUnload()
-        {
-			ModContent.GetInstance<Content.UI.SuperCharge.SuperChargeUI>().UserInterface.SetState(null);
 		}
     }
 }

@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         public override bool PreKill(int timeLeft) 
         {
             Projectile.type = ProjectileID.ExplosiveBullet;
-            return base.PreKill(timeLeft);
+            return true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.GetGlobalNPC<StatsNPC>().HighlightDuration = 180;

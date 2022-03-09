@@ -57,28 +57,28 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override string GetChat()
 		{
-			GuardianGames.ClaimedItem = hasClosedCeremony = true;
+			GuardianGamesSystem.ClaimedItem = hasClosedCeremony = true;
 			if (!hasClosedCeremony)
 			{
 				EntitySource_Gift source = new EntitySource_Gift(NPC);
-				switch (GuardianGames.WinningTeam)
+				switch (GuardianGamesSystem.WinningTeam)
 				{
 					case DestinyClassType.Titan:
-						if (!GuardianGames.ClaimedItem)
+						if (!GuardianGamesSystem.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<TitanFlag>());
 						}
 						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesTitanWin");
 
 					case DestinyClassType.Hunter:
-						if (!GuardianGames.ClaimedItem)
+						if (!GuardianGamesSystem.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<HunterFlag>());
 						}
 						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesHunterWin");
 
 					case DestinyClassType.Warlock:
-						if (!GuardianGames.ClaimedItem)
+						if (!GuardianGamesSystem.ClaimedItem)
 						{
 							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<WarlockFlag>());
 						}
@@ -122,7 +122,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.Hallow"));
 			}
 
-			if (GuardianGames.Active)
+			if (GuardianGamesSystem.Active)
 			{
 				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGames"));
 			}
@@ -203,7 +203,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SalvagersSalvo>());
 			shop.item[nextSlot].shopCustomPrice = 500000;
 			nextSlot++;
-			if (GuardianGames.Active)
+			if (GuardianGamesSystem.Active)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Podium>());
 				shop.item[nextSlot].shopCustomPrice = 50000;

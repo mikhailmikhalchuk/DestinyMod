@@ -43,10 +43,10 @@ namespace DestinyMod.Common.GlobalNPCs
             if (npc.boss)
             {
                 DownedBossData downedBossIndexer = new DownedBossData(npc.type);
-                if (DestinyModNPCIO.DownedBoss.FirstOrDefault(downedBossData => downedBossData.Type == npc.type).Type != 0)
+                if (NPCIOSystem.DownedBoss.FirstOrDefault(downedBossData => downedBossData.Type == npc.type).Type != 0)
                 {
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExoticCipher>()));
-                    DestinyModNPCIO.DownedBoss.Add(downedBossIndexer);
+                    NPCIOSystem.DownedBoss.Add(downedBossIndexer);
                 }
             }
         }

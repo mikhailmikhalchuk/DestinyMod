@@ -16,7 +16,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             return new Color(lightColor.R * 0.9f, lightColor.G, lightColor.B * 0.4f, lightColor.A);
         }
 
-        public void HandleApplyingParacausalCharge()
+        private void HandleApplyingParacausalCharge()
 		{
             Player player = Main.player[Projectile.owner];
             int paracausalCharge = ModContent.BuffType<ParacausalCharge>();
