@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Khvostov
 			base.AutomaticSetDefaults();
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/HakkeAutoRifle");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/HakkeAutoRifle");
 			Item.autoReuse = true;
 			Item.shootSpeed = 30f;
 		}

@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Terraria.ModLoader;
 
-namespace DestinyMod.Sounds.Item
+namespace DestinyMod.Assets.Sounds.Item.Weapons.Ranged
 {
 	public class AceOfSpades : ModSound
 	{

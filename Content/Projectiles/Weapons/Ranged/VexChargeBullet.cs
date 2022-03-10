@@ -42,7 +42,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (Charge == null && !Fired)
             {
-                Charge = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Sounds/Item/VexMythoclastStart"));
+                Charge = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"));
             }
 
             Player player = Main.player[Projectile.owner];
@@ -67,7 +67,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
                 if (Charge.State == SoundState.Stopped && !Fired)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/VexMythoclastFire"), Projectile.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastFire"), Projectile.Center);
                     Fired = true;
                     Charge?.Stop();
                     Charge = null;

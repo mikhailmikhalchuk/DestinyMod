@@ -33,7 +33,7 @@ namespace DestinyMod.Common.Projectiles
             for (int indexer = 0; indexer < Main.maxNPCs; indexer++)
             {
                 NPC npc = Main.npc[indexer];
-                if (npc.CanBeChasedBy(Projectile) && npc.damage > 0 && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.friendly)
+                if (npc.CanBeChasedBy(Projectile) && npc.damage > 0)
                 {
                     if (checkTiles && !Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, 1, 1))
                     {

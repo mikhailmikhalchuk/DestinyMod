@@ -22,7 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Red;
 			Item.knockBack = 0;
 			Item.useTime = 5;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/SweetBusiness");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/SweetBusiness");
 			Item.shootSpeed = 20f;
 			Item.useAnimation = 5;
 			Item.value = Item.buyPrice(gold: 1);

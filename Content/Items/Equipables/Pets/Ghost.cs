@@ -20,7 +20,7 @@ namespace DestinyMod.Content.Items.Equipables.Pets
 			Item.shoot = ModContent.ProjectileType<Projectiles.Pets.Ghost>();
 			Item.buffType = ModContent.BuffType<Buffs.Pets.Ghost>();
 			Item.buffTime = 3600;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/Ghost");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Pets/Ghost");
 		}
 
 		public override void UseAnimation(Player player)

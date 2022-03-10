@@ -20,7 +20,7 @@ namespace DestinyMod.Content.Items.Weapons.Super
 			Item.useTime = 5;
 			Item.useAnimation = 5;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/MidaMultiTool");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Super/MidaMultiTool");
 			Item.shoot = ModContent.ProjectileType<GoldenGunShot>();
 			Item.shootSpeed = 30f;
 		}

@@ -22,7 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             Item.knockBack = 6;
             Item.value = Item.buyPrice(gold: 22, silver: 22);
             Item.rare = ItemRarityID.Orange;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/RazeLighter");
+            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Melee/RazeLighter");
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<RazeLighterProjectile>();
             Item.shootSpeed = 40f;

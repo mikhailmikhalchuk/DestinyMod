@@ -21,7 +21,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.crit = 2;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/JadeRabbit");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/JadeRabbit");
 			Item.shootSpeed = 300f;
 		}
 

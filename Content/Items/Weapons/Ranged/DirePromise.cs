@@ -17,7 +17,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.LightRed;
 			Item.knockBack = 0;
 			Item.useTime = 20;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/HandCannon120");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/HandCannon120");
 			Item.shootSpeed = 40f;
 			Item.useAnimation = 20;
 			Item.value = Item.buyPrice(gold: 1);

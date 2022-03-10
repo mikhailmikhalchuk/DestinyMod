@@ -29,7 +29,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/BorealisMelee");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Melee/BorealisMelee");
 			Item.shoot = ProjectileID.PurificationPowder;
 			Item.shootSpeed = 300f;
 			Item.useAmmo = AmmoID.Bullet;

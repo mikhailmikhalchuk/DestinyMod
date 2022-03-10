@@ -25,7 +25,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/GravitonLance");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/GravitonLance");
 			Item.shootSpeed = 16f;
 			Item.reuseDelay = 5;
 		}

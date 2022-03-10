@@ -21,7 +21,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Yellow;
 			Item.knockBack = 0;
 			Item.useTime = 55;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/UniversalRemote");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/UniversalRemote");
 			Item.shootSpeed = 16f;
 			Item.useAnimation = 55;
 			Item.value = Item.buyPrice(gold: 1);

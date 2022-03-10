@@ -26,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/Thunderlord");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/Thunderlord");
 			Item.shootSpeed = 18f;
 		}
 

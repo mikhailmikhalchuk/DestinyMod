@@ -77,13 +77,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
                 if (Main.soundVolume <= 0)
                 {
-                    ChargeSound = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Sounds/Item/VexMythoclastStart"));
+                    ChargeSound = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"));
                     ChargeSound.Volume = 0;
                     ChargeSound.Play();
                 }
                 else
                 {
-                    ChargeSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/FusionRifleCharge"), Projectile.Center);
+                    ChargeSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
                 }
             }
 
@@ -108,7 +108,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
                 if (ChargeSound.State == SoundState.Stopped && !Fired)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/FusionRifleFire"), Projectile.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
                     Fired = true;
                     ChargeSound?.Stop();
                     ChargeSound = null;
@@ -150,7 +150,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
                 ChargeSound?.Stop();
                 ChargeSound = null;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/FusionRifleRelease"), Projectile.Center);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
             }
             CountFires = FireDelay = 0;
         }

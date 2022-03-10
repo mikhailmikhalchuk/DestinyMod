@@ -22,7 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/HakkeHandcannon");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/HakkeHandcannon");
 			Item.shootSpeed = 16f;
 		}
 

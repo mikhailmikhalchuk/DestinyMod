@@ -78,7 +78,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		{
 			Fire?.Stop(true);
 			Start?.Stop(true);
-			SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/DivinityStop"), Projectile.Center);
+			SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStop"), Projectile.Center);
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -100,13 +100,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			{
 				if (Main.soundVolume <= 0)
 				{
-					Start = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Sounds/Item/DivinityStart"));
+					Start = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStart"));
 					Start.Volume = 0;
 					Start.Play();
 				}
 				else
 				{
-					Start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/DivinityStart"), Projectile.Center);
+					Start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStart"), Projectile.Center);
 				}
 				Done = true;
 			}
@@ -120,14 +120,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			{
 				if (Main.soundVolume <= 0)
 				{
-					Fire = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Sounds/Item/DivinityFire"));
+					Fire = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityFire"));
 					Fire.IsLooped = true;
 					Fire.Volume = 0;
 					Fire.Play();
 				}
 				else
 				{
-					Fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/DivinityFire"), Projectile.Center);
+					Fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityFire"), Projectile.Center);
 				}
 			}
 			else if (Fire != null && Start.State != SoundState.Playing && Fire.State == SoundState.Stopped)

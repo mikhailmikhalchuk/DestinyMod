@@ -17,7 +17,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Yellow;
 			Item.knockBack = 0;
 			Item.useTime = 120;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/NoLandBeyond");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/NoLandBeyond");
 			Item.shootSpeed = 16f;
 			Item.useAnimation = 120;
 			Item.value = Item.buyPrice(0, 1, 0, 0);

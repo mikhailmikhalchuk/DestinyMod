@@ -21,7 +21,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 0;
 			Item.useTime = 20;
 			Item.crit = 10;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/AceOfSpades");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/AceOfSpades");
 			Item.useAnimation = 20;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.scale = 0.8f;

@@ -21,7 +21,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.damage = 135;
 			Item.knockBack = 0;
 			Item.crit = 10;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/AceOfSpades");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/AceOfSpades");
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
 		}

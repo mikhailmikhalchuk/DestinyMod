@@ -94,7 +94,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
                 int chargeMagnitude = Utils.Clamp(Charge / 20 + 1, 1, 4);
                 if (!Fired)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/JotunnCharge" + chargeMagnitude), Projectile.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/JotunnCharge" + chargeMagnitude), Projectile.Center);
                 }
                 Fired = true;
                 Projectile.netUpdate = true;
@@ -107,7 +107,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
             {
                 if (!Fired)
                 {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/JotunnCharge5"), Projectile.Center);
+                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/JotunnCharge5"), Projectile.Center);
                 }
                 Fired = true;
                 Projectile.netUpdate = true;

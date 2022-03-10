@@ -1,4 +1,3 @@
-using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 
 namespace DestinyMod

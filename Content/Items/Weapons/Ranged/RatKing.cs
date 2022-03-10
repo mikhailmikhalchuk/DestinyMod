@@ -22,7 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 0;
 			Item.useTime = 15;
 			Item.crit = 10;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/RatKing");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RatKing");
 			Item.useAnimation = 15;
 			Item.value = Item.buyPrice(0, 1, 0, 0);
 		}

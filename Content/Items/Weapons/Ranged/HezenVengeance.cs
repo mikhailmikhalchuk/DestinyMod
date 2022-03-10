@@ -19,7 +19,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/RocketLauncher");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RocketLauncher");
 			Item.shoot = ProjectileID.RocketI;
 			Item.shootSpeed = 16f;
 			Item.useAmmo = AmmoID.Rocket;

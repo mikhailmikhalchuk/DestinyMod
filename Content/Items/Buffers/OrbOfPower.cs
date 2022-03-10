@@ -37,7 +37,7 @@ namespace DestinyMod.Content.Items.Buffers
         {
             SuperPlayer superPlayer = player.GetModPlayer<SuperPlayer>();
             superPlayer.SuperChargeCurrent += 4 + superPlayer.OrbOfPowerAdd;
-            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/OrbOfPower"), player.Center);
+            SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Buffers/OrbOfPower"), player.Center);
             return false;
         }
     }

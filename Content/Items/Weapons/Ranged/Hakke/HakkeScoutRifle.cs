@@ -18,7 +18,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			Item.crit = 2;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/HakkeLongRifle");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/HakkeLongRifle");
 			Item.shootSpeed = 300f;
 			ShootOffset = new Vector2(0, -3);
 		}

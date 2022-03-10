@@ -23,7 +23,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Purple;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/WhisperOfTheWorm");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/WhisperOfTheWorm");
 			Item.shootSpeed = 16f;
 			DestinyModReuseDelay = 15;
 		}

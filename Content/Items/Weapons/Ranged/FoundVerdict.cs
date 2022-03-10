@@ -18,7 +18,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Yellow;
 			Item.knockBack = 0;
 			Item.useTime = 60;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/FoundVerdict");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FoundVerdict");
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.shootSpeed = 16f;
 			Item.useAnimation = 60;

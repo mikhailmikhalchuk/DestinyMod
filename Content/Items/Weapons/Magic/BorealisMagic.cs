@@ -29,7 +29,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Item/BorealisMagic");
+			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/BorealisMagic");
 			Item.shoot = ProjectileID.PurificationPowder;
 			Item.shootSpeed = 300f;
 			Item.useAmmo = AmmoID.Bullet;

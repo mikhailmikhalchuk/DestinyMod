@@ -119,8 +119,8 @@ namespace DestinyMod.Content.Items.Special
         {
             if (++PulloutTimer == PulloutReach - 2)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Special/EnergySword/Ready"), player.Center);
-                Hum = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Sounds/Special/EnergySword/Hum").AsAmbient(), player.Center);
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Special/EnergySword/Ready"), player.Center);
+                Hum = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Special/EnergySword/Hum").AsAmbient(), player.Center);
             }
 
             if (Hum != null && PulloutTimer >= PulloutReach - 2 && Hum.State == SoundState.Stopped)
