@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Helm of Saint-14");
-			Tooltip.SetDefault("\"He walked out into the demon light. But at the end he was brighter.\"");
+			Tooltip.SetDefault("'He walked out into the demon light. But at the end he was brighter.'");
 		}
 
 		public override void DestinySetDefaults()

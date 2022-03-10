@@ -9,7 +9,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	public class BorrowedTime : Gun
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Scales with world progression"
-			+ "\n\"Give a little, but take a little more.\"");
+			+ "\n'Give a little, but take a little more.'");
 
 		public override void DestinySetDefaults()
 		{

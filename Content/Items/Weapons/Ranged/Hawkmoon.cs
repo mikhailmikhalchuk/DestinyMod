@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	public class Hawkmoon : Gun
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Kills with this weapon stack one second of Paracausal Charge"
-			+ "\n\"Stalk thy prey and let loose thy talons upon the Darkness.\"");
+			+ "\n'Stalk thy prey and let loose thy talons upon the Darkness.'");
 
 		public override void DestinySetDefaults()
 		{

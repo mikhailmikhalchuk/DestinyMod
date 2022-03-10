@@ -9,7 +9,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class Fatebringer : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("\"Delivering the inevitable, one pull at a time.\"");
+		public override void SetStaticDefaults() => Tooltip.SetDefault("'Delivering the inevitable, one pull at a time.'");
 
 		public override void DestinySetDefaults()
 		{

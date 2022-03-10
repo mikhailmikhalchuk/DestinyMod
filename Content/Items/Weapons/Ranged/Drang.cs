@@ -9,8 +9,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class Drang : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("\"Since the Collapse, these pistols have been retooled several times to boost their firepower."
-			+ "\nA worn inscription reads, 'To Victor, from Sigrun.'\"");
+		public override void SetStaticDefaults() => Tooltip.SetDefault("'Since the Collapse, these pistols have been retooled several times to boost their firepower."
+			+ "\nA worn inscription reads, 'To Victor, from Sigrun.''");
 
 		public override void DestinySetDefaults()
 		{

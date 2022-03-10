@@ -11,7 +11,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
 	public class HakkeShotgun : HakkeCraftsmanshipWeapon
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires a spread of bullets\nHas a chance to grant the \"Hakke Craftsmanship\" buff on use");
+		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires a spread of bullets\nHas a chance to grant the 'Hakke Craftsmanship' buff on use");
 
 		public override void DestinySetDefaults()
 		{

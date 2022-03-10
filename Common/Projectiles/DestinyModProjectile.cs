@@ -1,3 +1,4 @@
+using DestinyMod.Common.GlobalProjectiles;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using System;
@@ -10,7 +11,9 @@ namespace DestinyMod.Common.Projectiles
 {
 	public abstract class DestinyModProjectile : ModProjectile
 	{
-		public sealed override void SetDefaults()
+        private EntitySource_ItemUse_WithAmmo AmmoReturnSource;
+
+        public sealed override void SetDefaults()
 		{
 			AutomaticSetDefaults();
 			DestinySetDefaults();
@@ -54,6 +57,17 @@ namespace DestinyMod.Common.Projectiles
             }
 
             return target;
+        }
+
+        public static void NewAmmoReturnProjectile(IEntitySource source, Vector2 position, Vector2 velocity, int Type, int Damage, float KnockBack, int Owner = 255, float ai0 = 0f, float ai1 = 0f)
+        {
+            NewAmmoReturnProjectile(source, position.X, position.Y, velocity.X, velocity.Y, Type, Damage, KnockBack, Owner, ai0, ai1);
+        }
+        
+        public static void NewAmmoReturnProjectile(IEntitySource source, float X, float Y, float SpeedX, float SpeedY, int Type, int Damage, float KnockBack, int Owner = 255, float ai0 = 0f, float ai1 = 0f)
+        {
+            Projectile destinyProj = Projectile.NewProjectileDirect(source, new Vector2(X, Y), new Vector2(SpeedX, SpeedY), Type, Damage, KnockBack, Owner, ai0, ai1);
+            destinyProj.GetGlobalProjectile<AmmoReturnProjectile>().AmmoReturnSource = (EntitySource_ItemUse_WithAmmo)source;
         }
 
         /// <summary>

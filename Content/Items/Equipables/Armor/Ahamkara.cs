@@ -14,7 +14,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 		{
 			DisplayName.SetDefault("Skull of Dire Ahamkara");
 			Tooltip.SetDefault("Increases movement speed by 10%"
-				+ "\n\"Reality is of the finest flesh, oh bearer mine. And are you not...hungry?\"");
+				+ "\n'Reality is of the finest flesh, oh bearer mine. And are you not...hungry?'");
 		}
 
 		public override void DestinySetDefaults()

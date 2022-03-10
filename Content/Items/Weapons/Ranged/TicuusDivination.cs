@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			DisplayName.SetDefault("Ticuu's Divination");
 			Tooltip.SetDefault("Fires 3 homing arrows"
 				+ "\nRight click to fire a single, more powerful arrow"
-				+ "\n\"Three points, pushed through forever.\"");
+				+ "\n'Three points, pushed through forever.'");
 		}
 
 		public override void DestinySetDefaults()

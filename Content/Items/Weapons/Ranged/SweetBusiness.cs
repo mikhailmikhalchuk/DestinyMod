@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("10% chance to not consume ammo"
 			+ "\nFires faster the longer this weapon is used"
-			+ "\n\"...I love my job.\"");
+			+ "\n'...I love my job.'");
 
 		public override void DestinySetDefaults()
 		{

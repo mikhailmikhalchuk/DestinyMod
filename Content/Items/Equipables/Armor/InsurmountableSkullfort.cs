@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("An Insurmountable Skullfort");
-			Tooltip.SetDefault("\"BRAINVAULT Sigma-ACTIUM-IX Cranial Dreadnought (Invincible Type)\"");
+			Tooltip.SetDefault("'BRAINVAULT Sigma-ACTIUM-IX Cranial Dreadnought (Invincible Type)'");
 		}
 
 		public override void DestinySetDefaults()

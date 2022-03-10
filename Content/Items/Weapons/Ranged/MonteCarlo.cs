@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	public class MonteCarlo : Gun
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Defeating an enemy with this weapon stacks one second of Monte Carlo Method"
-			+ "\n\"There will always be paths to tread and methods to try. Roll with it.\"");
+			+ "\n'There will always be paths to tread and methods to try. Roll with it.'");
 
 		public override void DestinySetDefaults()
 		{

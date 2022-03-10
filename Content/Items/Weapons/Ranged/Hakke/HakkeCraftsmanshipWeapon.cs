@@ -14,9 +14,9 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 
 		public float SpreadRadians;
 
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Has a chance to grant the \"Hakke Craftsmanship\" buff on use");
+		public override void SetStaticDefaults() => Tooltip.SetDefault("Has a chance to grant the 'Hakke Craftsmanship' buff on use");
 
-		public static void HandleMuzzleOffset(ref Vector2 position, Vector2 velocity)
+		protected static void HandleMuzzleOffset(ref Vector2 position, Vector2 velocity)
 		{
 			Vector2 muzzleOffset = Vector2.Normalize(velocity) * 10f;
 			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
@@ -25,7 +25,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			}
 		}
 
-		public static void HandleApplyingHakke(Player player)
+		protected static void HandleApplyingHakke(Player player)
 		{
 			int hakkeBuff = ModContent.BuffType<HakkeBuff>();
 			if (Main.rand.NextBool(10) && !player.HasBuff(hakkeBuff))

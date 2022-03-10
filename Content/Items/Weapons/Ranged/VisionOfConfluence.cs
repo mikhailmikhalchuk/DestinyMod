@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Vision of Confluence");
-			Tooltip.SetDefault("\"What you have seen will mark you forever.\"");
+			Tooltip.SetDefault("'What you have seen will mark you forever.'");
 		}
 
 		public override void DestinySetDefaults()

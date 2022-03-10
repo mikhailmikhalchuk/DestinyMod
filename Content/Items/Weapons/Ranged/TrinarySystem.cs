@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Hold down the trigger to fire"
 			+ "\nScales with world progression"
-			+ "\n\"The mathematics are quite complicated.\"");
+			+ "\n'The mathematics are quite complicated.'");
 
 		public override void DestinySetDefaults()
 		{

@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	public class AceOfSpades : Gun
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Kills with this weapon cause the target to explode" 
-			+ "\n\"Folding was never an option.\"");
+			+ "\n'Folding was never an option.'");
 
 		public override void DestinySetDefaults()
 		{

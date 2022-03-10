@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Rounds pierce and poison targets"
 			+ "\nKills with this weapon drop Remnants"
 			+ "\nPicking up Remnants increases the damage of the poison"
-			+ "\n\"To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.\"");
+			+ "\n'To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.'");
 
 		public override void DestinySetDefaults()
 		{
@@ -29,7 +29,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Main.NewText(source.AmmoItemIdUsed + " reminder");
 			Projectile.NewProjectile(source, position + new Vector2(0, -3), velocity, ModContent.ProjectileType<ThornBullet>(), damage, knockback, player.whoAmI);
 			return false;
 		}

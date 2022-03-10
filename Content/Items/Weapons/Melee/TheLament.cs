@@ -20,7 +20,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             + "\nWhile revving the blade, movement is inhibited"
             + "\nRevving the blade fully increases swing damage for a short time"
             + "\nDamaging enemies with this weapon restores a small portion of health"
-            + "\n\"The last thing the Vex ever heard - the grinding wails of a vicious Banshee.\"");
+            + "\n'The last thing the Vex ever heard - the grinding wails of a vicious Banshee.'");
 
         public override void DestinySetDefaults()
         {

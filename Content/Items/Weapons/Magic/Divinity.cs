@@ -11,7 +11,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires a solid beam"
 			+ "\nSustained damage with the beam cuts the target's defense by 20%"
-			+ "\n\"Calibrate reality. Seek inevitability. Embody divinity.\"");
+			+ "\n'Calibrate reality. Seek inevitability. Embody divinity.'");
 
 		public override void DestinySetDefaults()
 		{

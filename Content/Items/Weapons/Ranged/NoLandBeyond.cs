@@ -9,7 +9,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class NoLandBeyond : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("\"Every hit blazes the path to our reclamation.\"");
+		public override void SetStaticDefaults() => Tooltip.SetDefault("'Every hit blazes the path to our reclamation.'");
 
 		public override void DestinySetDefaults()
 		{

@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			DisplayName.SetDefault("Two-Tailed Fox");
 			Tooltip.SetDefault("Fires two rockets, one Void and one Solar"
 				+ "\nThe Solar rocket deals damage over time, and the Void rocket disables enemies"
-				+ "\n\"Adorably murderous.\"");
+				+ "\n'Adorably murderous.'");
 		}
 
 		public override void DestinySetDefaults()

@@ -11,7 +11,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("The Jade Rabbit");
-			Tooltip.SetDefault("\"What kind of harebrained scheme have you got in mind this time?\"");
+			Tooltip.SetDefault("'What kind of harebrained scheme have you got in mind this time?'");
 		}
 
 		public override void DestinySetDefaults()

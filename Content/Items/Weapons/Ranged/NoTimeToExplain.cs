@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		{
 			DisplayName.SetDefault("No Time to Explain");
 			Tooltip.SetDefault("Three round burst"
-				+ "\n\"A single word etched onto the inside of the weapon's casing: Now.\"");
+				+ "\n'A single word etched onto the inside of the weapon's casing: Now.'");
 		}
 
 		public override void DestinySetDefaults()

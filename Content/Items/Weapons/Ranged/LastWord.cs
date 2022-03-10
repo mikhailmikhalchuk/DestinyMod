@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("The Last Word");
-			Tooltip.SetDefault("\"Yours, until the last flame dies and all words have been spoken.\"");
+			Tooltip.SetDefault("'Yours, until the last flame dies and all words have been spoken.'");
 		}
 
 		public override void DestinySetDefaults()

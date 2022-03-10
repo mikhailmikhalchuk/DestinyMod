@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using DestinyMod.Common.Projectiles;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -12,7 +13,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Whisper of the Worm");
-			Tooltip.SetDefault("\"A Guardian's power makes a rich feeding ground. Do not be revolted.\"");
+			Tooltip.SetDefault("Missing a shot has a chance to return ammo"
+				+ "\n'A Guardian's power makes a rich feeding ground. Do not be revolted.'");
 		}
 
 		public override void DestinySetDefaults()
@@ -34,7 +36,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			{
 				Dust.NewDust(position += Vector2.Normalize(velocity) * 90f, 1, 1, DustID.WhiteTorch);
 			}
-			Projectile.NewProjectile(source, position + new Vector2(0, -2), velocity, type, damage, knockback, player.whoAmI);
+			DestinyModProjectile.NewAmmoReturnProjectile(source, position + new Vector2(0, -2), velocity, type, damage, knockback, player.whoAmI);
 			return false;
 		}
 

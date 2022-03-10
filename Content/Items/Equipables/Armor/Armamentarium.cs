@@ -14,7 +14,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("50% increased throwing damage when your Super bar is charged" 
-				+ "\n\"For this, there is one remedy.\"");
+				+ "\n'For this, there is one remedy.'");
 		}
 
 		public override void DestinySetDefaults()

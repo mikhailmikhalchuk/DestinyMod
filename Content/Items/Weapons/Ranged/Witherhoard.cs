@@ -10,7 +10,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Projectiles blight surrounding tiles on impact"
 			+ "\nEnemies that come in contact with the blight will be damaged"
-			+ "\n\"Like a one-man private security company.\"");
+			+ "\n'Like a one-man private security company.'");
 
 		public override void DestinySetDefaults()
 		{

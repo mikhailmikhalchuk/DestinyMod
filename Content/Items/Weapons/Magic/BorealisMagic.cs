@@ -15,7 +15,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 		{
 			DisplayName.SetDefault("Borealis");
 			Tooltip.SetDefault("Right click while holding this weapon to cycle between damage types"
-				+ "\n\"Light is a spectrum. Why limit yourself to a single hue?\"");
+				+ "\n'Light is a spectrum. Why limit yourself to a single hue?'");
 		}
 
 		public override void DestinySetDefaults()

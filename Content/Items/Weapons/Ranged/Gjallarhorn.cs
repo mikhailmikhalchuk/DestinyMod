@@ -11,7 +11,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	public class Gjallarhorn : Gun
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires a homing rocket which explodes into mini rockets on impact"
-			+ "\n\"If there is beauty in destruction, why not also in its delivery?\"");
+			+ "\n'If there is beauty in destruction, why not also in its delivery?'");
 
 		public override void DestinySetDefaults()
 		{

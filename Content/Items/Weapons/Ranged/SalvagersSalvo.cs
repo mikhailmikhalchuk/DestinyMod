@@ -14,7 +14,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		{
 			DisplayName.SetDefault("Salvager's Salvo");
 			Tooltip.SetDefault("Grenades fired will explode when the fire button is released"
-				+ "\n\"The only way out is through.\"");
+				+ "\n'The only way out is through.'");
 		}
 
 		public override void DestinySetDefaults()

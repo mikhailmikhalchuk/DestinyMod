@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	public class RatKing : Gun
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Becomes stronger if nearby teammates are using this weapon"
-			+ "\n\"We are small, but we are legion.\"");
+			+ "\n'We are small, but we are legion.'");
 
 		public override void DestinySetDefaults()
 		{

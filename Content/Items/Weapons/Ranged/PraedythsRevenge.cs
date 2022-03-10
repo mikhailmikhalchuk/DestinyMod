@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Praedyth's Revenge");
-			Tooltip.SetDefault("\"Praedyth's fall isn't over... because it hasn't happened yet... and it will happen again.\"");
+			Tooltip.SetDefault("'Praedyth's fall isn't over... because it hasn't happened yet... and it will happen again.'");
 		}
 
 		public override void DestinySetDefaults()

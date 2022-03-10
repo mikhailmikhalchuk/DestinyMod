@@ -20,7 +20,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
         public override void SetStaticDefaults() => Tooltip.SetDefault("Kills with this weapon grant stacks of Overcharge"
             + "\nRight-click with Overcharge to switch firing modes"
             + "\nHold down the trigger in the alternative firing mode to fire a more powerful shot"
-            + "\n\"...a causal loop within the weapon's mechanism, suggesting that the firing process somehow binds space and time into...\"");
+            + "\n'...a causal loop within the weapon's mechanism, suggesting that the firing process somehow binds space and time into...'");
 
         public override void DestinySetDefaults()
         {

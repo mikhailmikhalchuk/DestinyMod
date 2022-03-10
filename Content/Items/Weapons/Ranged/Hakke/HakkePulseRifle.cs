@@ -9,7 +9,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 	public class HakkePulseRifle : HakkeCraftsmanshipWeapon
 	{
 		public override void SetStaticDefaults() => Tooltip.SetDefault("Three round burst"
-			+ "Has a chance to grant the \"Hakke Craftsmanship\" buff on use");
+			+ "Has a chance to grant the 'Hakke Craftsmanship' buff on use");
 
 		public override void DestinySetDefaults()
 		{

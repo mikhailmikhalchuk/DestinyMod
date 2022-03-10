@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("MIDA Multi-Tool");
-			Tooltip.SetDefault("\"Select application: Ballistic engagement. Entrenching tool. Avionics trawl. Troll smasher. Stellar sextant. List continues.\"");
+			Tooltip.SetDefault("'Select application: Ballistic engagement. Entrenching tool. Avionics trawl. Troll smasher. Stellar sextant. List continues.'");
 		}
 
 		public override void DestinySetDefaults()

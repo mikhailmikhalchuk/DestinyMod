@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Fires a spread of bullets"
-				+ "\n\"To the untrained eye this beast is a junker. To the trained eye, however, this junker... is a beast.\"");
+				+ "\n'To the untrained eye this beast is a junker. To the trained eye, however, this junker... is a beast.'");
 		}
 
 		public override void DestinySetDefaults()
