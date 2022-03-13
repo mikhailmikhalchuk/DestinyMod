@@ -9,8 +9,11 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class TheThirdAxiom : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Three round burst"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Three round burst"
 			+ "\n'Don't tell me the odds.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

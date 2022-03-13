@@ -13,6 +13,9 @@ namespace DestinyMod.Content.Commands
 
 		public override string Description => "Sets the world time in ticks";
 
-		public override void Action(CommandCaller caller, string input, string[] args) => Main.time = int.Parse(args[0]);
+		public override void Action(CommandCaller caller, string input, string[] args)
+		{
+			Main.time = int.Parse(args[0]);
+		}
 	}
 }

@@ -26,7 +26,10 @@ namespace DestinyMod.Content.NPCs.Fallen
             set => NPC.ai[2] = value;
         }
 
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Fallen Skiff");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Fallen Skiff");
+        }
 
         public override void DestinySetDefaults()
         {

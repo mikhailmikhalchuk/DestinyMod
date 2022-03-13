@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class HezenVengeance : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("'The Hezen Axis Mind is tireless and infinite. While it cannot be stopped... it can be paused.'");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("'The Hezen Axis Mind is tireless and infinite. While it cannot be stopped... it can be paused.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

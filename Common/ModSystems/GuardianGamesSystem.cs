@@ -162,8 +162,14 @@ namespace DestinyMod.Common.ModSystems
 		}
 
 
-		public override void SaveWorldData(TagCompound tag) => tag.Add("Cooldown", DepositCooldown);
+		public override void SaveWorldData(TagCompound tag)
+		{
+			tag.Add("Cooldown", DepositCooldown);
+		}
 
-		public override void LoadWorldData(TagCompound tag) => DepositCooldown = tag.Get<int>("Cooldown");
+		public override void LoadWorldData(TagCompound tag)
+		{
+			DepositCooldown = tag.Get<int>("Cooldown");
+		}
 	}
 }

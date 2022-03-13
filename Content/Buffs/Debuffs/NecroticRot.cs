@@ -52,7 +52,7 @@ namespace DestinyMod.Content.Buffs.Debuffs
 		{
             if (damage == 10 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
-                damageSource = PlayerDeathReason.ByCustomReason(player.name + "'s partial necrosis became complete.");
+                damageSource = PlayerDeathReason.ByCustomReason(player.name + "'s cells failed them.");
             }
 
             return base.PreKill(player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);

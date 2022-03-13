@@ -18,7 +18,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Bullet");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Bullet");
+        }
 
         public override void DestinySetDefaults()
         {
@@ -83,7 +86,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Overcharge>(), 60);
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Overcharge>(), 60);
+        }
 
         public override void Kill(int timeLeft)
         {

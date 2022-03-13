@@ -12,7 +12,10 @@ namespace DestinyMod.Common.Recipes
 
 		public abstract int[] Items();
 
-		public virtual void Load(Mod mod) => RecipeGroup = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + GetName(), Items());
+		public virtual void Load(Mod mod)
+		{
+			RecipeGroup = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + GetName(), Items());
+		}
 
 		public virtual void Unload() { }
 	}

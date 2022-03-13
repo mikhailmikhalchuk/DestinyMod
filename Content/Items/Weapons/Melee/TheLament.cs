@@ -16,11 +16,14 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 
         public bool RightClickTest;
 
-        public override void SetStaticDefaults() => Tooltip.SetDefault("Hold right-click to rev up the blade"
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Hold right-click to rev up the blade"
             + "\nWhile revving the blade, movement is inhibited"
             + "\nRevving the blade fully increases swing damage for a short time"
             + "\nDamaging enemies with this weapon restores a small portion of health"
             + "\n'The last thing the Vex ever heard - the grinding wails of a vicious Banshee.'");
+        }
 
         public override void DestinySetDefaults()
         {
@@ -51,7 +54,10 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             }
         }
 
-        public override void OnHitPvp(Player player, Player target, int damage, bool crit) => HealBack(player);
+        public override void OnHitPvp(Player player, Player target, int damage, bool crit)
+        {
+            HealBack(player);
+        }
 
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
         {

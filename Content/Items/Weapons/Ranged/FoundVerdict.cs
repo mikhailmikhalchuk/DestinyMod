@@ -9,8 +9,11 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class FoundVerdict : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires a spread of bullets"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Fires a spread of bullets"
 			+ "\n'Witness.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

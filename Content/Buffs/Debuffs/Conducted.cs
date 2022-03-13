@@ -24,9 +24,15 @@ namespace DestinyMod.Content.Buffs.Debuffs
             dust.position = Vector2.Lerp(dust.position, entity.Center, 0.5f);
         }
 
-        public override void Update(Player player, ref int buffIndex) => GenerateElectricDust(player);
+        public override void Update(Player player, ref int buffIndex)
+        {
+            GenerateElectricDust(player);
+        }
 
-        public override void Update(NPC npc, ref int buffIndex) => GenerateElectricDust(npc);
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            GenerateElectricDust(npc);
+        }
 
 		public override bool PreKill(Player player, double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
@@ -37,8 +43,14 @@ namespace DestinyMod.Content.Buffs.Debuffs
             return base.PreKill(player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}
 
-        public override void UpdateBadLifeRegen(Player player) => ApplyDebuff(player, 4);
+        public override void UpdateBadLifeRegen(Player player)
+        {
+            ApplyDebuff(player, 4);
+        }
 
-        public override void UpdateLifeRegen(NPC npc, ref int damage) => ApplyDebuff(npc, 4);
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            ApplyDebuff(npc, 4);
+        }
 	}
 }

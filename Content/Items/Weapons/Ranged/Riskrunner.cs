@@ -10,9 +10,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class Riskrunner : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("33% chance to not consume ammo"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("33% chance to not consume ammo"
 			+ "\nFires bullets which have a chance to shock enemies on hit"
 			+ "\n'Charge your soul and let the electrons sing.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

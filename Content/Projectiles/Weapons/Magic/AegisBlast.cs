@@ -12,7 +12,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
     {
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RocketFireworkBlue;
 
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Aegis Blast");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Aegis Blast");
+        }
 
         public override void DestinySetDefaults()
         {
@@ -67,7 +70,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
             return base.PreAI();
         }
 
-        public override void AI() => HomeInOnNPC(400, 10f);
+        public override void AI()
+        {
+            HomeInOnNPC(400, 10f);
+        }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

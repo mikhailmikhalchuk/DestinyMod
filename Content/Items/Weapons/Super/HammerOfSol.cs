@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Items.Weapons.Super
 {
     public class HammerOfSol : SuperItem
     {
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Hammer of Sol");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Hammer of Sol");
+        }
 
         public override void DestinySetDefaults()
         {

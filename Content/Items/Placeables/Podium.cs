@@ -7,7 +7,10 @@ namespace DestinyMod.Content.Items.Placeables
 {
 	public class Podium : TileItem
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Can be used to deposit Laurels");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Can be used to deposit Laurels");
+		}
 
 		public override void DestinySetDefaults()
 		{

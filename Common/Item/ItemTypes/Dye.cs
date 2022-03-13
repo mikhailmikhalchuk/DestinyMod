@@ -14,6 +14,9 @@ namespace DestinyMod.Common.Items.ItemTypes
 			Item.dye = dye;
 		}
 
-		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+		}
 	}
 }

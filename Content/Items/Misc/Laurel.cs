@@ -11,7 +11,10 @@ namespace DestinyMod.Content.Items.Misc
 {
 	public class Laurel : DestinyModItem
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Deposit this at the Podium to rep your class and earn rewards");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Deposit this at the Podium to rep your class and earn rewards");
+		}
 
 		public override void DestinySetDefaults()
 		{

@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     public class VoidSeeker : DestinyModProjectile
     {
-        public override void SetStaticDefaults() => ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+        }
 
         public override void DestinySetDefaults()
         {
@@ -56,7 +59,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
-        public override void PostDraw(Color lightColor) => Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3() * 0.55f * Main.essScale);
+        public override void PostDraw(Color lightColor)
+        {
+            Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3() * 0.55f * Main.essScale);
+        }
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R * 0.5f, lightColor.G * 0.1f, lightColor.B, lightColor.A);
 

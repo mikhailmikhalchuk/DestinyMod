@@ -9,8 +9,11 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class BottomDollar : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Scales with world progression"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Scales with world progression"
 			+ "\n'Never count yourself out.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

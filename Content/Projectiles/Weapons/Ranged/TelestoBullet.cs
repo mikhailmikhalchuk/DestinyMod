@@ -26,9 +26,15 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.1f, lightColor.B * 0.8f, lightColor.A);
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Projectile.Kill();
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			Projectile.Kill();
+		}
 
-		public override void OnHitPvp(Player target, int damage, bool crit) => Projectile.Kill();
+		public override void OnHitPvp(Player target, int damage, bool crit)
+		{
+			Projectile.Kill();
+		}
 
 		public override void AI()
 		{

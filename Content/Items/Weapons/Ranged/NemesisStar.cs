@@ -10,8 +10,11 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class NemesisStar : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires faster on initial trigger pull"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Fires faster on initial trigger pull"
 			+ "\n'What is the answer when the question is extinction?'");
+		}
 
 		public override void DestinySetDefaults()
 		{

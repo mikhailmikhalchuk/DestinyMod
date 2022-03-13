@@ -11,7 +11,10 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 	{
 		public override DestinyClassType ArmorClassType => DestinyClassType.Titan;
 
-		public override void SetStaticDefaults() => Tooltip.SetDefault("3% increased ranged damage");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("3% increased ranged damage");
+		}
 
 		public override void DestinySetDefaults()
 		{
@@ -20,7 +23,10 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 			Item.defense = 8;
 		}
 
-		public override void UpdateEquip(Player player) => player.GetDamage(DamageClass.Ranged) += 0.03f;
+		public override void UpdateEquip(Player player)
+		{
+			player.GetDamage(DamageClass.Ranged) += 0.03f;
+		}
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ModContent.ItemType<RelicIron>(), 20)

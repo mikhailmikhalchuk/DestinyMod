@@ -14,6 +14,9 @@ namespace DestinyMod.Content.Buffs.Debuffs
             Main.debuff[Type] = true;
         }
 
-        public override void Update(Player player, ref int buffIndex) => player.buffTime[buffIndex] = 18000;
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.buffTime[buffIndex] = 18000;
+        }
     }
 }

@@ -53,7 +53,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			return false;
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Projectile.timeLeft = 3;
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			Projectile.timeLeft = 3;
+		}
 
 		public override void AI()
 		{

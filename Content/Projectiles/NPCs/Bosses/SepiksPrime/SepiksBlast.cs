@@ -10,7 +10,10 @@ namespace DestinyMod.Content.Projectiles.NPCs.Bosses.SepiksPrime
     {
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.EnchantedBoomerang;
 
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Eye Blast");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Eye Blast");
+        }
 
         public override void DestinySetDefaults()
         {

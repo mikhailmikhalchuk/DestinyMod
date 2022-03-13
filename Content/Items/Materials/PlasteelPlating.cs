@@ -6,7 +6,10 @@ namespace DestinyMod.Content.Items.Materials
 {
 	public class PlasteelPlating : DestinyModItem
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("A durable hybrid plastic favored by Titans for its balance of strength and workability");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("A durable hybrid plastic favored by Titans for its balance of strength and workability");
+		}
 
 		public override void DestinySetDefaults()
 		{

@@ -28,7 +28,10 @@ namespace DestinyMod.Core.UI
 			InterfaceScaleType = interfaceScaleType;
 		}
 
-		public virtual void Update(GameTime gameTime) => Interface?.Update(gameTime);
+		public virtual void Update(GameTime gameTime)
+		{
+			Interface?.Update(gameTime);
+		}
 
 		public virtual void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
@@ -64,6 +67,9 @@ namespace DestinyMod.Core.UI
 			}
 		}
 
-		public static void Unload() => ProcessedUIs?.Clear();
+		public static void Unload()
+		{
+			ProcessedUIs?.Clear();
+		}
 	}
 }

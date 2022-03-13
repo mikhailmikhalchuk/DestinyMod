@@ -74,6 +74,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
-        public override void PostDraw(Color lightColor) => Lighting.AddLight(Projectile.Center, Color.Red.ToVector3() * 0.55f * Main.essScale);
+        public override void PostDraw(Color lightColor)
+        {
+            Lighting.AddLight(Projectile.Center, Color.Red.ToVector3() * 0.55f * Main.essScale);
+        }
     }
 }

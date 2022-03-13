@@ -7,7 +7,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     public class GravitonBullet : Bullet
     {
-        public override void DestinySetDefaults() => Projectile.light = 0.5f;
+        public override void DestinySetDefaults()
+        {
+            Projectile.light = 0.5f;
+        }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

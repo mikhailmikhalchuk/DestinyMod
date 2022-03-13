@@ -6,8 +6,11 @@ namespace DestinyMod.Content.Items.Misc
 {
     public class ExoticCipher : DestinyModItem
     {
-        public override void SetStaticDefaults() => Tooltip.SetDefault("Historial data preserved as luminous matter"
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Historial data preserved as luminous matter"
                 + "\nA certain agent might like this item");
+        }
 
         public override void DestinySetDefaults()
         {

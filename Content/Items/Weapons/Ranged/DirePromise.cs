@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class DirePromise : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("'If you think this world ends well, you are mistaken.'");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("'If you think this world ends well, you are mistaken.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

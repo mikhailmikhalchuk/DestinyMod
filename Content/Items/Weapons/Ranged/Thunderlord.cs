@@ -12,9 +12,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class Thunderlord : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires bullets which create lightning on kills"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Fires bullets which create lightning on kills"
 			+ "\nFires faster the longer this weapon is used"
 			+ "\n'They rest quiet on fields afar...for this is no ending, but the eye.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

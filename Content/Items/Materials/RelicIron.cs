@@ -6,7 +6,10 @@ namespace DestinyMod.Content.Items.Materials
 {
 	public class RelicIron : TileItem
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("A post-Collapse material of extraordinary density");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("A post-Collapse material of extraordinary density");
+		}
 
 		public override int TileType => ModContent.TileType<Tiles.RelicShard>();
 

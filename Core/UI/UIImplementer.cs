@@ -35,10 +35,19 @@ namespace DestinyMod.Core.UI
 			}
 		}
 
-		public override void Unload() => UIHandler.Unload();
+		public override void Unload()
+		{
+			UIHandler.Unload();
+		}
 
-		public override void UpdateUI(GameTime gameTime) => UIHandler.HandleUpdate(gameTime);
+		public override void UpdateUI(GameTime gameTime)
+		{
+			UIHandler.HandleUpdate(gameTime);
+		}
 
-		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UIHandler.HandleModifyInterfaceLayers(layers);
+		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+		{
+			UIHandler.HandleModifyInterfaceLayers(layers);
+		}
 	}
 }

@@ -34,6 +34,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
             Projectile.position = player.Center;
         }
 
-        public override void PostDraw(Color lightColor) => Lighting.AddLight(Projectile.Center, Color.LightBlue.ToVector3() * 2f);
+        public override void PostDraw(Color lightColor)
+        {
+            Lighting.AddLight(Projectile.Center, Color.LightBlue.ToVector3() * 2f);
+        }
     }
 }

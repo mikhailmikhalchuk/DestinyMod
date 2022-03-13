@@ -75,8 +75,10 @@ namespace DestinyMod.Common.ModPlayers
 			}
 		}
 
-		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) =>
+		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
 			ImplementBuffIteration(destinyModBuff => destinyModBuff.OnHitNPC(Player, item, target, damage, knockback, crit));
+		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
@@ -92,8 +94,10 @@ namespace DestinyMod.Common.ModPlayers
 			return output;
 		}
 
-		public override void UpdateBadLifeRegen() =>
+		public override void UpdateBadLifeRegen()
+        {
 			ImplementBuffIteration(destinyModBuff => destinyModBuff.UpdateBadLifeRegen(Player));
+		}
 
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
 		{

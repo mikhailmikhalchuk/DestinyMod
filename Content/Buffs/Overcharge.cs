@@ -23,6 +23,9 @@ namespace DestinyMod.Content.Buffs
 			}
 		}
 
-		public override void ModifyBuffTip(ref string tip, ref int rare) => tip += " (" + Main.LocalPlayer.GetModPlayer<ItemPlayer>().OverchargeStacks + ")";
+		public override void ModifyBuffTip(ref string tip, ref int rare)
+		{
+			tip += " (" + Main.LocalPlayer.GetModPlayer<ItemPlayer>().OverchargeStacks + ")";
+		}
 	}
 }

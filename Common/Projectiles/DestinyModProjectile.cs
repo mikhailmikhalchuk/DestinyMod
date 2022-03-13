@@ -11,8 +11,6 @@ namespace DestinyMod.Common.Projectiles
 {
 	public abstract class DestinyModProjectile : ModProjectile
 	{
-        private EntitySource_ItemUse_WithAmmo AmmoReturnSource;
-
         public sealed override void SetDefaults()
 		{
 			AutomaticSetDefaults();

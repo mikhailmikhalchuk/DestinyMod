@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
 	public class SacredFlame : DestinyModProjectile
 	{
-		public override void SetStaticDefaults() => ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+		public override void SetStaticDefaults()
+		{
+			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+		}
 
 		public override void DestinySetDefaults()
 		{
@@ -33,7 +36,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			}
 		}
 
-		public override void AI() => GradualHomeInOnNPC(400, 15f, 0.1f);
+		public override void AI()
+		{
+			GradualHomeInOnNPC(400, 15f, 0.1f);
+		}
 
 		public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.75f, lightColor.B * 0.55f, lightColor.A);
 	}

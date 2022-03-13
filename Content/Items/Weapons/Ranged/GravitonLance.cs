@@ -12,10 +12,13 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	{
 		public int Shot;
 
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Three round burst"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Three round burst"
 			+ "\nSecond shot of a burst deals double damage"
 			+ "\nKills with this shot summon a seeking projectile"
 			+ "\n'Think of space-time as a tapestry on a loom. This weapon is the needle.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

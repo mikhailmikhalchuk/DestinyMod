@@ -18,6 +18,9 @@ namespace DestinyMod.Common.Items.ItemTypes
 			Item.useAmmo = AmmoID.Bullet;
 		}
 
-		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
 	}
 }

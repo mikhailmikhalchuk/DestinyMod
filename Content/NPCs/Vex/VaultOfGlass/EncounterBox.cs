@@ -39,7 +39,10 @@ namespace DestinyMod.Content.NPCs.Vex.VaultOfGlass
             // encounter start thing
         }
 
-        public override void DrawEffects(ref Color drawColor) => Lighting.AddLight(NPC.Center, Color.LightCyan.ToVector3() * Main.essScale);
+        public override void DrawEffects(ref Color drawColor)
+        {
+            Lighting.AddLight(NPC.Center, Color.LightCyan.ToVector3() * Main.essScale);
+        }
 
         public override void HitEffect(int hitDirection, double damage)
         {

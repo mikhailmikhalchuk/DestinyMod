@@ -6,7 +6,10 @@ namespace DestinyMod.Content.Items.Consumables
 {
     public class GuardianCrest : Consumable
     {
-        public override void SetStaticDefaults() => Tooltip.SetDefault("Grants the ability to switch to a different class");
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Grants the ability to switch to a different class");
+        }
 
         public override void DestinySetDefaults()
         {

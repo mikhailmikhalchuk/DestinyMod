@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class CorrectiveMeasure : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("'It breaks the rules of reality as ruthlessly as it shatters your foes.'");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("'It breaks the rules of reality as ruthlessly as it shatters your foes.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

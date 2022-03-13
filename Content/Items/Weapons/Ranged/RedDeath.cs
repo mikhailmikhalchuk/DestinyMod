@@ -10,10 +10,13 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class RedDeath : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Three round burst"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Three round burst"
 			+ "\nOnly the first shot consumes ammo"
 			+ "\nKills grant a small amount of health"
 			+ "\n'Vanguard policy urges Guardians to destroy this weapon on sight. It is a Guardian killer.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

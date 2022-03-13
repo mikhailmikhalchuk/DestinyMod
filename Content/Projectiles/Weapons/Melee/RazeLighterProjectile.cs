@@ -7,7 +7,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 {
     public class RazeLighterProjectile : AnimatedSwordProjectile
     {
-        public override void DestinySetDefaults() => FrameCycleSound = SoundLoader.GetLegacySoundSlot("Assets/Sounds/Item/Weapons/Melee/RazeLighter");
+        public override void DestinySetDefaults()
+        {
+            FrameCycleSound = SoundLoader.GetLegacySoundSlot("Assets/Sounds/Item/Weapons/Melee/RazeLighter");
+        }
 
         public override Color? GetAlpha(Color lightColor) => new Color(219, 117, 61, 0) * (1f - Projectile.alpha / 255f);
 

@@ -14,7 +14,10 @@ namespace DestinyMod.Content.Buffs
             Main.buffNoSave[Type] = true;
         }
 
-        public override void Update(Player player, ref int buffIndex) => player.buffTime[buffIndex] = 18000;
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.buffTime[buffIndex] = 18000;
+        }
 
         public void ImplementLinearActuators(Player player, ref int damage)
 		{

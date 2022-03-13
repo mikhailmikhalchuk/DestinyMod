@@ -11,7 +11,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
 {
     public abstract class AnimatedSwordProjectile : DestinyModProjectile
     {
-        public override void SetStaticDefaults() => Main.projFrames[Projectile.type] = 14;
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[Projectile.type] = 14;
+        }
 
         public LegacySoundStyle FrameCycleSound;
 

@@ -35,9 +35,15 @@ namespace DestinyMod.Content.Tiles
 
 		public override bool HasSmartInteract() => true;
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 178, 178, ModContent.ItemType<Items.Placeables.Podium>());
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 178, 178, ModContent.ItemType<Items.Placeables.Podium>());
+		}
 
-		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) => Lighting.AddLight(new Vector2(i * 16, j * 16), Color.White.ToVector3() * 0.55f);
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+		{
+			Lighting.AddLight(new Vector2(i * 16, j * 16), Color.White.ToVector3() * 0.55f);
+		}
 	
 		public override void MouseOver(int i, int j)
 		{

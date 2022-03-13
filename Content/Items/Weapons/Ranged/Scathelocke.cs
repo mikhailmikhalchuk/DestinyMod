@@ -10,7 +10,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class Scathelocke : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("'Our eyes squinted, our teeth clenched, our prayers answered.'");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("'Our eyes squinted, our teeth clenched, our prayers answered.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

@@ -7,6 +7,9 @@ namespace DestinyMod.Common.Items.ItemTypes
     {
         public override bool CanEquip(Player player) => base.CanEquip(player) && !player.GetModPlayer<ClassPlayer>().ExoticEquipped;
 
-		public override void UpdateEquip(Player player) => player.GetModPlayer<ClassPlayer>().ExoticEquipped = true;
+        public override void UpdateEquip(Player player)
+        {
+            player.GetModPlayer<ClassPlayer>().ExoticEquipped = true;
+        }
 	}
 }

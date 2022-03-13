@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 {
 	public class SepiksPrimeBag : TreasureBag
 	{
-		public override void DestinySetDefaults() => Item.rare = ItemRarityID.Orange;
+		public override void DestinySetDefaults()
+		{
+			Item.rare = ItemRarityID.Orange;
+		}
 
         public override void SetStaticDefaults()
         {

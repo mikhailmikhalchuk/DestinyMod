@@ -21,6 +21,9 @@ namespace DestinyMod.Content.Buffs
             }
         }
 
-		public override void ModifyBuffTip(ref string tip, ref int rare) => tip += Main.LocalPlayer.GetModPlayer<DebuffPlayer>().NecroticDamageMult * 100 + "%";
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            tip += Main.LocalPlayer.GetModPlayer<DebuffPlayer>().NecroticDamageMult * 100 + "%";
+        }
 	}
 }

@@ -7,7 +7,10 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 	[AutoloadEquip(EquipType.Head)]
 	public class SepiksPrimeMask : DestinyModItem
 	{
-		public override void SetStaticDefaults() => ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
+		public override void SetStaticDefaults()
+		{
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
+		}
 
 		public override void DestinySetDefaults()
 		{

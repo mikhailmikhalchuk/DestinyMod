@@ -12,7 +12,10 @@ namespace DestinyMod.Content.NPCs.Fallen
 {
     public class Vandal : DestinyModNPC
     {
-        public override void SetStaticDefaults() => Main.npcFrameCount[NPC.type] = 10;
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[NPC.type] = 10;
+        }
 
         public override void DestinySetDefaults()
         {

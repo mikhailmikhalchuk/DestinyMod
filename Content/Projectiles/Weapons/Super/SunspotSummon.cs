@@ -15,7 +15,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Super
 
         private int FrameSkip { get => (int)Projectile.localAI[1]; set => Projectile.localAI[1] = value; }
 
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Sunspot");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sunspot");
+        }
 
 		public override void DestinySetDefaults()
         {

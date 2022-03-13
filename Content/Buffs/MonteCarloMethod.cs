@@ -13,6 +13,9 @@ namespace DestinyMod.Content.Buffs
 			Main.buffNoSave[Type] = true;
 		}
 
-		public override void Update(Player player, ref int buffIndex) => player.GetDamage(DamageClass.Melee) *= 1.25f;
+		public override void Update(Player player, ref int buffIndex)
+		{
+			player.GetDamage(DamageClass.Melee) *= 1.25f;
+		}
 	}
 }

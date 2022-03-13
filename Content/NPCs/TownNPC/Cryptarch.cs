@@ -14,7 +14,10 @@ namespace DestinyMod.Content.NPCs.TownNPC
 	[AutoloadHead]
 	public class Cryptarch : GenericTownNPC
 	{
-		public override void DestinySetStaticDefaults() => DisplayName.SetDefault("Cryptarch");
+		public override void DestinySetStaticDefaults()
+		{
+			DisplayName.SetDefault("Cryptarch");
+		}
 
 		public override string TownNPCName() => "Master Rahool";
 

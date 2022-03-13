@@ -10,9 +10,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class Sunshot : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Fires explosive rounds"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Fires explosive rounds"
 			+ "\nRounds highlight enemies on contact"
 			+ "\n'Can't outrun the sunrise.' -Liu Feng");
+		}
 
 		public override void DestinySetDefaults()
 		{

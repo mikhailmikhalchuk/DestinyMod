@@ -21,7 +21,10 @@ namespace DestinyMod.Content.Items.Buffers
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
 
-        public override void DestinySetDefaults() => Item.rare = ItemRarityID.Gray;
+        public override void DestinySetDefaults()
+        {
+            Item.rare = ItemRarityID.Gray;
+        }
 
         public override bool ItemSpace(Player player) => true;
 
@@ -69,8 +72,14 @@ namespace DestinyMod.Content.Items.Buffers
             }
         }
 
-        public override void GrabRange(Player player, ref int grabRange) => grabRange = 128;
+        public override void GrabRange(Player player, ref int grabRange)
+        {
+            grabRange = 128;
+        }
 
-        public override void PostUpdate() => Lighting.AddLight(Item.Center, Color.Green.ToVector3() * 1.5f);
+        public override void PostUpdate()
+        {
+            Lighting.AddLight(Item.Center, Color.Green.ToVector3() * 1.5f);
+        }
     }
 }

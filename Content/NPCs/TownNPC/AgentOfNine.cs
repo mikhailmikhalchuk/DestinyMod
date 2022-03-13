@@ -157,7 +157,10 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			DestinyMod.Instance.Logger.Debug($"Selected Weapon: {Shop[0]}");
 		}
 
-		public override void SetChatButtons(ref string button, ref string button2) => button = Language.GetTextValue("LegacyInterface.28");
+		public override void SetChatButtons(ref string button, ref string button2)
+		{
+			button = Language.GetTextValue("LegacyInterface.28");
+		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
 		{
@@ -197,7 +200,10 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override bool UsesPartyHat() => false;
 
-		public override void AI() => NPC.homeless = true;
+		public override void AI()
+		{
+			NPC.homeless = true;
+		}
 
 		public override bool CanGoToStatue(bool toKingStatue) => false;
 

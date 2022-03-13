@@ -10,9 +10,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class OutbreakPerfected : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Three round burst"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Three round burst"
 			+ "\nCreates nanite swarms on critical kills and rapid hits"
 			+ "\n'~directive = KILL while enemies = PRESENT: execute(directive)~'");
+		}
 
 		public override void DestinySetDefaults()
 		{

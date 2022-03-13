@@ -9,7 +9,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     public class VoidSeekerExplosion : DestinyModProjectile
     {
-		public override void SetStaticDefaults() => Main.projFrames[Projectile.type] = 12;
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[Projectile.type] = 12;
+        }
 
         public override void DestinySetDefaults()
         {
@@ -42,7 +45,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public override bool? CanHitNPC(NPC target) => false;
 
-        public override void PostDraw(Color lightColor) => Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3() * 0.55f * Main.essScale);
+        public override void PostDraw(Color lightColor)
+        {
+            Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3() * 0.55f * Main.essScale);
+        }
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R * 0.5f, lightColor.G * 0.1f, lightColor.B, lightColor.A);
 

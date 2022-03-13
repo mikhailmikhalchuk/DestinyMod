@@ -513,7 +513,10 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             return null;
         }
 
-        public override void OnKill() => NPC.SetEventFlagCleared(ref DownedSepiksPrime, -1);
+        public override void OnKill()
+        {
+            NPC.SetEventFlagCleared(ref DownedSepiksPrime, -1);
+        }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -555,9 +558,15 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             return packet;
         }
 
-        public override void Save(TagCompound tagCompound) => tagCompound.Add("Downed", DownedSepiksPrime);
+        public override void Save(TagCompound tagCompound)
+        {
+            tagCompound.Add("Downed", DownedSepiksPrime);
+        }
 
-        public override void Load(TagCompound tagCompound) => DownedSepiksPrime = tagCompound.Get<bool>("Downed");
+        public override void Load(TagCompound tagCompound)
+        {
+            DownedSepiksPrime = tagCompound.Get<bool>("Downed");
+        }
     }
 
     internal enum SepiksBossMessageType : byte

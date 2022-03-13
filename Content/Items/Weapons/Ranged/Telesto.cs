@@ -11,9 +11,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class Telesto : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Hold down the trigger to fire"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Hold down the trigger to fire"
 			+ "\nProjectiles attach to surfaces and explode after a short delay"
 			+ "\n'Vestiges of the Queen's Harbingers yet linger among Saturn's moons.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

@@ -9,8 +9,11 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 {
 	public class HauntedEarth : Gun
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Increased critical strike chance while not moving"
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Increased critical strike chance while not moving"
 			+ "\n'Those we've lost still linger in every place we look. Earth is no place for the living.'");
+		}
 
 		public override void DestinySetDefaults()
 		{

@@ -87,8 +87,10 @@ namespace DestinyMod.Common.ModPlayers
 			onSuccessfulIteration(heldDestinyModItem);
 		}
 
-		public override void PostUpdateRunSpeeds() =>
+		public override void PostUpdateRunSpeeds()
+        {
 			ImplementItemIteration(destinyModItem => destinyModItem.DeterminePostUpdateRunSpeedsContext(Player), destinyModItem => destinyModItem.PostUpdateRunSpeeds(Player));
+		}
 
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
 		{
@@ -125,7 +127,9 @@ namespace DestinyMod.Common.ModPlayers
 			heldDestinyModItem.ModifyDrawInfo(Player, ref drawInfo);
 		}
 
-		public override void HideDrawLayers(PlayerDrawSet drawInfo) =>
+		public override void HideDrawLayers(PlayerDrawSet drawInfo)
+        {
 			ImplementItemIteration(destinyModItem => destinyModItem.DetermineHideDrawLayersContext(Player), destinyModItem => destinyModItem.HideDrawLayers(Player, drawInfo));
+		}
 	}
 }

@@ -128,7 +128,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => Projectile.timeLeft = 2;
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Projectile.timeLeft = 2;
+        }
 
         public override void Kill(int timeLeft)
         {
@@ -150,7 +153,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, lightColor.G * 0.75f, lightColor.B * 0.55f, lightColor.A);
 
-        public override void ModifyDamageHitbox(ref Rectangle hitbox) => hitbox = Fired ? Projectile.Hitbox : Rectangle.Empty;
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+            hitbox = Fired ? Projectile.Hitbox : Rectangle.Empty;
+        }
 
         public static void AdjustMagnitude(ref Vector2 vector)
         {

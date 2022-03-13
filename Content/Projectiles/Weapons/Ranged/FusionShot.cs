@@ -41,7 +41,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
-        public override void SetStaticDefaults() => DisplayName.SetDefault("Bullet");
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Bullet");
+        }
 
         public override void DestinySetDefaults()
         {
@@ -155,7 +158,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             CountFires = FireDelay = 0;
         }
 
-        public override void ModifyDamageHitbox(ref Rectangle hitbox) => hitbox = Rectangle.Empty;
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+            hitbox = Rectangle.Empty;
+        }
 
         public override bool PreDraw(ref Color lightColor) => false;
     }

@@ -25,7 +25,10 @@ namespace DestinyMod.Content.Tiles
 			AddMapEntry(new Color(160, 231, 242), name);
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<Items.Placeables.MicrophasicDatalattice>());
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<Items.Placeables.MicrophasicDatalattice>());
+		}
 
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
@@ -36,6 +39,9 @@ namespace DestinyMod.Content.Tiles
 			return false;
 		}
 
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) => Lighting.AddLight(new Vector2(i * 16, j * 16), Color.White.ToVector3() * 0.55f);
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			Lighting.AddLight(new Vector2(i * 16, j * 16), Color.White.ToVector3() * 0.55f);
+		}
 	}
 }
