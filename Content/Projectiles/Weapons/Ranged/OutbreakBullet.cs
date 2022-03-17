@@ -20,7 +20,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
                 DebuffNPC debuffNPC = target.GetGlobalNPC<DebuffNPC>();
                 debuffNPC.OutbreakHitCount++;
-                debuffNPC.OutbreakInfectiousDuration = 60;
+                debuffNPC.OutbreakHitDuration = 60;
                 if ((crit && target.life <= 0) || debuffNPC.OutbreakHitCount >= 12)
                 {
                     debuffNPC.OutbreakHitCount = 0;

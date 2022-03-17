@@ -35,6 +35,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(-22, 0);
+		public override Vector2? HoldoutOffset() => new Vector2(-12, 0);
 	}
 }

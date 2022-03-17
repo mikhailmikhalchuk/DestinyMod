@@ -40,5 +40,7 @@ Added a Bestiary icon for the mod
 Weapon tooltips are now single-quoted
 Added the ammo return perk for Whisper of the Worm
 Readded Divinity's yellow dust effect for affected NPCs
+Fixed fusion rifle cancellation
+Added Sleeper Simulant
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

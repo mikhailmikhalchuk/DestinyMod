@@ -33,11 +33,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             set => Projectile.ai[0] = value;
         }
 
-        public int CountFires
-        {
-            get => (int)Projectile.ai[1];
-            set => Projectile.ai[1] = value;
-        }
+        public int CountFires;
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
@@ -52,8 +48,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             AIType = ProjectileID.Bullet;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            // projectile.tileCollide = false;
-            // Projectile.hide = true;
+            Projectile.tileCollide = false;
+            Projectile.hide = true;
             Projectile.penetrate = -1;
         }
 
@@ -151,7 +147,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (CountFires < ProjectileCount)
             {
-                ChargeSound?.Stop();
+                ChargeSound?.Stop(true);
                 ChargeSound = null;
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
             }

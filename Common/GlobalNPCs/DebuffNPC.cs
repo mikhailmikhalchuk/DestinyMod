@@ -5,7 +5,7 @@ namespace DestinyMod.Common.GlobalNPCs
 {
 	public class DebuffNPC : GlobalNPC
 	{
-		public int OutbreakInfectiousDuration;
+		public int OutbreakHitDuration;
 
 		public int OutbreakHitCount;
 
@@ -15,7 +15,7 @@ namespace DestinyMod.Common.GlobalNPCs
 
 		public override void PostAI(NPC npc)
 		{
-			if (--OutbreakHitCount <= 0)
+			if (--OutbreakHitDuration <= 0)
 			{
 				OutbreakHitCount = 0;
 			}
