@@ -33,8 +33,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			//DestinyModProjectile.FireFusionProjectile(player, source, position, velocity, damage, knockback, 1, ModContent.ProjectileType<SleeperBeam>());
-			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<SleeperBeam>(), damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position, velocity + new Vector2(Main.rand.Next(-15, 16) * 0.05f), ModContent.ProjectileType<SleeperBeam>(), damage, knockback, player.whoAmI, 0, 4);
 			return false;
 		}
 

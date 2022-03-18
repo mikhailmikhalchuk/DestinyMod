@@ -10,6 +10,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ReLogic.Utilities;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
@@ -22,8 +23,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public float Distance { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
 
 		public float Counter { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
-
-		public bool Done { get => Projectile.localAI[0] != 0; set => Projectile.localAI[0] = value ? 1 : 0; }
 
 		public override void DestinySetDefaults()
 		{
@@ -39,7 +38,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];
-			DrawLaser(Main.spriteBatch, TextureAssets.Projectile[Projectile.type].Value, new Vector2(player.Center.X, player.Center.Y - 5),
+			DrawLaser(Main.spriteBatch, TextureAssets.Projectile[Projectile.type].Value, new Vector2(player.MountedCenter.X, player.MountedCenter.Y - 5),
 				Projectile.velocity, 10, Projectile.damage, -MathHelper.PiOver2, 1f, 60);
 			return false;
 		}
@@ -68,9 +67,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			Player player = Main.player[Projectile.owner];
-			Vector2 collisionBox = new Vector2(player.Center.X, player.Center.Y - 5) + Projectile.velocity * (Distance + 10);
+			Vector2 collisionBox = new Vector2(player.MountedCenter.X, player.MountedCenter.Y - 5) + Projectile.velocity * (Distance + 10);
 			float discard = 0f;
-			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), player.Center,
+			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), player.MountedCenter,
 				collisionBox, 8, ref discard);
 		}
 
@@ -94,45 +93,16 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			Projectile.position = player.Center + Projectile.velocity * 60;
+			Projectile.position = player.MountedCenter + Projectile.velocity * 60;
 			Projectile.timeLeft = 4;
-			if (!Done && Start == null)
+			if (Start == null)
 			{
-				if (Main.soundVolume <= 0)
-				{
-					Start = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStart"));
-					Start.Volume = 0;
-					Start.Play();
-				}
-				else
-				{
-					Start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStart"), Projectile.Center);
-				}
-				Done = true;
-			}
-			else if (!Done && Start != null)
-			{
-				Start.Play();
-				Done = true;
+				Start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStart"), Projectile.Center);
 			}
 
-			if (Fire == null && Start != null && Start.State != SoundState.Playing)
+			if ((Fire == null && Start != null && Start.State != SoundState.Playing) || (Fire != null && Start.State != SoundState.Playing && Fire.State == SoundState.Stopped))
 			{
-				if (Main.soundVolume <= 0)
-				{
-					Fire = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityFire"));
-					Fire.IsLooped = true;
-					Fire.Volume = 0;
-					Fire.Play();
-				}
-				else
-				{
-					Fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityFire"), Projectile.Center);
-				}
-			}
-			else if (Fire != null && Start.State != SoundState.Playing && Fire.State == SoundState.Stopped)
-			{
-				Fire.Play();
+				Fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityFire"), Projectile.Center);
 			}
 
 			if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 == 0 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
@@ -142,7 +112,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 
 			if (Projectile.owner == Main.myPlayer)
 			{
-				Projectile.velocity = Vector2.Normalize(Main.MouseWorld - player.Center);
+				Projectile.velocity = Vector2.Normalize(Main.MouseWorld - player.MountedCenter);
 				Projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
 				Projectile.netUpdate = true;
 			}
@@ -150,12 +120,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			int dir = Projectile.direction;
 			player.ChangeDir(dir);
 			player.heldProj = Projectile.whoAmI;
-			player.itemTime = player.itemAnimation = 4;
+			player.itemTime = player.itemAnimation = 2;
 			player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * dir, Projectile.velocity.X * dir);
 			for (Distance = 60; Distance <= 2200f; Distance += 5f)
 			{
-				Vector2 start = player.Center + Projectile.velocity * Distance;
-				if (!Collision.CanHitLine(player.Center, 1, 1, start, 1, 1))
+				Vector2 start = player.MountedCenter + Projectile.velocity * Distance;
+				if (!Collision.CanHitLine(player.MountedCenter, 1, 1, start, 1, 1))
 				{
 					Distance -= 5f;
 					Counter = 0;

@@ -72,7 +72,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void AI()
         {
-            if (ChargeSound == null && !Fired)
+            if (ChargeSound == null && !Fired) //84
             {
                 if (Main.soundVolume <= 0)
                 {

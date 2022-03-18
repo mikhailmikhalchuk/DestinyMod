@@ -19,7 +19,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.width = 4;
 			Projectile.height = 4;
 			Projectile.friendly = true;
-			Projectile.penetrate = 6;
+			Projectile.penetrate = 3;
 			Projectile.DamageType = DamageClass.Ranged;
 		}
 
@@ -60,7 +60,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void AI()
 		{
-			if (!Fired)
+			Projectile.localAI[1]++;
+			if (Projectile.ai[1] == 4f)
             {
 				if (ChargeSound == null)
 				{
@@ -87,6 +88,11 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					Projectile.netUpdate = true;
 				}
 
+				//Dust dust = Dust.NewDustDirect(player, player., 1, DustID.RedTorch);
+				//dust.velocity *= 0f;
+				//dust.noGravity = true;
+				//dust.scale = 0.01f * Projectile.localAI[1];
+
 				int dir = Projectile.direction;
 				player.ChangeDir(dir);
 				player.heldProj = Projectile.whoAmI;
@@ -102,6 +108,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 						ChargeSound?.Stop();
 						ChargeSound = null;
 						player.channel = false;
+
+						for (int i = 0; i < 3; i++)
+                        {
+							Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.Center, 10 * Projectile.velocity * 2f + new Vector2(Main.rand.Next(-15, 16) * 0.2f), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
+						}
+
+						Projectile.Kill();
+						player.itemAnimation = player.itemTime = 15;
 					}
 					else if (!player.channel && ChargeSound.State == SoundState.Playing)
 					{
@@ -110,13 +124,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				}
 			}
 
-			if (Fired)
+			if (Projectile.ai[1] == 5f)
             {
 				if (Projectile.localAI[0] <= 0)
                 {
 					Projectile.extraUpdates = 100;
 					Projectile.timeLeft = 300;
-					Projectile.velocity = 10 * Projectile.velocity * 2f;
+					//Projectile.velocity = 10 * Projectile.velocity * 2f;
 				}
 				Projectile.localAI[0]++;
 				if (Projectile.localAI[0] > 2f)
@@ -138,7 +152,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
-			hitbox = Fired ? Projectile.Hitbox : Rectangle.Empty;
+			hitbox = Projectile.ai[1] == 5f ? Projectile.Hitbox : Rectangle.Empty;
 		}
 	}
 }
