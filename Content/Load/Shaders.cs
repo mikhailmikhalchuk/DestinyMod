@@ -12,13 +12,14 @@ namespace DestinyMod.Content.Load
     {
         public static Ref<Effect> ShockwaveEffect;
 
+        public static Filter Shockwave;
+
         public void Load(Mod mod)
         {
             if (Main.dedServ)
             {
                 return;
             }
-
             GameShaders.Armor.BindShader(ModContent.ItemType<GambitDye>(), new ArmorShaderData(new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Dyes/Gambit").Value), "GambitDyePass"))
                 .UseColor(0, 1f, 0);
 
@@ -27,8 +28,10 @@ namespace DestinyMod.Content.Load
                 .UseSecondaryColor(2f, 0.25f, 0.35f);
 
             ShockwaveEffect = new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Shaders/Shockwave", AssetRequestMode.ImmediateLoad).Value);
-            Filters.Scene["DestinyMod:Shockwave"] = new Filter(new ScreenShaderData(ShockwaveEffect, "DestinyMod:Shockwave"), EffectPriority.VeryHigh);
-            Filters.Scene["DestinyMod:Shockwave"].Load();
+            ShockwaveEffect.Value.Parameters["rIntensity"].SetValue(1 / 1920f);
+            Shockwave = new Filter(new ScreenShaderData(ShockwaveEffect, "Shockwave"), EffectPriority.VeryHigh);
+            Filters.Scene["DestinyMod:Shockwave"] = Shockwave;
+            Shockwave.Load();
         }
 
         public void Unload() { }
