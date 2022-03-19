@@ -28,10 +28,10 @@ namespace DestinyMod.Content.Load
                 .UseSecondaryColor(2f, 0.25f, 0.35f);
 
             ShockwaveEffect = new Ref<Effect>(mod.Assets.Request<Effect>("Assets/Effects/Shaders/Shockwave", AssetRequestMode.ImmediateLoad).Value);
-            ShockwaveEffect.Value.Parameters["rIntensity"].SetValue(1 / 1920f);
-            Shockwave = new Filter(new ScreenShaderData(ShockwaveEffect, "Shockwave"), EffectPriority.VeryHigh);
-            Filters.Scene["DestinyMod:Shockwave"] = Shockwave;
-            Shockwave.Load();
+            //ShockwaveEffect.Value.Parameters["rIntensity"].SetValue(1 / 1920f);
+            //Shockwave = new Filter(new ScreenShaderData(ShockwaveEffect, "Shockwave"), EffectPriority.VeryHigh);
+            //Filters.Scene["DestinyMod:Shockwave"] = Shockwave;
+            //Shockwave.Load();
         }
 
         public void Unload() { }

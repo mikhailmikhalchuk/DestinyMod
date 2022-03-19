@@ -32,11 +32,11 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, position + new Vector2(0, -3), velocity.RotatedByRandom(MathHelper.ToRadians(3)), ModContent.ProjectileType<MonteBullet>(), damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position + new Vector2(0, -5), velocity.RotatedByRandom(MathHelper.ToRadians(3)), ModContent.ProjectileType<MonteBullet>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(-15, 0);
+		public override Vector2? HoldoutOffset() => new Vector2(-15, -1);
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ModContent.ItemType<GunsmithMaterials>(), 50)
