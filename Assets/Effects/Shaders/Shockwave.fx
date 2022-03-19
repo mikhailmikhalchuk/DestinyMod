@@ -25,34 +25,44 @@ const float PI = 3.1415926538; // How does HLSL not have a default const for PI?
 bool active; // I like having an active variable in screenshaders because sometimes they'll take a noticable time to deactivate 
 
 // r in these variables meaning ripple
-float rCount;
+float rStrength;
 float rSize;
-float rSpeed;
+float rBuffer;
+float rDiameter;
+float rCount;
+float rCountScale;
 
-float4 Shockwave(float2 coords : TEXCOORD0) : COLOR0
+float4 Shockwave(float4 position : SV_POSITION, float2 coords : TEXCOORD0) : COLOR0
 {
-    if (!active)
+    float screenRatio = uScreenResolution.y / uScreenResolution.x;
+    float2 targetPixelPos = (uTargetPosition - uScreenPosition) / uScreenResolution;
+    float2 targetScreenCoords = (targetPixelPos - float2(0, 0.5)) * float2(1, screenRatio) + float2(0, 0.5);
+    float2 screenCoords = (coords - float2(0, 0.5)) * float2(1, screenRatio) + float2(0, 0.5);
+    float distance = length(screenCoords - targetScreenCoords);
+    float mask = (1 - smoothstep(rSize - rBuffer, rSize, distance)) * smoothstep(rSize - rDiameter - rBuffer, rSize - rDiameter, distance);
+    /*float totalIterations = 0;
+    for (float applyCount = 0; applyCount < rCount; applyCount++)
     {
-        return tex2D(uImage0, coords);
-    }
+        if (++totalIterations > 5)
+        {
+            break;
+        }
 
-    float2 targetCoords = (uTargetPosition - uScreenPosition) / uScreenResolution;
-    float2 centerCoords = (coords - targetCoords) * (uScreenResolution / uScreenResolution.y);
-    float dotField = dot(centerCoords, centerCoords);
-    float ripple = dotField * rSize * PI - uProgress * rSpeed;
+        float adjustedRSize = rSize - rCountScale * applyCount;
+        float smoothenDistance = smoothstep(adjustedRSize - rHarshness, adjustedRSize, distance);
+        if (applyCount % 2 == 0)
+        {
+            mask *= 1 - smoothenDistance;
+        }
+        else
+        {
+            mask *= smoothenDistance;
+        }
+    }*/
 
-    if (ripple < 0 && ripple > rCount * -2 * PI)
-    {
-        ripple = saturate(sin(ripple));
-    }
-    else
-    {
-        ripple = 0;
-    }
-
-    float2 sampleCoords = coords + ((ripple * uOpacity / uScreenResolution) * centerCoords);
-
-    return tex2D(uImage0, sampleCoords);
+    float2 centreCoords = saturate(sin(screenCoords - targetScreenCoords)) * rStrength * mask; // normalize(screenCoords - targetScreenCoords) * rStrength * mask; // Also is a thing you can try
+    //return float4(float3(mask, mask, mask), 1);
+    return tex2D(uImage0, coords - centreCoords);
 }
 
 technique Technique1

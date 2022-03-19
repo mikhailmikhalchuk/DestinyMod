@@ -27,7 +27,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/AceOfSpades");
 			Item.useAnimation = 20;
 			Item.value = Item.buyPrice(gold: 1);
-			Item.scale = 0.8f;
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
