@@ -30,7 +30,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			Projectile.height = 10;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
-			// projectile.tileCollide = false;
+			Projectile.tileCollide = false;
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.hide = true;
 		}

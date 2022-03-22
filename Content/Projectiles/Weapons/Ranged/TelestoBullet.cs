@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Audio;
+using Terraria.ModLoader;
 using DestinyMod.Common.Projectiles;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
@@ -52,7 +53,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					for (int j = projectileTilePosition.Y; j < projectileTileDimensions.Y; j++)
 					{
 						Tile tile = Framing.GetTileSafely(i, j);
-						if(!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || (Main.tileSolidTop[tile.TileType] && tile.TileFrameY != 0))
+						if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || (Main.tileSolidTop[tile.TileType] && tile.TileFrameY != 0))
 						{
 							continue;
 						}
@@ -83,6 +84,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Player owner = Main.player[Projectile.owner];
 			Projectile projectile = Projectile.NewProjectileDirect(owner.GetProjectileSource_Item(owner.HeldItem), new Vector2(Projectile.Center.X, Projectile.Center.Y - 48), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, Projectile.damage / 2, 0, Projectile.owner);
 			projectile.friendly = true;
+			projectile.DamageType = DamageClass.Ranged;
 			SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);
 		}
 	}

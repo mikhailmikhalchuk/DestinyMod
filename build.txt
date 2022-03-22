@@ -1,8 +1,8 @@
-displayName = Destiny Mod
 author = MikhailMCraft & Co.
 version = 0.8.2
-buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*, Properties\*
+displayName = Destiny Mod
+homepage = https://discord.gg/ZrjsCq96zM
 hideCode = true
 hideResources = true
 includeSource = false
-homepage = https://discord.gg/ZrjsCq96zM
+buildIgnore = *.csproj, obj\*, bin\*, *.sln, .vs\*, .gitignore, .git\*, Properties\*

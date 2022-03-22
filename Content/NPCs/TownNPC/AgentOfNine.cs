@@ -11,7 +11,7 @@ using Terraria.Chat;
 using DestinyMod.Content.Items.Weapons.Ranged;
 using DestinyMod.Common.NPCs.Data;
 using DestinyMod.Common.NPCs.NPCTypes;
-using DestinyMod.Content.Currency;
+using DestinyMod.Content.Currencies;
 using Terraria.GameContent.Bestiary;
 
 namespace DestinyMod.Content.NPCs.TownNPC

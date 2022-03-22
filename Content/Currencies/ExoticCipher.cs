@@ -4,7 +4,7 @@ using Terraria.GameContent.UI;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace DestinyMod.Content.Currency
+namespace DestinyMod.Content.Currencies
 {
 	public class ExoticCipher : CustomCurrencySingleCoin, ILoadable
 	{

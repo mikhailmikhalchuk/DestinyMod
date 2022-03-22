@@ -20,9 +20,12 @@ namespace DestinyMod.Common.Items
 
 		public virtual void AutomaticSetDefaults()
 		{
-			Texture2D itemTexture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-			Item.width = itemTexture.Width;
-			Item.height = itemTexture.Height;
+			if (!Main.dedServ)
+            {
+				Texture2D itemTexture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				Item.width = itemTexture.Width;
+				Item.height = itemTexture.Height;
+			}
 		}
 
 		public virtual void DestinySetDefaults() { }

@@ -5,10 +5,10 @@ namespace DestinyMod.Common.DropConditions
 {
     public class HasAncientShard : IItemDropRuleCondition, IProvideItemConditionDescription
     {
-        public bool CanDrop(DropAttemptInfo info) => info.player.HasBuff<AncientShard>();
+        public bool CanDrop(DropAttemptInfo info) => info.player.HasBuff<AncientShard>() && !info.IsInSimulation;
 
-        public bool CanShowItemDropInUI() => true;
+        public bool CanShowItemDropInUI() => false;
 
-        public string GetConditionDescription() => null;
+        public string GetConditionDescription() => "Drops with the Ancient Shard buff";
     }
 }

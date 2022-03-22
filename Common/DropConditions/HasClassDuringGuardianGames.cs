@@ -6,10 +6,10 @@ namespace DestinyMod.Common.DropConditions
 {
     public class HasClassDuringGuardianGames : IItemDropRuleCondition, IProvideItemConditionDescription
     {
-        public bool CanDrop(DropAttemptInfo info) => GuardianGamesSystem.Active && info.player.GetModPlayer<ClassPlayer>().ClassType != DestinyClassType.None;
+        public bool CanDrop(DropAttemptInfo info) => GuardianGamesSystem.Active && info.player.GetModPlayer<ClassPlayer>().ClassType != DestinyClassType.None && !info.IsInSimulation;
 
-        public bool CanShowItemDropInUI() => true;
+        public bool CanShowItemDropInUI() => false;
 
-        public string GetConditionDescription() => null;
+        public string GetConditionDescription() => "Drops while the Guardian Games are active";
     }
 }

@@ -42,5 +42,8 @@ Added the ammo return perk for Whisper of the Worm
 Readded Divinity's yellow dust effect for affected NPCs
 Fixed fusion rifle cancellation
 Added Sleeper Simulant
+The mod should now no longer automatically unload when starting up a server with the mod loaded
+Telesto's bullets' explosions now correctly deal ranged damage
+Fusion rifles now no longer use sounds to determine when to fire, instead using an internal counter (this should fix issues with fusion sounds playing)
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

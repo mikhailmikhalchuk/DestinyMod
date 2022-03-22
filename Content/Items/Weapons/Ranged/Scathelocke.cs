@@ -18,8 +18,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void DestinySetDefaults()
 		{
 			Item.damage = 10;
-			Item.useTime = 7;
-			Item.useAnimation = 7;
+			Item.useTime = 6;
+			Item.useAnimation = 6;
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;

@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dead Man's Tale");
-			Tooltip.SetDefault("'Long, short, they all end the same way. —Katabasis'");
+			Tooltip.SetDefault("'Long, short, they all end the same way. -Katabasis'");
 		}
 
 		public override void DestinySetDefaults()

@@ -5,14 +5,13 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
+using System.IO;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
     // If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
     public class FusionShot : DestinyModProjectile
     {
-        public SoundEffectInstance ChargeSound;
-
         public bool SwappedData;
 
         public int ProjectileCount
@@ -34,6 +33,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         }
 
         public int CountFires;
+
+        public int Counter;
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
@@ -70,24 +71,16 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             return true;
 		}
 
-		public override void AI()
+        public override void AI()
         {
-            if (ChargeSound == null && !Fired) //84
+            if (Counter <= 0)
             {
-                if (Main.soundVolume <= 0)
-                {
-                    ChargeSound = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"));
-                    ChargeSound.Volume = 0;
-                    ChargeSound.Play();
-                }
-                else
-                {
-                    ChargeSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
-                }
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
             }
 
             Player player = Main.player[Projectile.owner];
             Projectile.position = player.Center + Projectile.velocity;
+            Counter++;
 
             if (Projectile.owner == Main.myPlayer)
             {
@@ -103,22 +96,17 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             player.itemAnimation = player.itemTime = 2;
             player.itemRotation = (Projectile.velocity * dir).ToRotation();
 
-            if (ChargeSound != null)
+            if (Counter == 84)
             {
-                if (ChargeSound.State == SoundState.Stopped && !Fired)
-                {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
-                    Fired = true;
-                    ChargeSound?.Stop();
-                    ChargeSound = null;
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
+                Fired = true;
 
-                    FireProjectile();
-                    CountFires = 1;
-                }
-                else if (!player.channel && ChargeSound.State == SoundState.Playing && !Fired)
-                {
-                    Projectile.Kill();
-                }
+                FireProjectile();
+                CountFires = 1;
+            }
+            else if (!player.channel && Counter < 84 && !Fired)
+            {
+                Projectile.Kill();
             }
 
             if (CountFires >= 1)
@@ -135,6 +123,16 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Counter);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Counter = reader.ReadInt32();
+        }
+
         public void FireProjectile()
 		{
             Player player = Main.player[Projectile.owner];
@@ -147,8 +145,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (CountFires < ProjectileCount)
             {
-                ChargeSound?.Stop(true);
-                ChargeSound = null;
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
             }
             CountFires = FireDelay = 0;
