@@ -123,16 +123,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(Counter);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            Counter = reader.ReadInt32();
-        }
-
         public void FireProjectile()
 		{
             Player player = Main.player[Projectile.owner];

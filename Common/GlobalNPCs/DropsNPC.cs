@@ -16,7 +16,7 @@ using DestinyMod.Content.Tiles;
 
 namespace DestinyMod.Common.GlobalNPCs
 {
-    public class DestinyGlobalNPC : GlobalNPC
+    public class DropsNPC : GlobalNPC
     {
         public override bool InstancePerEntity => true;
 
@@ -38,14 +38,26 @@ namespace DestinyMod.Common.GlobalNPCs
 
                 LeadingConditionRule laurel = new LeadingConditionRule(new HasClassDuringGuardianGames());
                 laurel.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Laurel>(), 25));
+
+                npcLoot.Add(laurel);
             }
 
             if (npc.boss)
             {
+                LeadingConditionRule downed = new LeadingConditionRule(new DropBasedOnDownedBossStatus());
+                downed.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ExoticCipher>()));
+
+                npcLoot.Add(downed);
+            }
+        }
+
+        public override void OnKill(NPC npc)
+        {
+            if (npc.boss)
+            {
                 DownedBossData downedBossIndexer = new DownedBossData(npc.type);
-                if (NPCIOSystem.DownedBoss.FirstOrDefault(downedBossData => downedBossData.Type == npc.type).Type != 0)
+                if (!NPCIOSystem.DownedBoss.Any(downedBossData => downedBossData.Type == npc.type))
                 {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExoticCipher>()));
                     NPCIOSystem.DownedBoss.Add(downedBossIndexer);
                 }
             }

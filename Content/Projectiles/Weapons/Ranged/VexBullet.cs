@@ -17,13 +17,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                Player player = Main.player[Projectile.owner];
-                ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
-                player.AddBuff(ModContent.BuffType<Buffs.Overcharge>(), 2);
-                if (itemPlayer.OverchargeStacks < 3)
-                {
-                    itemPlayer.OverchargeStacks++;
-                }
+                ApplyOvercharge();
             }
         }
 
@@ -31,13 +25,18 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (target.statLife <= 0)
             {
-                Player player = Main.player[Projectile.owner];
-                ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
-                player.AddBuff(ModContent.BuffType<Buffs.Overcharge>(), 2);
-                if (itemPlayer.OverchargeStacks < 3)
-                {
-                    itemPlayer.OverchargeStacks++;
-                }
+                ApplyOvercharge();
+            }
+        }
+
+        private void ApplyOvercharge()
+        {
+            Player player = Main.player[Projectile.owner];
+            ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
+            player.AddBuff(ModContent.BuffType<Buffs.Overcharge>(), 2);
+            if (itemPlayer.OverchargeStacks < 3)
+            {
+                itemPlayer.OverchargeStacks++;
             }
         }
     }

@@ -18,7 +18,7 @@ namespace DestinyMod.Common.ModPlayers
 
 		public int ShockwaveDuration = 120;
 
-        public override void PostUpdateMiscEffects()
+        /*public override void PostUpdateMiscEffects()
         {
 			if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Z) && Main.oldKeyState.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Z))
 			{

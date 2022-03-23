@@ -27,6 +27,8 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
+The patch fixing item animation hitboxes has been approved by the tModLoader team (this fixes tooltip hovers for animated items in the world)
+
 Fixed the super charge bar's text position
 Added Bestiary entries for town NPCs
 Added happiness qualifiers for town NPCs
@@ -45,5 +47,6 @@ Added Sleeper Simulant
 The mod should now no longer automatically unload when starting up a server with the mod loaded
 Telesto's bullets' explosions now correctly deal ranged damage
 Fusion rifles now no longer use sounds to determine when to fire, instead using an internal counter (this should fix issues with fusion sounds playing)
+Exotic Ciphers now correctly drop from bosses on first death, including modded bosses
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

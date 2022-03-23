@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.Projectiles;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -21,45 +22,40 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void DestinySetDefaults()
 		{
-			Projectile.CloneDefaults(ProjectileID.RocketI);
-			AIType = ProjectileID.RocketI;
+			Projectile.width = 14;
+			Projectile.height = 14;
 			Projectile.timeLeft = 500;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
-			Projectile.ai[0] = -1;
+			Projectile.penetrate = 1;
+			Projectile.aiStyle = -1;
 		}
 
 		public override void AI()
         {
-			if (Projectile.timeLeft <= 2)
+			Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + MathHelper.PiOver2;
+			if (Math.Abs(Projectile.velocity.X) >= 8 || Math.Abs(Projectile.velocity.Y) >= 8)
             {
-				Projectile.Resize(50, 50);
-
-				if (Projectile.timeLeft < 2)
+				for (int i = 0; i < 2; i++)
                 {
-					return;
-                }
-				for (int i = 0; i < 20; i++)
-				{
-					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
+					float dustX = 3;
+					float dustY = 3;
+					if (i == 1)
+                    {
+						dustX += Projectile.velocity.X * 0.5f;
+						dustY += Projectile.velocity.Y * 0.5f;
+					}
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X + dustX, Projectile.position.Y + dustY) - Projectile.velocity * 0.5f, Projectile.width - 8, Projectile.height - 8, DustID.Torch, Alpha: 100);
+					dust.scale *= 2f + Main.rand.Next(10) * 0.1f;
+					dust.velocity *= 0.2f;
 					dust.noGravity = true;
-					dust.velocity *= 7f;
-					dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
-					dust.velocity *= 3f;
+
+					dust = Dust.NewDustDirect(new Vector2(Projectile.position.X + dustX, Projectile.position.Y + dustY) - Projectile.velocity * 0.5f, Projectile.width - 8, Projectile.height - 8, DustID.Smoke, Alpha: 100, Scale: 0.5f);
+					dust.fadeIn = 1f + Main.rand.Next(5) * 0.1f;
+					dust.velocity *= 0.05f;
 				}
-			}
-			if (Projectile.timeLeft <= 3)
-            {
-				return;
             }
 			Target = GradualHomeInOnNPC(400f, 20f, 0.15f);
-		}
-
-		public override bool OnTileCollide(Vector2 oldVelocity)
-		{
-			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-			Projectile.timeLeft = 3;
-			return false;
 		}
 
 		public override void OnHitNPC(NPC npc, int damage, float knockback, bool crit)
@@ -75,13 +71,24 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			{
 				Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), Projectile.position, Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f), ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, Projectile.owner);
 			}
-			Projectile.timeLeft = 3;
 			Target = -1;
 		}
 
 		public override void Kill(int timeLeft)
 		{
+			Projectile.Resize(80, 80);
+			Projectile.maxPenetrate = -1;
+			Projectile.penetrate = -1;
+			Projectile.Damage();
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+			for (int i = 0; i < 20; i++)
+			{
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
+				dust.noGravity = true;
+				dust.velocity *= 7f;
+				dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
+				dust.velocity *= 3f;
+			}
 		}
 	}
 }

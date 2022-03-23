@@ -27,7 +27,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
-        public void DeathBulletHeal()
+        private void DeathBulletHeal()
 		{
             Player player = Main.player[Projectile.owner];
             player.statLife += 5;
