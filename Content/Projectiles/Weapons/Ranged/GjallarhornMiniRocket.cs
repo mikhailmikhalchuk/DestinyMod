@@ -32,8 +32,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void AI()
 		{
-			Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + MathHelper.PiOver2;
-			if (Math.Abs(Projectile.velocity.X) >= 8 || Math.Abs(Projectile.velocity.Y) >= 8)
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+
+			Vector2 absoluteVelocity = new Vector2(Math.Abs(Projectile.velocity.X), Math.Abs(Projectile.velocity.Y));
+			if (absoluteVelocity.X >= 8 || absoluteVelocity.Y >= 8)
 			{
 				for (int i = 0; i < 2; i++)
 				{
@@ -44,20 +46,24 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 						dustX += Projectile.velocity.X * 0.5f;
 						dustY += Projectile.velocity.Y * 0.5f;
 					}
-					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X + dustX, Projectile.position.Y + dustY) - Projectile.velocity * 0.5f, Projectile.width - 8, Projectile.height - 8, DustID.Torch, Alpha: 100);
+
+					Vector2 dustPosition = Projectile.position + new Vector2(dustX, dustY) - Projectile.velocity * 0.5f;
+					Dust dust = Dust.NewDustDirect(dustPosition, Projectile.width - 8, Projectile.height - 8, DustID.Torch, Alpha: 100);
 					dust.scale *= 2f + Main.rand.Next(10) * 0.1f;
 					dust.velocity *= 0.2f;
 					dust.noGravity = true;
 
-					dust = Dust.NewDustDirect(new Vector2(Projectile.position.X + dustX, Projectile.position.Y + dustY) - Projectile.velocity * 0.5f, Projectile.width - 8, Projectile.height - 8, DustID.Smoke, Alpha: 100, Scale: 0.5f);
+					dust = Dust.NewDustDirect(dustPosition, Projectile.width - 8, Projectile.height - 8, DustID.Smoke, Alpha: 100, Scale: 0.5f);
 					dust.fadeIn = 1f + Main.rand.Next(5) * 0.1f;
 					dust.velocity *= 0.05f;
 				}
 			}
-			if (Math.Abs(Projectile.velocity.X) < 15f && Math.Abs(Projectile.velocity.Y) < 15f)
+
+			if (absoluteVelocity.X < 15f && absoluteVelocity.Y < 15f)
             {
 				Projectile.velocity *= 1.1f;
             }
+
 			if (Projectile.timeLeft <= 190)
             {
 				GradualHomeInOnNPC(400f, 20f, 0.15f);
@@ -81,10 +87,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 			for (int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 3.5f);
 				dust.noGravity = true;
 				dust.velocity *= 7f;
-				dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
+				dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.5f);
 				dust.velocity *= 3f;
 			}
 		}
