@@ -9,10 +9,9 @@ using Microsoft.Xna.Framework.Audio;
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
 	public class SleeperBeam : DestinyModProjectile
-	{
-		public SoundEffectInstance ChargeSound;
+	{public bool Fired;
 
-		public bool Fired;
+		public int Counter;
 
 		public override void DestinySetDefaults()
 		{
@@ -27,8 +26,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
 			if (!Fired)
 			{
-				ChargeSound?.Stop(true);
-				ChargeSound = null;
 				SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
 			}
 			else
@@ -63,22 +60,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.localAI[1]++;
 			if (Projectile.ai[1] == 4f)
             {
-				if (ChargeSound == null)
+				if (Counter <= 0)
 				{
-					if (Main.soundVolume <= 0)
-					{
-						ChargeSound = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"));
-						ChargeSound.Volume = 0;
-						ChargeSound.Play();
-					}
-					else
-					{
-						ChargeSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
-					}
+					SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
 				}
 
 				Player player = Main.player[Projectile.owner];
 				Projectile.position = player.Center + Projectile.velocity;
+				Counter++;
 
 				if (Projectile.owner == Main.myPlayer)
 				{
@@ -88,39 +77,33 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					Projectile.netUpdate = true;
 				}
 
-				//Dust dust = Dust.NewDustDirect(player, player., 1, DustID.RedTorch);
-				//dust.velocity *= 0f;
-				//dust.noGravity = true;
-				//dust.scale = 0.01f * Projectile.localAI[1];
-
 				int dir = Projectile.direction;
 				player.ChangeDir(dir);
 				player.heldProj = Projectile.whoAmI;
 				player.itemAnimation = player.itemTime = 2;
 				player.itemRotation = (Projectile.velocity * dir).ToRotation();
 
-				if (ChargeSound != null)
+				Dust dust = Dust.NewDustDirect(player.Center + (player.itemRotation.ToRotationVector2() * 40f * player.direction), 15, 20, DustID.RedTorch);
+				dust.noGravity = true;
+				dust.scale *= 1 + (float)Counter / 43f;
+
+				if (Counter == 43)
 				{
-					if (ChargeSound.State == SoundState.Stopped)
-					{
-						SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
-						Fired = true;
-						ChargeSound?.Stop();
-						ChargeSound = null;
-						player.channel = false;
+					SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
+					Fired = true;
+					player.channel = false;
 
-						for (int i = 0; i < 3; i++)
-                        {
-							Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.Center, 10 * Projectile.velocity * 2f + new Vector2(Main.rand.Next(-15, 16) * 0.2f), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
-						}
-
-						Projectile.Kill();
-						player.itemAnimation = player.itemTime = 15;
-					}
-					else if (!player.channel && ChargeSound.State == SoundState.Playing)
+					for (int i = 0; i < 3; i++)
 					{
-						Projectile.Kill();
+						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.Center, 10 * Projectile.velocity * 2f + (i == 1 ? Vector2.Zero : new Vector2(Main.rand.Next(-7, 8) * 0.2f)), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
 					}
+
+					Projectile.Kill();
+					player.itemAnimation = player.itemTime = 15;
+				}
+				else if (!player.channel && Counter < 43 && !Fired)
+				{
+					Projectile.Kill();
 				}
 			}
 

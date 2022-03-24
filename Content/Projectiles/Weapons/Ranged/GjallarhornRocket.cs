@@ -29,13 +29,16 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = 1;
 			Projectile.aiStyle = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 
 		public override void AI()
         {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
-			if (Math.Abs(Projectile.velocity.X) >= 8 || Math.Abs(Projectile.velocity.Y) >= 8)
+			Vector2 absoluteVelocity = new Vector2(Math.Abs(Projectile.velocity.X), Math.Abs(Projectile.velocity.Y));
+			if (absoluteVelocity.X >= 8 || absoluteVelocity.Y >= 8)
 			{
 				for (int i = 0; i < 2; i++)
 				{
@@ -50,6 +53,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					dust.fadeIn = 1f + Main.rand.Next(5) * 0.1f;
 					dust.velocity *= 0.05f;
 				}
+			}
+			if (absoluteVelocity.X < 15f && absoluteVelocity.Y < 15f)
+			{
+				Projectile.velocity *= 1.1f;
 			}
 
 			Target = GradualHomeInOnNPC(400f, 20f, 0.15f);

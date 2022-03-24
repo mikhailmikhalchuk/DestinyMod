@@ -27,10 +27,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = 1;
 			Projectile.aiStyle = -1;
-			Projectile.scale = 0.75f;
+            Projectile.scale = 0.75f;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 
-		public override void AI()
+        public override void AI()
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
@@ -58,7 +60,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					dust.velocity *= 0.05f;
 				}
 			}
-
 			if (absoluteVelocity.X < 15f && absoluteVelocity.Y < 15f)
             {
 				Projectile.velocity *= 1.1f;

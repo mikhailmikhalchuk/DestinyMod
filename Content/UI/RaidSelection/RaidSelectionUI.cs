@@ -118,11 +118,11 @@ namespace DestinyMod.Content.UI.RaidSelection
 
 			CalculatedStyle dims = raidDragable.GetInnerDimensions();
 
-			Utils.DrawBorderStringFourWay(spriteBatch, ModContent.Request<DynamicSpriteFont>("Assets/Fonts/FuturaBold").Value, Raid.ToUpper(), dims.X + 20, dims.Y + 20, Color.White, Color.Transparent, Vector2.Zero, 0.5f);
+			Utils.DrawBorderStringFourWay(spriteBatch, ModContent.Request<DynamicSpriteFont>("DestinyMod/Assets/Fonts/FuturaBold").Value, Raid.ToUpper(), dims.X + 20, dims.Y + 20, Color.White, Color.Transparent, Vector2.Zero, 0.5f);
 
-			Utils.DrawBorderStringFourWay(spriteBatch, ModContent.Request<DynamicSpriteFont>("Assets/Fonts/FuturaBook").Value, $"Times cleared: {Clears}", dims.X + 20, dims.Y + 70, Color.White, Color.Transparent, Vector2.Zero, 0.8f);
+			Utils.DrawBorderStringFourWay(spriteBatch, ModContent.Request<DynamicSpriteFont>("DestinyMod/Assets/Fonts/FuturaBook").Value, $"Times cleared: {Clears}", dims.X + 20, dims.Y + 70, Color.White, Color.Transparent, Vector2.Zero, 0.8f);
 
-			Utils.DrawBorderStringFourWay(spriteBatch, ModContent.Request<DynamicSpriteFont>("Assets/Fonts/FuturaBook").Value, $"Recommended: {(DownedRequirement ? $"[c/00FF00:{DownedName}]" : $"[c/FF0000:{DownedName}]")}", dims.X + 20, dims.Y + 100, Color.White, Color.Transparent, Vector2.Zero, 0.8f);
+			Utils.DrawBorderStringFourWay(spriteBatch, ModContent.Request<DynamicSpriteFont>("DestinyMod/Assets/Fonts/FuturaBook").Value, $"Recommended: {(DownedRequirement ? $"[c/00FF00:{DownedName}]" : $"[c/FF0000:{DownedName}]")}", dims.X + 20, dims.Y + 100, Color.White, Color.Transparent, Vector2.Zero, 0.8f);
 		}
 
 		private void MouseOverPanel(UIMouseEvent evt, UIElement listeningElement)

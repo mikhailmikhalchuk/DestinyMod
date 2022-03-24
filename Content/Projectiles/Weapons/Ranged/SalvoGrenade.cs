@@ -17,6 +17,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.aiStyle = -1;
 			Projectile.timeLeft = 400;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -53,25 +55,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			return false;
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-			Projectile.timeLeft = 3;
-		}
-
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
 			player.itemAnimation = player.itemTime = 10;
-			if ((Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3) || (player.GetModPlayer<StatsPlayer>().ChannelTime <= 0 && Projectile.timeLeft <= 390))
+			if (player.GetModPlayer<StatsPlayer>().ChannelTime <= 0 && Projectile.timeLeft <= 390)
 			{
-				Projectile.alpha = 255;
-				Projectile.Resize(22, 22);
-				Projectile.damage = 150;
-				Projectile.knockBack = 10f;
-				if (Projectile.timeLeft > 3)
-				{
-					Projectile.timeLeft = 3;
-				}
+				Projectile.Kill();
 			}
 			else if (Main.rand.NextBool())
 			{
@@ -108,6 +98,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		public override void Kill(int timeLeft)
 		{
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+			Projectile.Resize(80, 80);
+			Projectile.maxPenetrate = -1;
+			Projectile.penetrate = -1;
+			Projectile.Damage();
 
 			for (int i = 0; i < 30; i++)
 			{
@@ -134,8 +128,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					gore.velocity.Y += goreCount < 2 ? 1 : -1;
 				}
 			}
-
-			Projectile.Resize(10, 10);
 		}
 	}
 }
