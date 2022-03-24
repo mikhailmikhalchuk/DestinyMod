@@ -9,9 +9,12 @@ using Microsoft.Xna.Framework.Audio;
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
 	public class SleeperBeam : DestinyModProjectile
-	{public bool Fired;
+	{
+		public bool Fired;
 
 		public int Counter;
+
+		private SoundEffectInstance FireSound;
 
 		public override void DestinySetDefaults()
 		{
@@ -26,6 +29,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
 			if (!Fired)
 			{
+				FireSound?.Stop(true);
+				FireSound = null;
 				SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
 			}
 			else
@@ -62,7 +67,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
 				if (Counter <= 0)
 				{
-					SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
+					FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
 				}
 
 				Player player = Main.player[Projectile.owner];

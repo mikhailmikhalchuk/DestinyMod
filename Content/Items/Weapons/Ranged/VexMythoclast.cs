@@ -32,10 +32,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
             Item.channel = true;
             Item.rare = ItemRarityID.Yellow;
             Item.knockBack = 0;
-            Item.useTime = 18;
+            Item.useTime = 15;
             Item.crit = 10;
             Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclast"); //thanks, fillinek
-            Item.useAnimation = 18;
+            Item.useAnimation = 15;
             Item.value = Item.buyPrice(gold: 1);
         }
 
@@ -65,6 +65,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
                 SoundEngine.PlaySound(SoundID.Item101);
                 SwapCooldown = 15;
                 Item.color = Color.LightPink;
+                Item.autoReuse = false;
             }
             else if (player.altFunctionUse == 2 && UsingAltFunction && SwapCooldown <= 0)
             {

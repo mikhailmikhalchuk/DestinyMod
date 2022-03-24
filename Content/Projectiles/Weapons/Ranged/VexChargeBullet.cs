@@ -14,7 +14,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
     {
         public bool Fired { get => Projectile.ai[0] != 0; set => Projectile.ai[0] = value ? 1 : 0; }
 
-        public static SoundEffectInstance Charge;
+        private SoundEffectInstance FireSound;
+
+        private int Counter;
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
@@ -28,75 +30,76 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.CloneDefaults(ProjectileID.Bullet);
             AIType = ProjectileID.Bullet;
             Projectile.friendly = true;
+            Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.hide = true;
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-            return true;
         }
 
         public override bool PreDraw(ref Color lightColor) => Fired;
 
         public override void AI()
         {
-            if (Charge == null && !Fired)
+            if (Counter <= 0)
             {
-                Charge = SoundEngine.LegacySoundPlayer.PlaySound(SoundLoader.CustomSoundType, Style: SoundLoader.GetSoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"));
+                FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"), Projectile.Center);
             }
 
             Player player = Main.player[Projectile.owner];
+            Counter++;
+
             if (!Fired)
             {
-                Projectile.position = player.Center + Projectile.velocity;
+                Projectile.position = player.MountedCenter - new Vector2(0, 4) + Projectile.velocity;
                 int dir = Projectile.direction;
                 player.ChangeDir(Projectile.direction);
                 player.heldProj = Projectile.whoAmI;
                 player.itemAnimation = player.itemTime = 2;
                 player.itemRotation = (Projectile.velocity * dir).ToRotation();
             }
-
             if (Projectile.owner == Main.myPlayer && !Fired)
             {
-                Projectile.velocity = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
+                Projectile.velocity = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.Zero);
                 Projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
                 Projectile.netUpdate = true;
             }
 
-            if (Charge != null)
+            if (Counter == 90)
             {
-                if (Charge.State == SoundState.Stopped && !Fired)
-                {
-                    SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastFire"), Projectile.Center);
-                    Fired = true;
-                    Charge?.Stop();
-                    Charge = null;
+                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastFire"), Projectile.Center);
+                Fired = true;
+                player.channel = false;
 
-                    Projectile.velocity *= 20;
-                    Projectile.tileCollide = true;
-                    player.GetModPlayer<ItemPlayer>().OverchargeStacks--;
-                }
-                else if (!player.channel && Charge.State == SoundState.Playing && !Fired && player.whoAmI == Main.myPlayer)
-                {
-                    Projectile.Kill();
-                }
+                Projectile.velocity *= 20;
+                Projectile.tileCollide = true;
+                Projectile.hide = false;
+                player.GetModPlayer<ItemPlayer>().OverchargeStacks--;
+            }
+            else if (!player.channel && Counter < 90 && !Fired)
+            {
+                Projectile.Kill();
             }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Main.player[Projectile.owner].AddBuff(ModContent.BuffType<Overcharge>(), 60);
+            if (!target.friendly && target.damage > 0 && target.life <= 0)
+            {
+                Player player = Main.player[Projectile.owner];
+                ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
+                player.AddBuff(ModContent.BuffType<Overcharge>(), 2);
+                if (itemPlayer.OverchargeStacks < 3)
+                {
+                    itemPlayer.OverchargeStacks++;
+                }
+            }
         }
 
         public override void Kill(int timeLeft)
         {
             if (!Fired)
             {
-                Charge?.Stop();
-                Charge = null;
+                FireSound?.Stop(true);
+                FireSound = null;
             }
         }
 

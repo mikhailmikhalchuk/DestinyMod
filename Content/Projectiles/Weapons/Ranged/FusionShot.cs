@@ -12,7 +12,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
     // If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
     public class FusionShot : DestinyModProjectile
     {
-        public bool SwappedData;
+        private bool SwappedData;
+
+        private SoundEffectInstance FireSound;
 
         public int ProjectileCount
 		{
@@ -24,7 +26,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public int UtilisedProjectileType => ProjectileType > 0 ? ProjectileType : ProjectileID.Bullet;
 
-        public bool Fired;
+        private bool Fired;
 
         public int FireDelay
         {
@@ -32,9 +34,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             set => Projectile.ai[0] = value;
         }
 
-        public int CountFires;
+        private int CountFires;
 
-        public int Counter;
+        private int Counter;
 
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
 
@@ -75,7 +77,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (Counter <= 0)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
+                FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
             }
 
             Player player = Main.player[Projectile.owner];
@@ -135,6 +137,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (CountFires < ProjectileCount)
             {
+                FireSound?.Stop(true);
+                FireSound = null;
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
             }
             CountFires = FireDelay = 0;
