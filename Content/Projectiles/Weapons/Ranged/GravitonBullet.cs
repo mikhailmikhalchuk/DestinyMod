@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.Projectiles.ProjectileType;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
@@ -17,7 +18,22 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Player player = Main.player[Projectile.owner];
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, new Vector2(0, 0), ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Projectile.owner);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Projectile.owner);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(target.Center, 1, 1, DustID.GemAmethyst, Alpha: 100, Scale: 1.3f);
+                    Vector2 dustVelocity = dust.velocity;
+                    if (dustVelocity == Vector2.Zero)
+                    {
+                        dustVelocity.X = 1f;
+                    }
+                    float length = dustVelocity.Length();
+                    dustVelocity *= 13f / length;
+                    dust.velocity *= 0.3f;
+                    dust.velocity += dustVelocity / 10f;
+                    dust.noGravity = true;
+                }
             }
         }
 

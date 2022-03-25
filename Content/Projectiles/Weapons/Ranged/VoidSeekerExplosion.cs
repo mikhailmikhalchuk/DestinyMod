@@ -24,11 +24,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.aiStyle = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = -1;
+            Projectile.scale = 1.5f;
         }
 
         public override void AI()
         {
-            if (++Projectile.frameCounter % 50 == 0)
+            if (++Projectile.frameCounter % 3 == 0)
             {
                 if (++Projectile.frame >= 12)
                 {

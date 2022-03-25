@@ -109,7 +109,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
                 Fired = true;
 
-                player.ConsumeItem(ItemAmmoType);
+                Item ammoItem = new Item();
+                ammoItem.SetDefaults(ItemAmmoType);
+
+                if (ammoItem.consumable)
+                {
+                    player.ConsumeItem(ItemAmmoType);
+                }
                 FireProjectile();
                 CountFires = 1;
             }

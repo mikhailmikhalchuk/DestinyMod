@@ -35,7 +35,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 Projectile.velocity.X *= 0.98f;
             }
 
-            if (GradualHomeInOnNPC(200f, 15f, 0.05f) == -1)
+            if (GradualHomeInOnNPC(200f, 15f, 0.05f) == -1 && Projectile.timeLeft < 355)
             {
                 Projectile.velocity.Y += 0.2f;
             }
@@ -59,6 +59,21 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
                 Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage, knockback, player.whoAmI);
+            }
+
+            for (int i = 0; i < 100; i++)
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center, 6, 6, DustID.GemAmethyst, Alpha: 100, Scale: 1.3f);
+                Vector2 dustVelocity = dust.velocity;
+                if (dustVelocity == Vector2.Zero)
+                {
+                    dustVelocity.X = 1f;
+                }
+                float length = dustVelocity.Length();
+                dustVelocity *= 13f / length;
+                dust.velocity *= 0.3f;
+                dust.velocity += dustVelocity / 2f;
+                dust.noGravity = true;
             }
 
             Projectile.Kill();

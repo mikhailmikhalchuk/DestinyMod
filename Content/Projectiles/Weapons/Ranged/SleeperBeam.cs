@@ -98,7 +98,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					Fired = true;
 					player.channel = false;
 
-					player.ConsumeItem((int)Projectile.ai[0]);
+					Item ammoItem = new Item();
+					ammoItem.SetDefaults((int)Projectile.ai[0]);
+
+					if (ammoItem.consumable)
+					{
+						player.ConsumeItem((int)Projectile.ai[0]);
+					}
+
 					for (int i = 0; i < 3; i++)
 					{
 						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.MountedCenter + Projectile.velocity * 22, 10 * Projectile.velocity * 2f + (i == 1 ? Vector2.Zero : new Vector2(Main.rand.Next(-7, 8) * 0.2f)), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);

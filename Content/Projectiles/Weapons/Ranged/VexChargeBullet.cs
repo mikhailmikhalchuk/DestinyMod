@@ -68,7 +68,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 Fired = true;
                 player.channel = false;
 
-                player.ConsumeItem((int)Projectile.ai[1]);
+                Item ammoItem = new Item();
+                ammoItem.SetDefaults((int)Projectile.ai[1]);
+
+                if (ammoItem.consumable)
+                {
+                    player.ConsumeItem((int)Projectile.ai[1]);
+                }
+
                 Projectile.velocity *= 20;
                 Projectile.tileCollide = true;
                 player.GetModPlayer<ItemPlayer>().OverchargeStacks--;
