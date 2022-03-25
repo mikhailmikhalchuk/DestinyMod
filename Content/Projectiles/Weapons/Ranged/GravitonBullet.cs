@@ -20,18 +20,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
                 Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Projectile.owner);
 
-                for (int i = 0; i < 20; i++)
+                int dustCount = 20;
+                for (int i = 0; i < dustCount; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(target.Center, 1, 1, DustID.GemAmethyst, Alpha: 100, Scale: 1.3f);
-                    Vector2 dustVelocity = dust.velocity;
-                    if (dustVelocity == Vector2.Zero)
-                    {
-                        dustVelocity.X = 1f;
-                    }
-                    float length = dustVelocity.Length();
-                    dustVelocity *= 13f / length;
-                    dust.velocity *= 0.3f;
-                    dust.velocity += dustVelocity / 10f;
+                    int dustDistance = 100;
+                    Vector2 dustPosition = target.Center + new Vector2(dustDistance).RotatedBy(360f / dustCount * i);
+                    Vector2 dustVelocity = (target.Center - dustPosition).SafeNormalize(Vector2.Zero) * 5f;
+                    Dust dust = Dust.NewDustPerfect(dustPosition, DustID.GemAmethyst, dustVelocity, 100, Scale: 1.3f);
                     dust.noGravity = true;
                 }
             }
