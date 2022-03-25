@@ -40,10 +40,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 				type = ModContent.ProjectileType<GravitonBullet>();
 				damage *= 3;
 			}
-			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 5), velocity, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 8), velocity, type, damage, knockback, player.whoAmI);
 			return false;
 		}
 		
-		public override Vector2? HoldoutOffset() => new Vector2(-20, -2);
+		public override Vector2? HoldoutOffset() => new Vector2(-10, -2);
 	}
 }

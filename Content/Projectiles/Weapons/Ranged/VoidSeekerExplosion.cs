@@ -18,23 +18,25 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             Projectile.width = 44;
             Projectile.height = 44;
-            Projectile.timeLeft = 999;
+            Projectile.timeLeft = 600;
             Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.aiStyle = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = -1;
         }
 
         public override void AI()
         {
-            if (++Projectile.frameCounter % 5 == 0)
+            if (++Projectile.frameCounter % 50 == 0)
             {
-                if (++Projectile.frame >= Main.projFrames[Projectile.type])
+                if (++Projectile.frame >= 12)
                 {
                     Projectile.Kill();
                 }
             }
 
-            Projectile.velocity = Vector2.Zero;
+            //Projectile.velocity = Vector2.Zero;
 
             if (Main.rand.NextBool(7))
             {
@@ -51,11 +53,5 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         }
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R * 0.5f, lightColor.G * 0.1f, lightColor.B, lightColor.A);
-
-        public override void Kill(int timeLeft)
-        {
-            Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-        }
     }
 }

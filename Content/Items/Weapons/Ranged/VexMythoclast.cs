@@ -51,7 +51,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
                 Item.autoReuse = true;
                 type = ModContent.ProjectileType<VexBullet>();
             }
-            Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 4), velocity, type, !UsingAltFunction ? damage * 2 : damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 4), velocity, type, !UsingAltFunction ? damage * 2 : damage, knockback, player.whoAmI, 0, source.AmmoItemIdUsed);
             return false;
         }
 
@@ -97,5 +97,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
         public override bool AltFunctionUse(Player player) => true;
 
         public override Vector2? HoldoutOffset() => new Vector2(-5, -2);
+
+        public override bool CanConsumeAmmo(Player player) => !UsingAltFunction;
     }
 }

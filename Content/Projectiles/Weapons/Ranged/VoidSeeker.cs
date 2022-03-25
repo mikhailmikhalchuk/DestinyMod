@@ -23,7 +23,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.timeLeft = 360;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -51,12 +53,15 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 
-            Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeekerExplosion>(), damage, knockback, Projectile.whoAmI);
+            Main.NewText("sussy");
+            Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeekerExplosion>(), damage, knockback, player.whoAmI);
 
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage, knockback, Projectile.whoAmI);
+                Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage, knockback, player.whoAmI);
             }
+
+            Projectile.Kill();
         }
 
         public override void PostDraw(Color lightColor)
@@ -68,12 +73,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public override void Kill(int timeLeft)
         {
-            Projectile.timeLeft = 999;
-            Projectile.position = Projectile.Center;
-            Projectile.width = 44;
-            Projectile.height = 44;
-            Projectile.position.X -= Projectile.width / 2;
-            Projectile.position.Y -= Projectile.height / 2;
+            Projectile.Resize(44, 44);
+            Projectile.Damage();
             Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
         }

@@ -71,12 +71,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				}
 
 				Player player = Main.player[Projectile.owner];
-				Projectile.position = player.Center + Projectile.velocity;
+				Projectile.position = player.MountedCenter + Projectile.velocity;
 				Counter++;
 
 				if (Projectile.owner == Main.myPlayer)
 				{
-					Vector2 difference = Vector2.Normalize(Main.MouseWorld - player.Center);
+					Vector2 difference = Vector2.Normalize(Main.MouseWorld - player.MountedCenter);
 					Projectile.velocity = difference;
 					Projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
 					Projectile.netUpdate = true;
@@ -88,7 +88,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				player.itemAnimation = player.itemTime = 2;
 				player.itemRotation = (Projectile.velocity * dir).ToRotation();
 
-				Dust dust = Dust.NewDustDirect(player.Center + (player.itemRotation.ToRotationVector2() * 40f * player.direction), 15, 20, DustID.RedTorch);
+				Dust dust = Dust.NewDustDirect(player.MountedCenter + (player.itemRotation.ToRotationVector2() * 40f * player.direction), 15, 20, DustID.RedTorch);
 				dust.noGravity = true;
 				dust.scale *= 1 + (float)Counter / 43f;
 
@@ -98,9 +98,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 					Fired = true;
 					player.channel = false;
 
+					player.ConsumeItem((int)Projectile.ai[0]);
 					for (int i = 0; i < 3; i++)
 					{
-						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.Center, 10 * Projectile.velocity * 2f + (i == 1 ? Vector2.Zero : new Vector2(Main.rand.Next(-7, 8) * 0.2f)), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
+						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.MountedCenter + Projectile.velocity * 22, 10 * Projectile.velocity * 2f + (i == 1 ? Vector2.Zero : new Vector2(Main.rand.Next(-7, 8) * 0.2f)), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
 					}
 
 					Projectile.Kill();

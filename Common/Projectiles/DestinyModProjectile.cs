@@ -109,15 +109,22 @@ namespace DestinyMod.Common.Projectiles
         /// Fires a fusion rifle bullet, causing the current weapon to act like a fusion rifle. Should be called within <c>ModItem.Shoot()</c>
         /// </summary>
         /// <param name="owner">The owner of the projectile. By default, pass the <c>player</c> parameter provided by <c>ModItem.Shoot()</c></param>
+        /// <param name="source">The source of the projectile. By default, pass the <c>source</c> parameter provided by <c>ModItem.Shoot()</c></param>
         /// <param name="position">The position of the projectile. By default, pass the <c>position</c> parameter provided by <c>ModItem.Shoot()</c></param>
         /// <param name="velocity">The velocity of the projectile. By default, pass the <c>speedX</c> and <c>speedY</c> parameters provided by <c>ModItem.Shoot()</c></param>
         /// <param name="damage">The damage of the projectile. By default, pass the <c>damage</c> parameter provided by <c>ModItem.Shoot()</c></param>
         /// <param name="knockBack">The knockback of the projectile. By default, pass the <c>knockBack</c> parameter provided by <c>ModItem.Shoot()</c></param>
+        /// <param name="chargeTime">The amount of time the player has to hold the fusion rifle down before it fires.</param>
         /// <param name="bulletsToFire">The amount of bullets the fusion rifle should fire.</param>
         /// <param name="projectileType">The type of the projectile the fusion rifle should fire.</param>
         /// <returns>The <seealso cref="Projectile"/> fired.</returns>
         public static Projectile FireFusionProjectile(Player owner, IEntitySource source, Vector2 position, Vector2 velocity, 
-            int damage, float knockBack, int bulletsToFire = 6, int projectileType = ProjectileID.Bullet) => 
-            Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<FusionShot>(), damage, knockBack, owner.whoAmI, bulletsToFire, projectileType);
+            int damage, float knockBack, int chargeTime, int bulletsToFire = 6, int projectileType = ProjectileID.Bullet)
+        {
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<FusionShot>(), damage, knockBack, owner.whoAmI, bulletsToFire, projectileType);
+            ((FusionShot)proj.ModProjectile).ItemAmmoType = ((EntitySource_ItemUse_WithAmmo)source).AmmoItemIdUsed;
+            ((FusionShot)proj.ModProjectile).ChargeTime = chargeTime;
+            return proj;
+        }
     }
 }

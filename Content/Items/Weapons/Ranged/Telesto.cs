@@ -32,10 +32,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			DestinyModProjectile.FireFusionProjectile(player, source, position + new Vector2(0, -2), velocity, damage, knockback, 7, ModContent.ProjectileType<TelestoBullet>());
+			DestinyModProjectile.FireFusionProjectile(player, source, position + new Vector2(0, -2), velocity, damage, knockback, 84, 7, ModContent.ProjectileType<TelestoBullet>());
 			return false;
 		}
 
 		public override Vector2? HoldoutOffset() => new Vector2(-1, 0);
+
+		public override bool CanConsumeAmmo(Player player) => false;
 	}
 }

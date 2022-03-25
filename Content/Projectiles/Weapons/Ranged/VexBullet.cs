@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.Projectiles.ProjectileType;
 using DestinyMod.Common.ModPlayers;
+using DestinyMod.Common.ModSystems;
 using System;
 using System.Collections.Generic;
 
@@ -36,26 +37,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
         }
 
-        private List<(Dust, int)> DustList = new List<(Dust, int)>();
-
         public override void AI()
         {
-            for (int i = 0; i < DustList.Count; i++)
-            {
-                (Dust, int) item = DustList[i];
-                if (++item.Item2 >= 4)
-                {
-                    item.Item1.active = false;
-                }
-                DustList[i] = item;
-            }
-            DustList.RemoveAll(tup => tup.Item2 >= 4);
             for (int i = 0; i < 6; i++)
             {
                 Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz, Alpha: 100, Scale: 0.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.5f;
-                DustList.Add((dust, 0));
+                dust.SetDustTimeLeft(4);
             }
         }
 

@@ -1,20 +1,25 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
-using System.IO;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
-    // If you are summoning this projectile in you MUST set ai[0] to the total number of bullets you want the fusion rifle to fire and ai[1] to the type of the bullet originally fired from the fusion rifle! Otherwise defaults to 5 bullets and generic bullet type
     public class FusionShot : DestinyModProjectile
     {
         private bool SwappedData;
 
         private SoundEffectInstance FireSound;
+
+        public int FireDelay
+        {
+            get => (int)Projectile.ai[0];
+            set => Projectile.ai[0] = value;
+        }
 
         public int ProjectileCount
 		{
@@ -26,13 +31,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public int UtilisedProjectileType => ProjectileType > 0 ? ProjectileType : ProjectileID.Bullet;
 
+
+        public int ItemAmmoType;
+
+        public int ChargeTime;
+
+
         private bool Fired;
 
-        public int FireDelay
-        {
-            get => (int)Projectile.ai[0];
-            set => Projectile.ai[0] = value;
-        }
 
         private int CountFires;
 
@@ -81,12 +87,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             }
 
             Player player = Main.player[Projectile.owner];
-            Projectile.position = player.Center + Projectile.velocity;
+            Projectile.position = player.MountedCenter + Projectile.velocity;
             Counter++;
 
             if (Projectile.owner == Main.myPlayer)
             {
-                Vector2 difference = Vector2.Normalize(Main.MouseWorld - player.Center);
+                Vector2 difference = Vector2.Normalize(Main.MouseWorld - player.MountedCenter);
                 Projectile.velocity = difference;
                 Projectile.direction = Main.MouseWorld.X > player.position.X ? 1 : -1;
                 Projectile.netUpdate = true;
@@ -98,15 +104,16 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             player.itemAnimation = player.itemTime = 2;
             player.itemRotation = (Projectile.velocity * dir).ToRotation();
 
-            if (Counter == 84)
+            if (Counter == ChargeTime)
             {
                 SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
                 Fired = true;
 
+                player.ConsumeItem(ItemAmmoType);
                 FireProjectile();
                 CountFires = 1;
             }
-            else if (!player.channel && Counter < 84 && !Fired)
+            else if (!player.channel && Counter < ChargeTime && !Fired)
             {
                 Projectile.Kill();
             }

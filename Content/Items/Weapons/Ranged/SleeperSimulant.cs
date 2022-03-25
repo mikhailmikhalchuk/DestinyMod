@@ -32,10 +32,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, position, velocity + new Vector2(Main.rand.Next(-15, 16) * 0.05f), ModContent.ProjectileType<SleeperBeam>(), damage, knockback, player.whoAmI, 0, 4);
+			Projectile.NewProjectile(source, position, velocity + new Vector2(Main.rand.Next(-15, 16) * 0.05f), ModContent.ProjectileType<SleeperBeam>(), damage, knockback, player.whoAmI, source.AmmoItemIdUsed, 4);
 			return false;
 		}
 
 		public override Vector2? HoldoutOffset() => new Vector2(-12, 0);
+
+		public override bool CanConsumeAmmo(Player player) => false;
 	}
 }

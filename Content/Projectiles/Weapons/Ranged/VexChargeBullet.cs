@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Common.ModPlayers;
+using DestinyMod.Common.ModSystems;
 using DestinyMod.Common.Projectiles;
 using DestinyMod.Content.Buffs;
 using Microsoft.Xna.Framework.Audio;
@@ -34,8 +35,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.hide = true;
         }
-
-        public override bool PreDraw(ref Color lightColor) => Fired;
 
         public override void AI()
         {
@@ -69,14 +68,25 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 Fired = true;
                 player.channel = false;
 
+                player.ConsumeItem((int)Projectile.ai[1]);
                 Projectile.velocity *= 20;
                 Projectile.tileCollide = true;
-                Projectile.hide = false;
                 player.GetModPlayer<ItemPlayer>().OverchargeStacks--;
             }
             else if (!player.channel && Counter < 90 && !Fired)
             {
                 Projectile.Kill();
+            }
+
+            if (Fired)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemRuby, Alpha: 100, Scale: 0.5f);
+                    dust.noGravity = true;
+                    dust.velocity *= 0.5f;
+                    dust.SetDustTimeLeft(4);
+                }
             }
         }
 
@@ -110,5 +120,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 hitbox = Rectangle.Empty;
             }
         }
+
+        public override bool PreDraw(ref Color lightColor) => false;
     }
 }

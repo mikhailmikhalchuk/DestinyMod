@@ -47,8 +47,10 @@ Added Sleeper Simulant
 The mod should now no longer automatically unload when starting up a server with the mod loaded
 Telesto's bullets' explosions now correctly deal ranged damage
 Fusion rifles now no longer use sounds to determine when to fire, instead using an internal counter (this should fix issues with fusion sounds playing)
+Fusion rifles now only consume ammo after their projectiles are fired
 Exotic Ciphers now correctly drop from bosses on first death, including modded bosses
 Fixed rocket and grenade explosions for real this time
 Vex Mythoclast's bullets now look more similar to their in-game appearance
+Fixed Graviton Lance's explosion
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
