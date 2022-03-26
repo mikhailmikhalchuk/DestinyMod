@@ -54,7 +54,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 
             Main.NewText("sussy");
-            Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeekerExplosion>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeekerExplosion>(), 0, knockback, player.whoAmI);
 
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {

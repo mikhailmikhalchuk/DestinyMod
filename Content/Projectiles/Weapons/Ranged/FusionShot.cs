@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.DataStructures;
@@ -103,6 +104,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             player.heldProj = Projectile.whoAmI;
             player.itemAnimation = player.itemTime = 2;
             player.itemRotation = (Projectile.velocity * dir).ToRotation();
+
+            /*if (Main.rand.NextBool(Math.Clamp(ChargeTime / Counter * 2, 1, 100)) && (float)Counter / (float)ChargeTime > 0.4f)
+            {
+                Dust dust = Dust.NewDustDirect(player.MountedCenter + new Vector2(0, -5) + Projectile.velocity.ToRotation().ToRotationVector2() * 40f, 1, 1, DustID.PurpleTorch, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 100, default, 1.25f);
+                dust.noGravity = true;
+                dust.velocity *= 2f;
+                dust.velocity.Y -= 0.3f;
+            }*/
 
             if (Counter == ChargeTime)
             {

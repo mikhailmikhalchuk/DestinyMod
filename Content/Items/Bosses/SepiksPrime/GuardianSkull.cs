@@ -13,7 +13,8 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("An offering to the House of Devils' High Servitor\nSummons Sepiks Prime");
+            Tooltip.SetDefault("An offering to the House of Devils' High Servitor"
+                + "\nSummons Sepiks Prime");
 
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 

@@ -14,6 +14,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public int Counter;
 
+		public int SurfaceHits = 3;
+
 		private SoundEffectInstance FireSound;
 
 		public override void DestinySetDefaults()
@@ -21,7 +23,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.width = 4;
 			Projectile.height = 4;
 			Projectile.friendly = true;
-			Projectile.penetrate = 3;
+			Projectile.penetrate = -1;
 			Projectile.DamageType = DamageClass.Ranged;
 		}
 
@@ -44,7 +46,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-			if (--Projectile.penetrate <= 0)
+			if (--SurfaceHits <= 0)
             {
 				Projectile.Kill();
 				return false;
@@ -56,6 +58,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			if (Projectile.velocity.Y != oldVelocity.Y)
 			{
 				Projectile.velocity.Y = 0f - oldVelocity.Y;
+			}
+			if (Projectile.ai[1] == 5f && SurfaceHits == 2)
+            {
+				for (int i = 0; i < 2; i++)
+				{
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Projectile.velocity + new Vector2(Main.rand.Next(-15, 16) * 0.2f, Main.rand.Next(-15, 16) * 0.2f), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, 6);
+				}
 			}
 			return false;
 		}
@@ -88,7 +97,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				player.itemAnimation = player.itemTime = 2;
 				player.itemRotation = (Projectile.velocity * dir).ToRotation();
 
-				Dust dust = Dust.NewDustDirect(player.MountedCenter + (player.itemRotation.ToRotationVector2() * 40f * player.direction), 15, 20, DustID.RedTorch);
+				Dust dust = Dust.NewDustDirect(player.MountedCenter + new Vector2(0, -5) + Projectile.velocity.ToRotation().ToRotationVector2() * 40f, 15, 20, DustID.RedTorch);
 				dust.noGravity = true;
 				dust.scale *= 1 + (float)Counter / 43f;
 
@@ -106,10 +115,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 						player.ConsumeItem((int)Projectile.ai[0]);
 					}
 
-					for (int i = 0; i < 3; i++)
-					{
-						Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.MountedCenter + Projectile.velocity * 22, 10 * Projectile.velocity * 2f + (i == 1 ? Vector2.Zero : new Vector2(Main.rand.Next(-7, 8) * 0.2f)), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
-					}
+					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.MountedCenter + Projectile.velocity * 22, 10 * Projectile.velocity * 2f, ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
 
 					Projectile.Kill();
 					player.itemAnimation = player.itemTime = 15;
@@ -120,7 +126,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				}
 			}
 
-			if (Projectile.ai[1] == 5f)
+			if (Projectile.ai[1] >= 5f)
             {
 				if (Projectile.localAI[0] <= 0)
                 {
@@ -138,8 +144,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 						Projectile.alpha = 255;
 						Dust dust = Dust.NewDustDirect(bouncePos, 1, 1, DustID.RedTorch);
 						dust.position = bouncePos;
-						dust.scale = Main.rand.Next(70, 110) * 0.013f;
-						dust.velocity *= 0.2f;
+						dust.scale = 1.5f;
+						dust.velocity = Vector2.Zero;
 						dust.noGravity = true;
 					}
 				}
@@ -148,7 +154,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
-			hitbox = Projectile.ai[1] == 5f ? Projectile.Hitbox : Rectangle.Empty;
+			hitbox = Projectile.ai[1] >= 5f ? Projectile.Hitbox : Rectangle.Empty;
 		}
 	}
 }
