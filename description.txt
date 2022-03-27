@@ -52,5 +52,6 @@ Exotic Ciphers now correctly drop from bosses on first death, including modded b
 Fixed rocket and grenade explosions for real this time
 Vex Mythoclast's bullets now look more similar to their in-game appearance
 Fixed Graviton Lance's explosion
+Resprited the Prodigal Helm
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
