@@ -37,7 +37,7 @@ Downscaled more sprites
 Adjusted bullet firing positions to more accurately come out of the muzzle
 Partially added a few translations
 Made super damage a new damage class
-Fixed the Cryptarch only selling one of each engram ever
+Cryptarch now no longer has a limit on sold engrams
 Added a Bestiary icon for the mod
 Weapon tooltips are now single-quoted
 Added the ammo return perk for Whisper of the Worm

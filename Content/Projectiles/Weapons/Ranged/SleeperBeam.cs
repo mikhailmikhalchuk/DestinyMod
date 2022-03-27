@@ -97,9 +97,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				player.itemAnimation = player.itemTime = 2;
 				player.itemRotation = (Projectile.velocity * dir).ToRotation();
 
-				Dust dust = Dust.NewDustDirect(player.MountedCenter + new Vector2(0, -5) + Projectile.velocity.ToRotation().ToRotationVector2() * 40f, 15, 20, DustID.RedTorch);
+				/*Dust dust = Dust.NewDustDirect(player.MountedCenter + new Vector2(0, -5) + Projectile.velocity.ToRotation().ToRotationVector2() * 40f, 15, 20, DustID.RedTorch);
 				dust.noGravity = true;
-				dust.scale *= 1 + (float)Counter / 43f;
+				dust.scale *= 1 + (float)Counter / 43f;*/
 
 				if (Counter == 43)
 				{
