@@ -8,7 +8,7 @@ namespace DestinyMod.Common.ModSystems
 {
     public sealed class DustHandlerSystem : ModSystem
     {
-        public static List<(Dust, int, int)> DustList = new List<(Dust, int, int)>();
+        internal static List<(Dust, int, int)> DustList = new List<(Dust, int, int)>();
 
         public override void PostUpdateWorld()
         {

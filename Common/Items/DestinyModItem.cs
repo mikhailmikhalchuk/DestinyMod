@@ -30,10 +30,22 @@ namespace DestinyMod.Common.Items
 
 		public virtual void DestinySetDefaults() { }
 
+		/// <summary>
+		/// Allows you to disallow the player from equipping this equipable item. Return false to disallow equipping this equipable item. Returns true by default.
+		/// </summary>
+		/// <param name="player">The <see cref="Player"/> who owns the item.</param>
 		public virtual bool CanEquip(Player player) => true;
 
+		/// <summary>
+		/// Called every tick while the player is holding this item. Calls on all clients and the server.
+		/// </summary>
+		/// <param name="player">The <see cref="Player"/> holding the item.</param>
 		public virtual void OnHold(Player player) { }
 
+		/// <summary>
+		/// Called every tick while the player is not holding this item, but has it in their inventory. Calls on all clients and the server.
+		/// </summary>
+		/// <param name="player">The <see cref="Player"/> not holding the item.</param>
 		public virtual void OnRelease(Player player) { }
 
 		public virtual IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => IterationContext.None;

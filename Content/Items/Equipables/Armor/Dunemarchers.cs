@@ -45,7 +45,7 @@ namespace DestinyMod.Content.Items.Equipables.Armor
 			base.UpdateEquip(player);
 		}
 
-		public override void AddRecipes() => CreateRecipe(1)
+        public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ModContent.ItemType<Materials.RelicIron>(), 20)
 			.AddIngredient(ModContent.ItemType<Materials.PlasteelPlating>(), 10)
 			.AddTile(TileID.Anvils)

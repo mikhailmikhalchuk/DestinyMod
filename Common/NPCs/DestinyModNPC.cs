@@ -35,13 +35,13 @@ namespace DestinyMod.Common.NPCs
 		/// <summary>
 		/// Do NOT save instanced data here.
 		/// </summary>
-		/// <param name="tagCompound">The <see cref="TagCompound"/> to add data to.</param>
+		/// <param name="tagCompound">The <see cref="TagCompound"/> to NOT add data to.</param>
 		public virtual void Save(TagCompound tagCompound) { }
 		
 		/// <summary>
 		/// Do NOT load instanced data here.
 		/// </summary>
-		/// <param name="tagCompound">The <see cref="TagCompound"/> to load data from.</param>
+		/// <param name="tagCompound">The <see cref="TagCompound"/> to NOT load data from.</param>
 		public virtual void Load(TagCompound tagCompound) { }
 	}
 }

@@ -75,23 +75,19 @@ namespace DestinyMod.Common.NPCs.NPCTypes
 			}
 		}
 
-		/// <summary>
-		/// See base.TownNPCAttackStrength for default summary.
-		/// </summary>
 		/// <param name="damage">Defaults to 20.</param>
 		/// <param name="knockback">Defaults to 4f.</param>
+		/// <inheritdoc cref="ModNPC.TownNPCAttackStrength(ref int, ref float)"/>
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
 		{
 			damage = 20;
 			knockback = 4f;
 		}
 
-		/// <summary>
-		/// See base.DrawTownAttackGun for default summary.
-		/// </summary>
 		/// <param name="scale">Defaults to 0.5f.</param>
 		/// <param name="item">Defaults to <see cref="ItemID.FlintlockPistol"/>.</param>
 		/// <param name="closeness">Defaults to 20.</param>
+		/// <inheritdoc cref="ModNPC.DrawTownAttackGun(ref float, ref int, ref int)"/>
 		public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)
 		{
 			scale = 0.5f;
@@ -99,33 +95,27 @@ namespace DestinyMod.Common.NPCs.NPCTypes
 			closeness = 20;
 		}
 
-		/// <summary>
-		/// See base.TownNPCAttackCooldown for default summary.
-		/// </summary>
 		/// <param name="cooldown">Defaults to 30.</param>
 		/// <param name="randExtraCooldown">Defaults to 30.</param>
+		/// <inheritdoc cref="ModNPC.TownNPCAttackCooldown(ref int, ref int)"/>
 		public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
 		{
 			cooldown = 30;
 			randExtraCooldown = 30;
 		}
 
-		///<summary>
-		/// See base.TownNPCAttackProj for default summary
-		///</summary>
-		/// <param name="projType">Defaults to ProjectileID.Bullet</param>
-		/// <param name="attackDelay">Defaults to 1</param>
+		/// <param name="projType">Defaults to <see cref="ProjectileID.Bullet"/>.</param>
+		/// <param name="attackDelay">Defaults to 1.</param>
+		/// <inheritdoc cref="ModNPC.TownNPCAttackProj(ref int, ref int)"/>
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
 		{
 			projType = ProjectileID.Bullet;
 			attackDelay = 1;
 		}
 
-		///<summary>
-		/// See base.TownNPCAttackProjSpeed for default summary
-		///</summary>
-		/// <param name="multiplier">Defaults to 12f</param>
-		/// <param name="randomOffset">Defaults to 2f</param>
+		/// <param name="multiplier">Defaults to 12f.</param>
+		/// <param name="randomOffset">Defaults to 2f.</param>
+		/// <inheritdoc cref="ModNPC.TownNPCAttackProjSpeed(ref float, ref float, ref float)"/>
 		public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
 		{
 			multiplier = 12f;

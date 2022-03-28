@@ -21,7 +21,7 @@ namespace DestinyMod.Common.ModPlayers
 			Armor = 4
 		}
 
-		public override void PostUpdate()
+        public override void PostUpdateMiscEffects()
 		{
 			for (int inventoryCount = 0; inventoryCount < Player.inventory.Length - 1; inventoryCount++)
 			{
