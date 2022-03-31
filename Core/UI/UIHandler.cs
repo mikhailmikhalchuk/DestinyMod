@@ -66,10 +66,5 @@ namespace DestinyMod.Core.UI
 				uiHandler.ModifyInterfaceLayers(layers);
 			}
 		}
-
-		public static void Unload()
-		{
-			ProcessedUIs?.Clear();
-		}
 	}
 }

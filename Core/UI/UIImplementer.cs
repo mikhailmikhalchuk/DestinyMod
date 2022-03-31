@@ -37,7 +37,7 @@ namespace DestinyMod.Core.UI
 
 		public override void Unload()
 		{
-			UIHandler.Unload();
+			UIHandler.ProcessedUIs?.Clear();
 		}
 
 		public override void UpdateUI(GameTime gameTime)
