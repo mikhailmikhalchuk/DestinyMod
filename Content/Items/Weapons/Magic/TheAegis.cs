@@ -22,8 +22,8 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 		{
 			ShieldTexture = ModContent.Request<Texture2D>("DestinyMod/Content/Items/Weapons/Magic/TheAegis_Shield");
 			Tooltip.SetDefault("A timelost relic, with the power to protect Guardians from being erased from existence"
-			+ "\nLeft click to summon a protective shield"
-			+ "\nRight click to fire a powerful blast");
+			+ "\nSummons a protective shield"
+			+ "\nRight Click to fire a powerful blast");
 		}
 
 		public override void DestinySetDefaults()

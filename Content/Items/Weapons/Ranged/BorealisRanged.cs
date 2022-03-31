@@ -13,7 +13,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Borealis");
-			Tooltip.SetDefault("Right click while holding this weapon to cycle between damage types"
+			Tooltip.SetDefault("Right Click while holding this weapon to cycle between damage types"
 				+ "\n'Light is a spectrum. Why limit yourself to a single hue?'");
 		}
 

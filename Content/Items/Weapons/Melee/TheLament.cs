@@ -18,7 +18,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hold right-click to rev up the blade"
+            Tooltip.SetDefault("Right Click to rev up the blade"
             + "\nWhile revving the blade, movement is inhibited"
             + "\nRevving the blade fully increases swing damage for a short time"
             + "\nDamaging enemies with this weapon restores a small portion of health"

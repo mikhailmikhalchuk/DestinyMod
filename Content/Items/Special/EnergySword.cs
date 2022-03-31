@@ -70,7 +70,7 @@ namespace DestinyMod.Content.Items.Special
             DisplayName.SetDefault("Type-I Energy Sword");
             Tooltip.SetDefault("Ignores enemy defense"
                 + "\nGreatly increases maximum running speed when held"
-                + "\nRight click to lunge"
+                + "\nRight Click to lunge"
                 + "\n'A noble and ancient weapon, wielded by the strongest of Sangheili.'"
                 + "\n'Requires great skill and bravery to use, and inspires fear in those who face its elegant plasma blade.'");
         }

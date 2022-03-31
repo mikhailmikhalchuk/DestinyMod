@@ -9,7 +9,7 @@ namespace DestinyMod.Content.Buffs
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Overcharge");
-			Description.SetDefault("Right-click with Vex Mythoclast to switch firing modes");
+			Description.SetDefault("Right Click with Vex Mythoclast to switch firing modes");
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.buffNoSave[Type] = true;
 		}
