@@ -18,8 +18,6 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 
 		public static Asset<Texture2D> ShieldTexture { get; private set; }
 
-		public override void Unload() { }
-
 		public override void SetStaticDefaults()
 		{
 			ShieldTexture = ModContent.Request<Texture2D>("DestinyMod/Content/Items/Weapons/Magic/TheAegis_Shield");

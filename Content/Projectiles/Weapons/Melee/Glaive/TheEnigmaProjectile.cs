@@ -6,12 +6,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee.Glaive
 {
     public class TheEnigmaProjectile : GlaiveProjectile
     {
-        public override string Texture => "Terraria/Images/Projectile_939";
-
         public override void DestinySetDefaults()
         {
-            Projectile.width = 18;
-            Projectile.height = 18;
+            Projectile.width = 32;
+            Projectile.height = 32;
+            SpriteWidth = 62;
+            SpriteHeight = 68;
         }
     }
 }
