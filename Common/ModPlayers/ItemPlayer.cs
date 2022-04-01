@@ -39,8 +39,7 @@ namespace DestinyMod.Common.ModPlayers
 				inventoryDestinyModItem.OnRelease(Player);
 			}
 
-			Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
-			if (heldItem.ModItem is DestinyModItem destinyModItem)
+			if (Player.HeldItem.ModItem is DestinyModItem destinyModItem)
 			{
 				destinyModItem.OnHold(Player);
 			}
@@ -77,8 +76,7 @@ namespace DestinyMod.Common.ModPlayers
 				onSuccessfulIteration(inventoryDestinyModItem);
 			}
 
-			Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
-			if (heldItem == null || heldItem.IsAir || heldItem.ModItem is not DestinyModItem heldDestinyModItem
+			if (Player.HeldItem == null || Player.HeldItem.IsAir || Player.HeldItem.ModItem is not DestinyModItem heldDestinyModItem
 				|| !determineContext(heldDestinyModItem).HasFlag(IterationContext.HeldItem))
 			{
 				return;
@@ -117,8 +115,7 @@ namespace DestinyMod.Common.ModPlayers
 				inventoryDestinyModItem.ModifyDrawInfo(Player, ref drawInfo);
 			}
 
-			Item heldItem = Main.mouseItem.IsAir ? Player.inventory[Player.selectedItem] : Main.mouseItem;
-			if (heldItem == null || heldItem.IsAir || heldItem.ModItem is not DestinyModItem heldDestinyModItem
+			if (Player.HeldItem == null || Player.HeldItem.IsAir || Player.HeldItem.ModItem is not DestinyModItem heldDestinyModItem
 				|| !heldDestinyModItem.DetermineModifyDrawInfoContext(Player).HasFlag(IterationContext.HeldItem))
 			{
 				return;

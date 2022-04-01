@@ -16,7 +16,7 @@ namespace DestinyMod.Content.Items.Consumables
         {
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.Item113;
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Red;
             Item.value = Item.buyPrice(gold: 1);
         }
 

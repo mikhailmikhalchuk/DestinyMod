@@ -7,6 +7,8 @@ using DestinyMod.Core.UI;
 using Terraria.ModLoader;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.Configs;
+using Terraria.Audio;
+using Terraria.ID;
 
 namespace DestinyMod.Content.UI.ClassChange
 {
@@ -17,6 +19,8 @@ namespace DestinyMod.Content.UI.ClassChange
 		public UIImageButton WarlockIcon;
 
 		public UIImageButton HunterIcon;
+
+		private DestinyClassType ConfirmToClass;
 
 		public override void PreLoad(ref string name)
 		{
@@ -56,31 +60,43 @@ namespace DestinyMod.Content.UI.ClassChange
 
         private void HunterIcon_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
+			if (ConfirmToClass == DestinyClassType.None)
+			{
+				ConfirmToClass = DestinyClassType.Hunter;
+				return;
+			}
 			PostSelectClass();
 		}
 
         private void WarlockIcon_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
+			if (ConfirmToClass == DestinyClassType.None)
+			{
+				ConfirmToClass = DestinyClassType.Warlock;
+				return;
+			}
 			PostSelectClass();
 		}
 
         private void TitanIcon_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
+			if (ConfirmToClass == DestinyClassType.None)
+            {
+				ConfirmToClass = DestinyClassType.Titan;
+				return;
+			}
 			PostSelectClass();
         }
 
-		private static void PostSelectClass()
+		private void PostSelectClass()
         {
-			if (!Main.LocalPlayer.HasItem(ModContent.ItemType<Items.Consumables.GuardianCrest>()))
-			{
-				Main.NewText("No Guardian Crest in inventory!", Color.Red);
-				return;
-			}
+			Main.LocalPlayer.GetModPlayer<ClassPlayer>().ClassType = ConfirmToClass;
+			SoundEngine.PlaySound(SoundID.Item36);
 			Main.LocalPlayer.ConsumeItem(ModContent.ItemType<Items.Consumables.GuardianCrest>());
 			ModContent.GetInstance<ClassChangeUI>().UserInterface.SetState(null);
 		}
 
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
 			base.DrawSelf(spriteBatch);
 
@@ -89,6 +105,18 @@ namespace DestinyMod.Content.UI.ClassChange
 			Left.Set(pos.X, 0);
 			Top.Set(pos.Y + Main.LocalPlayer.gfxOffY - 4, 0);
 
+			if (!Main.LocalPlayer.HasItem(ModContent.ItemType<Items.Consumables.GuardianCrest>()) && Main.LocalPlayer.HeldItem.type != ModContent.ItemType<Items.Consumables.GuardianCrest>())
+            {
+				ModContent.GetInstance<ClassChangeUI>().UserInterface.SetState(null);
+				return;
+			}
+			if ((ConfirmToClass == DestinyClassType.Titan && TitanIcon.ContainsPoint(Main.MouseScreen)) || (ConfirmToClass == DestinyClassType.Warlock && WarlockIcon.ContainsPoint(Main.MouseScreen)) || (ConfirmToClass == DestinyClassType.Hunter && HunterIcon.ContainsPoint(Main.MouseScreen)))
+            {
+				Main.instance.MouseText("Click again to confirm" + (ConfirmToClass == Main.LocalPlayer.GetModPlayer<ClassPlayer>().ClassType ? "\n[c/FF1919:WARNING:] This is your currently selected class!" : ""));
+				Main.LocalPlayer.mouseInterface = true;
+				return;
+            }
+			ConfirmToClass = DestinyClassType.None;
 			if (TitanIcon.ContainsPoint(Main.MouseScreen))
             {
 				Main.instance.MouseText("Titan");

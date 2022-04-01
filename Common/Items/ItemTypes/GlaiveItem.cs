@@ -13,6 +13,8 @@ namespace DestinyMod.Common.Items.ItemTypes
 	{
 		public int GlaiveCharge { get; set; }
 
+		private int OldShoot;
+
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -37,20 +39,23 @@ namespace DestinyMod.Common.Items.ItemTypes
         {
 			if (player.altFunctionUse == 2)
             {
+				Item.autoReuse = true;
+				Item.useStyle = ItemUseStyleID.Thrust;
+				OldShoot = Item.shoot;
+				Item.shoot = ProjectileID.None;
 				GlaiveCharge--;
 				player.itemTime = player.itemAnimation = 1;
 			}
-            return true;
-        }
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-			if (player.altFunctionUse == 2)
+			else
             {
-				Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 0, 2);
-				return false;
-            }
-			return true;
+				Item.autoReuse = false;
+				Item.useStyle = ItemUseStyleID.Rapier;
+				if (OldShoot != 0)
+                {
+					Item.shoot = OldShoot;
+                }
+			}
+            return true;
         }
 
         public override void PostUpdateRunSpeeds(Player player)

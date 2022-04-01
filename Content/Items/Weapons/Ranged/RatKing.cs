@@ -54,14 +54,17 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return output;
 		}
 
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat) => flat += CalculateQualifiedPlayerCount(player) * 12;
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
+		{
+			flat += CalculateQualifiedPlayerCount(player) * 12;
+		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			int qualifiedPlayerCount = CalculateQualifiedPlayerCount(Main.LocalPlayer);
 			if (qualifiedPlayerCount > 0)
 			{
-				TooltipLine kingBonus = new TooltipLine(Mod, "KingBonus", 
+				TooltipLine kingBonus = new TooltipLine(Mod, "KingBonus",
 					$"This weapon deals {qualifiedPlayerCount * 12} increased damage ({qualifiedPlayerCount} nearby {(qualifiedPlayerCount > 1 ? "players" : "player")})")
 				{
 					overrideColor = Color.Gold

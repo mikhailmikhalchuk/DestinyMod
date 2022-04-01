@@ -25,8 +25,7 @@ namespace DestinyMod.Content.DrawLayers
 				return;
 			}
 
-			Item heldItem = player.HeldItem;
-			if (heldItem == null || heldItem.ModItem is not EnergySword energySword)
+			if (player.HeldItem == null || player.HeldItem.ModItem is not EnergySword energySword)
 			{
 				return;
 			}
