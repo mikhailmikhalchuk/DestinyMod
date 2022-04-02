@@ -139,7 +139,7 @@ namespace DestinyMod.Content.Items.Special
 			}
         }
 
-        public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+        public override ItemPlayer.IterationContext PostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
 
         public override void PostUpdateRunSpeeds(Player player)
         {
@@ -165,7 +165,7 @@ namespace DestinyMod.Content.Items.Special
             energySwordShader.Apply();
         }
 
-        public override ItemPlayer.IterationContext DetermineHideDrawLayersContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+        public override ItemPlayer.IterationContext HideDrawLayersContext(Player player) => ItemPlayer.IterationContext.HeldItem;
 
         public override void HideDrawLayers(Player player, PlayerDrawSet drawInfo)
         {

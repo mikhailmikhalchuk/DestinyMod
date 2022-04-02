@@ -39,7 +39,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(5, 3);
+        public override Vector2? HoldoutOffset() => new Vector2(5, 3);
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ModContent.ItemType<GunsmithMaterials>(), 50)

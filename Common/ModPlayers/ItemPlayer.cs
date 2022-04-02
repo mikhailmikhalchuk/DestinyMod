@@ -1,7 +1,10 @@
 using DestinyMod.Common.Items;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace DestinyMod.Common.ModPlayers
@@ -11,6 +14,10 @@ namespace DestinyMod.Common.ModPlayers
 		public int AegisCharge = 0;
 
 		public int OverchargeStacks = 0;
+
+		public bool GlaiveShielded;
+
+		public Item OldHeldItem;
 
 		[Flags]
 		public enum IterationContext
@@ -31,7 +38,7 @@ namespace DestinyMod.Common.ModPlayers
 				}
 
 				Item inventoryItem = Player.inventory[inventoryCount];
-				if (inventoryItem == null || inventoryItem.IsAir || inventoryItem.ModItem is not DestinyModItem inventoryDestinyModItem)
+				if (inventoryItem == null || inventoryItem.IsAir || inventoryItem.ModItem is not DestinyModItem inventoryDestinyModItem || inventoryItem != OldHeldItem)
 				{
 					continue;
 				}
@@ -39,10 +46,13 @@ namespace DestinyMod.Common.ModPlayers
 				inventoryDestinyModItem.OnRelease(Player);
 			}
 
-			if (Player.HeldItem.ModItem is DestinyModItem destinyModItem)
+			Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+			if (heldItem.ModItem is DestinyModItem destinyModItem && heldItem != OldHeldItem)
 			{
 				destinyModItem.OnHold(Player);
 			}
+
+			OldHeldItem = heldItem;
 		}
 
 		// Perhaps we should not for performance?
@@ -56,7 +66,7 @@ namespace DestinyMod.Common.ModPlayers
 					continue;
 				}
 
-				onSuccessfulIteration(armorDestinyModItem);
+				onSuccessfulIteration.Invoke(armorDestinyModItem);
 			}
 
 			for (int inventoryCount = 0; inventoryCount < Player.inventory.Length - 1; inventoryCount++)
@@ -73,21 +83,22 @@ namespace DestinyMod.Common.ModPlayers
 					continue;
 				}
 
-				onSuccessfulIteration(inventoryDestinyModItem);
+				onSuccessfulIteration.Invoke(inventoryDestinyModItem);
 			}
 
-			if (Player.HeldItem == null || Player.HeldItem.IsAir || Player.HeldItem.ModItem is not DestinyModItem heldDestinyModItem
+			Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+			if (heldItem == null || heldItem.IsAir || heldItem.ModItem is not DestinyModItem heldDestinyModItem
 				|| !determineContext(heldDestinyModItem).HasFlag(IterationContext.HeldItem))
 			{
 				return;
 			}
 
-			onSuccessfulIteration(heldDestinyModItem);
+			onSuccessfulIteration.Invoke(heldDestinyModItem);
 		}
 
 		public override void PostUpdateRunSpeeds()
         {
-			ImplementItemIteration(destinyModItem => destinyModItem.DeterminePostUpdateRunSpeedsContext(Player), destinyModItem => destinyModItem.PostUpdateRunSpeeds(Player));
+			ImplementItemIteration(destinyModItem => destinyModItem.PostUpdateRunSpeedsContext(Player), destinyModItem => destinyModItem.PostUpdateRunSpeeds(Player));
 		}
 
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
@@ -95,7 +106,7 @@ namespace DestinyMod.Common.ModPlayers
 			foreach (Item armorItem in Player.armor)
 			{
 				if (armorItem == null || armorItem.IsAir || armorItem.ModItem is not DestinyModItem armorDestinyModItem
-					|| !armorDestinyModItem.DetermineModifyDrawInfoContext(Player).HasFlag(IterationContext.Armor))
+					|| !armorDestinyModItem.ModifyDrawInfoContext(Player).HasFlag(IterationContext.Armor))
 				{
 					continue;
 				}
@@ -107,7 +118,7 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				Item inventoryItem = Player.inventory[inventoryCount];
 				if (inventoryItem == null || inventoryItem.IsAir || inventoryItem.ModItem is not DestinyModItem inventoryDestinyModItem
-					|| !inventoryDestinyModItem.DetermineModifyDrawInfoContext(Player).HasFlag(IterationContext.Inventory))
+					|| !inventoryDestinyModItem.ModifyDrawInfoContext(Player).HasFlag(IterationContext.Inventory))
 				{
 					continue;
 				}
@@ -115,8 +126,9 @@ namespace DestinyMod.Common.ModPlayers
 				inventoryDestinyModItem.ModifyDrawInfo(Player, ref drawInfo);
 			}
 
-			if (Player.HeldItem == null || Player.HeldItem.IsAir || Player.HeldItem.ModItem is not DestinyModItem heldDestinyModItem
-				|| !heldDestinyModItem.DetermineModifyDrawInfoContext(Player).HasFlag(IterationContext.HeldItem))
+			Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+			if (heldItem == null || heldItem.IsAir || heldItem.ModItem is not DestinyModItem heldDestinyModItem
+				|| !heldDestinyModItem.ModifyDrawInfoContext(Player).HasFlag(IterationContext.HeldItem))
 			{
 				return;
 			}
@@ -126,7 +138,26 @@ namespace DestinyMod.Common.ModPlayers
 
 		public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
-			ImplementItemIteration(destinyModItem => destinyModItem.DetermineHideDrawLayersContext(Player), destinyModItem => destinyModItem.HideDrawLayers(Player, drawInfo));
+			ImplementItemIteration(destinyModItem => destinyModItem.HideDrawLayersContext(Player), destinyModItem => destinyModItem.HideDrawLayers(Player, drawInfo));
 		}
-	}
+
+		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) => !GlaiveShielded;
+
+		public override bool CanBeHitByProjectile(Projectile proj) => !GlaiveShielded;
+
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+			if (GlaiveShielded)
+            {
+				Main.spriteBatch.End();
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+				DrawData forceFieldData = new DrawData((Texture2D)Main.Assets.Request<Texture2D>("Images/Misc/Perlin"), Player.MountedCenter - Main.screenPosition, (Rectangle?)new Rectangle(0, 0, 100, 100), Color.White * 0.75f, 0, new Vector2(50), 1, SpriteEffects.None, 0);
+				GameShaders.Misc["ForceField"].UseColor(new Vector3(1));
+				GameShaders.Misc["ForceField"].Apply(forceFieldData);
+				forceFieldData.Draw(Main.spriteBatch);
+				Main.spriteBatch.End();
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+			}
+		}
+    }
 }

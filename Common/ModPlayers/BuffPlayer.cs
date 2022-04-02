@@ -26,7 +26,7 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
 				{
-					onSuccessfulIteration(destinyModBuff);
+					onSuccessfulIteration.Invoke(destinyModBuff);
 				}
 			}
 		}
@@ -37,7 +37,7 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
 				{
-					destinyModBuff.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit); // Relegated to not simply code :penisive:
+					destinyModBuff.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
 				}
 			}
 		}
@@ -48,7 +48,7 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
 				{
-					destinyModBuff.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection); // Relegated to not simply code :penisive:
+					destinyModBuff.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
 				}
 			}
 		}
@@ -59,7 +59,7 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
 				{
-					destinyModBuff.ModifyHitPvp(Player, item, target, ref damage, ref crit); // Relegated to not simply code :penisive:
+					destinyModBuff.ModifyHitPvp(Player, item, target, ref damage, ref crit);
 				}
 			}
 		}
@@ -70,7 +70,7 @@ namespace DestinyMod.Common.ModPlayers
 			{
 				if (IsBuffIndexDestinyModBuff(indexer) is DestinyModBuff destinyModBuff)
 				{
-					destinyModBuff.ModifyHitPvpWithProj(Player, proj, target, ref damage, ref crit); // Relegated to not simply code :penisive:
+					destinyModBuff.ModifyHitPvpWithProj(Player, proj, target, ref damage, ref crit);
 				}
 			}
 		}

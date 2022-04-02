@@ -41,7 +41,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
 
         private static void HealBack(Player player)
 		{
-            int heal = 5;
+            const int heal = 5;
             player.statLife += heal;
             player.HealEffect(heal);
         }
@@ -67,7 +67,10 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             }
         }
 
-        public override void MeleeEffects(Player player, Rectangle hitbox) => Item.color = RevUp > 90 ? Color.LightPink : default;
+        public override void MeleeEffects(Player player, Rectangle hitbox)
+        {
+            Item.color = RevUp > 90 ? Color.LightPink : default;
+        }
 
         public override bool? UseItem(Player player)
 		{
@@ -127,7 +130,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             return OldRightClickTest == RightClickTest;
         }
 
-        public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+        public override ItemPlayer.IterationContext PostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
 
         public override void PostUpdateRunSpeeds(Player player)
 		{

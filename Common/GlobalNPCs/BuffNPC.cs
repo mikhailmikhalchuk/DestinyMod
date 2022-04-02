@@ -26,7 +26,7 @@ namespace DestinyMod.Common.GlobalNPCs
 			{
 				if (IsBuffIndexDestinyModBuff(npc, indexer) is DestinyModBuff destinyModBuff)
 				{
-					onSuccessfulIteration(destinyModBuff);
+					onSuccessfulIteration.Invoke(destinyModBuff);
 				}
 			}
 		}

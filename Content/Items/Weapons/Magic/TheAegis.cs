@@ -68,7 +68,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 
 		public override bool CanUseItem(Player player) => !(player.altFunctionUse == 2 && Cooldown > 0);
 
-		public override ItemPlayer.IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+		public override ItemPlayer.IterationContext PostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;
 
 		public override void PostUpdateRunSpeeds(Player player)
 		{
@@ -80,7 +80,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 			}
 		}
 
-		public override ItemPlayer.IterationContext DetermineModifyDrawInfoContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+		public override ItemPlayer.IterationContext ModifyDrawInfoContext(Player player) => ItemPlayer.IterationContext.HeldItem;
 
 		public override void ModifyDrawInfo(Player player, ref PlayerDrawSet drawInfo)
 		{
@@ -102,7 +102,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 			}
 		}
 
-		public override ItemPlayer.IterationContext DetermineHideDrawLayersContext(Player player) => ItemPlayer.IterationContext.HeldItem;
+		public override ItemPlayer.IterationContext HideDrawLayersContext(Player player) => ItemPlayer.IterationContext.HeldItem;
 
 		public override void HideDrawLayers(Player player, PlayerDrawSet drawInfo)
 		{

@@ -7,6 +7,8 @@ using Terraria.Enums;
 using Microsoft.Xna.Framework;
 using DestinyMod.Content.Projectiles.Weapons.Melee.Glaive;
 using Terraria.GameInput;
+using DestinyMod.Common.Items.ItemTypes;
+using DestinyMod.Common.ModPlayers;
 
 namespace DestinyMod.Common.Projectiles.ProjectileType
 {
@@ -25,7 +27,6 @@ namespace DestinyMod.Common.Projectiles.ProjectileType
 			Projectile.penetrate = -1;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.extraUpdates = 1;
-			Projectile.timeLeft = 360;
 			Projectile.aiStyle = -1;
 		}
 
@@ -33,58 +34,43 @@ namespace DestinyMod.Common.Projectiles.ProjectileType
         {
 			Player owner = Main.player[Projectile.owner];
 
-			if (Projectile.ai[1] == 2)
-            {
-				owner.heldProj = Projectile.whoAmI;
+			owner.heldProj = Projectile.whoAmI;
 
-				Main.NewText(PlayerInput.Triggers.JustPressed.MouseRight);
-				if (Main.myPlayer == Projectile.owner && PlayerInput.Triggers.JustPressed.MouseRight)
-                {
-					owner.itemTime = owner.itemAnimation = 2;
-				}
-				else if (Main.myPlayer == Projectile.owner && !PlayerInput.Triggers.JustPressed.MouseRight)
-                {
-					Projectile.Kill();
-                }
-
-				Projectile.ai[0]++;
-				Projectile.Opacity = Utils.GetLerpValue(0, 7, Projectile.ai[0], true) * Utils.GetLerpValue(16, 12, Projectile.ai[0], true);
-				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - MathHelper.PiOver4 * Projectile.spriteDirection;
-				Projectile.Center = owner.RotatedRelativePoint(owner.MountedCenter, false, false) + Projectile.velocity * (Projectile.ai[0] - 1);
-				Projectile.spriteDirection = (Vector2.Dot(Projectile.velocity, Vector2.UnitX) >= 0f).ToDirectionInt();
-
-				DrawOriginOffsetX = 0;
-				DrawOffsetX = -(SpriteWidth / 2 - Projectile.width / 2);
-				DrawOriginOffsetY = -(SpriteHeight / 2 - Projectile.height / 2);
+			GlaiveItem glaive = owner.HeldItem.ModItem as GlaiveItem;
+			if (Main.myPlayer == Projectile.owner && PlayerInput.Triggers.Current.MouseRight && glaive.GlaiveCharge > 0)
+			{
+				owner.GetModPlayer<ItemPlayer>().GlaiveShielded = true;
+				glaive.GlaiveCharge -= 0.25f;
 			}
-			else
+			else if ((Main.myPlayer == Projectile.owner && !PlayerInput.Triggers.Current.MouseRight) || glaive.GlaiveCharge <= 0)
             {
-				if (++Projectile.ai[0] >= 16)
-				{
-					Projectile.NewProjectile(owner.GetProjectileSource_Misc(0), owner.Center, Projectile.velocity * 3, ModContent.ProjectileType<GlaiveShot>(), 10, 0, owner.whoAmI);
-					Projectile.Kill();
-				}
-				else
-				{
-					owner.heldProj = Projectile.whoAmI;
-				}
-
-				Projectile.Opacity = Utils.GetLerpValue(0, 7, Projectile.ai[0], true) * Utils.GetLerpValue(16, 12, Projectile.ai[0], true);
-				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - MathHelper.PiOver4 * Projectile.spriteDirection;
-				Projectile.Center = owner.RotatedRelativePoint(owner.MountedCenter, false, false) + Projectile.velocity * (Projectile.ai[0] - 1);
-				Projectile.spriteDirection = (Vector2.Dot(Projectile.velocity, Vector2.UnitX) >= 0f).ToDirectionInt();
-
-				DrawOriginOffsetX = 0;
-				DrawOffsetX = -(SpriteWidth / 2 - Projectile.width / 2);
-				DrawOriginOffsetY = -(SpriteHeight / 2 - Projectile.height / 2);
+				owner.GetModPlayer<ItemPlayer>().GlaiveShielded = false;
 			}
-        }
 
-		public override bool ShouldUpdatePosition() => false;
+			Projectile.rotation = (Main.MouseWorld - owner.MountedCenter).SafeNormalize(Vector2.Zero).ToRotation() + MathHelper.PiOver2 - MathHelper.PiOver4 * Projectile.spriteDirection;
+			Projectile.Center = owner.RotatedRelativePoint(owner.MountedCenter, false, false);
+			Projectile.spriteDirection = (Vector2.Dot(Main.MouseWorld - owner.MountedCenter, Vector2.UnitX) >= 0f).ToDirectionInt();
+			owner.direction = Projectile.spriteDirection;
+
+			DrawOriginOffsetX = 0;
+			DrawOffsetX = -(SpriteWidth / 2 - Projectile.width / 2);
+			DrawOriginOffsetY = -(SpriteHeight / 2 - Projectile.height / 2);
+		}
+
+        public override void Kill(int timeLeft)
+        {
+			Main.player[Projectile.owner].GetModPlayer<ItemPlayer>().GlaiveShielded = false;
+		}
+
+        public override bool ShouldUpdatePosition() => false;
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
 			float discard = 0;
+			if (Projectile.ai[1] == 2)
+            {
+				return false;
+            }
 			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Projectile.velocity * 6, 10 * Projectile.scale, ref discard);
         }
 

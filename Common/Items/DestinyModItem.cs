@@ -33,30 +33,30 @@ namespace DestinyMod.Common.Items
 		/// <summary>
 		/// Allows you to disallow the player from equipping this equipable item. Return false to disallow equipping this equipable item. Returns true by default.
 		/// </summary>
-		/// <param name="player">The <see cref="Player"/> who owns the item.</param>
+		/// <param name="player">The player who owns the item.</param>
 		public virtual bool CanEquip(Player player) => true;
 
 		/// <summary>
-		/// Called every tick while the player is holding this item. Calls on all clients and the server.
+		/// Called when the player switches to this item. Calls on all clients.
 		/// </summary>
-		/// <param name="player">The <see cref="Player"/> holding the item.</param>
+		/// <param name="player">The player who switched to the item.</param>
 		public virtual void OnHold(Player player) { }
 
 		/// <summary>
-		/// Called every tick while the player is not holding this item, but has it in their inventory. Calls on all clients and the server.
+		/// Called when the player switches away from this item. Calls on all clients.
 		/// </summary>
-		/// <param name="player">The <see cref="Player"/> not holding the item.</param>
+		/// <param name="player">The player who switched away from the item.</param>
 		public virtual void OnRelease(Player player) { }
 
-		public virtual IterationContext DeterminePostUpdateRunSpeedsContext(Player player) => IterationContext.None;
+		public virtual IterationContext PostUpdateRunSpeedsContext(Player player) => IterationContext.None;
 
 		public virtual void PostUpdateRunSpeeds(Player player) { }
 
-		public virtual IterationContext DetermineModifyDrawInfoContext(Player player) => IterationContext.None;
+		public virtual IterationContext ModifyDrawInfoContext(Player player) => IterationContext.None;
 
 		public virtual void ModifyDrawInfo(Player player, ref PlayerDrawSet drawInfo) { }
 
-		public virtual IterationContext DetermineHideDrawLayersContext(Player player) => IterationContext.None;
+		public virtual IterationContext HideDrawLayersContext(Player player) => IterationContext.None;
 
 		public virtual void HideDrawLayers(Player player, PlayerDrawSet drawInfo) { }
 	}
