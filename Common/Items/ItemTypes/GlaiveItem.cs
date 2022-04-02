@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using DestinyMod.Common.ModPlayers;
+using Terraria.GameInput;
 
 namespace DestinyMod.Common.Items.ItemTypes
 {
@@ -35,25 +36,21 @@ namespace DestinyMod.Common.Items.ItemTypes
 
 		public override bool CanUseItem(Player player) => !(player.altFunctionUse == 2 && GlaiveCharge == 0);
 
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (player.altFunctionUse == 2)
+            {
+				Projectile.NewProjectile(source, position, velocity, Type, damage, knockback, player.whoAmI, 0, 2);
+				return false;
+            }
+			return true;
+        }
+
         public override bool? UseItem(Player player)
         {
 			if (player.altFunctionUse == 2)
             {
-				Item.autoReuse = true;
-				Item.useStyle = ItemUseStyleID.Thrust;
-				OldShoot = Item.shoot;
-				Item.shoot = ProjectileID.None;
 				GlaiveCharge--;
-				player.itemTime = player.itemAnimation = 1;
-			}
-			else
-            {
-				Item.autoReuse = false;
-				Item.useStyle = ItemUseStyleID.Rapier;
-				if (OldShoot != 0)
-                {
-					Item.shoot = OldShoot;
-                }
 			}
             return true;
         }
