@@ -19,6 +19,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.timeLeft = 400;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
+			Projectile.penetrate = 1;
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

@@ -20,7 +20,7 @@ namespace DestinyMod.Common.Items.ItemTypes
             Item.value = 0;
         }
 
-        public override bool CanUseItem(Player player) => player.GetModPlayer<SuperPlayer>().SuperActiveTime == 0;
+        public override bool CanUseItem(Player player) => player.GetModPlayer<SuperPlayer>().SuperActiveTime > 0;
 
         public override bool? PrefixChance(int pre, UnifiedRandom rand) => false;
     }
