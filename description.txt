@@ -28,6 +28,6 @@ Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
 Added MIDA Multi-Tool's exotic perk
-Graviton lance now only shoots 2 bullets
+Graviton Lance now only shoots 2 bullets
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

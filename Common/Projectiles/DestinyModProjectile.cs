@@ -126,5 +126,27 @@ namespace DestinyMod.Common.Projectiles
             ((FusionShot)proj.ModProjectile).ChargeTime = chargeTime;
             return proj;
         }
+
+        /// <summary>
+        /// Determines whether or not the projectile will be in collision with a tile after X steps
+        /// </summary>
+        /// <param name="steps">The amount of times to simulate a velocity change for the projectile</param>
+        /// <param name="velocity">The velocity to use when simulating. Defaults to the projectile's current velocity</param>
+        /// <returns><see langword="true"/> if the projectile would collide with a tile; otherwise, <see langword="false"/></returns>
+        public bool WillCollideInSteps(int steps, Vector2? velocity = null)
+        {
+            if (steps <= 0)
+            {
+                steps = 1;
+            }
+
+            Point futurePosition = (Projectile.position + ((velocity ?? Projectile.velocity) * steps)).ToTileCoordinates();
+
+            if (Main.tile[futurePosition.X, futurePosition.Y] == null || !Main.tile[futurePosition.X, futurePosition.Y].HasTile || Main.tile[futurePosition.X, futurePosition.Y].IsActuated)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -78,7 +78,29 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Target = -1;
 		}
 
-		public override void Kill(int timeLeft)
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+			Player player = Main.player[Projectile.owner];
+			int safetyCheck = 0;
+
+			for (int i = 0; i < 5; i++)
+			{
+				Vector2 futureVec = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
+
+				while (WillCollideInSteps(10, futureVec) && safetyCheck < 100)
+                {
+					safetyCheck++;
+					futureVec = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
+				}
+
+				//-oldVelocity.SafeNormalize(Vector2.One).RotateRandom(MathHelper.PiOver2) * Utils.NextFloat(Main.rand, 5f, 9f)
+				Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), Projectile.position, futureVec, ModContent.ProjectileType<GjallarhornMiniRocket>(), 10, 0, Projectile.owner);
+			}
+
+			return true;
+        }
+
+        public override void Kill(int timeLeft)
 		{
 			Projectile.Resize(80, 80);
 			Projectile.maxPenetrate = -1;
