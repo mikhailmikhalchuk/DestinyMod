@@ -8,7 +8,10 @@ namespace DestinyMod.Content.Items.Equipables.Pets
 {
 	public class Ghost : DestinyModItem
 	{
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Summons a Ghost, born from the Traveler and a Guardian's faithful companion");
+		public override void SetStaticDefaults()
+		{
+			Tooltip.SetDefault("Summons a Ghost, born from the Traveler and a Guardian's faithful companion");
+		}
 
 		public override void DestinySetDefaults()
 		{
