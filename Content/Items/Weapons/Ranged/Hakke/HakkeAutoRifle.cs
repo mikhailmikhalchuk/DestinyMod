@@ -3,12 +3,26 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Content.Items.Materials;
+using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items;
+using System.Collections.Generic;
+using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.Traits;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
 	public class HakkeAutoRifle : HakkeCraftsmanshipWeapon
 	{
-		public override void DestinySetDefaults()
+		public override void SetStaticDefaults()
+		{
+			ItemData.InitializeNewItemData(Type, 1370, null, 1, new List<ItemPerkPool>()
+			{
+				new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>()),
+				new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliber>())
+			}); ;
+		}
+
+        public override void DestinySetDefaults()
 		{
 			Item.damage = 7;
 			Item.useTime = 9;

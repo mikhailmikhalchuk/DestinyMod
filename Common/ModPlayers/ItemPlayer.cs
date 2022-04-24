@@ -159,5 +159,15 @@ namespace DestinyMod.Common.ModPlayers
 				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 			}
 		}
+
+        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
+        }
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            base.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
     }
 }
