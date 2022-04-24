@@ -20,7 +20,7 @@ namespace DestinyMod.Common.GlobalItems
 
         public IList<ItemPerk> ActivePerks;
 
-        public IList<ItemMod> ItemMods = new List<ItemMod>();
+        public IList<ItemMod> ItemMods;
 
         public override bool InstancePerEntity => true;
 

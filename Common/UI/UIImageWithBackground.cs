@@ -26,10 +26,6 @@ namespace DestinyMod.Common.UI
             ScaleSize = scaleSize;
             BackgroundColor = Color.White;
             ImageColor = Color.White;
-        }
-
-        public override void OnInitialize()
-        {
             Width.Pixels = Background.Width;
             Height.Pixels = Background.Height;
         }

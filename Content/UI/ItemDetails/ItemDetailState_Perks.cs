@@ -52,56 +52,23 @@ namespace DestinyMod.Content.UI.ItemDetails
 					perk.Top.Pixels = yPos + ItemPerk.TextureSize * (6f / 5f) * perkIndexer;
 					lowestPerkPosition = Math.Max(lowestPerkPosition, perk.Top.Pixels);
 
-					perk.OnUpdate += (evt) =>
-					{
-						if (!perk.IsMouseHovering)
-                        {
-							return;
-                        }
-
-						Main.mouseText = true;
-						string mouseText = perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name;
-
-						if (perkTypePool.TypeName != null)
-						{
-							mouseText += "\n" + perkTypePool.TypeName;
-						}
-
-						if (perk.ItemPerk.Description != null)
-						{
-							mouseText += "\n" + perk.ItemPerk.Description;
-						}
-
-						if (!perk.IsActive)
-						{
-							mouseText += "\nClick to apply";
-						}
-
-						Main.instance.MouseText(mouseText);
-					};
-
 					perk.OnMouseOver += (evt, listeningElement) =>
 					{
-						Main.mouseText = true;
-						string mouseText = perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name;
-
-						if (perkTypePool.TypeName != null)
-                        {
-							mouseText += "\n" + perkTypePool.TypeName;
-						}
-
-						if (perk.ItemPerk.Description != null)
-						{
-							mouseText += "\n" + perk.ItemPerk.Description;
-						}
-
+						MouseTitle = perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name;
+						MouseSubtitle = perkTypePool.TypeName;
+						MouseText = perk.ItemPerk.Description;
 						if (!perk.IsActive)
                         {
-							mouseText += "\nClick to apply";
+							MouseText += "\nClick to apply";
                         }						
-
-						Main.instance.MouseText(mouseText);
 					};
+
+					/*perk.OnMouseOut += (evt, listeningElement) =>
+					{
+						MouseTitle = null;
+						MouseSubtitle = null;
+						MouseText = null;
+					};*/
 
 					perk.OnClick += (evt, listeningElement) =>
 					{

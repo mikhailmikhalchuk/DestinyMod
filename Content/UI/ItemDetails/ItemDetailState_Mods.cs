@@ -43,7 +43,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			int xPos = 10;
 			yPos += 8;
 			Asset<Texture2D> infuseSlot = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/InfuseSlot");
-			InfuseItemSlot = new UIImageWithBackground(slotBackground, infuseSlot);
+			InfuseItemSlot = new UIImageWithBackground(slotBackground, infuseSlot, 34);
 			InfuseItemSlot.Left.Pixels = xPos;
 			InfuseItemSlot.Top.Pixels = yPos;
 			xPos += infuseSlot.Width() + 8;
@@ -51,7 +51,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			if (includeItemTierSlot)
             {
-				ItemTierSlot = new UIImageWithBackground(slotBackground, infuseSlot);
+				ItemTierSlot = new UIImageWithBackground(slotBackground, infuseSlot, 34);
 				ItemTierSlot.Left.Pixels = xPos;
 				ItemTierSlot.Top.Pixels = yPos;
 				xPos += infuseSlot.Width() + 8;
@@ -59,15 +59,19 @@ namespace DestinyMod.Content.UI.ItemDetails
 			}
 
 			ItemDataItem inspectedItemData = InspectedItem.GetGlobalItem<ItemDataItem>();
-			for (int modSlotIndexer = 0; modSlotIndexer < inspectedItemData.ItemMods.Count; modSlotIndexer++)
-            {
-				ItemMod mod = inspectedItemData.ItemMods[modSlotIndexer];
-				ItemModSlot modSlot = new ItemModSlot(mod.Item);
-				modSlot.Left.Pixels = xPos;
-				modSlot.Top.Pixels = yPos;
-				xPos += ItemModSlot.BackgroundTexture.Width + 8;
-				ModSlots.Add(modSlot);
-				MasterBackground.Append(modSlot);
+			if (inspectedItemData.ItemMods != null)
+			{
+				ModSlots = new List<ItemModSlot>();
+				for (int modSlotIndexer = 0; modSlotIndexer < inspectedItemData.ItemMods.Count; modSlotIndexer++)
+				{
+					ItemMod mod = inspectedItemData.ItemMods[modSlotIndexer];
+					ItemModSlot modSlot = new ItemModSlot(mod.Item, 34);
+					modSlot.Left.Pixels = xPos;
+					modSlot.Top.Pixels = yPos;
+					xPos += (int)modSlot.Width.Pixels + 8;
+					ModSlots.Add(modSlot);
+					MasterBackground.Append(modSlot);
+				}
 			}
 
 			return yPos + slotBackground.Height + 10;
