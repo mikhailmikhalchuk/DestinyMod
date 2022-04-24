@@ -36,7 +36,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			WeaponModsSeparator.Top.Pixels = yPos += 20;
 			WeaponModsSeparator.Width.Pixels = 300f;
 			WeaponModsSeparator.Height.Pixels = 2f;
-			WeaponModsSeparator.Color = SeperatorColor;
+			WeaponModsSeparator.Color = SeparatorColor;
 			MasterBackground.Append(WeaponModsSeparator);
 
 			Texture2D slotBackground = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad).Value;

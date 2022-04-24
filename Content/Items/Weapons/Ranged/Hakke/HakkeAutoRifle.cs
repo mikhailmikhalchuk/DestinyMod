@@ -18,7 +18,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			ItemData.InitializeNewItemData(Type, 1370, null, 1, new List<ItemPerkPool>()
 			{
 				new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>()),
-				new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliber>())
+				new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
 			}); ;
 		}
 

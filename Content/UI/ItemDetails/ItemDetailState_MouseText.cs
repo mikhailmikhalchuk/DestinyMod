@@ -27,7 +27,6 @@ namespace DestinyMod.Content.UI.ItemDetails
             int mouseTextWidth = 360;
             int borderBuffer = 10;
             int buffer = 4;
-            float alpha = 0.75f;
 
             DynamicSpriteFont mouseFont = FontAssets.MouseText.Value;
             int yPos = originY + borderBuffer;
@@ -54,11 +53,11 @@ namespace DestinyMod.Content.UI.ItemDetails
             }
 
             int nameHeight = heightMeasurer;
-            spriteBatch.Draw(magicPixel, new Rectangle(originX, originY, mouseTextWidth, heightMeasurer), Color.Gray * alpha);
+            spriteBatch.Draw(magicPixel, new Rectangle(originX, originY, mouseTextWidth, heightMeasurer), Color.Black);
 
             string textFormatted = string.Empty;
             float textScale = 1f;
-            int textHeight = 0;
+            int textHeight;
             if (!string.IsNullOrEmpty(MouseText))
             {
                 textFormatted = mouseFont.CreateWrappedText(MouseText, mouseTextWidth - 2 * buffer);
@@ -66,24 +65,25 @@ namespace DestinyMod.Content.UI.ItemDetails
                 heightMeasurer += textHeight;
             }
 
-            spriteBatch.Draw(magicPixel, new Rectangle(originX, originY + nameHeight, mouseTextWidth, heightMeasurer - nameHeight), Color.DarkGray * alpha);
+            Color col = Color.DarkGray * 0.1f;
+            col.A = 255;
+            spriteBatch.Draw(magicPixel, new Rectangle(originX, originY + nameHeight, mouseTextWidth, heightMeasurer - nameHeight), col);
 
             if (!string.IsNullOrEmpty(MouseTitle))
             {
-                spriteBatch.DrawString(mouseFont, titleFormatted, new Vector2(originX + buffer, yPos), SeperatorColor * alpha, 0, Vector2.Zero, titleScale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(mouseFont, titleFormatted, new Vector2(originX + buffer, yPos), Color.WhiteSmoke, 0, Vector2.Zero, titleScale, SpriteEffects.None, 0f);
                 yPos += titleHeight;
             }
 
             if (!string.IsNullOrEmpty(MouseSubtitle))
             {
-                spriteBatch.DrawString(mouseFont, subtitleFormatted, new Vector2(originX + buffer, yPos), SeperatorColor * alpha, 0, Vector2.Zero, subtitleScale, SpriteEffects.None, 0f);
-                yPos += subtitleHeight;
+                spriteBatch.DrawString(mouseFont, subtitleFormatted, new Vector2(originX + buffer, yPos), Color.WhiteSmoke, 0, Vector2.Zero, subtitleScale, SpriteEffects.None, 0f);
+                yPos += (int)(subtitleHeight * 1.5f);
             }
 
             if (!string.IsNullOrEmpty(MouseText))
             {
-                spriteBatch.DrawString(mouseFont, textFormatted, new Vector2(originX + buffer, yPos), SeperatorColor * alpha, 0, Vector2.Zero, textScale, SpriteEffects.None, 0f);
-                yPos += textHeight;
+                spriteBatch.DrawString(mouseFont, textFormatted, new Vector2(originX + buffer, yPos), Color.WhiteSmoke, 0, Vector2.Zero, textScale, SpriteEffects.None, 0f);
             }
         }
     }

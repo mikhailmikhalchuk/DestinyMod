@@ -7,7 +7,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
         public override void SetDefaults()
         {
             DisplayName = "Frenzy";
-            Description = "What this does is also beyond me";
+            Description = "Being in combat for an extended time increases this weapon's damage and firing speed until you are out of combat";
         }
     }
 }

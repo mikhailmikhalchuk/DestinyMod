@@ -7,7 +7,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
         public override void SetDefaults()
         {
             DisplayName = "Barrel Shroud";
-            Description = "That day, May 6th";
+            Description = "- Decreases bullet spread";
         }
     }
 }

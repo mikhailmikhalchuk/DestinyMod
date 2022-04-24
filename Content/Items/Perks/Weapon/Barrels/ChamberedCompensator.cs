@@ -7,7 +7,8 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
         public override void SetDefaults()
         {
             DisplayName = "Chambered Compensator";
-            Description = "Is this even a barrel";
+            Description = "- Moderately decreases bullet spread"
+                + "\n- Slightly decreases firing speed";
         }
     }
 }

@@ -8,6 +8,8 @@ using DestinyMod.Common.GlobalItems;
 using System.Linq;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -31,7 +33,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			WeaponPerksSeparator.Top.Pixels = yPos += 20;
 			WeaponPerksSeparator.Width.Pixels = 300f;
 			WeaponPerksSeparator.Height.Pixels = 2f;
-			WeaponPerksSeparator.Color = SeperatorColor;
+			WeaponPerksSeparator.Color = SeparatorColor;
 			MasterBackground.Append(WeaponPerksSeparator);
 
 			ItemPerks = new List<ItemPerkDisplay>();
@@ -70,10 +72,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 						MouseText = null;
 					};*/
 
-					perk.OnClick += (evt, listeningElement) =>
+					perk.OnMouseDown += (evt, listeningElement) =>
 					{
 						perk.ToggleActive();
 						SyncActivePerks();
+						SoundEngine.PlaySound(SoundID.Grab);
+						MouseText = perk.ItemPerk.Description;
 					};
 
 					ItemPerks.Add(perk);
@@ -94,7 +98,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				perkSeparator.Top.Pixels = yPos;
 				perkSeparator.Width.Pixels = 2f;
 				perkSeparator.Height.Pixels = lowestPerkPosition - yPos + ItemPerk.TextureSize;
-				perkSeparator.Color = SeperatorColor;
+				perkSeparator.Color = SeparatorColor;
 				MasterBackground.Append(perkSeparator);
 			}
 

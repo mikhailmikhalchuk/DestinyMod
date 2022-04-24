@@ -28,7 +28,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public UIText InspectedItemName { get; private set; }
 
-		public static Color SeperatorColor = new Color(68, 70, 74);
+		public UIText InspectedItemPowerLevel { get; private set; }
+
+		public static Color SeparatorColor = new Color(68, 70, 74);
 
 		public ItemDetailsState() { }
 
@@ -74,6 +76,18 @@ namespace DestinyMod.Content.UI.ItemDetails
 			top += (int)InspectedItemDisplay.Height.Pixels + 20;
 			top = InitialisePerksSection(top);
 			top = InitialiseModsSection(top);
+
+			InspectedItemPowerLevel = new UIText(InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel.ToString(), 0.7f, large: true);
+			InspectedItemPowerLevel.Left.Pixels = 375;
+			InspectedItemPowerLevel.Top.Pixels = 260;
+			InspectedItemPowerLevel.VAlign = 0.5f;
+			InspectedItemDisplay.Append(InspectedItemPowerLevel);
+
+			UIText InspectedItemPowerLevelText = new UIText("Power", 0.8f);
+			InspectedItemPowerLevelText.Left.Pixels = 437;
+			InspectedItemPowerLevelText.Top.Pixels = 265;
+			InspectedItemPowerLevelText.VAlign = 0.5f;
+			InspectedItemDisplay.Append(InspectedItemPowerLevelText);
 		}
 
         public override void Update(GameTime gameTime)

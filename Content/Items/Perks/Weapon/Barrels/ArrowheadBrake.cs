@@ -7,7 +7,8 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
         public override void SetDefaults()
         {
             DisplayName = "Arrowhead Brake";
-            Description = "I don't know what this is, thankfully you'll be the one implementing this";
+            Description = "- Decreases bullet spread"
+                + "\n- Increases firing speed";
         }
     }
 }

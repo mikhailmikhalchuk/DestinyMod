@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
@@ -31,6 +32,16 @@ namespace DestinyMod.Content.UI.ItemDetails
             Width.Pixels = ItemPerk.TextureSize;
             Height.Pixels = ItemPerk.TextureSize;
             PerkTexture = ModContent.Request<Texture2D>(ItemPerk.Texture);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (ContainsPoint(Main.MouseScreen))
+            {
+                Main.LocalPlayer.mouseInterface = true;
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
