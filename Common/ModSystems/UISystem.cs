@@ -10,6 +10,7 @@ namespace DestinyMod.Common.ModSystems
             if (!Main.dedServ)
             {
                 ModContent.GetInstance<Content.UI.SuperCharge.SuperChargeUI>().UserInterface.SetState(new Content.UI.SuperCharge.SuperChargeUI());
+                ModContent.GetInstance<Content.UI.PerkSelection.PerkSelection>().UserInterface.SetState(new Content.UI.PerkSelection.PerkSelection());
             }
         }
 
@@ -18,6 +19,7 @@ namespace DestinyMod.Common.ModSystems
             if (!Main.dedServ)
             {
                 ModContent.GetInstance<Content.UI.SuperCharge.SuperChargeUI>().UserInterface.SetState(null);
+                ModContent.GetInstance<Content.UI.PerkSelection.PerkSelection>().UserInterface.SetState(null);
             }
         }
     }
