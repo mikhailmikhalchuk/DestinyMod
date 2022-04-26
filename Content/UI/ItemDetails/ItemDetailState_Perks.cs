@@ -10,6 +10,8 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
+using DestinyMod.Content.UI.MouseText;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -54,17 +56,24 @@ namespace DestinyMod.Content.UI.ItemDetails
 					perk.Top.Pixels = yPos + ItemPerk.TextureSize * (6f / 5f) * perkIndexer;
 					lowestPerkPosition = Math.Max(lowestPerkPosition, perk.Top.Pixels);
 
-					perk.OnMouseOver += (evt, listeningElement) =>
+					perk.OnUpdate += (evt) =>
 					{
-						MouseTitle = perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name;
-						MouseSubtitle = perkTypePool.TypeName;
-						MouseText = perk.ItemPerk.Description;
-						if (!perk.IsActive)
-                        {
-							//MouseText += "\nClick to apply";
-                        }						
-					};
+						if (!perk.ContainsPoint(Main.MouseScreen))
+						{
+							return;
+						}
 
+						int oldTitleAndSubtitleHeight = (int)MouseText_TitleAndSubtitle.Height.Pixels;
+						MouseText_TitleAndSubtitle.UpdateData(perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name, perkTypePool.TypeName);
+
+						int oldBodyHeight = (int)MouseText_BodyText.Height.Pixels;
+						MouseText_BodyText.UpdateData(perk.ItemPerk.Description);
+
+						MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
+						mouseTextState.AppendToTitleBackground(MouseText_TitleAndSubtitle);
+						mouseTextState.AppendToMasterBackground(MouseText_BodyText);
+					};
+					
 					/*perk.OnMouseOut += (evt, listeningElement) =>
 					{
 						MouseTitle = null;
@@ -77,7 +86,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 						perk.ToggleActive();
 						SyncActivePerks();
 						SoundEngine.PlaySound(SoundID.Grab);
-						MouseText = perk.ItemPerk.Description;
+						// MouseText = perk.ItemPerk.Description; // Porque?
 					};
 
 					ItemPerks.Add(perk);

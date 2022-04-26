@@ -1,4 +1,4 @@
-using Terraria.GameContent.UI.Elements;
+/*using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using DestinyMod.Core.UI;
 using Terraria;
@@ -87,4 +87,4 @@ namespace DestinyMod.Content.UI.ItemDetails
             }
         }
     }
-}
+}*/

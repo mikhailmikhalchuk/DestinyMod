@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using DestinyMod.Common.Items.PerksAndMods;
 using DestinyMod.Common.GlobalItems;
 using System.Linq;
+using DestinyMod.Content.UI.MouseText;
+using Terraria.UI;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -29,6 +31,10 @@ namespace DestinyMod.Content.UI.ItemDetails
 		public UIText InspectedItemName { get; private set; }
 
 		public UIText InspectedItemPowerLevel { get; private set; }
+
+		public MouseText_TitleAndSubtitle MouseText_TitleAndSubtitle { get; private set; }
+
+		public MouseText_BodyText MouseText_BodyText { get; private set; }
 
 		public static Color SeparatorColor = new Color(68, 70, 74);
 
@@ -53,6 +59,10 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public override void OnInitialize()
 		{
+			MouseText_TitleAndSubtitle = new MouseText_TitleAndSubtitle(420, string.Empty, string.Empty, titleScale: 0f, subtitleScale: 0f);
+			MouseText_BodyText = new MouseText_BodyText(420, string.Empty, scale: 0f);
+			ModContent.GetInstance<MouseTextState>().CleanseAll();
+
 			Asset<Texture2D> masterBackgroundTexture = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ItemDetailsBackground", AssetRequestMode.ImmediateLoad);
 			MasterBackground = new UIImage(masterBackgroundTexture);
 			MasterBackground.Width.Set(masterBackgroundTexture.Width(), 0);
@@ -105,6 +115,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			if (Main.keyState.IsKeyDown(Keys.Escape))
 			{
+				ModContent.GetInstance<MouseTextState>().Visible = false;
 				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
 			}
 
@@ -112,6 +123,8 @@ namespace DestinyMod.Content.UI.ItemDetails
             {
 				Main.LocalPlayer.mouseInterface = true;
             }
+
+			ModContent.GetInstance<MouseTextState>().Visible = MasterBackground.ContainsPoint(Main.MouseScreen);
 		}
 	}
 }

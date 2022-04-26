@@ -33,7 +33,7 @@ namespace DestinyMod.Common.ModPlayers
         {
             if (UnlockedMods.Count > 0)
             {
-                tag.Add("UnlockedMods", UnlockedMods.Select(mod => mod.Name).ToList());
+                tag.Add("UnlockedMods", UnlockedMods.Select(mod => mod?.Name).ToList());
             }
         }
 
