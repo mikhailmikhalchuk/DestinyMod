@@ -98,7 +98,7 @@ namespace DestinyMod.Common.GlobalItems
 
             if (ItemMods != null)
             {
-                tag.Add("ItemMods", ItemMods.Select(mod => ItemIO.Save(mod.Item)).ToList());
+                tag.Add("ItemMods", ItemMods.Select(mod => mod.Name).ToList());
             }
         }
 
@@ -112,7 +112,7 @@ namespace DestinyMod.Common.GlobalItems
                 List<string> savedPerks = tag.Get<List<string>>("ItemPerks");
                 foreach (string perk in savedPerks)
                 {
-                    if (ItemPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
+                    if (ModAndPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
                     {
                         ActivePerks.Add(itemPerk);
                     }
@@ -125,7 +125,17 @@ namespace DestinyMod.Common.GlobalItems
 
             if (tag.ContainsKey("ItemMods"))
             {
-                ItemMods = tag.Get<List<TagCompound>>("ItemMods").Select(tag => ItemIO.Load(tag).ModItem as ItemMod).ToList();
+                ItemMods = new List<ItemMod>();
+                List<string> itemModsSaved = tag.Get<List<string>>("ItemMods");
+                foreach (string modName in itemModsSaved)
+                {
+                    if (!ModAndPerkLoader.ItemModsByName.TryGetValue(modName, out ItemMod itemMod))
+                    {
+                        continue;
+                    }
+
+                    ItemMods.Add(itemMod);
+                }
             }
 
             SetDefaults(item);

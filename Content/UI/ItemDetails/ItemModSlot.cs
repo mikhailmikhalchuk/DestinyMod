@@ -1,39 +1,35 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using ReLogic.Content;
-using Terraria;
 using DestinyMod.Common.UI;
-using Terraria.GameContent;
+using DestinyMod.Common.Items.PerksAndMods;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
     public class ItemModSlot : UIImageWithBackground
     {
-        public Item Item { get; private set; }
+        public ItemMod ItemMod { get; private set; }
 
         public static Texture2D BackgroundTexture => ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad).Value;
 
-        public ItemModSlot(Item item = null, int scaleSize = 50) : base(BackgroundTexture, null, scaleSize)
+        public ItemModSlot(ItemMod itemMod = null, int scaleSize = 50) : base(BackgroundTexture, null, scaleSize)
         {
-            Item = item;
+            ItemMod = itemMod;
 
-            if (Item == null)
+            if (ItemMod == null)
             {
-                Item = new Item();
-                Item.SetDefaults();
+                Image = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad);
             }
             else
             {
-                Main.instance.LoadItem(item.type);
-                Image = TextureAssets.Item[item.type];
+               Image = ModContent.Request<Texture2D>(ItemMod.Texture, AssetRequestMode.ImmediateLoad);
             }
         }
 
-        public void UpdateItem(int type)
+        public void UpdateItemMod(ItemMod newMod)
         {
-            Item.SetDefaults(type);
-            Main.instance.LoadItem(type);
-            Image = TextureAssets.Item[type];
+            ItemMod = newMod;
+            Image = ModContent.Request<Texture2D>(ItemMod.Texture, AssetRequestMode.ImmediateLoad);
         }
     }
 }

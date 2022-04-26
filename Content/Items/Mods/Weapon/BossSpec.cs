@@ -1,33 +1,28 @@
-using Terraria;
 using DestinyMod.Common.Items.PerksAndMods;
+using Terraria;
 
 namespace DestinyMod.Content.Items.Mods.Weapon
 {
     public class BossSpec : ItemMod
     {
-        public override void SetStaticDefaults() => Tooltip.SetDefault("Deals extra damage against boss enemies.");
-
-        public override void DestinySetDefaults()
+        public override void SetDefaults()
         {
-            ApplyType = ItemType.Weapon;
-            Item.maxStack = 99;
-            Item.value = Item.buyPrice(0, 5, 0, 0);
+            DisplayName = "Boss Spec";
+            Description = "Increases damage against bosses and vehicles.";
         }
 
-        public override void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        public void Function(NPC target, ref int damage)
         {
-            if (target.boss)
+            if (!target.boss)
             {
-                damage = (int)(damage * 1.05f);
+                return;
             }
+
+            damage = (int)(damage * 1.05f);
         }
 
-        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            if (target.boss)
-            {
-                damage = (int)(damage * 1.05f);
-            }
-        }
+        public override void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit) => Function(target, ref damage);
+
+        public override void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => Function(target, ref damage);
     }
 }
