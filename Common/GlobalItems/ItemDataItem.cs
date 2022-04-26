@@ -96,9 +96,9 @@ namespace DestinyMod.Common.GlobalItems
                 tag.Add("ItemPerks", ActivePerks.Select(itemPerk => itemPerk.Name).ToList());
             }
 
-            if (ItemMods != null)
+            if (ItemMods != null && ItemMods.Count > 0 && ItemMods.All(mod => mod != null))
             {
-                tag.Add("ItemMods", ItemMods.Select(mod => mod.Name).ToList());
+                tag.Add("ItemMods", ItemMods.Select(mod => mod?.Name).ToList());
             }
         }
 

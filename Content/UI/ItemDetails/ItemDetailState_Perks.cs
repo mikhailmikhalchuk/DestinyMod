@@ -61,7 +61,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 						MouseText = perk.ItemPerk.Description;
 						if (!perk.IsActive)
                         {
-							MouseText += "\nClick to apply";
+							//MouseText += "\nClick to apply";
                         }						
 					};
 

@@ -88,6 +88,15 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemPowerLevelText.Top.Pixels = 265;
 			InspectedItemPowerLevelText.VAlign = 0.5f;
 			InspectedItemDisplay.Append(InspectedItemPowerLevelText);
+
+			UIImageButton CloseButton = new UIImageButton(Main.Assets.Request<Texture2D>("Images/UI/SearchCancel"));
+			CloseButton.Left.Pixels = MasterBackground.Width.Pixels - 33;
+			CloseButton.Top.Pixels = MasterBackground.Top.Pixels + 10;
+			CloseButton.OnClick += (evt, listeningElement) =>
+			{
+				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
+			};
+			MasterBackground.Append(CloseButton);
 		}
 
         public override void Update(GameTime gameTime)
@@ -98,6 +107,11 @@ namespace DestinyMod.Content.UI.ItemDetails
 			{
 				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
 			}
+
+			if (MasterBackground.ContainsPoint(Main.MouseScreen))
+            {
+				Main.LocalPlayer.mouseInterface = true;
+            }
 		}
 	}
 }

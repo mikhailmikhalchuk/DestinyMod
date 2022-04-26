@@ -34,16 +34,6 @@ namespace DestinyMod.Content.UI.ItemDetails
             PerkTexture = ModContent.Request<Texture2D>(ItemPerk.Texture);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-
-            if (ContainsPoint(Main.MouseScreen))
-            {
-                Main.LocalPlayer.mouseInterface = true;
-            }
-        }
-
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(TextureAssets.MagicPixel.Value, GetDimensions().ToRectangle(), IsActive ? Color.SkyBlue : Color.Transparent);
