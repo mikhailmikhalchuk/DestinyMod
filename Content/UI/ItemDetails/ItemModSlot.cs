@@ -12,7 +12,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public static Texture2D BackgroundTexture => ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad).Value;
 
-        public ItemModSlot(ItemMod itemMod = null, int scaleSize = 50) : base(BackgroundTexture, null, scaleSize)
+        public ItemModSlot(ItemMod itemMod = null, int scaleSize = 34) : base(BackgroundTexture, null, scaleSize)
         {
             ItemMod = itemMod;
 

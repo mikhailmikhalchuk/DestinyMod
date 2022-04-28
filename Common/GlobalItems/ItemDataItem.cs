@@ -93,12 +93,12 @@ namespace DestinyMod.Common.GlobalItems
 
             if (ActivePerks != null)
             {
-                tag.Add("ItemPerks", ActivePerks.Select(itemPerk => itemPerk.Name).ToList());
+                tag.Add("ItemPerks", ActivePerks.Select(itemPerk => itemPerk == null ? "Null" : itemPerk.Name).ToList());
             }
 
-            if (ItemMods != null && ItemMods.Count > 0 && ItemMods.All(mod => mod != null))
+            if (ItemMods != null && ItemMods.Count > 0)
             {
-                tag.Add("ItemMods", ItemMods.Select(mod => mod?.Name).ToList());
+                tag.Add("ItemMods", ItemMods.Select(mod => mod == null ? "Null" : mod.Name).ToList());
             }
         }
 
@@ -112,6 +112,12 @@ namespace DestinyMod.Common.GlobalItems
                 List<string> savedPerks = tag.Get<List<string>>("ItemPerks");
                 foreach (string perk in savedPerks)
                 {
+                    if (perk == "Null")
+                    {
+                        ActivePerks.Add(null);
+                        continue;
+                    }
+
                     if (ModAndPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
                     {
                         ActivePerks.Add(itemPerk);
@@ -129,12 +135,20 @@ namespace DestinyMod.Common.GlobalItems
                 List<string> itemModsSaved = tag.Get<List<string>>("ItemMods");
                 foreach (string modName in itemModsSaved)
                 {
-                    if (!ModAndPerkLoader.ItemModsByName.TryGetValue(modName, out ItemMod itemMod))
+                    if (modName == "Null")
                     {
+                        ItemMods.Add(null);
                         continue;
                     }
 
-                    ItemMods.Add(itemMod);
+                    if (ModAndPerkLoader.ItemModsByName.TryGetValue(modName, out ItemMod itemMod))
+                    {
+                        ItemMods.Add(itemMod);
+                    }
+                    else
+                    {
+                        ItemMods.Add(null);
+                    }
                 }
             }
 

@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.UI;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -42,7 +43,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Texture2D slotBackground = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad).Value;
 			int xPos = 10;
 			yPos += 8;
-			Asset<Texture2D> infuseSlot = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/InfuseSlot");
+			Asset<Texture2D> infuseSlot = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/InfuseSlot", AssetRequestMode.ImmediateLoad);
 			InfuseItemSlot = new UIImageWithBackground(slotBackground, infuseSlot, 34);
 			InfuseItemSlot.Left.Pixels = xPos;
 			InfuseItemSlot.Top.Pixels = yPos;
@@ -68,13 +69,21 @@ namespace DestinyMod.Content.UI.ItemDetails
 					ItemModSlot modSlot = new ItemModSlot(mod, 34);
 					modSlot.Left.Pixels = xPos;
 					modSlot.Top.Pixels = yPos;
+					modSlot.OnMouseOver += (evt, listeningElement) =>
+					{
+					};
 					xPos += (int)modSlot.Width.Pixels + 8;
 					ModSlots.Add(modSlot);
 					MasterBackground.Append(modSlot);
 				}
 			}
 
-			return yPos + slotBackground.Height + 10;
+			yPos += slotBackground.Height + 8;
+			UIElement modSelectionBackground = new UIElement();
+			modSelectionBackground.Left.Pixels = 10;
+			modSelectionBackground.Top.Pixels = yPos;
+
+			return yPos;
         }
 	}
 }
