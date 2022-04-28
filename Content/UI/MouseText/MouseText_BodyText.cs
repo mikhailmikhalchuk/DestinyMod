@@ -36,12 +36,12 @@ namespace DestinyMod.Content.UI.MouseText
 			int widthAdjusted = (int)Width.Pixels - MouseTextState.CommonBorder * 2;
 			Text = MouseFont.CreateWrappedText(text, widthAdjusted * (1f / scale));
 			TextScale = scale;
-			TextSize = MouseFont.MeasureString(text) * scale;
+			TextSize = MouseFont.MeasureString(Text) * scale;
 			Color = color.HasValue ? color.Value : Color.White;
 			Height.Pixels = TextSize.Y;
 			if (Height.Pixels > 0)
 			{
-				Height.Pixels += MouseTextState.CommonBorder ;
+				Height.Pixels += MouseTextState.CommonBorder;
 			}
 		}
 

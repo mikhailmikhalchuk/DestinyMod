@@ -75,7 +75,7 @@ namespace DestinyMod.Content.UI.MouseText
 			}
 
 			Texture2D magicPixel = TextureAssets.MagicPixel.Value;
-			spriteBatch.Draw(magicPixel, MasterBackground.GetDimensions().ToRectangle(), new Color(37, 37, 37) * CommonOpacity);
+			spriteBatch.Draw(magicPixel, MasterBackground.GetDimensions().ToRectangle(), new Color(10, 10, 10) * CommonOpacity);
 			spriteBatch.Draw(magicPixel, TitleBackground.GetDimensions().ToRectangle(), new Color(68, 70, 74) * CommonOpacity);
 			base.Draw(spriteBatch);
 
