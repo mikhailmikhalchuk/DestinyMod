@@ -36,6 +36,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public MouseText_BodyText MouseText_BodyText { get; private set; }
 
+		public MouseText_ClickIndicator MouseText_ClickIndicator { get; private set; }
+
 		public static Color SeparatorColor = new Color(68, 70, 74);
 
 		public ItemDetailsState() { }
@@ -59,8 +61,10 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public override void OnInitialize()
 		{
-			MouseText_TitleAndSubtitle = new MouseText_TitleAndSubtitle(420, string.Empty, string.Empty, titleScale: 0f, subtitleScale: 0f);
+			MouseText_TitleAndSubtitle = new MouseText_TitleAndSubtitle(420, string.Empty, string.Empty, titleScale: 0f, subtitleScale: 0f);;
 			MouseText_BodyText = new MouseText_BodyText(420, string.Empty, scale: 0f);
+			MouseText_ClickIndicator = new MouseText_ClickIndicator();
+			MouseText_ClickIndicator.Width.Pixels = 420;
 			ModContent.GetInstance<MouseTextState>().CleanseAll();
 
 			Asset<Texture2D> masterBackgroundTexture = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ItemDetailsBackground", AssetRequestMode.ImmediateLoad);

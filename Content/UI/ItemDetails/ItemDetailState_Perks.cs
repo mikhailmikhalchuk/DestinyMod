@@ -70,8 +70,13 @@ namespace DestinyMod.Content.UI.ItemDetails
 						MouseText_BodyText.UpdateData(perk.ItemPerk.Description);
 
 						MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
-						mouseTextState.AppendToTitleBackground(MouseText_TitleAndSubtitle);
+						mouseTextState.AppendToMasterBackground(MouseText_TitleAndSubtitle);
 						mouseTextState.AppendToMasterBackground(MouseText_BodyText);
+
+						if (!perk.IsActive)
+                        {
+							mouseTextState.AppendToMasterBackground(MouseText_ClickIndicator);
+						}
 					};
 					
 					/*perk.OnMouseOut += (evt, listeningElement) =>

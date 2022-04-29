@@ -7,9 +7,17 @@ using ReLogic.Graphics;
 namespace DestinyMod.Content.UI.MouseText
 {
 	// Again, please feel free to rename this to anything better
-	public partial class MouseText_BodyText : UIElement
+	public class MouseText_BodyText : UIElement
 	{
 		public static DynamicSpriteFont MouseFont => FontAssets.MouseText.Value;
+
+		private Color BackgroundColor_Internal = new Color(20, 20, 20) * MouseTextState.CommonOpacity;
+
+		public Color? BackgroundColor
+		{
+			get => BackgroundColor_Internal;
+			set => BackgroundColor_Internal = (value == null ? value.Value : new Color(20, 20, 20) * MouseTextState.CommonOpacity);
+		}
 
 		public string Text { get; private set; }
 
@@ -17,16 +25,22 @@ namespace DestinyMod.Content.UI.MouseText
 
 		public Vector2 TextSize { get; private set; }
 
-		public Color Color { get; private set; }
+		private Color TextColor_Internal = Color.White;
 
-		public MouseText_BodyText(int width, string text, Color? color = null, float scale = 1f)
+		public Color? TextColor
+		{
+			get => TextColor_Internal;
+			set => TextColor_Internal = (value == null ? value.Value : Color.White);
+		}
+
+		public MouseText_BodyText(int width, string text, float scale = 1f)
 		{
 			Width.Pixels = width;
-			UpdateData(text, color, scale);
+			UpdateData(text, scale);
 		}
 
 		// Exists to reduce the need to use MouseTextState's append to / remove from methods
-		public void UpdateData(string text, Color? color = null, float scale = 1f)
+		public void UpdateData(string text, float scale = 1f)
 		{
 			if (Text == text && TextScale == scale)
             {
@@ -37,7 +51,6 @@ namespace DestinyMod.Content.UI.MouseText
 			Text = MouseFont.CreateWrappedText(text, widthAdjusted * (1f / scale));
 			TextScale = scale;
 			TextSize = MouseFont.MeasureString(Text) * scale;
-			Color = color.HasValue ? color.Value : Color.White;
 			Height.Pixels = TextSize.Y;
 			if (Height.Pixels > 0)
 			{
@@ -48,7 +61,9 @@ namespace DestinyMod.Content.UI.MouseText
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
 			base.DrawSelf(spriteBatch);
-			spriteBatch.DrawString(MouseFont, Text, GetDimensions().Position() + new Vector2(MouseTextState.CommonBorder), Color, 0f, Vector2.Zero, TextScale, SpriteEffects.None, 0f);
+			CalculatedStyle dimensions = GetDimensions();
+			spriteBatch.Draw(TextureAssets.MagicPixel.Value, dimensions.ToRectangle(), BackgroundColor.Value);
+			spriteBatch.DrawString(MouseFont, Text, dimensions.Position() + new Vector2(MouseTextState.CommonBorder * 2, MouseTextState.CommonBorder), TextColor.Value, 0f, Vector2.Zero, TextScale, SpriteEffects.None, 0f);
 		}
 	}
 }

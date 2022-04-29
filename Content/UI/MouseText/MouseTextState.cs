@@ -23,8 +23,6 @@ namespace DestinyMod.Content.UI.MouseText
 
 		private UIElement MasterBackground;
 
-		private UIElement TitleBackground;
-
 		public override void PreLoad(ref string name)
 		{
 			AutoSetState = true;
@@ -39,11 +37,6 @@ namespace DestinyMod.Content.UI.MouseText
 			MasterBackground.Width.Pixels = 100;
 			MasterBackground.Height.Pixels = 100;
 			Append(MasterBackground);
-
-			TitleBackground = new UIElement();
-			TitleBackground.Width.Pixels = 100;
-			TitleBackground.Height.Pixels = 0;
-			MasterBackground.Append(TitleBackground);
 		}
 
 		public override void Update(GameTime gameTime)
@@ -74,9 +67,6 @@ namespace DestinyMod.Content.UI.MouseText
 				return;
 			}
 
-			Texture2D magicPixel = TextureAssets.MagicPixel.Value;
-			spriteBatch.Draw(magicPixel, MasterBackground.GetDimensions().ToRectangle(), new Color(10, 10, 10) * CommonOpacity);
-			spriteBatch.Draw(magicPixel, TitleBackground.GetDimensions().ToRectangle(), new Color(68, 70, 74) * CommonOpacity);
 			base.Draw(spriteBatch);
 
 			CleanseAll(); // :crying This becomes so scuffed if you have frame skip off at FPS > 60
@@ -88,71 +78,35 @@ namespace DestinyMod.Content.UI.MouseText
 		public void RecalculateSpacing()
 		{
 			int greatestWidth = 0;
-			List<UIElement> titleBackgroundChildren = TitleBackground.Children.ToList();
-			for (int titleIndexer = 0; titleIndexer < titleBackgroundChildren.Count; titleIndexer++)
+			List<UIElement> children = MasterBackground.Children.ToList();
+			for (int masterIndexer = 0; masterIndexer < children.Count; masterIndexer++)
 			{
-				UIElement child = titleBackgroundChildren[titleIndexer];
-
-				child.Left.Pixels = CommonBorder;
-
-				if (titleIndexer == 0)
-				{
-					child.Top.Pixels = CommonBorder;
-				}
-				else
-				{
-					UIElement previousChild = titleBackgroundChildren[titleIndexer - 1];
-					child.Top.Pixels = previousChild.Top.Pixels + previousChild.Height.Pixels + CommonBorder;
-				}
-
-				if (child.Width.Pixels > greatestWidth)
-                {
-					greatestWidth = (int)child.Width.Pixels;
-                }
-			}
-
-			TitleBackground.Height.Pixels = 0;
-			int titleChildrenCount = TitleBackground.Children.Count();
-			if (titleChildrenCount > 0)
-			{
-				UIElement titleBackgroundLastChild = titleBackgroundChildren[titleChildrenCount - 1];
-				TitleBackground.Height.Pixels = titleBackgroundLastChild.Top.Pixels + titleBackgroundLastChild.Height.Pixels + CommonBorder;
-			}
-
-			List<UIElement> masterBackgroundChildren = MasterBackground.Children.ToList();
-			for (int masterIndexer = 0; masterIndexer < masterBackgroundChildren.Count; masterIndexer++)
-			{
-				UIElement child = masterBackgroundChildren[masterIndexer];
-
+				UIElement child = children[masterIndexer];
 				if (masterIndexer == 0)
 				{
-					child.Left.Pixels = 0;
 					child.Top.Pixels = 0; // Should be only handling TitleBackground
 				}
 				else
 				{
-					UIElement previousChild = masterBackgroundChildren[masterIndexer - 1];
-					child.Left.Pixels = CommonBorder;
-					child.Top.Pixels = previousChild.Top.Pixels + previousChild.Height.Pixels + CommonBorder;
-
-					if (child.Width.Pixels > greatestWidth)
+					UIElement previousChild = children[masterIndexer - 1];
+					child.Top.Pixels = previousChild.Top.Pixels + previousChild.Height.Pixels;
+					int totalWidth = (int)(child.Left.Pixels + child.Width.Pixels);
+					if (totalWidth > greatestWidth)
 					{
-						greatestWidth = (int)child.Width.Pixels;
+						greatestWidth = totalWidth;
 					}
 				}
 			}
 
-			MasterBackground.Height.Pixels = TitleBackground.Height.Pixels;
-			int masterChildrenCount = MasterBackground.Children.Count();
-			if (masterChildrenCount > 1)
+			MasterBackground.Height.Pixels = 0;
+			int childrenCount = MasterBackground.Children.Count();
+			if (childrenCount > 1)
 			{
-				UIElement masterBackgroundLastChild = masterBackgroundChildren[masterChildrenCount - 1];
-				MasterBackground.Height.Pixels = masterBackgroundLastChild.Top.Pixels + masterBackgroundLastChild.Height.Pixels + CommonBorder;
+				UIElement lastChild = children[childrenCount - 1];
+				MasterBackground.Height.Pixels = lastChild.Top.Pixels + lastChild.Height.Pixels;
 			}
 
-			int newWidth = greatestWidth + 2 * CommonBorder;
-			TitleBackground.Width.Pixels = newWidth;
-			MasterBackground.Width.Pixels = newWidth;
+			MasterBackground.Width.Pixels = greatestWidth;
 			Recalculate();
 		}
 
@@ -162,31 +116,15 @@ namespace DestinyMod.Content.UI.MouseText
 			RecalculateSpacing();
         }
 
-		public void AppendToTitleBackground(UIElement desiredElementToAppend)
-		{
-			TitleBackground.Append(desiredElementToAppend);
-			RecalculateSpacing();
-		}
-
 		public void RemoveFromMasterBackground(UIElement desiredElementToRemove)
         {
 			MasterBackground.RemoveChild(desiredElementToRemove);
 			RecalculateSpacing();
 		}
 
-		public void RemoveFromTitleBackground(UIElement desiredElementToRemove)
-		{
-			TitleBackground.RemoveChild(desiredElementToRemove);
-			RecalculateSpacing();
-		}
-
 		public void CleanseAll()
         {
-			TitleBackground.RemoveAllChildren();
 			MasterBackground.RemoveAllChildren();
-			MasterBackground.Append(TitleBackground);
-			TitleBackground.Width.Pixels = 0;
-			TitleBackground.Height.Pixels = 0;
 			MasterBackground.Width.Pixels = 0;
 			MasterBackground.Height.Pixels = 0;
 		}
