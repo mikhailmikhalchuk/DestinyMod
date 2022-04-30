@@ -9,6 +9,7 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         {
             DisplayName = "Boss Spec";
             Description = "Increases damage against bosses and vehicles.";
+            ApplyType = ItemType.Weapon;
         }
 
         public void Function(NPC target, ref int damage)

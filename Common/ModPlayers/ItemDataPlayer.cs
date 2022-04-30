@@ -49,7 +49,7 @@ namespace DestinyMod.Common.ModPlayers
                         continue;
                     }
 
-                    UnlockedMods.Add(itemMod);
+                    //UnlockedMods.Add(itemMod);
                 }
             }
         }

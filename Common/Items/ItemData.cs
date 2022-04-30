@@ -118,7 +118,7 @@ namespace DestinyMod.Common.Items
             itemDataItem.ItemMods = new List<ItemMod>();
             for (int modIndexer = 0; modIndexer < MaximumModCount; modIndexer++)
             {
-                itemDataItem.ItemMods.Add(null);
+                itemDataItem.ItemMods.Add(ModContent.GetInstance<NullMod>());
             }
         }
     }

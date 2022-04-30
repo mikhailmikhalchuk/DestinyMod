@@ -8,6 +8,7 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         {
             DisplayName = "Backup Mag";
             Description = "Increases magazine.";
+            ApplyType = ItemType.Weapon;
         }
     }
 }

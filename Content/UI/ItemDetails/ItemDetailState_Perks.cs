@@ -63,12 +63,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 							return;
 						}
 
-						int oldTitleAndSubtitleHeight = (int)MouseText_TitleAndSubtitle.Height.Pixels;
 						MouseText_TitleAndSubtitle.UpdateData(perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name, perkTypePool.TypeName);
-
-						int oldBodyHeight = (int)MouseText_BodyText.Height.Pixels;
 						MouseText_BodyText.UpdateData(perk.ItemPerk.Description);
-
 						MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
 						mouseTextState.AppendToMasterBackground(MouseText_TitleAndSubtitle);
 						mouseTextState.AppendToMasterBackground(MouseText_BodyText);

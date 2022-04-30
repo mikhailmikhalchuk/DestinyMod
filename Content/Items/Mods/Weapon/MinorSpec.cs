@@ -11,6 +11,7 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         {
             DisplayName = "Minor Spec";
             Description = "Deals extra damage against rank-and-file enemies.";
+            ApplyType = ItemType.Weapon;
         }
 
         public void Function(NPC target, ref int damage)

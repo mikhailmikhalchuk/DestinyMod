@@ -1,5 +1,6 @@
 ﻿using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Content.Items.Mods;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using DestinyMod.Content.UI.ItemDetails;
 using Microsoft.Xna.Framework;
@@ -98,7 +99,7 @@ namespace DestinyMod.Common.GlobalItems
 
             if (ItemMods != null && ItemMods.Count > 0)
             {
-                tag.Add("ItemMods", ItemMods.Select(mod => mod == null ? "Null" : mod.Name).ToList());
+                tag.Add("ItemMods", ItemMods.Select(mod => mod == null ? ModContent.GetInstance<NullMod>().Name : mod.Name).ToList());
             }
         }
 
@@ -137,7 +138,7 @@ namespace DestinyMod.Common.GlobalItems
                 {
                     if (modName == "Null")
                     {
-                        ItemMods.Add(null);
+                        ItemMods.Add(ModContent.GetInstance<NullMod>());
                         continue;
                     }
 
@@ -147,7 +148,7 @@ namespace DestinyMod.Common.GlobalItems
                     }
                     else
                     {
-                        ItemMods.Add(null);
+                        ItemMods.Add(ModContent.GetInstance<NullMod>());
                     }
                 }
             }

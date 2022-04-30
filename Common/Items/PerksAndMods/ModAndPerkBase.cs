@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
+using Terraria.ModLoader;
 
 namespace DestinyMod.Common.Items.PerksAndMods
 {
@@ -16,6 +12,17 @@ namespace DestinyMod.Common.Items.PerksAndMods
         public string DisplayName;
 
         public string Description;
+
+        public static T CreateInstanceOf<T>() where T : ModAndPerkBase, new()
+        {
+            T reference = ModContent.GetInstance<T>();
+            T outPut = new T
+            {
+                Name = reference.Name
+            };
+            outPut.SetDefaults();
+            return outPut;
+        }
 
         public virtual void Load(ref string name) { }
 
