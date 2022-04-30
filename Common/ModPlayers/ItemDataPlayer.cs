@@ -14,6 +14,8 @@ namespace DestinyMod.Common.ModPlayers
     {
         public int LightLevel;
 
+        public override bool CloneNewInstances => false;
+
         public IList<ItemMod> UnlockedMods = new List<ItemMod>();
 
         public override void PreUpdate()
@@ -25,8 +27,16 @@ namespace DestinyMod.Common.ModPlayers
 
             // Here for testing purposes
             Main.NewText("[ Testing ]: Populating IList<ItemMod> UnlockedMods with Boss Spec and Minor Spec.");
-            UnlockedMods.Add(ModContent.GetInstance<BossSpec>());
-            UnlockedMods.Add(ModContent.GetInstance<MinorSpec>());
+            UnlockedMods = new List<ItemMod>()
+            {
+                ModContent.GetInstance<BossSpec>(),
+                ModContent.GetInstance<MinorSpec>(),
+            };
+        }
+
+        public override void ResetEffects()
+        {
+            LightLevel = 0;
         }
 
         public override void SaveData(TagCompound tag)
@@ -49,7 +59,7 @@ namespace DestinyMod.Common.ModPlayers
                         continue;
                     }
 
-                    //UnlockedMods.Add(itemMod);
+                    UnlockedMods.Add(itemMod);
                 }
             }
         }
@@ -60,7 +70,7 @@ namespace DestinyMod.Common.ModPlayers
 
             foreach (Item armorItem in Player.armor)
             {
-                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData))
+                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData) || armorItemData.LightLevel < ItemData.MaxmimumLightLevel)
                 {
                     continue;
                 }
@@ -88,6 +98,11 @@ namespace DestinyMod.Common.ModPlayers
             Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
             if (heldItem != null && !heldItem.IsAir && heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
             {
+                if (heldItemData.LightLevel < ItemData.MaxmimumLightLevel)
+                {
+                    return;
+                }
+
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaxmimumLightLevel);
 
@@ -108,8 +123,11 @@ namespace DestinyMod.Common.ModPlayers
                 }
             }
 
-            LightLevel /= itemsConsidered;
-            Player.statDefense += (LightLevel - 1350) / 10;
+            if (itemsConsidered > 0)
+            {
+                LightLevel /= itemsConsidered;
+                Player.statDefense += (LightLevel - 1350) / 10;
+            }
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
