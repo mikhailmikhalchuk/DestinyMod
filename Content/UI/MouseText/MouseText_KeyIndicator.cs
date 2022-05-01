@@ -6,19 +6,13 @@ using ReLogic.Graphics;
 using Terraria.ModLoader;
 using ReLogic.Content;
 using Terraria;
+using Microsoft.Xna.Framework.Input;
 
 namespace DestinyMod.Content.UI.MouseText
 {
 	// Again, please feel free to rename this to anything better
-	public class MouseText_ClickIndicator : UIElement
+	public class MouseText_KeyIndicator : UIElement
 	{
-		public enum ClickTypes
-        {
-			Left,
-			Middle,
-			Right,
-        }
-
 		public static DynamicSpriteFont MouseFont => FontAssets.MouseText.Value;
 
 		public string Text { get; private set; }
@@ -35,32 +29,29 @@ namespace DestinyMod.Content.UI.MouseText
 			set => BackgroundColor_Internal = (value == null ? value.Value : new Color(10, 10, 10) * MouseTextState.CommonOpacity);
 		}
 
-
-		private ClickTypes InternalClickType;
-
-		public ClickTypes ClickType
-        {
-			get => InternalClickType;
-			set
-            {
-				InternalClickType = value;
-				string indicatorGraphicPath = "DestinyMod/Assets/Textures/UI/" + InternalClickType.ToString() + "Click";
-				IndicatorGraphic = ModContent.Request<Texture2D>(indicatorGraphicPath, AssetRequestMode.ImmediateLoad).Value;
-			}
-        }
-
-
 		public Texture2D IndicatorGraphic { get; private set; }
 
-		public MouseText_ClickIndicator(string text = null, ClickTypes clickType = ClickTypes.Left)
+		private Keys InternalKey;
+
+		public Keys Key
 		{
-			UpdateText(text ?? "Apply");
-			ClickType = clickType;
+			get => InternalKey;
+			set
+			{
+				InternalKey = value;
+			}
+		}
+
+		public MouseText_KeyIndicator(string text = null, Keys key = Keys.F)
+		{
+			UpdateText(text ?? string.Empty);
+			IndicatorGraphic = ModContent.Request<Texture2D>("DestinyMod/Assets/Textures/UI/Key", AssetRequestMode.ImmediateLoad).Value;
+			Key = key;
 			Height.Pixels = 32;
 		}
 
 		public void UpdateText(string newText)
-        {
+		{
 			Text = newText;
 			TextScale = 0.8f;
 			TextSize = MouseFont.MeasureString(Text) * TextScale;
@@ -74,7 +65,12 @@ namespace DestinyMod.Content.UI.MouseText
 
 			Vector2 textPosition = dimensions.Position() + new Vector2(dimensions.Width, dimensions.Height / 2) - new Vector2(TextSize.X + MouseTextState.CommonBorder, 0);
 			spriteBatch.DrawString(MouseFont, Text, textPosition, Color.White, 0f, new Vector2(0, TextSize.Y / 2), TextScale, SpriteEffects.None, 0f);
-			spriteBatch.Draw(IndicatorGraphic, new Vector2(textPosition.X - IndicatorGraphic.Width - 4, dimensions.Y + dimensions.Height / 2), null, Color.White, 0f, IndicatorGraphic.Size() / 2, 1f, SpriteEffects.None, 0f );
+
+			Vector2 indicatorGraphicPosition = new Vector2(textPosition.X - IndicatorGraphic.Width - 4, dimensions.Y + dimensions.Height / 2);
+			spriteBatch.Draw(IndicatorGraphic, indicatorGraphicPosition, null, Color.White, 0f, IndicatorGraphic.Size() / 2, 1f, SpriteEffects.None, 0f);
+
+			string keyText = Key.ToString();
+			spriteBatch.DrawString(MouseFont, keyText, indicatorGraphicPosition, Color.White, 0f, (MouseFont.MeasureString(keyText) * TextScale) / 2, TextScale, SpriteEffects.None, 0f);
 		}
 	}
 }

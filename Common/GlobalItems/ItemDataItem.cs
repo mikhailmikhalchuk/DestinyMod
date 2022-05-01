@@ -60,8 +60,8 @@ namespace DestinyMod.Common.GlobalItems
             }
 
             TooltipLine lightLevelTooltip = new TooltipLine(DestinyMod.Instance, "LightLevel", "Power: " + LightLevel.ToString()); // To Do: Fancy icons when different classes get implemented
+            TooltipLine nameTooltip = tooltips.FirstOrDefault(tooltip => tooltip.Mod == "Terraria" && tooltip.Name == "ItemName");
 
-            TooltipLine nameTooltip = tooltips.FirstOrDefault(tooltip => tooltip.mod == "Terraria" && tooltip.Name == "ItemName");
             if (nameTooltip != null)
             {
                 int nameIndex = tooltips.IndexOf(nameTooltip);

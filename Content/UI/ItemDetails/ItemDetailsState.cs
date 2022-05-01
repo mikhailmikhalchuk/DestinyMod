@@ -90,6 +90,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			top += (int)InspectedItemDisplay.Height.Pixels + 20;
 			top = InitialisePerksSection(top);
 			top = InitialiseModsSection(top);
+			top = InitialiseCosmeticsSection(top);
 
 			InspectedItemPowerLevel = new UIText(InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel.ToString(), 0.7f, large: true);
 			InspectedItemPowerLevel.Left.Pixels = 375;

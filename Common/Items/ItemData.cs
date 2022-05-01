@@ -32,6 +32,8 @@ namespace DestinyMod.Common.Items
 
         public IList<ItemPerkPool> PerkPool;
 
+        public bool Shaderable;
+
         public static IDictionary<int, ItemData> ItemDatasByID { get; private set; } = new Dictionary<int, ItemData>();
 
         private ItemData(int itemType, int defaultLightLevel = 1350, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
