@@ -26,7 +26,7 @@ namespace DestinyMod.Content.UI.MouseText
 		public Color? BackgroundColor
 		{
 			get => BackgroundColor_Internal;
-			set => BackgroundColor_Internal = (value == null ? value.Value : new Color(10, 10, 10) * MouseTextState.CommonOpacity);
+			set => BackgroundColor_Internal = value == null ? new Color(10, 10, 10) * MouseTextState.CommonOpacity : value.Value;
 		}
 
 		public Texture2D IndicatorGraphic { get; private set; }

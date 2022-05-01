@@ -83,7 +83,7 @@ namespace DestinyMod.Common.GlobalItems
                 if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.N))
                 {
                     ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(new ItemDetailsState(item));
-                    Main.playerInventory = false;
+                    //Main.playerInventory = false;
                 }
             }
         }

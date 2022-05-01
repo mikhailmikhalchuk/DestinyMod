@@ -90,17 +90,18 @@ namespace DestinyMod.Content.UI.MouseText
 				{
 					UIElement previousChild = children[masterIndexer - 1];
 					child.Top.Pixels = previousChild.Top.Pixels + previousChild.Height.Pixels;
-					int totalWidth = (int)(child.Left.Pixels + child.Width.Pixels);
-					if (totalWidth > greatestWidth)
-					{
-						greatestWidth = totalWidth;
-					}
+				}
+
+				int totalWidth = (int)(child.Left.Pixels + child.Width.Pixels);
+				if (totalWidth > greatestWidth)
+				{
+					greatestWidth = totalWidth;
 				}
 			}
 
 			MasterBackground.Height.Pixels = 0;
 			int childrenCount = MasterBackground.Children.Count();
-			if (childrenCount > 1)
+			if (childrenCount > 0)
 			{
 				UIElement lastChild = children[childrenCount - 1];
 				MasterBackground.Height.Pixels = lastChild.Top.Pixels + lastChild.Height.Pixels;

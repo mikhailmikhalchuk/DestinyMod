@@ -16,7 +16,7 @@ namespace DestinyMod.Content.UI.MouseText
 		public Color? BackgroundColor
 		{
 			get => BackgroundColor_Internal;
-			set => BackgroundColor_Internal = (value == null ? value.Value : new Color(20, 20, 20) * MouseTextState.CommonOpacity);
+			set => BackgroundColor_Internal = value == null ? new Color(20, 20, 20) * MouseTextState.CommonOpacity : value.Value;
 		}
 
 		public string Text { get; private set; }
@@ -30,7 +30,7 @@ namespace DestinyMod.Content.UI.MouseText
 		public Color? TextColor
 		{
 			get => TextColor_Internal;
-			set => TextColor_Internal = (value == null ? value.Value : Color.White);
+			set => TextColor_Internal = value == null ? Color.White : value.Value;
 		}
 
 		public MouseText_BodyText(int width, string text, float scale = 1f)

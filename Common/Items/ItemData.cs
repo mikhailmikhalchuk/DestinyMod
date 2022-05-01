@@ -49,15 +49,16 @@ namespace DestinyMod.Common.Items
 
         public void Unload() => ItemDatasByID?.Clear();
 
-        public static bool InitializeNewItemData(int itemType, int defaultLightLevel = 1350, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
+        public static ItemData InitializeNewItemData(int itemType, int defaultLightLevel = 1350, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
         {
             if (ItemDatasByID == null || ItemDatasByID.ContainsKey(itemType))
             {
-                return false;
+                return null;
             }
 
-            ItemDatasByID.Add(itemType, new ItemData(itemType, defaultLightLevel, interpretLightLevel, maximumModCount, perkPool));
-            return true;
+            ItemData newItemData = new ItemData(itemType, defaultLightLevel, interpretLightLevel, maximumModCount, perkPool);
+            ItemDatasByID.Add(itemType, newItemData);
+            return newItemData;
         }
 
         public int ClampLightLevel(int lightLevel)

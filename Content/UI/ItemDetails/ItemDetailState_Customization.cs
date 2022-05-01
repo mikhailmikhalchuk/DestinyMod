@@ -45,10 +45,10 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Texture2D dyeSlotBackground = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/DyeSlot", AssetRequestMode.ImmediateLoad).Value;
 			DyeSlot = new UIItemSlotWithBackground(dyeSlotBackground, isItemValid: (item) => item.dye > 0);
 			DyeSlot.Left.Pixels = 10;
-			DyeSlot.Top.Pixels = yPos;
-			DyeSlot.BlockItemInput = true;
+			DyeSlot.Top.Pixels = yPos += 8;
+			DyeSlot.BlockItemInput = false;
 			DyeSlot.OnUpdate += HandleDyeSlotMouseText;
-			MasterBackground.Append(InfuseItemSlot);
+			MasterBackground.Append(DyeSlot);
 			return yPos;
 		}
 
@@ -61,7 +61,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			string title = uIItemSlotWithBackground.Item.IsAir ? "Default Shader" : uIItemSlotWithBackground.Item.HoverName;
 			string subTitle = uIItemSlotWithBackground.Item.IsAir ? "Restore Defaults" : "Shader";
-			MouseText_TitleAndSubtitle.UpdateData(title, string.Empty);
+			MouseText_TitleAndSubtitle.UpdateData(title, subTitle);
 
 			MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
 			mouseTextState.AppendToMasterBackground(MouseText_TitleAndSubtitle);
