@@ -82,7 +82,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		public override void Kill(int timeLeft)
 		{
 			Player owner = Main.player[Projectile.owner];
-			Projectile projectile = Projectile.NewProjectileDirect(owner.GetProjectileSource_Item(owner.HeldItem), new Vector2(Projectile.Center.X, Projectile.Center.Y - 48), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, Projectile.damage / 2, 0, Projectile.owner);
+			Projectile projectile = Projectile.NewProjectileDirect(Projectile.GetSource_Death(), new Vector2(Projectile.Center.X, Projectile.Center.Y - 48), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT2Explosion, Projectile.damage / 2, 0, Projectile.owner);
 			projectile.friendly = true;
 			projectile.DamageType = DamageClass.Ranged;
 			SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.Center);

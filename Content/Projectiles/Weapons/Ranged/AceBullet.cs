@@ -18,7 +18,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Player player = Main.player[Projectile.owner];
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                Projectile.NewProjectile(player.GetProjectileSource_Item(ModContent.GetModItem(ModContent.ItemType<Items.Weapons.Ranged.AceOfSpades>()).Item), target.position.X, target.position.Y, 0, 0, ProjectileID.DD2ExplosiveTrapT3Explosion, damage / 2, 0, Projectile.owner);
+                Projectile.NewProjectile(player.GetSource_OnHit(target), target.position.X, target.position.Y, 0, 0, ProjectileID.DD2ExplosiveTrapT3Explosion, damage / 2, 0, Projectile.owner);
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, target.position);
             }
         }
@@ -28,7 +28,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Player player = Main.player[Projectile.owner];
             if (target.statLife <= 0)
             {
-                Projectile.NewProjectile(player.GetProjectileSource_Item(ModContent.GetModItem(ModContent.ItemType<Items.Weapons.Ranged.AceOfSpades>()).Item), target.position.X, target.position.Y, 0, 0, ProjectileID.DD2ExplosiveTrapT3Explosion, damage / 2, 0, Projectile.owner);
+                Projectile.NewProjectile(player.GetSource_OnHit(target), target.position.X, target.position.Y, 0, 0, ProjectileID.DD2ExplosiveTrapT3Explosion, damage / 2, 0, Projectile.owner);
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, target.position);
             }
         }

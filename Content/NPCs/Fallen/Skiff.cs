@@ -76,9 +76,9 @@ namespace DestinyMod.Content.NPCs.Fallen
                 Phase = 1f;
                 if (Timer == 200f)
                 {
-                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - NPC.width / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
-                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
-                    NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + NPC.width / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                    NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X - NPC.width / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                    NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
+                    NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + NPC.width / 4, (int)NPC.Center.Y, ModContent.NPCType<Vandal>());
                 }
                 if (Timer >= 300f)
                 {

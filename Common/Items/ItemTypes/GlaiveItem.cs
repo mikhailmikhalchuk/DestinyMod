@@ -53,7 +53,7 @@ namespace DestinyMod.Common.Items.ItemTypes
 
         public override void OnHold(Player player)
         {
-			_proj = Projectile.NewProjectile(player.GetProjectileSource_Item(Item), player.Center, Vector2.Zero, Item.shoot, Item.damage, Item.knockBack, player.whoAmI);
+			_proj = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.Center, Vector2.Zero, Item.shoot, Item.damage, Item.knockBack, player.whoAmI);
 		}
 
         public override void OnRelease(Player player)

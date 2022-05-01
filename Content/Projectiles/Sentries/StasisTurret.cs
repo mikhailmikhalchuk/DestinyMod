@@ -57,7 +57,7 @@ namespace DestinyMod.Content.Projectiles.Sentries
                 Vector2 toTarget = Projectile.DirectionTo(target.Center);
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, toTarget * 15f, ProjectileID.Bullet, 10, 0, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, toTarget * 15f, ProjectileID.Bullet, 10, 0, Projectile.owner);
                 }
             }
             if (Timer >= 110)

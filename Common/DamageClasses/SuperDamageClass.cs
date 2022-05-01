@@ -11,7 +11,7 @@ namespace DestinyMod.Common.DamageClasses
             ClassName.SetDefault("super damage");
         }
 
-        protected override float GetBenefitFrom(DamageClass damageClass)
+        /*protected override float GetBenefitFrom(DamageClass damageClass)
         {
             if (damageClass == DamageClass.Generic)
             {
@@ -24,6 +24,6 @@ namespace DestinyMod.Common.DamageClasses
         public override bool CountsAs(DamageClass damageClass)
         {
             return false;
-        }
+        }*/
     }
 }

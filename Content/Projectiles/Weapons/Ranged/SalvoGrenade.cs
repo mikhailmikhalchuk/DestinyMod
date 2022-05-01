@@ -123,7 +123,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			{
 				for (int goreCount = 0; goreCount < 4; goreCount++)
 				{
-					Gore gore = Gore.NewGoreDirect(Projectile.position, default, Main.rand.Next(61, 64));
+					Gore gore = Gore.NewGoreDirect(Projectile.GetSource_Death(), Projectile.position, default, Main.rand.Next(61, 64));
 					gore.velocity *= i == 1 ? 0.4f : 0.8f;
 					gore.velocity.X += goreCount % 2 == 0 ? 1 : -1;
 					gore.velocity.Y += goreCount < 2 ? 1 : -1;

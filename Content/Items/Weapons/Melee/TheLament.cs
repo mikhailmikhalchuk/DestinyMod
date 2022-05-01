@@ -59,7 +59,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             HealBack(player);
         }
 
-        public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {
             if (RevUp > 90)
             {

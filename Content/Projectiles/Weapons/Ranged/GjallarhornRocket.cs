@@ -73,7 +73,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 			for (int i = 0; i < 5; i++)
 			{
-				Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), Projectile.position, Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f), ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, Projectile.owner);
+				Projectile.NewProjectile(player.GetSource_OnHit(npc), Projectile.position, Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f), ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, Projectile.owner);
 			}
 			Target = -1;
 		}
@@ -94,7 +94,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				}
 
 				//-oldVelocity.SafeNormalize(Vector2.One).RotateRandom(MathHelper.PiOver2) * Utils.NextFloat(Main.rand, 5f, 9f)
-				Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), Projectile.position, futureVec, ModContent.ProjectileType<GjallarhornMiniRocket>(), 10, 0, Projectile.owner);
+				Projectile.NewProjectile(player.GetSource_TileInteraction((int)(Projectile.position.X / 16), (int)(Projectile.position.Y / 16)), Projectile.position, futureVec, ModContent.ProjectileType<GjallarhornMiniRocket>(), 10, 0, Projectile.owner);
 			}
 
 			return true;

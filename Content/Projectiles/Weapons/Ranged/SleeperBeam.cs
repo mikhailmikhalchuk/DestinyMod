@@ -63,7 +63,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
 				for (int i = 0; i < 2; i++)
 				{
-					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Projectile.velocity + new Vector2(Main.rand.Next(-15, 16) * 0.2f, Main.rand.Next(-15, 16) * 0.2f), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, 6);
+					Projectile.NewProjectile(Projectile.GetSource_TileInteraction((int)(Projectile.position.X / 16), (int)(Projectile.position.Y / 16)), Projectile.Center, Projectile.velocity + new Vector2(Main.rand.Next(-15, 16) * 0.2f, Main.rand.Next(-15, 16) * 0.2f), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, 6);
 				}
 			}
 			return false;
@@ -115,7 +115,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 						player.ConsumeItem((int)Projectile.ai[0]);
 					}
 
-					Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), player.MountedCenter + Projectile.velocity * 22, 10 * Projectile.velocity * 2f, ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
+					Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.MountedCenter + Projectile.velocity * 22, 10 * Projectile.velocity * 2f, ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, player.whoAmI, 0, 5);
 
 					Projectile.Kill();
 					player.itemAnimation = player.itemTime = 15;

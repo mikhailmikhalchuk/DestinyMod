@@ -457,11 +457,11 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
-                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X - 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
-                int skiff = NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X + 500, (int)NPC.Center.Y - 100, ModContent.NPCType<Fallen.Skiff>());
+                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
+                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X - 150, (int)NPC.Center.Y + 20, ModContent.NPCType<SepiksServitor>());
+                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
+                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X - 130, (int)NPC.Center.Y + 120, ModContent.NPCType<SepiksServitor>());
+                int skiff = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 500, (int)NPC.Center.Y - 100, ModContent.NPCType<Fallen.Skiff>());
                 ((Fallen.Skiff)Main.npc[skiff].ModNPC).PositionToDrop = new Vector2(NPC.Center.X, NPC.Center.Y - 300);
             }
         }
@@ -484,7 +484,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 {
                     delta = new Vector2(0f, 5f);
                 }
-                Projectile.NewProjectile(NPC.GetSpawnSourceForProjectileNPC(), NPC.Center, delta.RotatedByRandom(MathHelper.ToRadians(10)), ModContent.ProjectileType<SepiksBlast>(), 20, 5, Main.myPlayer, NPC.whoAmI);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, delta.RotatedByRandom(MathHelper.ToRadians(10)), ModContent.ProjectileType<SepiksBlast>(), 20, 5, Main.myPlayer, NPC.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
                 NPC.netUpdate = true;
             }
@@ -497,7 +497,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.NewNPC(NPC.GetSpawnSourceForNPCFromNPCAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SepiksHoming>(), ai0: NPC.whoAmI);
+                NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SepiksHoming>(), ai0: NPC.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item8, NPC.Center);
                 NPC.netUpdate = true;
             }

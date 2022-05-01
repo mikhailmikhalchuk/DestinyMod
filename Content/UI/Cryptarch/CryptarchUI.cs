@@ -62,7 +62,7 @@ namespace DestinyMod.Content.UI.Cryptarch
 			
 			if (player.talkNPC == -1 || Main.npc[player.talkNPC].type != ModContent.NPCType<NPCs.TownNPC.Cryptarch>())
 			{
-				player.QuickSpawnItem(player.GetItemSource_Misc(InputSlot.Item.type), InputSlot.Item.type, InputSlot.Item.stack);
+				player.QuickSpawnItem(player.GetSource_GiftOrReward("Cryptarch"), InputSlot.Item.type, InputSlot.Item.stack);
 				ModContent.GetInstance<CryptarchUI>().UserInterface.SetState(null);
 			}
 		}
@@ -184,21 +184,21 @@ namespace DestinyMod.Content.UI.Cryptarch
 					Player player = Main.LocalPlayer;
 					if (InputSlot.Item.type == ModContent.ItemType<CommonEngram>())
 					{
-						player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.SilverCoin), ItemID.SilverCoin, Main.rand.Next(1, 10));
+						player.QuickSpawnItem(player.GetSource_GiftOrReward("Cryptarch"), ItemID.SilverCoin, Main.rand.Next(1, 10));
 					}
 					else if (InputSlot.Item.type == ModContent.ItemType<UncommonEngram>())
 					{
-						player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.SilverCoin), ItemID.SilverCoin, Main.rand.Next(10, 50));
+						player.QuickSpawnItem(player.GetSource_GiftOrReward("Cryptarch"), ItemID.SilverCoin, Main.rand.Next(10, 50));
 					}
 					else if (InputSlot.Item.type == ModContent.ItemType<RareEngram>())
 					{
-						player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.GoldCoin), ItemID.GoldCoin, Main.rand.Next(1, 3));
+						player.QuickSpawnItem(player.GetSource_GiftOrReward("Cryptarch"), ItemID.GoldCoin, Main.rand.Next(1, 3));
 					}
 				}
 				else
 				{
 					int random = Main.rand.Next(lootTable);
-					player.QuickSpawnItem(player.GetItemSource_Misc(random), random);
+					player.QuickSpawnItem(player.GetSource_GiftOrReward("Cryptarch"), random);
 					if (!npcPlayer.DecryptedItems.Contains(random))
 					{
 						npcPlayer.DecryptedItems.Add(random);

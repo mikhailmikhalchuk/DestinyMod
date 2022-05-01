@@ -86,7 +86,7 @@ namespace DestinyMod.Common.ModSystems
 						randIndex = Main.rand.Next(0, OraclePotentialPositions.Count);
 						DestinyMod.Instance.Logger.Info(randIndex + " @ " + OracleStage);
 					}
-					int oracle = NPC.NewNPC(NPC.GetSpawnSourceForNaturalSpawn(), OraclePotentialPositions[randIndex].Item1.X, OraclePotentialPositions[randIndex].Item1.Y, ModContent.NPCType<Oracle>(), 0, oracleOrder);
+					int oracle = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), OraclePotentialPositions[randIndex].Item1.X, OraclePotentialPositions[randIndex].Item1.Y, ModContent.NPCType<Oracle>(), 0, oracleOrder);
 					Main.npc[oracle].hide = true;
 
                     OraclePotentialPositions[randIndex] = new Tuple<Point, bool, int>(OraclePotentialPositions[randIndex].Item1, true, oracleOrder);

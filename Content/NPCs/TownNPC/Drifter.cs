@@ -31,7 +31,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			;
 		}
 
-		public override string TownNPCName() => "The Drifter";
+		public override List<string> SetNPCNameList() => new List<string> { "The Drifter" };
 
 		public override void DestinySetDefaults()
 		{

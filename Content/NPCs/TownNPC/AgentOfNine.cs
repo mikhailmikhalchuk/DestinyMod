@@ -31,7 +31,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			NPCID.Sets.SpawnsWithCustomName[Type] = true;
 		}
 
-		public override string TownNPCName() => "Xûr";
+		public override List<string> SetNPCNameList() => new List<string> { "Xûr" };
 
 		public override void DestinySetDefaults()
 		{
@@ -88,7 +88,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 			if (agentOfNine == null && CanSpawnNow())
 			{
-				int newAgentOfNine = NPC.NewNPC(NPC.GetSpawnSourceForTownSpawn(), Main.spawnTileX * 16, Main.spawnTileY * 16, ModContent.NPCType<AgentOfNine>(), 1);
+				int newAgentOfNine = NPC.NewNPC(NPC.GetSource_TownSpawn(), Main.spawnTileX * 16, Main.spawnTileY * 16, ModContent.NPCType<AgentOfNine>(), 1);
 				agentOfNine = Main.npc[newAgentOfNine];
 				agentOfNine.homeless = true;
 				agentOfNine.direction = Main.spawnTileX >= WorldGen.bestX ? -1 : 1;

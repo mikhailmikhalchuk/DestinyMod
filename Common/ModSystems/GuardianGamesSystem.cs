@@ -111,7 +111,7 @@ namespace DestinyMod.Common.ModSystems
 					if (responseString == "TOOMUCH")
 					{
 						Main.NewText("You've already deposited 30 Laurels today! Try again tomorrow.", Color.Red);
-						player.QuickSpawnItem(player.GetItemSource_Misc(laurelType), laurelType, laurelCount);
+						player.QuickSpawnItem(player.GetSource_Misc("Guardian Games"), laurelType, laurelCount);
 					}
 					else
 					{
@@ -119,14 +119,14 @@ namespace DestinyMod.Common.ModSystems
 						if (string.IsNullOrEmpty(depositedLaurelsString))
 						{
 							int depositedLaurels = int.Parse(depositedLaurelsString);
-							player.QuickSpawnItem(player.GetItemSource_Misc(laurelType), laurelType, laurelCount - depositedLaurels);
+							player.QuickSpawnItem(player.GetSource_Misc("Guardian Games"), laurelType, laurelCount - depositedLaurels);
 							Main.NewText("Deposited " + depositedLaurels + " Laurels!", new Color(255, 255, 0));
-							player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.GoldCoin), ItemID.GoldCoin, laurelCount - depositedLaurels);
+							player.QuickSpawnItem(player.GetSource_Misc("Guardian Games"), ItemID.GoldCoin, laurelCount - depositedLaurels);
 						}
 						else
 						{
 							Main.NewText("Deposited " + laurelCount + "Laurels!", new Color(255, 255, 0));
-							player.QuickSpawnItem(player.GetItemSource_Misc(ItemID.GoldCoin), ItemID.GoldCoin, laurelCount);
+							player.QuickSpawnItem(player.GetSource_Misc("Guardian Games"), ItemID.GoldCoin, laurelCount);
 						}
 
 						int firedRocket = 0;
@@ -149,7 +149,7 @@ namespace DestinyMod.Common.ModSystems
 								break;
 						}
 
-						Projectile.NewProjectile(player.GetProjectileSource_Misc(0), player.Center, new Vector2(0, -Main.rand.Next(5, 8)), firedRocket, 0, 0, player.whoAmI);
+						Projectile.NewProjectile(player.GetSource_Misc("Guardian Games"), player.Center, new Vector2(0, -Main.rand.Next(5, 8)), firedRocket, 0, 0, player.whoAmI);
 					}
 				});
 

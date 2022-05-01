@@ -47,7 +47,7 @@ namespace DestinyMod.Common.ModPlayers
             {
 				/*Projectile shieldThrow = Projectile.NewProjectileDirect(Player.GetProjectileSource_Misc(0), Player.Center, Vector2.Zero, ModContent.ProjectileType<Content.Projectiles.Weapons.Magic.ShieldThrow>(), 10, 0, Player.whoAmI);
 				shieldThrow.velocity = shieldThrow.DirectionTo(Main.MouseWorld) * 15f;*/
-				Projectile.NewProjectile(Player.GetProjectileSource_Misc(0), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Content.Projectiles.Sentries.StasisTurret>(), 10, 0, Player.whoAmI);
+				Projectile.NewProjectile(Player.GetSource_Misc("Super"), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Content.Projectiles.Sentries.StasisTurret>(), 10, 0, Player.whoAmI);
 			}
 			return;
 			if (HotKeys.ActiveSuper.JustPressed && SuperChargeCurrent == 100 && !Player.dead)
@@ -61,8 +61,8 @@ namespace DestinyMod.Common.ModPlayers
 						Item item = Player.inventory[itemSlot];
 						if (item.IsAir)
 						{
-							Projectile.NewProjectile(Player.GetProjectileSource_Misc(0), Player.position, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, Player.whoAmI);
-							Player.QuickSpawnItem(Player.GetItemSource_Misc(superItem), superItem);
+							Projectile.NewProjectile(Player.GetSource_Misc("Super"), Player.position, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, Player.whoAmI);
+							Player.QuickSpawnItem(Player.GetSource_Misc("Super"), superItem);
 							return true;
 						}
 					}

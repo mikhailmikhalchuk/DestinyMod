@@ -35,8 +35,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Super
         {
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                OrbOfPower orbOfPowah = Main.item[Item.NewItem(Main.player[Projectile.owner].GetItemSource_Misc(ModContent.ItemType<OrbOfPower>()), Main.player[Projectile.owner].Hitbox, ModContent.ItemType<OrbOfPower>())].ModItem as OrbOfPower;
-                orbOfPowah.OrbOwner = Main.player[Projectile.owner];
+                Player owner = Main.player[Projectile.owner];
+                OrbOfPower orbOfPowah = Main.item[Item.NewItem(owner.GetSource_OnHit(target), owner.Hitbox, ModContent.ItemType<OrbOfPower>())].ModItem as OrbOfPower;
+                orbOfPowah.OrbOwner = owner;
             }
         }
 

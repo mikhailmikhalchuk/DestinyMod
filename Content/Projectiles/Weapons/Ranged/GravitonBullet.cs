@@ -18,7 +18,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Player player = Main.player[Projectile.owner];
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Projectile.owner);
+                Projectile.NewProjectile(player.GetSource_OnHit(target), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage / 4, knockback, Projectile.owner);
 
                 int dustCount = 40;
                 for (int i = 0; i < dustCount; i++)

@@ -38,7 +38,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override void ModifyWeaponCrit(Player player, ref int crit)
+		public override void ModifyWeaponCrit(Player player, ref float crit)
 		{
 			if (player.velocity == Vector2.Zero)
 			{
