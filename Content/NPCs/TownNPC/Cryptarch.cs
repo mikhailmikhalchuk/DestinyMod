@@ -8,6 +8,8 @@ using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.NPCs.NPCTypes;
 using DestinyMod.Content.UI.Cryptarch;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent;
+using System.Collections.Generic;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
@@ -19,7 +21,12 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			DisplayName.SetDefault("Cryptarch");
 		}
 
-		public override string TownNPCName() => "Master Rahool";
+        public override ITownNPCProfile TownNPCProfile()
+        {
+            return base.TownNPCProfile();
+        }
+
+		public override List<string> SetNPCNameList() => new List<string> { "Master Rahool" };
 
 		public override void DestinySetDefaults()
 		{

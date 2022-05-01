@@ -27,7 +27,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                     for (int k = 0; k < 4; k++)
                     {
                         Vector2 velocity = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 3f, 5f);
-                        Projectile.NewProjectile(owner.GetProjectileSource_Item(owner.HeldItem), target.Center, velocity, ModContent.ProjectileType<SIVANanite>(), 20, 0, Projectile.owner);
+                        Projectile.NewProjectile(owner.GetSource_OnHit(target), target.Center, velocity, ModContent.ProjectileType<SIVANanite>(), 20, 0, Projectile.owner);
                     }
                 }
             }

@@ -33,16 +33,16 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage, ref float flat)
-		{
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
 			if (Main.hardMode)
 			{
-				flat += 25;
+				damage.Flat += 25;
 			}
 		}
 
-		public override void ModifyWeaponCrit(Player player, ref int crit)
-		{
+        public override void ModifyWeaponCrit(Player player, ref float crit)
+        {
 			if (Main.hardMode)
 			{
 				crit += 8;

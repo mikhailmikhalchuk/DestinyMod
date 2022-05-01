@@ -17,7 +17,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Player owner = Main.player[Projectile.owner];
             if (!target.friendly && target.life <= 0 && target.damage > 0 && Projectile.owner == Main.myPlayer)
             {
-                Projectile p = Projectile.NewProjectileDirect(owner.GetProjectileSource_Item(owner.HeldItem), target.position - new Vector2(0, 1000), new Vector2(0, 25), ProjectileID.CultistBossLightningOrbArc, 30, 0, owner.whoAmI, new Vector2(0, 10).ToRotation(), Main.rand.Next(100));
+                Projectile p = Projectile.NewProjectileDirect(owner.GetSource_OnHit(target), target.position - new Vector2(0, 1000), new Vector2(0, 25), ProjectileID.CultistBossLightningOrbArc, 30, 0, owner.whoAmI, new Vector2(0, 10).ToRotation(), Main.rand.Next(100));
                 p.friendly = true;
                 SoundEngine.PlaySound(SoundID.Item122, target.position);
             }

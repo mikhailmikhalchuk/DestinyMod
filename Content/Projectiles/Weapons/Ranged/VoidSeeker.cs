@@ -53,12 +53,11 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 
-            Main.NewText("sussy");
-            Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeekerExplosion>(), 0, knockback, player.whoAmI);
+            Projectile.NewProjectile(player.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeekerExplosion>(), 0, knockback, player.whoAmI);
 
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                Projectile.NewProjectile(player.GetProjectileSource_Item(player.HeldItem), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<VoidSeeker>(), damage, knockback, player.whoAmI);
             }
 
             for (int i = 0; i < 100; i++)
@@ -79,10 +78,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.Kill();
         }
 
-        public override void PostDraw(Color lightColor)
-        {
-            Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3() * 0.55f * Main.essScale);
-        }
+        public override void PostDraw(Color lightColor) => Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3() * 0.55f * Main.essScale);
 
         public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R * 0.5f, lightColor.G * 0.1f, lightColor.B, lightColor.A);
 

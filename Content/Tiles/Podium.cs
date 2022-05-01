@@ -7,6 +7,7 @@ using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using DestinyMod.Common.ModSystems;
+using Terraria.GameContent.ObjectInteractions;
 
 namespace DestinyMod.Content.Tiles
 {
@@ -33,7 +34,7 @@ namespace DestinyMod.Content.Tiles
 			AddMapEntry(new Color(255, 255, 255), name);
 		}
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{

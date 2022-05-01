@@ -26,7 +26,7 @@ namespace DestinyMod.Common.Items.ItemTypes
 
             tooltips.Add(new TooltipLine(Mod, "HasClass", "You must be a " + ArmorClassType + " to equip this")
             {
-                overrideColor = new Color(255, 0, 0)
+                OverrideColor = new Color(255, 0, 0)
             });
         }
 

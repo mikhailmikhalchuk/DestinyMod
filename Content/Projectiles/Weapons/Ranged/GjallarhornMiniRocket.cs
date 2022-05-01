@@ -41,15 +41,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			{
 				for (int i = 0; i < 2; i++)
 				{
-					float dustX = 3;
-					float dustY = 3;
-					if (i == 1)
-					{
-						dustX += Projectile.velocity.X * 0.5f;
-						dustY += Projectile.velocity.Y * 0.5f;
-					}
-
-					Vector2 dustPosition = Projectile.position + new Vector2(dustX, dustY) - Projectile.velocity * 0.5f;
+					Vector2 dustPosModifier = new Vector2(3) + (i == 1 ? Projectile.velocity * 0.5f : Vector2.Zero);
+					Vector2 dustPosition = Projectile.position + dustPosModifier - Projectile.velocity * 0.5f;
 					Dust dust = Dust.NewDustDirect(dustPosition, Projectile.width - 8, Projectile.height - 8, DustID.Torch, Alpha: 100);
 					dust.scale *= 2f + Main.rand.Next(10) * 0.1f;
 					dust.velocity *= 0.2f;

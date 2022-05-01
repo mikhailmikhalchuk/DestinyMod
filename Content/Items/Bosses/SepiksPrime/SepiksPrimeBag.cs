@@ -2,7 +2,6 @@ using DestinyMod.Common.Items.ItemTypes;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Items.Bosses.SepiksPrime
@@ -24,7 +23,7 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
 
         public override void OpenBossBag(Player player)
 		{
-			IEntitySource source = player.GetItemSource_OpenItem(Type);
+			IEntitySource source = player.GetSource_OpenItem(Type);
 
 			if (Main.rand.NextBool(7))
 			{

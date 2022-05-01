@@ -36,7 +36,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			;
 		}
 
-		public override string TownNPCName() => "Zavala";
+		public override List<string> SetNPCNameList() => new List<string> { "Zavala" };
 
 		public override void DestinySetDefaults()
 		{

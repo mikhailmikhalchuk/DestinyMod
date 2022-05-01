@@ -72,14 +72,8 @@ namespace DestinyMod.Content.Items.Buffers
             }
         }
 
-        public override void GrabRange(Player player, ref int grabRange)
-        {
-            grabRange = 128;
-        }
+        public override void GrabRange(Player player, ref int grabRange) => grabRange = 128;
 
-        public override void PostUpdate()
-        {
-            Lighting.AddLight(Item.Center, Color.Green.ToVector3() * 1.5f);
-        }
+        public override void PostUpdate() => Lighting.AddLight(Item.Center, Color.Green.ToVector3() * 1.5f);
     }
 }

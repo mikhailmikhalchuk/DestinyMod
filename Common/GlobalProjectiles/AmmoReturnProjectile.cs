@@ -18,7 +18,7 @@ namespace DestinyMod.Common.GlobalProjectiles
             Player owner = Main.player[projectile.owner];
             if (AmmoReturnSource != null && Main.rand.NextBool(5) && AmmoReturnSource?.AmmoItemIdUsed != 3104 && !HasHitEntity)
             {
-                owner.QuickSpawnItem(owner.GetItemSource_Misc(AmmoReturnSource.AmmoItemIdUsed), AmmoReturnSource.AmmoItemIdUsed);
+                owner.QuickSpawnItem(AmmoReturnSource, AmmoReturnSource.AmmoItemIdUsed);
             }
             return true;
         }

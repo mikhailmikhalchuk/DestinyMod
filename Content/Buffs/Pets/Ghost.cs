@@ -23,7 +23,7 @@ namespace DestinyMod.Content.Buffs.Pets
 			int petProjectile = ModContent.ProjectileType<Projectiles.Pets.Ghost>();
 			if (player.ownedProjectileCounts[petProjectile] <= 0 && player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(player.GetProjectileSource_Misc(0), player.Center, Vector2.Zero, petProjectile, 0, 0f, player.whoAmI);
+				Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, petProjectile, 0, 0f, player.whoAmI);
 			}
 		}
 	}

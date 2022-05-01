@@ -40,7 +40,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Super
         {
             if (!target.friendly && target.damage > 0 && target.life <= 0)
             {
-                OrbOfPower orbOfPowah = Main.item[Item.NewItem(Main.player[Projectile.owner].GetItemSource_Misc(ModContent.ItemType<OrbOfPower>()), Main.player[Projectile.owner].Hitbox, ModContent.ItemType<OrbOfPower>())].ModItem as OrbOfPower;
+                Player owner = Main.player[Projectile.owner];
+                OrbOfPower orbOfPowah = Main.item[Item.NewItem(owner.GetSource_Misc(ModContent.ItemType<OrbOfPower>().ToString()), owner.Hitbox, ModContent.ItemType<OrbOfPower>())].ModItem as OrbOfPower;
                 orbOfPowah.OrbOwner = Main.player[Projectile.owner];
             }
         }
@@ -68,7 +69,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Super
 
                 if (!youFailed)
                 {
-                    Projectile.NewProjectile(player.GetProjectileSource_Misc(0), Projectile.position + new Vector2(0, 40), Vector2.Zero, ModContent.ProjectileType<SunspotSummon>(), 0, 0, Projectile.owner);
+                    Projectile.NewProjectile(player.GetSource_Misc("0"), Projectile.position + new Vector2(0, 40), Vector2.Zero, ModContent.ProjectileType<SunspotSummon>(), 0, 0, Projectile.owner);
                 }
             }
             return true;
