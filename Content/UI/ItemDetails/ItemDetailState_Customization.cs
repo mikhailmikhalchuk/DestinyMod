@@ -62,7 +62,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			}
 
 			string title = uIItemSlotWithBackground.Item.IsAir ? "Default Shader" : uIItemSlotWithBackground.Item.HoverName;
-			string subTitle = uIItemSlotWithBackground.Item.IsAir ? "Restore Defaults" : "Shader";
+			string subTitle = uIItemSlotWithBackground.Item.IsAir ? "None" : "Shader";
 			MouseText_TitleAndSubtitle.UpdateData(title, subTitle);
 
 			MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();

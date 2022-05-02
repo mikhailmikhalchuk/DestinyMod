@@ -2,6 +2,8 @@ using Terraria.UI;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using DestinyMod.Content.UI.MouseText;
 using Terraria.ModLoader;
 using DestinyMod.Common.GlobalItems;
@@ -116,6 +118,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
             ReferenceModSlot.UpdateItemMod(itemModSlot.ItemMod);
             ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+            SoundEngine.PlaySound(SoundID.Grab);
             inspectedItemData.ItemMods.Clear();
             foreach (ItemModSlot itemMod in ItemDetailsState.ModSlots)
             {

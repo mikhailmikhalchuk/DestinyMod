@@ -1,4 +1,6 @@
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using DestinyMod.Core.UI;
@@ -89,7 +91,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			top += (int)InspectedItemDisplay.Height.Pixels + 20;
 			top = InitialisePerksSection(top);
-			top = InitialiseModsSection(top);
+			top = InitializeModsSection(top);
 			top = InitialiseCosmeticsSection(top);
 
 			InspectedItemPowerLevel = new UIText(InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel.ToString(), 0.7f, large: true);
@@ -99,7 +101,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemDisplay.Append(InspectedItemPowerLevel);
 
 			UIText InspectedItemPowerLevelText = new UIText("Power", 0.8f);
-			InspectedItemPowerLevelText.Left.Pixels = 437;
+			InspectedItemPowerLevelText.Left.Pixels = 440;
 			InspectedItemPowerLevelText.Top.Pixels = 265;
 			InspectedItemPowerLevelText.VAlign = 0.5f;
 			InspectedItemDisplay.Append(InspectedItemPowerLevelText);
@@ -109,6 +111,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			CloseButton.Top.Pixels = MasterBackground.Top.Pixels + 10;
 			CloseButton.OnClick += (evt, listeningElement) =>
 			{
+				SoundEngine.PlaySound(SoundID.MenuClose);
 				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
 			};
 			MasterBackground.Append(CloseButton);
@@ -120,6 +123,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			if (Main.keyState.IsKeyDown(Keys.Escape))
 			{
+				SoundEngine.PlaySound(SoundID.MenuClose);
 				ModContent.GetInstance<MouseTextState>().Visible = false;
 				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
 			}

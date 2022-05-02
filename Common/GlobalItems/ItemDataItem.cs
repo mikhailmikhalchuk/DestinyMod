@@ -9,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -102,11 +104,12 @@ namespace DestinyMod.Common.GlobalItems
             }
 
             Rectangle drawHitbox = new Rectangle((int)position.X, (int)position.Y, (int)(frame.Width * scale), (int)(frame.Height * scale));
-            // spriteBatch.Draw(Terraria.GameContent.TextureAssets.MagicPixel.Value, drawHitbox, Color.Red * 0.5f);
+            //spriteBatch.Draw(Terraria.GameContent.TextureAssets.MagicPixel.Value, new Rectangle((int)origin.X, (int)origin.Y, 10, 10), Color.Red * 0.5f);
             if (drawHitbox.Contains(Main.MouseScreen.ToPoint()))
             {
-                if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.N))
+                if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.N) && ModContent.GetInstance<ItemDetailsState>().UserInterface.CurrentState == null)
                 {
+                    SoundEngine.PlaySound(SoundID.MenuOpen);
                     ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(new ItemDetailsState(item));
                     //Main.playerInventory = false;
                 }

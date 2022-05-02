@@ -74,20 +74,16 @@ namespace DestinyMod.Content.UI.ItemDetails
 							mouseTextState.AppendToMasterBackground(MouseText_ClickIndicator);
 						}
 					};
-					
-					/*perk.OnMouseOut += (evt, listeningElement) =>
-					{
-						MouseTitle = null;
-						MouseSubtitle = null;
-						MouseText = null;
-					};*/
 
 					perk.OnMouseDown += (evt, listeningElement) =>
 					{
+						if (perk.IsActive)
+						{
+							return;
+						}
 						perk.ToggleActive();
 						SyncActivePerks();
 						SoundEngine.PlaySound(SoundID.Grab);
-						// MouseText = perk.ItemPerk.Description; // Porque?
 					};
 
 					ItemPerks.Add(perk);

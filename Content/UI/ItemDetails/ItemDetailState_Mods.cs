@@ -28,7 +28,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public IList<ItemModSlot> ModSlots { get; private set; }
 
-		public int InitialiseModsSection(int yPos, bool includeItemTierSlot = false)
+		public int InitializeModsSection(int yPos, bool includeItemTierSlot = false)
         {
 			WeaponModsTitle = new UIText("Weapon Mods");
 			WeaponModsTitle.Left.Pixels = 10;

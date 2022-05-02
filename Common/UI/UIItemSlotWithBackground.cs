@@ -2,9 +2,11 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameInput;
+using Terraria.ID;
 using Terraria.UI;
 
 namespace DestinyMod.Common.UI
@@ -12,7 +14,7 @@ namespace DestinyMod.Common.UI
     // This only handles items in stacks of 1
     public class UIItemSlotWithBackground : UIImageWithBackground
     {
-        private Item InternalItem;
+        private static Item InternalItem;
 
         public Item Item
         {
@@ -41,7 +43,7 @@ namespace DestinyMod.Common.UI
 
         public event DelegateOnUpdateItem OnUpdateItem;
 
-        public Player Player => Main.LocalPlayer;
+        public static Player Player => Main.LocalPlayer;
 
         public UIItemSlotWithBackground(Texture2D background, int? scaleSize = null, Item item = null, Func<Item, bool> isItemValid = null) : base(background, scaleSize: scaleSize ?? background.Width)
         {
@@ -50,9 +52,9 @@ namespace DestinyMod.Common.UI
             IsItemValid = isItemValid;
         }
 
-        public override void Click(UIMouseEvent evt)
+        public override void MouseDown(UIMouseEvent evt)
         {
-            base.Click(evt);
+            base.MouseDown(evt);
 
             if (BlockItemInput)
             {
@@ -66,9 +68,9 @@ namespace DestinyMod.Common.UI
             }
         }
 
-        public override void RightClick(UIMouseEvent evt)
+        public override void RightMouseDown(UIMouseEvent evt)
         {
-            base.RightClick(evt);
+            base.RightMouseDown(evt);
 
             if (BlockItemInput)
             {
@@ -89,7 +91,7 @@ namespace DestinyMod.Common.UI
             Main.mouseItem = currentItem;
         }
 
-        public void ConsumeMouseItem()
+        public static void ConsumeMouseItem()
         {
             Main.mouseItem.stack--;
             if (Main.mouseItem.stack < 0)
@@ -101,6 +103,8 @@ namespace DestinyMod.Common.UI
         public void HandleLeftClick()
         {
             IEntitySource uiItemSlotEntitySource = Player.GetSource_Misc("UI");
+
+            Item currentItem = Item.Clone();
             if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
             {
                 Player.QuickSpawnClonedItem(uiItemSlotEntitySource, Item);
@@ -108,7 +112,6 @@ namespace DestinyMod.Common.UI
                 goto ret;
             }
 
-            Item currentItem = Item.Clone();
             if (Main.mouseItem.IsAir)
             {
                 Main.mouseItem = currentItem;
@@ -136,7 +139,11 @@ namespace DestinyMod.Common.UI
                 }
             }
 
-            ret: // Evil beyond belief
+        ret: // Evil beyond belief
+            if (currentItem.type != Item.type)
+            {
+                SoundEngine.PlaySound(SoundID.Grab);
+            }
             OnUpdateItem?.Invoke(this);
         }
 
@@ -172,10 +179,17 @@ namespace DestinyMod.Common.UI
                 }
             }
 
-            ret: // Evil beyond belief
+        ret: // Evil beyond belief
+            if (currentItem.type != Item.type)
+            {
+                SoundEngine.PlaySound(SoundID.Grab);
+            }
             OnUpdateItem?.Invoke(this);
         }
 
-        public void InvokeOnUpdateItem() => OnUpdateItem?.Invoke(this); // Supposedly bad practice but Is dos nots cares
+        public void InvokeOnUpdateItem()
+        {
+            OnUpdateItem?.Invoke(this);
+        } // Supposedly bad practice but Is dos nots cares
     }
 }
