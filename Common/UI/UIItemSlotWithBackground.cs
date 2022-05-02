@@ -37,7 +37,9 @@ namespace DestinyMod.Common.UI
 
         public Func<Item, bool> IsItemValid;
 
-        public event Action<UIItemSlotWithBackground> OnUpdateItem;
+        public delegate void DelegateOnUpdateItem(UIItemSlotWithBackground uIItemSlotWithBackground);
+
+        public event DelegateOnUpdateItem OnUpdateItem;
 
         public Player Player => Main.LocalPlayer;
 

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -22,6 +23,8 @@ namespace DestinyMod.Common.GlobalItems
         public IList<ItemPerk> ActivePerks;
 
         public IList<ItemMod> ItemMods;
+
+        public Item Shader;
 
         public override bool InstancePerEntity => true;
 
@@ -73,9 +76,31 @@ namespace DestinyMod.Common.GlobalItems
             }
         }
 
+        #region Drawing
+
+        public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (Shader != null && Shader.dye > 0)
+            {
+                // Thank you old me for doing EnergySword :dorime:
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix); 
+                GameShaders.Armor.GetShaderFromItemId(Shader.type).Apply(item);
+            }
+
+            return true;
+        }
+
         // death
         public override void PostDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
+            if (Shader != null && Shader.dye > 0)
+            {
+                // Thank you old me for doing EnergySword :dorime:
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
+            }
+
             Rectangle drawHitbox = new Rectangle((int)position.X, (int)position.Y, (int)(frame.Width * scale), (int)(frame.Height * scale));
             // spriteBatch.Draw(Terraria.GameContent.TextureAssets.MagicPixel.Value, drawHitbox, Color.Red * 0.5f);
             if (drawHitbox.Contains(Main.MouseScreen.ToPoint()))
@@ -87,6 +112,33 @@ namespace DestinyMod.Common.GlobalItems
                 }
             }
         }
+
+        public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            if (Shader != null && Shader.dye > 0)
+            {
+                // Thank you old me for doing EnergySword :dorime:
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+                GameShaders.Armor.GetShaderFromItemId(Shader.type).Apply(item);
+            }
+
+            return true;
+        }
+
+        public override void PostDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            if (Shader != null && Shader.dye > 0)
+            {
+                // Thank you old me for doing EnergySword :dorime:
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            }
+        }
+
+        #endregion
+
+        #region I/O
 
         public override void SaveData(Item item, TagCompound tag)
         {
@@ -100,6 +152,11 @@ namespace DestinyMod.Common.GlobalItems
             if (ItemMods != null && ItemMods.Count > 0)
             {
                 tag.Add("ItemMods", ItemMods.Select(mod => mod == null ? ModContent.GetInstance<NullMod>().Name : mod.Name).ToList());
+            }
+
+            if (Shader != null)
+            {
+                tag.Add("Shader", ItemIO.Save(Shader));
             }
         }
 
@@ -153,8 +210,15 @@ namespace DestinyMod.Common.GlobalItems
                 }
             }
 
+            if (tag.ContainsKey("Shader"))
+            {
+                Shader = ItemIO.Load(tag.Get<TagCompound>("Shader"));
+            }
+
             SetDefaults(item);
         }
+
+        #endregion
     }
 
     public class TestLightLevelCommand : ModCommand

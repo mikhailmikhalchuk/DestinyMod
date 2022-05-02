@@ -47,12 +47,14 @@ namespace DestinyMod.Content.UI.ItemDetails
 			DyeSlot.Left.Pixels = 10;
 			DyeSlot.Top.Pixels = yPos += 8;
 			DyeSlot.BlockItemInput = false;
+			DyeSlot.Item = InspectedItem.GetGlobalItem<ItemDataItem>().Shader;
 			DyeSlot.OnUpdate += HandleDyeSlotMouseText;
+            DyeSlot.OnUpdateItem += UpdateItemShader;
 			MasterBackground.Append(DyeSlot);
 			return yPos;
 		}
 
-		public void HandleDyeSlotMouseText(UIElement affectedElement)
+        public void HandleDyeSlotMouseText(UIElement affectedElement)
 		{
 			if (affectedElement is not UIItemSlotWithBackground uIItemSlotWithBackground || !uIItemSlotWithBackground.ContainsPoint(Main.MouseScreen))
 			{
@@ -65,6 +67,11 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
 			mouseTextState.AppendToMasterBackground(MouseText_TitleAndSubtitle);
+		}
+
+		public void UpdateItemShader(UIItemSlotWithBackground uIItemSlotWithBackground)
+		{
+			InspectedItem.GetGlobalItem<ItemDataItem>().Shader = uIItemSlotWithBackground.Item;
 		}
 	}
 }
