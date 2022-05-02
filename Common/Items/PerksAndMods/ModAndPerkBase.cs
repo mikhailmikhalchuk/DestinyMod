@@ -7,6 +7,8 @@ namespace DestinyMod.Common.Items.PerksAndMods
     {
         public virtual string Texture => (GetType().Namespace + "." + Name).Replace('.', '/');
 
+        public int Type { get; internal set; }
+
         public string Name { get; internal set; }
 
         public string DisplayName;

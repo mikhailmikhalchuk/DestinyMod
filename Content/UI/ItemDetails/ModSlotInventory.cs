@@ -103,7 +103,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_TitleAndSubtitle);
             mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_BodyText);
 
-            if (ReferenceModSlot.ItemMod.Name != itemModSlot.ItemMod.Name) // Remind me to benchmark comparison speeds of string == string, int == int, and type == type :)
+            if (ReferenceModSlot.ItemMod.Type != itemModSlot.ItemMod.Type) // Thanks :)
             {
                 mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_ClickIndicator);
             }
@@ -111,7 +111,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public void HandleModSlotApply(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!Visible || ReferenceModSlot == null || listeningElement is not ItemModSlot itemModSlot || ReferenceModSlot.ItemMod.Name == itemModSlot.ItemMod.Name)
+            if (!Visible || ReferenceModSlot == null || listeningElement is not ItemModSlot itemModSlot || ReferenceModSlot.ItemMod.Type == itemModSlot.ItemMod.Type)
             {
                 return;
             }
