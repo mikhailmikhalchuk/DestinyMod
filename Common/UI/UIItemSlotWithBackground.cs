@@ -14,7 +14,7 @@ namespace DestinyMod.Common.UI
     // This only handles items in stacks of 1
     public class UIItemSlotWithBackground : UIImageWithBackground
     {
-        private static Item InternalItem;
+        private Item InternalItem;
 
         public Item Item
         {
@@ -187,9 +187,6 @@ namespace DestinyMod.Common.UI
             OnUpdateItem?.Invoke(this);
         }
 
-        public void InvokeOnUpdateItem()
-        {
-            OnUpdateItem?.Invoke(this);
-        } // Supposedly bad practice but Is dos nots cares
+        public void InvokeOnUpdateItem() => OnUpdateItem?.Invoke(this); // Supposedly bad practice but Is dos nots cares
     }
 }

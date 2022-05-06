@@ -35,7 +35,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			WeaponPerksSeparator.Top.Pixels = yPos += 20;
 			WeaponPerksSeparator.Width.Pixels = 300f;
 			WeaponPerksSeparator.Height.Pixels = 2f;
-			WeaponPerksSeparator.Color = SeparatorColor;
+			WeaponPerksSeparator.Color = BaseColor_Light;
 			MasterBackground.Append(WeaponPerksSeparator);
 
 			ItemPerks = new List<ItemPerkDisplay>();
@@ -104,7 +104,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				perkSeparator.Top.Pixels = yPos;
 				perkSeparator.Width.Pixels = 2f;
 				perkSeparator.Height.Pixels = lowestPerkPosition - yPos + ItemPerk.TextureSize;
-				perkSeparator.Color = SeparatorColor;
+				perkSeparator.Color = BaseColor_Light;
 				MasterBackground.Append(perkSeparator);
 			}
 

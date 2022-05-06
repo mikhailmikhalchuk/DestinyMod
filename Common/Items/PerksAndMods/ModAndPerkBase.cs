@@ -20,6 +20,7 @@ namespace DestinyMod.Common.Items.PerksAndMods
             T reference = ModContent.GetInstance<T>();
             T outPut = new T
             {
+                Type = reference.Type,
                 Name = reference.Name
             };
             outPut.SetDefaults();

@@ -17,6 +17,7 @@ using DestinyMod.Common.GlobalItems;
 using System.Linq;
 using DestinyMod.Content.UI.MouseText;
 using Terraria.UI;
+using Terraria.GameContent;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -26,7 +27,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public ItemData InspectedItemData { get; }
 
-		public UIImage MasterBackground { get; private set; }
+		public UIElement MasterBackground { get; private set; }
 
 		public DisplayItemSlot InspectedItemDisplay { get; private set; }
 
@@ -40,7 +41,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public MouseText_ClickIndicator MouseText_ClickIndicator { get; private set; }
 
-		public static Color SeparatorColor = new Color(68, 70, 74);
+		public static Color BaseColor_Light = new Color(68, 70, 74);
+
+		public static Color BaseColor_Dark = new Color(37, 37, 38);
 
 		public ItemDetailsState() { }
 
@@ -69,10 +72,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 			MouseText_ClickIndicator.Width.Pixels = 420;
 			ModContent.GetInstance<MouseTextState>().CleanseAll();
 
-			Asset<Texture2D> masterBackgroundTexture = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ItemDetailsBackground", AssetRequestMode.ImmediateLoad);
-			MasterBackground = new UIImage(masterBackgroundTexture);
-			MasterBackground.Width.Set(masterBackgroundTexture.Width(), 0);
-			MasterBackground.Height.Set(masterBackgroundTexture.Height(), 0);
+			MasterBackground = new UIElement();
+			MasterBackground.Width.Pixels = 600;
+			MasterBackground.Height.Pixels = 480;
 			MasterBackground.HAlign = 0.5f;
 			MasterBackground.VAlign = 0.5f;
 			MasterBackground.SetPadding(0f);
@@ -93,6 +95,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 			top = InitialisePerksSection(top);
 			top = InitializeModsSection(top);
 			top = InitialiseCosmeticsSection(top);
+
+			MasterBackground.Height.Pixels = top + 8;
 
 			InspectedItemPowerLevel = new UIText(InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel.ToString(), 0.7f, large: true);
 			InspectedItemPowerLevel.Left.Pixels = 375;
@@ -135,5 +139,15 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			ModContent.GetInstance<MouseTextState>().Visible = MasterBackground.ContainsPoint(Main.MouseScreen);
 		}
-	}
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+			CalculatedStyle backgroundDimensions = MasterBackground.GetDimensions();
+			Texture2D magicPixel = TextureAssets.MagicPixel.Value;
+			Rectangle backgroundRect = backgroundDimensions.ToRectangle();
+			spriteBatch.Draw(magicPixel, backgroundRect, BaseColor_Light);
+			backgroundRect.Inflate(-2, -2);
+			spriteBatch.Draw(magicPixel, backgroundRect, BaseColor_Dark);
+		}
+    }
 }

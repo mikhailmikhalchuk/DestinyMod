@@ -39,7 +39,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			CosmeticsSeparator.Top.Pixels = yPos += 20;
 			CosmeticsSeparator.Width.Pixels = 300f;
 			CosmeticsSeparator.Height.Pixels = 2f;
-			CosmeticsSeparator.Color = SeparatorColor;
+			CosmeticsSeparator.Color = BaseColor_Light;
 			MasterBackground.Append(CosmeticsSeparator);
 
 			Texture2D dyeSlotBackground = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/DyeSlot", AssetRequestMode.ImmediateLoad).Value;
@@ -51,7 +51,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			DyeSlot.OnUpdate += HandleDyeSlotMouseText;
             DyeSlot.OnUpdateItem += UpdateItemShader;
 			MasterBackground.Append(DyeSlot);
-			return yPos;
+			return yPos + (int)DyeSlot.Height.Pixels + 10;
 		}
 
         public void HandleDyeSlotMouseText(UIElement affectedElement)
