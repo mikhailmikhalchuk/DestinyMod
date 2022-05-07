@@ -12,48 +12,53 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Content.UI.MouseText;
+using Terraria.UI;
+using Microsoft.Xna.Framework.Graphics;
+using DestinyMod.Core.Extensions;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
-	public partial class ItemDetailsState : DestinyModUIState
+	public class ItemDetailsState_Perks : UIElement
 	{
+		public ItemDetailsState ItemDetailsState { get; private set; }
+
 		public UIText WeaponPerksTitle { get; private set; }
 
 		public UISeparator WeaponPerksSeparator { get; private set; }
 
 		public IList<ItemPerkDisplay> ItemPerks { get; private set; }
 
-		public int InitialisePerksSection(int yPos)
-        {
+		public bool Visible;
+
+		public ItemDetailsState_Perks(ItemDetailsState itemDetailsState)
+		{
+			ItemDetailsState = itemDetailsState;
+
 			WeaponPerksTitle = new UIText("Weapon Perks");
-			WeaponPerksTitle.Left.Pixels = 10;
-			WeaponPerksTitle.Top.Pixels = yPos;
-			MasterBackground.Append(WeaponPerksTitle);
+			Append(WeaponPerksTitle);
 
 			WeaponPerksSeparator = new UISeparator();
-			WeaponPerksSeparator.Left.Pixels = 10;
-			WeaponPerksSeparator.Top.Pixels = yPos += 20;
+			WeaponPerksSeparator.Top.Pixels = 20;
 			WeaponPerksSeparator.Width.Pixels = 300f;
 			WeaponPerksSeparator.Height.Pixels = 2f;
-			WeaponPerksSeparator.Color = BaseColor_Light;
-			MasterBackground.Append(WeaponPerksSeparator);
+			WeaponPerksSeparator.Color = ItemDetailsState.BaseColor_Light;
+			Append(WeaponPerksSeparator);
 
 			ItemPerks = new List<ItemPerkDisplay>();
 
-			yPos += 8;
-			float lowestPerkPosition = yPos;
-			ItemDataItem inspectedItem = InspectedItem.GetGlobalItem<ItemDataItem>();
-			for (int i = 0; i < InspectedItemData.PerkPool.Count; i++)
+			float lowestPerkPosition = 28;
+			ItemDataItem inspectedItem = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+			for (int i = 0; i < ItemDetailsState.InspectedItemData.PerkPool.Count; i++)
 			{
-				ItemPerkPool perkTypePool = InspectedItemData.PerkPool[i];
+				ItemPerkPool perkTypePool = ItemDetailsState.InspectedItemData.PerkPool[i];
 				IList<ItemPerkDisplay> itemPerksWithinType = new List<ItemPerkDisplay>();
 				for (int perkIndexer = 0; perkIndexer < perkTypePool.Perks.Count; perkIndexer++)
 				{
 					ItemPerk perkInQuestion = perkTypePool.Perks[perkIndexer];
 					bool isPerkActive = inspectedItem.ActivePerks.Contains(perkInQuestion);
 					ItemPerkDisplay perk = new ItemPerkDisplay(perkInQuestion, isPerkActive);
-					perk.Left.Pixels = 10 + ItemPerk.TextureSize * (5f / 3f) * i;
-					perk.Top.Pixels = yPos + ItemPerk.TextureSize * (6f / 5f) * perkIndexer;
+					perk.Left.Pixels = ItemPerk.TextureSize * (5f / 3f) * i;
+					perk.Top.Pixels = 28 + ItemPerk.TextureSize * (6f / 5f) * perkIndexer;
 					lowestPerkPosition = Math.Max(lowestPerkPosition, perk.Top.Pixels);
 
 					perk.OnUpdate += (evt) =>
@@ -63,15 +68,15 @@ namespace DestinyMod.Content.UI.ItemDetails
 							return;
 						}
 
-						MouseText_TitleAndSubtitle.UpdateData(perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name, perkTypePool.TypeName);
-						MouseText_BodyText.UpdateData(perk.ItemPerk.Description);
+						ItemDetailsState.MouseText_TitleAndSubtitle.UpdateData(perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name, perkTypePool.TypeName);
+						ItemDetailsState.MouseText_BodyText.UpdateData(perk.ItemPerk.Description);
 						MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
-						mouseTextState.AppendToMasterBackground(MouseText_TitleAndSubtitle);
-						mouseTextState.AppendToMasterBackground(MouseText_BodyText);
+						mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_TitleAndSubtitle);
+						mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_BodyText);
 
 						if (!perk.IsActive)
                         {
-							mouseTextState.AppendToMasterBackground(MouseText_ClickIndicator);
+							mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_ClickIndicator);
 						}
 					};
 
@@ -88,7 +93,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 					ItemPerks.Add(perk);
 					itemPerksWithinType.Add(perk);
-					MasterBackground.Append(perk);
+					Append(perk);
 				}
 
 				foreach (ItemPerkDisplay itemPerkDisplay in itemPerksWithinType)
@@ -97,23 +102,45 @@ namespace DestinyMod.Content.UI.ItemDetails
 				}
 			}
 
-			for (int i = 1; i < InspectedItemData.PerkPool.Count; i++)
+			for (int i = 1; i < ItemDetailsState.InspectedItemData.PerkPool.Count; i++)
 			{
 				UISeparator perkSeparator = new UISeparator();
-				perkSeparator.Left.Pixels = 10 + ItemPerk.TextureSize * (4f / 3f) * i;
-				perkSeparator.Top.Pixels = yPos;
+				perkSeparator.Left.Pixels = ItemPerk.TextureSize * (4f / 3f) * i;
+				perkSeparator.Top.Pixels = 28;
 				perkSeparator.Width.Pixels = 2f;
-				perkSeparator.Height.Pixels = lowestPerkPosition - yPos + ItemPerk.TextureSize;
-				perkSeparator.Color = BaseColor_Light;
-				MasterBackground.Append(perkSeparator);
+				perkSeparator.Height.Pixels = lowestPerkPosition - 20 + ItemPerk.TextureSize;
+				perkSeparator.Color = ItemDetailsState.BaseColor_Light;
+				Append(perkSeparator);
 			}
 
-			return (int)lowestPerkPosition + ItemPerk.TextureSize + 10;
-        }
+			Vector2 size = this.CalculateChildrenSize();
+			Width.Pixels = size.X;
+			Height.Pixels = size.Y;
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			if (!Visible)
+			{
+				return;
+			}
+
+			base.Update(gameTime);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (!Visible)
+			{
+				return;
+			}
+
+			base.Draw(spriteBatch);
+		}
 
 		public void SyncActivePerks()
         {
-			ItemDataItem inspectedItemData = InspectedItem.GetGlobalItem<ItemDataItem>();
+			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
 			inspectedItemData.ActivePerks.Clear();
 			foreach (ItemPerkDisplay itemPerk in ItemPerks)
             {

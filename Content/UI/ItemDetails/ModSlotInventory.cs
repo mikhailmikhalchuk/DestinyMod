@@ -120,7 +120,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
             SoundEngine.PlaySound(SoundID.Grab);
             inspectedItemData.ItemMods.Clear();
-            foreach (ItemModSlot itemMod in ItemDetailsState.ModSlots)
+            foreach (ItemModSlot itemMod in ItemDetailsState.Mods.ModSlots)
             {
                 inspectedItemData.ItemMods.Add(itemMod.ItemMod);
             }

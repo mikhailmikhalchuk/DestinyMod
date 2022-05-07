@@ -1,9 +1,5 @@
 ﻿using Terraria.GameContent.UI.Elements;
-using Microsoft.Xna.Framework;
-using DestinyMod.Core.UI;
 using DestinyMod.Common.UI;
-using System.Collections.Generic;
-using DestinyMod.Common.Items.PerksAndMods;
 using DestinyMod.Common.GlobalItems;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,50 +7,77 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.UI;
 using DestinyMod.Content.UI.MouseText;
+using Microsoft.Xna.Framework;
+using DestinyMod.Core.Extensions;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
-	public partial class ItemDetailsState : DestinyModUIState
+	public class ItemDetailState_Customization : UIElement
 	{
+		public ItemDetailsState ItemDetailsState { get; private set; }
+
 		public UIText CosmeticsTitle { get; private set; }
 
 		public UISeparator CosmeticsSeparator { get; private set; }
 
 		public UIItemSlotWithBackground DyeSlot { get; private set; }
 
-		public int InitialiseCosmeticsSection(int yPos)
+		public bool Visible;
+
+		public ItemDetailState_Customization(ItemDetailsState itemDetailsState)
 		{
-			if (!InspectedItemData.Shaderable)
+			ItemDetailsState = itemDetailsState;
+
+			if (ItemDetailsState == null || !ItemDetailsState.InspectedItemData.Shaderable)
             {
-				return yPos;
+				return;
             }
 
 			CosmeticsTitle = new UIText("Item Cosmetics");
-			CosmeticsTitle.Left.Pixels = 10;
-			CosmeticsTitle.Top.Pixels = yPos;
-			MasterBackground.Append(CosmeticsTitle);
+			Append(CosmeticsTitle);
 
 			CosmeticsSeparator = new UISeparator();
-			CosmeticsSeparator.Left.Pixels = 10;
-			CosmeticsSeparator.Top.Pixels = yPos += 20;
+			CosmeticsSeparator.Top.Pixels = 20;
 			CosmeticsSeparator.Width.Pixels = 300f;
-			CosmeticsSeparator.Height.Pixels = 2f;
-			CosmeticsSeparator.Color = BaseColor_Light;
-			MasterBackground.Append(CosmeticsSeparator);
+			CosmeticsSeparator.Height.Pixels = 2;
+			CosmeticsSeparator.Color = ItemDetailsState.BaseColor_Light;
+			Append(CosmeticsSeparator);
 
 			Texture2D dyeSlotBackground = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/DyeSlot", AssetRequestMode.ImmediateLoad).Value;
 			DyeSlot = new UIItemSlotWithBackground(dyeSlotBackground, isItemValid: (item) => item.dye > 0);
-			DyeSlot.Left.Pixels = 10;
-			DyeSlot.Top.Pixels = yPos += 8;
+			DyeSlot.Top.Pixels = 28;
 			DyeSlot.BlockItemInput = false;
-			DyeSlot.Item = InspectedItem.GetGlobalItem<ItemDataItem>().Shader;
+			DyeSlot.Item = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>().Shader;
 			DyeSlot.OnUpdate += HandleDyeSlotMouseText;
-            DyeSlot.OnUpdateItem += UpdateItemShader;
-			MasterBackground.Append(DyeSlot);
-			return yPos + (int)DyeSlot.Height.Pixels + 10;
+			DyeSlot.OnUpdateItem += UpdateItemShader;
+			Append(DyeSlot);
+
+			Vector2 size = this.CalculateChildrenSize();
+			Width.Pixels = size.X;
+			Height.Pixels = size.Y;
 		}
 
-        public void HandleDyeSlotMouseText(UIElement affectedElement)
+		public override void Update(GameTime gameTime)
+		{
+			if (!Visible)
+			{
+				return;
+			}
+
+			base.Update(gameTime);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (!Visible)
+			{
+				return;
+			}
+
+			base.Draw(spriteBatch);
+		}
+
+		public void HandleDyeSlotMouseText(UIElement affectedElement)
 		{
 			if (affectedElement is not UIItemSlotWithBackground uIItemSlotWithBackground || !uIItemSlotWithBackground.ContainsPoint(Main.MouseScreen))
 			{
@@ -63,15 +86,15 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			string title = uIItemSlotWithBackground.Item.IsAir ? "Default Shader" : uIItemSlotWithBackground.Item.HoverName;
 			string subTitle = uIItemSlotWithBackground.Item.IsAir ? "None" : "Shader";
-			MouseText_TitleAndSubtitle.UpdateData(title, subTitle);
+			ItemDetailsState.MouseText_TitleAndSubtitle.UpdateData(title, subTitle);
 
 			MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
-			mouseTextState.AppendToMasterBackground(MouseText_TitleAndSubtitle);
+			mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_TitleAndSubtitle);
 		}
 
 		public void UpdateItemShader(UIItemSlotWithBackground uIItemSlotWithBackground)
 		{
-			InspectedItem.GetGlobalItem<ItemDataItem>().Shader = uIItemSlotWithBackground.Item;
+			ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>().Shader = uIItemSlotWithBackground.Item;
 		}
-	}
+    }
 }

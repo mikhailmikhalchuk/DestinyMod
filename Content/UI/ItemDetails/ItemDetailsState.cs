@@ -18,6 +18,7 @@ using System.Linq;
 using DestinyMod.Content.UI.MouseText;
 using Terraria.UI;
 using Terraria.GameContent;
+using DestinyMod.Core.Extensions;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -34,6 +35,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 		public UIText InspectedItemName { get; private set; }
 
 		public UIText InspectedItemPowerLevel { get; private set; }
+
+		public ItemDetailsState_Perks Perks { get; private set; }
+
+		public ItemDetailsState_Mods Mods { get; private set; }
+
+		public ItemDetailState_Customization Customization { get; private set; }
 
 		public MouseText_TitleAndSubtitle MouseText_TitleAndSubtitle { get; private set; }
 
@@ -78,7 +85,6 @@ namespace DestinyMod.Content.UI.ItemDetails
 			MasterBackground.HAlign = 0.5f;
 			MasterBackground.VAlign = 0.5f;
 			MasterBackground.SetPadding(0f);
-			Append(MasterBackground);
 
 			int top = 10;
 			InspectedItemDisplay = new DisplayItemSlot(InspectedItem.type);
@@ -92,11 +98,29 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemDisplay.Append(InspectedItemName);
 
 			top += (int)InspectedItemDisplay.Height.Pixels + 20;
-			top = InitialisePerksSection(top);
-			top = InitializeModsSection(top);
-			top = InitialiseCosmeticsSection(top);
 
-			MasterBackground.Height.Pixels = top + 8;
+			Perks = new ItemDetailsState_Perks(this);
+			Perks.Visible = true;
+			Perks.Left.Pixels = 10;
+			Perks.Top.Pixels = top;
+			MasterBackground.Append(Perks);
+
+			Mods = new ItemDetailsState_Mods(this);
+			Mods.Visible = true;
+			Mods.Left.Pixels = 10;
+			top += (int)Perks.Height.Pixels + 8;
+			Mods.Top.Pixels = top;
+			MasterBackground.Append(Mods);
+
+			Customization = new ItemDetailState_Customization(this);
+			Customization.Visible = true;
+			Customization.Left.Pixels = 10;
+			top += (int)Mods.Height.Pixels + 8;
+			Customization.Top.Pixels = top;
+			MasterBackground.Append(Customization);
+
+			top += (int)Customization.Height.Pixels + 8;
+			MasterBackground.Height.Pixels = top;
 
 			InspectedItemPowerLevel = new UIText(InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel.ToString(), 0.7f, large: true);
 			InspectedItemPowerLevel.Left.Pixels = 375;
@@ -119,6 +143,11 @@ namespace DestinyMod.Content.UI.ItemDetails
 				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
 			};
 			MasterBackground.Append(CloseButton);
+
+			Vector2 size = MasterBackground.CalculateChildrenSize();
+			MasterBackground.Width.Pixels = size.X + 20;
+			MasterBackground.Height.Pixels = size.Y + 20;
+			Append(MasterBackground);
 		}
 
         public override void Update(GameTime gameTime)

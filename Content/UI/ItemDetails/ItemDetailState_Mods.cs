@@ -11,11 +11,14 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.UI;
 using DestinyMod.Content.UI.MouseText;
+using DestinyMod.Core.Extensions;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
-	public partial class ItemDetailsState : DestinyModUIState
+	public class ItemDetailsState_Mods : UIElement
 	{
+		public ItemDetailsState ItemDetailsState { get; private set; }
+
 		public UIText WeaponModsTitle { get; private set; }
 
 		public UISeparator WeaponModsSeparator { get; private set; }
@@ -28,46 +31,44 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public IList<ItemModSlot> ModSlots { get; private set; }
 
-		public int InitializeModsSection(int yPos, bool includeItemTierSlot = false)
-        {
+		public bool Visible;
+
+		public ItemDetailsState_Mods(ItemDetailsState itemDetailsState)
+		{
+			ItemDetailsState = itemDetailsState;
+
 			WeaponModsTitle = new UIText("Weapon Mods");
-			WeaponModsTitle.Left.Pixels = 10;
-			WeaponModsTitle.Top.Pixels = yPos;
-			MasterBackground.Append(WeaponModsTitle);
+			Append(WeaponModsTitle);
 
 			WeaponModsSeparator = new UISeparator();
-			WeaponModsSeparator.Left.Pixels = 10;
-			WeaponModsSeparator.Top.Pixels = yPos += 20;
+			WeaponModsSeparator.Top.Pixels = 20;
 			WeaponModsSeparator.Width.Pixels = 300f;
 			WeaponModsSeparator.Height.Pixels = 2f;
-			WeaponModsSeparator.Color = BaseColor_Light;
-			MasterBackground.Append(WeaponModsSeparator);
+			WeaponModsSeparator.Color = ItemDetailsState.BaseColor_Light;
+			Append(WeaponModsSeparator);
 
 			Texture2D slotBackground = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad).Value;
-			int xPos = 10;
-			yPos += 8;
+			int xPos = 0;
 			Asset<Texture2D> infuseSlot = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/InfuseSlot", AssetRequestMode.ImmediateLoad);
 			InfuseItemSlot = new UIImageWithBackground(slotBackground, infuseSlot, 34);
 			InfuseItemSlot.Left.Pixels = xPos;
-			InfuseItemSlot.Top.Pixels = yPos;
+			InfuseItemSlot.Top.Pixels = 28;
 			xPos += infuseSlot.Width() + 8;
-			MasterBackground.Append(InfuseItemSlot);
+			Append(InfuseItemSlot);
 
-			if (includeItemTierSlot)
-            {
+			/*if (includeItemTierSlot)
+			{
 				ItemTierSlot = new UIImageWithBackground(slotBackground, infuseSlot, 34);
 				ItemTierSlot.Left.Pixels = xPos;
-				ItemTierSlot.Top.Pixels = yPos;
+				ItemTierSlot.Top.Pixels = 28;
 				xPos += infuseSlot.Width() + 8;
 				MasterBackground.Append(ItemTierSlot);
-			}
+			}*/
 
-			ModSlotInventory = new ModSlotInventory(this, null, 7);
-			ModSlotInventory.Left.Pixels = 10;
-			ModSlotInventory.Top.Pixels = yPos + slotBackground.Height + 8;
-			MasterBackground.Append(ModSlotInventory);
+			ModSlotInventory = new ModSlotInventory(ItemDetailsState, null, 7);
+			ModSlotInventory.Top.Pixels = 36 + slotBackground.Height;
 			ModSlotInventory.Visible = false;
-			ItemDataItem inspectedItemData = InspectedItem.GetGlobalItem<ItemDataItem>();
+			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
 			if (inspectedItemData.ItemMods != null)
 			{
 				ModSlots = new List<ItemModSlot>();
@@ -76,23 +77,41 @@ namespace DestinyMod.Content.UI.ItemDetails
 					ItemMod mod = inspectedItemData.ItemMods[modSlotIndexer];
 					ItemModSlot modSlot = new ItemModSlot(mod, 34);
 					modSlot.Left.Pixels = xPos;
-					modSlot.Top.Pixels = yPos;
+					modSlot.Top.Pixels = 28;
 					modSlot.OnUpdate += HandleModMouseText;
 					modSlot.OnMouseOver += HandleBringingUpModSlotInventory;
 					modSlot.OnUpdate += HandleClosingModSlotInventory;
 					xPos += (int)modSlot.Width.Pixels + 8;
 					ModSlots.Add(modSlot);
-					MasterBackground.Append(modSlot);
+					Append(modSlot);
 				}
 			}
 
-			yPos += slotBackground.Height + 8;
-			UIElement modSelectionBackground = new UIElement();
-			modSelectionBackground.Left.Pixels = 10;
-			modSelectionBackground.Top.Pixels = yPos;
+			Vector2 size = this.CalculateChildrenSize();
+			Width.Pixels = size.X;
+			Height.Pixels = size.Y;
+			Append(ModSlotInventory);
+		}
 
-			return yPos;
-        }
+		public override void Update(GameTime gameTime)
+		{
+			if (!Visible)
+			{
+				return;
+			}
+
+			base.Update(gameTime);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (!Visible)
+			{
+				return;
+			}
+
+			base.Draw(spriteBatch);
+		}
 
 		public void HandleModMouseText(UIElement affectedElement)
 		{
@@ -102,12 +121,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 			}
 
 			string subtitle = itemModSlot.ItemMod.ApplyType == 0 ? string.Empty : itemModSlot.ItemMod.ApplyType.ToString() + " Mod";
-			MouseText_TitleAndSubtitle.UpdateData(itemModSlot.ItemMod.DisplayName ?? itemModSlot.ItemMod.Name, subtitle);
-			MouseText_BodyText.UpdateData(itemModSlot.ItemMod.Description);
+			ItemDetailsState.MouseText_TitleAndSubtitle.UpdateData(itemModSlot.ItemMod.DisplayName ?? itemModSlot.ItemMod.Name, subtitle);
+			ItemDetailsState.MouseText_BodyText.UpdateData(itemModSlot.ItemMod.Description);
 
 			MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
-			mouseTextState.AppendToMasterBackground(MouseText_TitleAndSubtitle);
-			mouseTextState.AppendToMasterBackground(MouseText_BodyText);
+			mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_TitleAndSubtitle);
+			mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_BodyText);
 		}
 
 		public void HandleBringingUpModSlotInventory(UIMouseEvent evt, UIElement listeningElement)
@@ -119,6 +138,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			ModSlotInventory.SetUpInventorySlots(itemModSlot);
 			ModSlotInventory.Visible = true;
+			ItemDetailsState.Customization.Visible = false;
 		}
 
 		public void HandleClosingModSlotInventory(UIElement affectedElement)
@@ -134,6 +154,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			{
 				ModSlotInventory.ReferenceModSlot = null;
 				ModSlotInventory.Visible = false;
+				ItemDetailsState.Customization.Visible = true;
 			}
 		}
 	}
