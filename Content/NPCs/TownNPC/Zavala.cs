@@ -7,7 +7,6 @@ using Terraria.GameContent.Events;
 using Terraria.DataStructures;
 using DestinyMod.Common.NPCs.NPCTypes;
 using DestinyMod.Content.Items.Weapons.Ranged;
-using DestinyMod.Content.Items.Placeables.Furniture;
 using DestinyMod.Content.Items.Equipables.Dyes;
 using DestinyMod.Content.Items.Placeables;
 using DestinyMod.Common.ModSystems;
@@ -57,34 +56,6 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override string GetChat()
 		{
-			GuardianGamesSystem.ClaimedItem = hasClosedCeremony = true;
-			if (!hasClosedCeremony)
-			{
-				EntitySource_Gift source = new EntitySource_Gift(NPC);
-				switch (GuardianGamesSystem.WinningTeam)
-				{
-					case DestinyClassType.Titan:
-						if (!GuardianGamesSystem.ClaimedItem)
-						{
-							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<TitanFlag>());
-						}
-						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesTitanWin");
-
-					case DestinyClassType.Hunter:
-						if (!GuardianGamesSystem.ClaimedItem)
-						{
-							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<HunterFlag>());
-						}
-						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesHunterWin");
-
-					case DestinyClassType.Warlock:
-						if (!GuardianGamesSystem.ClaimedItem)
-						{
-							Main.LocalPlayer.QuickSpawnItem(source, ModContent.ItemType<WarlockFlag>());
-						}
-						return Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGamesWarlockWin");
-				}
-			}
 
 			if (Main.rand.NextBool(100))
 			{
@@ -120,11 +91,6 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			if (Main.LocalPlayer.ZoneHallow)
 			{
 				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.Hallow"));
-			}
-
-			if (GuardianGamesSystem.Active)
-			{
-				dialogue.Add(Language.GetTextValue("Mods.DestinyMod.Zavala.GuardianGames"));
 			}
 
 			for (int dialogueCount = 2; dialogueCount < 6; dialogueCount++)
@@ -203,24 +169,6 @@ namespace DestinyMod.Content.NPCs.TownNPC
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SalvagersSalvo>());
 			shop.item[nextSlot].shopCustomPrice = 500000;
 			nextSlot++;
-			if (GuardianGamesSystem.Active)
-			{
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Podium>());
-				shop.item[nextSlot].shopCustomPrice = 50000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TitanFlag>());
-				shop.item[nextSlot].shopCustomPrice = 10000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<HunterFlag>());
-				shop.item[nextSlot].shopCustomPrice = 10000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<WarlockFlag>());
-				shop.item[nextSlot].shopCustomPrice = 10000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<GuardianGamesDye>());
-				shop.item[nextSlot].shopCustomPrice = 20000;
-				nextSlot++;
-			}
 		}
 
 		public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)

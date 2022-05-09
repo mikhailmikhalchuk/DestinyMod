@@ -32,19 +32,6 @@ namespace DestinyMod.Common.Configs
         [Tooltip("Restricts certain items to specific classes.")]
         public bool RestrictClassItems { get; set; }
 
-        [Label("Guardian Games")]
-        [BackgroundColor(26, 70, 143, 192)]
-        [DefaultValue(false)]
-        [ReloadRequired]
-        [Tooltip("Allows you to participate in the Guardian Games\n-This will make a request to a server every time the mod is reloaded\n-Your public IP address WILL be exposed, but we do not collect or identify it\n-Enables laurel dropping from enemies")]
-        public bool GuardianGamesConfig { get; set; }
-
-        [Label("Sepiks Death Animation")]
-        [BackgroundColor(26, 70, 143, 192)]
-        [DefaultValue(false)]
-        [Tooltip("Enables Sepiks Prime's unique death animation.")]
-        public bool SepiksDeathAnimation { get; set; }
-
         [Header("UI")]
         [Label("Class Labels")]
         [BackgroundColor(26, 70, 143, 192)]
