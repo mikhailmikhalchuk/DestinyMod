@@ -28,7 +28,17 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public IList<ItemPerkDisplay> ItemPerks { get; private set; }
 
-		public bool Visible;
+		private bool InternalVisible;
+
+		public bool Visible
+		{
+			get => InternalVisible;
+			set
+			{
+				InternalVisible = value;
+				IgnoresMouseInteraction = !InternalVisible;
+			}
+		}
 
 		public ItemDetailsState_Perks(ItemDetailsState itemDetailsState)
 		{
@@ -117,6 +127,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Width.Pixels = size.X;
 			Height.Pixels = size.Y;
 		}
+
+		public override bool ContainsPoint(Vector2 point) => Visible && base.ContainsPoint(point);
 
 		public override void Update(GameTime gameTime)
 		{

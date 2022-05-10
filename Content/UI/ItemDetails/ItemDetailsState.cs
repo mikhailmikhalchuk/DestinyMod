@@ -154,6 +154,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 		{
 			base.Update(gameTime);
 
+			/*if (Main.GameUpdateCount % 60 == 0)
+			Main.NewText(GetElementAt(Main.MouseScreen).ToString());*/
+
 			if (Main.keyState.IsKeyDown(Keys.Escape))
 			{
 				SoundEngine.PlaySound(SoundID.MenuClose);

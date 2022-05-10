@@ -52,15 +52,11 @@ namespace DestinyMod.Content.UI.MouseText
 
 			if (Main.MouseScreen != OldMouseScreen)
 			{
-				Vector2 uiPosition = Main.MouseScreen;
-				if (uiPosition.Y > Main.screenHeight / 2)
+				Vector2 uiPosition = Main.MouseScreen + new Vector2(10);
+				if (uiPosition.Y > Main.screenHeight / 2f)
                 {
-					uiPosition += new Vector2(10, -MasterBackground.Height.Pixels - 10);
+					uiPosition.Y -= MasterBackground.Height.Pixels;
                 }
-				else
-                {
-					uiPosition += new Vector2(10, 10);
-				}
 				MasterBackground.Left.Pixels = uiPosition.X;
 				MasterBackground.Top.Pixels = uiPosition.Y;
 				Recalculate();

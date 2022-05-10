@@ -31,7 +31,19 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public IList<ItemModSlot> ModSlots { get; private set; }
 
-		public bool Visible;
+		public int NormalHeight { get; private set; }
+
+		private bool InternalVisible;
+
+		public bool Visible
+		{
+			get => InternalVisible;
+			set
+			{
+				InternalVisible = value;
+				IgnoresMouseInteraction = !InternalVisible;
+			}
+		}
 
 		public ItemDetailsState_Mods(ItemDetailsState itemDetailsState)
 		{
@@ -90,6 +102,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Vector2 size = this.CalculateChildrenSize();
 			Width.Pixels = size.X;
 			Height.Pixels = size.Y;
+			NormalHeight = (int)size.Y;
+
 			Append(ModSlotInventory);
 		}
 
@@ -139,6 +153,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			ModSlotInventory.SetUpInventorySlots(itemModSlot);
 			ModSlotInventory.Visible = true;
 			ItemDetailsState.Customization.Visible = false;
+			Height.Pixels = this.CalculateChildrenSize().Y;
 		}
 
 		public void HandleClosingModSlotInventory(UIElement affectedElement)
@@ -155,6 +170,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				ModSlotInventory.ReferenceModSlot = null;
 				ModSlotInventory.Visible = false;
 				ItemDetailsState.Customization.Visible = true;
+				Height.Pixels = this.CalculateChildrenSize().Y;
 			}
 		}
 	}
