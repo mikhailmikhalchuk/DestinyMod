@@ -102,18 +102,6 @@ namespace DestinyMod.Common.GlobalItems
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
             }
-
-            Rectangle drawHitbox = new Rectangle((int)position.X, (int)position.Y, (int)(frame.Width * scale), (int)(frame.Height * scale));
-            //spriteBatch.Draw(Terraria.GameContent.TextureAssets.MagicPixel.Value, new Rectangle((int)origin.X, (int)origin.Y, 10, 10), Color.Red * 0.5f);
-            if (drawHitbox.Contains(Main.MouseScreen.ToPoint()))
-            {
-                if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.N) && ModContent.GetInstance<ItemDetailsState>().UserInterface.CurrentState == null)
-                {
-                    SoundEngine.PlaySound(SoundID.MenuOpen);
-                    ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(new ItemDetailsState(item));
-                    //Main.playerInventory = false;
-                }
-            }
         }
 
         public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)

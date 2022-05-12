@@ -87,7 +87,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				for (int modSlotIndexer = 0; modSlotIndexer < inspectedItemData.ItemMods.Count; modSlotIndexer++)
 				{
 					ItemMod mod = inspectedItemData.ItemMods[modSlotIndexer];
-					ItemModSlot modSlot = new ItemModSlot(mod, 34);
+					ItemModSlot modSlot = new ItemModSlot(mod);
 					modSlot.Left.Pixels = xPos;
 					modSlot.Top.Pixels = 28;
 					modSlot.OnUpdate += HandleModMouseText;
