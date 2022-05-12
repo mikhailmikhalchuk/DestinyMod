@@ -43,6 +43,13 @@ namespace DestinyMod.Common.ModPlayers
 
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
+			if (HotKeys.ActiveSuper.JustPressed)
+            {
+				/*Projectile shieldThrow = Projectile.NewProjectileDirect(Player.GetProjectileSource_Misc(0), Player.Center, Vector2.Zero, ModContent.ProjectileType<Content.Projectiles.Weapons.Magic.ShieldThrow>(), 10, 0, Player.whoAmI);
+				shieldThrow.velocity = shieldThrow.DirectionTo(Main.MouseWorld) * 15f;*/
+				Projectile.NewProjectile(Player.GetSource_Misc("Super"), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Content.Projectiles.Sentries.StasisTurret>(), 10, 0, Player.whoAmI);
+			}
+			return;
 			if (HotKeys.ActiveSuper.JustPressed && SuperChargeCurrent == 100 && !Player.dead)
 			{
 				SuperActiveTime = 600;

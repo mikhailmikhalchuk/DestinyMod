@@ -35,6 +35,11 @@ namespace DestinyMod.Common.GlobalNPCs
                 npcLoot.Add(ancientShard);
 
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CommonEngram>(), 65));
+
+                LeadingConditionRule laurel = new LeadingConditionRule(new HasClassDuringGuardianGames());
+                laurel.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Laurel>(), 25));
+
+                npcLoot.Add(laurel);
             }
 
             if (npc.boss)
