@@ -19,6 +19,10 @@ using DestinyMod.Content.UI.MouseText;
 using Terraria.UI;
 using Terraria.GameContent;
 using DestinyMod.Core.Extensions;
+using DestinyMod.Core.Utils;
+using System;
+using Terraria.Graphics.Shaders;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -36,6 +40,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public UIText InspectedItemPowerLevel { get; private set; }
 
+		public UIElement InspectedItemLargeDisplay { get; private set; }
+
 		public ItemDetailsState_Perks Perks { get; private set; }
 
 		public ItemDetailsState_Mods Mods { get; private set; }
@@ -51,6 +57,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 		public static Color BaseColor_Light = new Color(68, 70, 74);
 
 		public static Color BaseColor_Dark = new Color(37, 37, 38);
+
+		public static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
+		{
+			CullMode = CullMode.None,
+			ScissorTestEnable = true
+		};
 
 		public ItemDetailsState() { }
 
@@ -98,44 +110,50 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemDisplay.Append(InspectedItemName);
 
 			top += (int)InspectedItemDisplay.Height.Pixels + 20;
+			InspectedItemLargeDisplay = new UIElement();
+			InspectedItemLargeDisplay.Left.Pixels = 310;
+			InspectedItemLargeDisplay.Top.Pixels = top;
+			InspectedItemLargeDisplay.Width.Pixels = 300;
+			InspectedItemLargeDisplay.Height.Pixels = 150;
+			MasterBackground.Append(InspectedItemLargeDisplay);
 
 			Perks = new ItemDetailsState_Perks(this);
 			Perks.Visible = true;
 			Perks.Left.Pixels = 10;
 			Perks.Top.Pixels = top;
 			MasterBackground.Append(Perks);
+			top += (int)Perks.Height.Pixels + 8;
 
 			Mods = new ItemDetailsState_Mods(this);
 			Mods.Visible = true;
 			Mods.Left.Pixels = 10;
-			top += (int)Perks.Height.Pixels + 8;
 			Mods.Top.Pixels = top;
 			MasterBackground.Append(Mods);
+			top += (int)Mods.Height.Pixels + 8;
 
 			Customization = new ItemDetailState_Customization(this);
 			Customization.Visible = true;
 			Customization.Left.Pixels = 10;
-			top += (int)Mods.Height.Pixels + 8;
 			Customization.Top.Pixels = top;
 			MasterBackground.Append(Customization);
-
 			top += (int)Customization.Height.Pixels + 8;
+
 			MasterBackground.Height.Pixels = top;
 
 			InspectedItemPowerLevel = new UIText(InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel.ToString(), 0.7f, large: true);
 			InspectedItemPowerLevel.Left.Pixels = 375;
-			InspectedItemPowerLevel.Top.Pixels = 260;
+			InspectedItemPowerLevel.Top.Pixels = InspectedItemLargeDisplay.Top.Pixels + InspectedItemLargeDisplay.Height.Pixels + 8;
 			InspectedItemPowerLevel.VAlign = 0.5f;
 			InspectedItemDisplay.Append(InspectedItemPowerLevel);
 
 			UIText InspectedItemPowerLevelText = new UIText("Power", 0.8f);
 			InspectedItemPowerLevelText.Left.Pixels = 440;
-			InspectedItemPowerLevelText.Top.Pixels = 265;
+			InspectedItemPowerLevelText.Top.Pixels = InspectedItemLargeDisplay.Top.Pixels + InspectedItemLargeDisplay.Height.Pixels + 13;
 			InspectedItemPowerLevelText.VAlign = 0.5f;
 			InspectedItemDisplay.Append(InspectedItemPowerLevelText);
 
 			UIImageButton CloseButton = new UIImageButton(Main.Assets.Request<Texture2D>("Images/UI/SearchCancel"));
-			CloseButton.Left.Pixels = MasterBackground.Width.Pixels - 33;
+			CloseButton.Left.Pixels = MasterBackground.Width.Pixels - 10;
 			CloseButton.Top.Pixels = MasterBackground.Top.Pixels + 10;
 			CloseButton.OnClick += (evt, listeningElement) =>
 			{
@@ -145,8 +163,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 			MasterBackground.Append(CloseButton);
 
 			Vector2 size = MasterBackground.CalculateChildrenSize();
-			MasterBackground.Width.Pixels = size.X + 20;
-			MasterBackground.Height.Pixels = size.Y + 20;
+			MasterBackground.Width.Pixels = size.X + 10;
+			MasterBackground.Height.Pixels = size.Y + 10;
 			Append(MasterBackground);
 		}
 
@@ -180,6 +198,35 @@ namespace DestinyMod.Content.UI.ItemDetails
 			spriteBatch.Draw(magicPixel, backgroundRect, BaseColor_Light);
 			backgroundRect.Inflate(-2, -2);
 			spriteBatch.Draw(magicPixel, backgroundRect, BaseColor_Dark);
+
+			Rectangle croppedBackground = InspectedItemLargeDisplay.GetDimensions().ToRectangle();
+			croppedBackground.Inflate(0, 75);
+
+			Main.instance.LoadItem(InspectedItem.type);
+			Texture2D itemTexture = TextureAssets.Item[InspectedItem.type].Value;
+			bool isXGreaterThanY = itemTexture.Width > itemTexture.Height;
+			int greaterDimension = Math.Max(itemTexture.Width, itemTexture.Height);
+			float scaleRatio = isXGreaterThanY ? croppedBackground.Width / greaterDimension : croppedBackground.Height / greaterDimension;
+			int destWidth = (int)(itemTexture.Width * scaleRatio);
+			int destHeight = (int)(itemTexture.Height * scaleRatio);
+			int destX = (int)(croppedBackground.X + (croppedBackground.Width - destWidth) / 2f);
+			int destY = (int)(croppedBackground.Y + (croppedBackground.Height - destHeight) / 2f);
+			Rectangle destinationRect = new Rectangle(destX, destY, destWidth, destHeight);
+
+			DrawData itemDisplay = new DrawData(itemTexture, destinationRect, Color.White);
+			ItemDataItem itemData = InspectedItem.GetGlobalItem<ItemDataItem>();
+
+			SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+			if (itemData.Shader != null && itemData.Shader.dye > 0)
+			{
+				GameShaders.Armor.GetShaderFromItemId(itemData.Shader.type).Apply(InspectedItem, itemDisplay);
+			}
+
+			itemDisplay.Draw(spriteBatch);
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);
 		}
     }
 }
