@@ -22,7 +22,7 @@ namespace DestinyMod.Common.Items
 
         public static readonly int PreMoonlordLightLevelCap = 1500; // 50x minimum :D ( I love Tera balancing )
 
-        public const int MaxmimumLightLevel = 1560; // ~90x minimum with current formula
+        public const int MaximumLightLevel = 1560; // ~90x minimum with current formula (This is the hard cap)
 
         public int DefaultLightLevel;
 
@@ -36,10 +36,10 @@ namespace DestinyMod.Common.Items
 
         public static IDictionary<int, ItemData> ItemDatasByID { get; private set; } = new Dictionary<int, ItemData>();
 
-        private ItemData(int itemType, int defaultLightLevel = 1350, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
+        private ItemData(int itemType, int defaultLightLevel = MinimumLightLevel, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
         {
             ItemType = itemType;
-            DefaultLightLevel = Math.Clamp(defaultLightLevel, MinimumLightLevel, MaxmimumLightLevel);
+            DefaultLightLevel = Math.Clamp(defaultLightLevel, MinimumLightLevel, MaximumLightLevel);
             InterpretLightLevel = interpretLightLevel;
             MaximumModCount = maximumModCount; 
             PerkPool = perkPool;
@@ -47,9 +47,21 @@ namespace DestinyMod.Common.Items
 
         public void Load(Mod mod) { }
 
-        public void Unload() => ItemDatasByID?.Clear();
+        public void Unload()
+        {
+            ItemDatasByID?.Clear();
+        }
 
-        public static ItemData InitializeNewItemData(int itemType, int defaultLightLevel = 1350, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
+        /// <summary>
+        /// Initializes perk data for the item.
+        /// </summary>
+        /// <param name="itemType">The item's type.</param>
+        /// <param name="defaultLightLevel">The light level to default to when rolling this weapon.</param>
+        /// <param name="interpretLightLevel">An <see cref="Action"/> to be called to calculate the light level when rolling this weapon.</param>
+        /// <param name="maximumModCount">The maximum amount of mod slots to include on this weapon (how many mods can be socketed at one time).</param>
+        /// <param name="perkPool">The list of perks for this weapon.</param>
+        /// <returns>The generated perk data.</returns>
+        public static ItemData InitializeNewItemData(int itemType, int defaultLightLevel = MinimumLightLevel, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
         {
             if (ItemDatasByID == null || ItemDatasByID.ContainsKey(itemType))
             {
@@ -78,7 +90,7 @@ namespace DestinyMod.Common.Items
                 lightLevel = Math.Clamp(lightLevel, MinimumLightLevel, PreMoonlordLightLevelCap);
             }
 
-            return Math.Clamp(lightLevel, DefaultLightLevel, MaxmimumLightLevel);
+            return Math.Clamp(lightLevel, DefaultLightLevel, MaximumLightLevel);
         }
 
         public void GenerateItem(Player player, IEntitySource source, int overrideLightLevel = -1)

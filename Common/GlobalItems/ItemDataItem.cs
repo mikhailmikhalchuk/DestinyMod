@@ -20,7 +20,7 @@ namespace DestinyMod.Common.GlobalItems
 {
     public class ItemDataItem : GlobalItem
     {
-        public int LightLevel;
+        public int LightLevel = -1;
 
         public IList<ItemPerk> ActivePerks;
 

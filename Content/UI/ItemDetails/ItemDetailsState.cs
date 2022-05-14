@@ -117,23 +117,29 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemLargeDisplay.Height.Pixels = 150;
 			MasterBackground.Append(InspectedItemLargeDisplay);
 
-			Perks = new ItemDetailsState_Perks(this);
-			Perks.Visible = true;
-			Perks.Left.Pixels = 10;
+            Perks = new ItemDetailsState_Perks(this)
+            {
+                Visible = true
+            };
+            Perks.Left.Pixels = 10;
 			Perks.Top.Pixels = top;
 			MasterBackground.Append(Perks);
 			top += (int)Perks.Height.Pixels + 8;
 
-			Mods = new ItemDetailsState_Mods(this);
-			Mods.Visible = true;
-			Mods.Left.Pixels = 10;
+            Mods = new ItemDetailsState_Mods(this)
+            {
+                Visible = true
+            };
+            Mods.Left.Pixels = 10;
 			Mods.Top.Pixels = top;
 			MasterBackground.Append(Mods);
 			top += (int)Mods.Height.Pixels + 8;
 
-			Customization = new ItemDetailState_Customization(this);
-			Customization.Visible = true;
-			Customization.Left.Pixels = 10;
+            Customization = new ItemDetailState_Customization(this)
+            {
+                Visible = true
+            };
+            Customization.Left.Pixels = 10;
 			Customization.Top.Pixels = top;
 			MasterBackground.Append(Customization);
 			top += (int)Customization.Height.Pixels + 8;
@@ -214,7 +220,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Rectangle destinationRect = new Rectangle(destX, destY, destWidth, destHeight);
 
 			DrawData itemDisplay = new DrawData(itemTexture, destinationRect, Color.White);
-			ItemDataItem itemData = InspectedItem.GetGlobalItem<ItemDataItem>();
+			if (!InspectedItem.TryGetGlobalItem(out ItemDataItem itemData))
+            {
+				SoundEngine.PlaySound(SoundID.MenuClose);
+				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
+				return;
+            }
 
 			SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 			spriteBatch.End();
@@ -224,6 +235,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				GameShaders.Armor.GetShaderFromItemId(itemData.Shader.type).Apply(InspectedItem, itemDisplay);
 			}
 
+			itemDisplay.effect = SpriteEffects.FlipHorizontally;
 			itemDisplay.Draw(spriteBatch);
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);

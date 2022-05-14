@@ -15,6 +15,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 	{
 		public override void SetStaticDefaults()
 		{
+			base.SetStaticDefaults();
 			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1, new List<ItemPerkPool>()
 			{
 				new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>()),

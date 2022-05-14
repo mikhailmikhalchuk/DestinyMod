@@ -70,13 +70,13 @@ namespace DestinyMod.Common.ModPlayers
 
             foreach (Item armorItem in Player.armor)
             {
-                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData) || armorItemData.LightLevel < ItemData.MaxmimumLightLevel)
+                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData) || armorItemData.LightLevel < ItemData.MaximumLightLevel)
                 {
                     continue;
                 }
 
                 itemsConsidered++;
-                LightLevel += Utils.Clamp(armorItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaxmimumLightLevel);
+                LightLevel += Utils.Clamp(armorItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
 
                 if (armorItemData.ActivePerks != null)
                 {
@@ -98,13 +98,13 @@ namespace DestinyMod.Common.ModPlayers
             Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
             if (heldItem != null && !heldItem.IsAir && heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
             {
-                if (heldItemData.LightLevel < ItemData.MaxmimumLightLevel)
+                if (heldItemData.LightLevel < ItemData.MaximumLightLevel)
                 {
                     return;
                 }
 
                 itemsConsidered++;
-                LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaxmimumLightLevel);
+                LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
 
                 if (heldItemData.ActivePerks != null)
                 {

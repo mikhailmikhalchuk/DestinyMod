@@ -1,4 +1,5 @@
-﻿using DestinyMod.Content.UI.ItemDetails;
+﻿using DestinyMod.Common.GlobalItems;
+using DestinyMod.Content.UI.ItemDetails;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -9,7 +10,10 @@ namespace DestinyMod.Common.Mono.Detours
 {
     public sealed class ItemSlotPerkSystem : ILoadable
     {
-        public void Load(Mod mod) => On.Terraria.UI.ItemSlot.RightClick_ItemArray_int_int += ItemSlot_RightClick_ItemArray_int_int;
+        public void Load(Mod mod)
+        {
+            On.Terraria.UI.ItemSlot.RightClick_ItemArray_int_int += ItemSlot_RightClick_ItemArray_int_int;
+        }
 
         public void Unload() { }
 
@@ -18,7 +22,7 @@ namespace DestinyMod.Common.Mono.Detours
             orig.Invoke(inv, context, slot);
 
             Item item = inv[slot];
-            if (item.IsAir || !Main.mouseRight || !Main.mouseRightRelease)
+            if (item.IsAir || !Main.mouseRight || !Main.mouseRightRelease || item.GetGlobalItem<ItemDataItem>().LightLevel == -1)
             {
                 return;
             }
