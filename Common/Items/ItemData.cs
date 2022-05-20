@@ -7,6 +7,7 @@ using Terraria;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.GlobalItems;
 using DestinyMod.Content.Items.Mods;
+using Microsoft.Xna.Framework;
 
 namespace DestinyMod.Common.Items
 {
@@ -33,6 +34,8 @@ namespace DestinyMod.Common.Items
         public IList<ItemPerkPool> PerkPool;
 
         public bool Shaderable;
+
+        public int Recoil;
 
         public static IDictionary<int, ItemData> ItemDatasByID { get; private set; } = new Dictionary<int, ItemData>();
 
@@ -136,5 +139,7 @@ namespace DestinyMod.Common.Items
                 itemDataItem.ItemMods.Add(ModContent.GetInstance<NullMod>());
             }
         }
+
+        public static int CalculateRecoil(int recoil) => (int)Math.Round(Math.Sin((recoil + 5) * (MathHelper.TwoPi / 20)) * (100 - recoil));
     }
 }

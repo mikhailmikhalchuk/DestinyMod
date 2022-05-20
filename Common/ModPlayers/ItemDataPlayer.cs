@@ -98,10 +98,10 @@ namespace DestinyMod.Common.ModPlayers
             Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
             if (heldItem != null && !heldItem.IsAir && heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
             {
-                if (heldItemData.LightLevel < ItemData.MaximumLightLevel)
+                /*if (heldItemData.LightLevel < ItemData.MaximumLightLevel) huh?
                 {
                     return;
-                }
+                }*/
 
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
@@ -226,6 +226,34 @@ namespace DestinyMod.Common.ModPlayers
                     itemMod?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
                 }
             }
+        }
+
+        public override float UseSpeedMultiplier(Item item)
+        {
+            float start = base.UseSpeedMultiplier(item);
+            Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+            if (heldItem == null || heldItem.IsAir || !heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
+            {
+                return start;
+            }
+
+            if (heldItemData.ActivePerks != null)
+            {
+                foreach (ItemPerk itemPerk in heldItemData.ActivePerks)
+                {
+                    itemPerk.UseSpeedMultiplier(Player, item, ref start);
+                }
+            }
+
+            if (heldItemData.ItemMods != null)
+            {
+                foreach (ItemMod itemMod in heldItemData.ItemMods)
+                {
+                    itemMod.UseSpeedMultiplier(Player, item, ref start);
+                }
+            }
+
+            return start;
         }
     }
 }

@@ -22,6 +22,8 @@ namespace DestinyMod.Common.GlobalItems
     {
         public int LightLevel = -1;
 
+        public int Recoil;
+
         public IList<ItemPerk> ActivePerks;
 
         public IList<ItemMod> ItemMods;
@@ -43,6 +45,8 @@ namespace DestinyMod.Common.GlobalItems
                 {
                     LightLevel = itemData.DefaultLightLevel;
                 }
+
+                Recoil = itemData.Recoil;
 
                 if (itemData.InterpretLightLevel == null)
                 {
@@ -125,6 +129,18 @@ namespace DestinyMod.Common.GlobalItems
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
+        }
+
+        public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            int recVal = ItemData.CalculateRecoil(10);
+            Vector2 newVel = velocity.RotatedByRandom(MathHelper.ToRadians(recVal / 10));
+            if (newVel.Y > Recoil)
+            {
+                newVel.Y = 0;
+            }
+            Projectile.NewProjectile(source, position, newVel, type, damage, knockback, player.whoAmI);
+            return false;
         }
 
         #endregion

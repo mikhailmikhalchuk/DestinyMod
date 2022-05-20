@@ -36,5 +36,16 @@ namespace DestinyMod.Common.Items.PerksAndMods
         public virtual void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit) { }
 
         public virtual void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) { }
+
+        /// <summary>
+        /// Allows modification of the use speed of the item.
+        /// </summary>
+        /// <param name="player">The player using the item.</param>
+        /// <param name="item">The item being used.</param>
+        /// <param name="multiplier">The current multiplier. This is stacking with other perks on the item, and is unsorted - that is, this multiplier can be changed by other perks in the handler call.</param>
+        public virtual void UseSpeedMultiplier(Player player, Item item, ref float multiplier)
+        {
+            multiplier *= 1f;
+        }
     }
 }

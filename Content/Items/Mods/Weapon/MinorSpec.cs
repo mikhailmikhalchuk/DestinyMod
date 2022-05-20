@@ -5,7 +5,7 @@ namespace DestinyMod.Content.Items.Mods.Weapon
 {
     public class MinorSpec : ItemMod
     {
-        public static readonly int RankAndFileHealthPoint = 5000;
+        public const int RankAndFileHealthPoint = 5000;
 
         public override void SetDefaults()
         {
@@ -14,14 +14,14 @@ namespace DestinyMod.Content.Items.Mods.Weapon
             ApplyType = ItemType.Weapon;
         }
 
-        public void Function(NPC target, ref int damage)
+        public static void Function(NPC target, ref int damage)
         {
-            if (target.lifeMax > RankAndFileHealthPoint)
+            if (target.lifeMax > RankAndFileHealthPoint || target.boss)
             {
                 return;
             }
 
-            damage = (int)(damage * 1.05f);
+            damage = (int)(damage * 1.078f);
         }
 
         public override void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit) => Function(target, ref damage);
