@@ -1,40 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Terraria.UI;
 using ReLogic.Graphics;
 using Terraria.ModLoader;
 using ReLogic.Content;
 using Terraria;
+using DestinyMod.Core.Data;
 
 namespace DestinyMod.Content.UI.MouseText
 {
 	// Again, please feel free to rename this to anything better
-	public class MouseText_ClickIndicator : UIElement
+	public class MouseText_ClickIndicator : MouseTextElement
 	{
-		public enum ClickTypes
-        {
-			Left,
-			Middle,
-			Right,
-        }
-
-		public static DynamicSpriteFont MouseFont => FontAssets.MouseText.Value;
-
 		public string Text { get; private set; }
 
 		public float TextScale { get; private set; }
 
 		public Vector2 TextSize { get; private set; }
 
-		private Color BackgroundColor_Internal = new Color(10, 10, 10) * MouseTextState.CommonOpacity;
-
-		public Color? BackgroundColor
-		{
-			get => BackgroundColor_Internal;
-			set => BackgroundColor_Internal = value == null ? new Color(10, 10, 10) * MouseTextState.CommonOpacity : value.Value;
-		}
-
+		public override Color BackgroundColor_Default => new Color(10, 10, 10) * CommonOpacity;
 
 		private ClickTypes InternalClickType;
 
@@ -49,13 +33,13 @@ namespace DestinyMod.Content.UI.MouseText
 			}
         }
 
-
 		public Texture2D IndicatorGraphic { get; private set; }
 
 		public MouseText_ClickIndicator(string text = null, ClickTypes clickType = ClickTypes.Left)
 		{
 			UpdateText(text ?? "Apply");
 			ClickType = clickType;
+			WidthPercentage = 1f;
 			Height.Pixels = 32;
 		}
 
@@ -68,10 +52,8 @@ namespace DestinyMod.Content.UI.MouseText
 
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
-			Texture2D magicPixel = TextureAssets.MagicPixel.Value;
+			base.DrawSelf(spriteBatch);
 			CalculatedStyle dimensions = GetDimensions();
-			spriteBatch.Draw(magicPixel, dimensions.ToRectangle(), BackgroundColor.Value);
-
 			Vector2 textPosition = dimensions.Position() + new Vector2(dimensions.Width, dimensions.Height / 2) - new Vector2(TextSize.X + MouseTextState.CommonBorder, 0);
 			spriteBatch.DrawString(MouseFont, Text, textPosition, Color.White, 0f, new Vector2(0, TextSize.Y / 2), TextScale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(IndicatorGraphic, new Vector2(textPosition.X - IndicatorGraphic.Width - 4, dimensions.Y + dimensions.Height / 2), null, Color.White, 0f, IndicatorGraphic.Size() / 2, 1f, SpriteEffects.None, 0f );

@@ -1,10 +1,7 @@
 using Terraria;
 using Microsoft.Xna.Framework;
 using DestinyMod.Core.UI;
-using DestinyMod.Common.UI;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria.GameContent;
 using Terraria.UI;
 using System.Linq;
 using System.Collections.Generic;
@@ -22,6 +19,10 @@ namespace DestinyMod.Content.UI.MouseText
 		public static readonly int CommonBorder = 6;
 
 		private UIElement MasterBackground;
+
+		public int DefaultWidth = 420;
+
+		public int FocusTimer; // Scuffed way to fix an issue where Widths haven't been properly updated yet
 
 		public override void PreLoad(ref string name)
 		{
@@ -43,10 +44,13 @@ namespace DestinyMod.Content.UI.MouseText
 		{
 			if (!Visible)
             {
+				FocusTimer = 0;
 				return;
             }
 
 			base.Update(gameTime);
+
+			FocusTimer++;
 
 			Main.mouseText = false;
 
@@ -67,7 +71,7 @@ namespace DestinyMod.Content.UI.MouseText
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-			if (!Visible)
+			if (!Visible || FocusTimer < 15)
 			{
 				return;
 			}
@@ -86,7 +90,12 @@ namespace DestinyMod.Content.UI.MouseText
 			List<UIElement> children = MasterBackground.Children.ToList();
 			for (int masterIndexer = 0; masterIndexer < children.Count; masterIndexer++)
 			{
-				UIElement child = children[masterIndexer];
+				UIElement childElement = children[masterIndexer];
+				if (childElement is not MouseTextElement child)
+                {
+					continue;
+                }
+
 				if (masterIndexer == 0)
 				{
 					child.Top.Pixels = 0; // Should be only handling TitleBackground
@@ -97,6 +106,7 @@ namespace DestinyMod.Content.UI.MouseText
 					child.Top.Pixels = previousChild.Top.Pixels + previousChild.Height.Pixels;
 				}
 
+				child.Width.Pixels = child.WidthPixels;
 				int totalWidth = (int)(child.Left.Pixels + child.Width.Pixels);
 				if (totalWidth > greatestWidth)
 				{
@@ -112,17 +122,34 @@ namespace DestinyMod.Content.UI.MouseText
 				MasterBackground.Height.Pixels = lastChild.Top.Pixels + lastChild.Height.Pixels;
 			}
 
+			if (greatestWidth <= 0)
+            {
+				greatestWidth = DefaultWidth;
+			}
+
 			MasterBackground.Width.Pixels = greatestWidth;
+
+			for (int masterIndexer = 0; masterIndexer < children.Count; masterIndexer++)
+			{
+				UIElement childElement = children[masterIndexer];
+				if (childElement is not MouseTextElement child)
+				{
+					continue;
+				}
+
+				child.Width.Pixels += child.WidthPercentage * greatestWidth;
+			}
+
 			Recalculate();
 		}
 
-		public void AppendToMasterBackground(UIElement desiredElementToAppend)
+		public void AppendToMasterBackground(MouseTextElement desiredElementToAppend)
         {
 			MasterBackground.Append(desiredElementToAppend);
 			RecalculateSpacing();
         }
 
-		public void RemoveFromMasterBackground(UIElement desiredElementToRemove)
+		public void RemoveFromMasterBackground(MouseTextElement desiredElementToRemove)
         {
 			MasterBackground.RemoveChild(desiredElementToRemove);
 			RecalculateSpacing();

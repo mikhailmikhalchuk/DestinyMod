@@ -85,10 +85,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public override void OnInitialize()
 		{
-			MouseText_TitleAndSubtitle = new MouseText_TitleAndSubtitle(420, string.Empty, string.Empty, titleScale: 0f, subtitleScale: 0f);;
-			MouseText_BodyText = new MouseText_BodyText(420, string.Empty, scale: 0f);
+			MouseText_TitleAndSubtitle = new MouseText_TitleAndSubtitle(string.Empty, string.Empty, titleScale: 0f, subtitleScale: 0f);;
+			MouseText_BodyText = new MouseText_BodyText(string.Empty, scale: 0f);
 			MouseText_ClickIndicator = new MouseText_ClickIndicator();
-			MouseText_ClickIndicator.Width.Pixels = 420;
 			ModContent.GetInstance<MouseTextState>().CleanseAll();
 
 			MasterBackground = new UIElement();
@@ -186,6 +185,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				SoundEngine.PlaySound(SoundID.MenuClose);
 				ModContent.GetInstance<MouseTextState>().Visible = false;
 				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
+				return;
 			}
 
 			if (MasterBackground.ContainsPoint(Main.MouseScreen))

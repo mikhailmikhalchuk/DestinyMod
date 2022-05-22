@@ -1,23 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Terraria.UI;
 using ReLogic.Graphics;
 
 namespace DestinyMod.Content.UI.MouseText
 {
 	// Again, please feel free to rename this to anything better
-	public class MouseText_BodyText : UIElement
+	public class MouseText_BodyText : MouseTextElement
 	{
-		public static DynamicSpriteFont MouseFont => FontAssets.MouseText.Value;
-
-		private Color BackgroundColor_Internal = new Color(20, 20, 20) * MouseTextState.CommonOpacity;
-
-		public Color? BackgroundColor
-		{
-			get => BackgroundColor_Internal;
-			set => BackgroundColor_Internal = value == null ? new Color(20, 20, 20) * MouseTextState.CommonOpacity : value.Value;
-		}
+        public override Color BackgroundColor_Default => new Color(20, 20, 20) * CommonOpacity;
 
 		public string Text { get; private set; }
 
@@ -33,9 +24,9 @@ namespace DestinyMod.Content.UI.MouseText
 			set => TextColor_Internal = value == null ? Color.White : value.Value;
 		}
 
-		public MouseText_BodyText(int width, string text, float scale = 1f)
+		public MouseText_BodyText(string text, float scale = 1f)
 		{
-			Width.Pixels = width;
+			WidthPercentage = 1f;
 			UpdateData(text, scale);
 		}
 
@@ -62,7 +53,6 @@ namespace DestinyMod.Content.UI.MouseText
 		{
 			base.DrawSelf(spriteBatch);
 			CalculatedStyle dimensions = GetDimensions();
-			spriteBatch.Draw(TextureAssets.MagicPixel.Value, dimensions.ToRectangle(), BackgroundColor.Value);
 			spriteBatch.DrawString(MouseFont, Text, dimensions.Position() + new Vector2(MouseTextState.CommonBorder * 2, MouseTextState.CommonBorder), TextColor.Value, 0f, Vector2.Zero, TextScale, SpriteEffects.None, 0f);
 		}
 	}

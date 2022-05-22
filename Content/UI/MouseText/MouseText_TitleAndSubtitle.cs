@@ -1,23 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Terraria.UI;
 using ReLogic.Graphics;
 
 namespace DestinyMod.Content.UI.MouseText
 {
 	// Please feel free to rename this to anything better
-	public class MouseText_TitleAndSubtitle : UIElement
+	public class MouseText_TitleAndSubtitle : MouseTextElement
 	{
-		public static DynamicSpriteFont MouseFont => FontAssets.MouseText.Value;
-
-		private Color BackgroundColor_Internal = new Color(68, 70, 74) * MouseTextState.CommonOpacity;
-
-		public Color? BackgroundColor 
-		{
-			get => BackgroundColor_Internal;
-			set => BackgroundColor_Internal = value == null ? new Color(68, 70, 74) * MouseTextState.CommonOpacity : value.Value;
-		}
+		public override Color BackgroundColor_Default => new Color(68, 70, 74) * CommonOpacity;
 
 		public string Title { get; private set; }
 
@@ -39,9 +30,9 @@ namespace DestinyMod.Content.UI.MouseText
 			set => TextColor_Internal = value == null ? Color.White : value.Value;
 		}
 
-		public MouseText_TitleAndSubtitle(int width, string title, string subtitle, float titleScale = 1.5f, float subtitleScale = 1f)
+		public MouseText_TitleAndSubtitle(string title, string subtitle, float titleScale = 1.5f, float subtitleScale = 1f)
         {
-			Width.Pixels = width;
+			WidthPercentage = 1f;
 			UpdateData(title, subtitle, titleScale, subtitleScale);
 		}
 
@@ -75,7 +66,6 @@ namespace DestinyMod.Content.UI.MouseText
         {
             base.DrawSelf(spriteBatch);
 			CalculatedStyle dimensions = GetDimensions();
-			spriteBatch.Draw(TextureAssets.MagicPixel.Value, dimensions.ToRectangle(), BackgroundColor.Value);
 			spriteBatch.DrawString(MouseFont, Title, dimensions.Position() + new Vector2(MouseTextState.CommonBorder * 2, MouseTextState.CommonBorder), TextColor.Value, 0f, Vector2.Zero, TitleScale, SpriteEffects.None, 0f);
 			spriteBatch.DrawString(MouseFont, Subtitle, dimensions.Position() + new Vector2(MouseTextState.CommonBorder * 2, TitleSize.Y + MouseTextState.CommonBorder + 2), TextColor.Value, 0f, Vector2.Zero, SubtitleScale, SpriteEffects.None, 0f);
 		}

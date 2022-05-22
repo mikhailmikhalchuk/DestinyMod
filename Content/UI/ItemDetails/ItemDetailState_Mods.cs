@@ -23,7 +23,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public UISeparator WeaponModsSeparator { get; private set; }
 
-		public UIImageWithBackground InfuseItemSlot { get; private set; }
+		public InfuseSlot InfuseItemSlot { get; private set; }
 
 		public UIImageWithBackground ItemTierSlot { get; private set; }
 
@@ -62,7 +62,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Texture2D slotBackground = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad).Value;
 			int xPos = 0;
 			Asset<Texture2D> infuseSlot = ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/InfuseSlot", AssetRequestMode.ImmediateLoad);
-			InfuseItemSlot = new UIImageWithBackground(slotBackground, infuseSlot, 34);
+			InfuseItemSlot = new InfuseSlot(120);
 			InfuseItemSlot.Left.Pixels = xPos;
 			InfuseItemSlot.Top.Pixels = 28;
 			xPos += infuseSlot.Width() + 8;
