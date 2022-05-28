@@ -12,7 +12,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -82,6 +81,19 @@ namespace DestinyMod.Common.GlobalItems
             }
         }
 
+        public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            int recVal = ItemData.CalculateRecoil(Recoil);
+            Vector2 newVel = velocity.RotatedByRandom(MathHelper.ToRadians(recVal / 10));
+            /*if (newVel.Y > Recoil)
+            {
+                newVel.Y = 0; // Why?
+            }*/
+            Projectile.NewProjectile(source, position, newVel, type, damage, knockback, player.whoAmI);
+            return false;
+        }
+
+
         #region Drawing
 
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -130,19 +142,6 @@ namespace DestinyMod.Common.GlobalItems
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             }
         }
-
-        public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            int recVal = ItemData.CalculateRecoil(10);
-            Vector2 newVel = velocity.RotatedByRandom(MathHelper.ToRadians(recVal / 10));
-            if (newVel.Y > Recoil)
-            {
-                newVel.Y = 0;
-            }
-            Projectile.NewProjectile(source, position, newVel, type, damage, knockback, player.whoAmI);
-            return false;
-        }
-
         #endregion
 
         #region I/O

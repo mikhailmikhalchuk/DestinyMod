@@ -22,6 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 				new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
 			});
 			hakkeItemData.Shaderable = true;
+			hakkeItemData.Recoil = 10;
 		}
 
         public override void DestinySetDefaults()
