@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using ReLogic.Content;
 using Terraria;
 using Microsoft.Xna.Framework.Input;
+using Terraria.GameContent;
+using System;
 
 namespace DestinyMod.Content.UI.MouseText
 {
@@ -33,6 +35,24 @@ namespace DestinyMod.Content.UI.MouseText
 			}
 		}
 
+		private float InternalProgress;
+
+		public float Progress
+        {
+			get => InternalProgress;
+			set => InternalProgress = Math.Clamp(value, 0f, 1f);
+		}
+
+		private Color? InternalProgressColor = null;
+
+		public static Color DefaultProgressColor => Color.Green * CommonOpacity;
+
+		public Color? ProgressColor
+		{
+			get => InternalProgressColor ?? DefaultProgressColor;
+			set => InternalProgressColor = value == null ? DefaultProgressColor : value.Value;
+		}
+
 		public MouseText_KeyIndicator(string text = null, Keys key = Keys.F)
 		{
 			UpdateText(text ?? string.Empty);
@@ -51,7 +71,17 @@ namespace DestinyMod.Content.UI.MouseText
 
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
+			base.DrawSelf(spriteBatch);
+
 			CalculatedStyle dimensions = GetDimensions();
+
+			if (Progress > 0 && Progress < 1)
+			{
+				Texture2D magicPixel = TextureAssets.MagicPixel.Value;
+				Rectangle progressDestRect = new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)(dimensions.Width * Progress), (int)dimensions.Height);
+				Color pulsedColor = ProgressColor.Value * (float)Math.Abs(Math.Sin(Main.GameUpdateCount / 15f) * 0.66f);
+				spriteBatch.Draw(magicPixel, progressDestRect, pulsedColor);
+			}
 
 			Vector2 textPosition = dimensions.Position() + new Vector2(dimensions.Width, dimensions.Height / 2) - new Vector2(TextSize.X + MouseTextState.CommonBorder, 0);
 			spriteBatch.DrawString(MouseFont, Text, textPosition, Color.White, 0f, new Vector2(0, TextSize.Y / 2), TextScale, SpriteEffects.None, 0f);
