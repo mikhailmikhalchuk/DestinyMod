@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
@@ -13,9 +14,9 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Rounds pierce and poison targets"
-			+ "\nKills with this weapon drop Remnants"
-			+ "\nPicking up Remnants increases the damage of the poison"
-			+ "\n'To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.'");
+				+ "\nKills with this weapon drop Remnants"
+				+ "\nPicking up Remnants increases the damage of the poison"
+				+ "\n'To rend one's enemies is to see them not as equals, but objects - hollow of spirit and meaning.'");
 		}
 
 		public override void DestinySetDefaults()
@@ -26,7 +27,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/Thorn");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/Thorn")
+            {
+				Volume = 0.5f
+            };
 			Item.shootSpeed = 40f;
 		}
 

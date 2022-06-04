@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Terraria.Audio;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 
@@ -28,7 +29,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/GravitonLance");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/GravitonLance");
 			Item.shootSpeed = 16f;
 			Item.reuseDelay = 5;
 		}

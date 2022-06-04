@@ -14,7 +14,7 @@ namespace DestinyMod.Common.ModPlayers
     {
         public int LightLevel;
 
-        public override bool CloneNewInstances => false;
+        protected override bool CloneNewInstances => true;
 
         public IList<ItemMod> UnlockedMods = new List<ItemMod>();
 

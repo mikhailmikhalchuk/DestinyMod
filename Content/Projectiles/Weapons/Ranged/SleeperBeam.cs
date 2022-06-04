@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
 using Microsoft.Xna.Framework.Audio;
+using ReLogic.Utilities;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
@@ -16,7 +17,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public int SurfaceHits = 3;
 
-		private SoundEffectInstance FireSound;
+		private SlotId FireSound;
 
 		public override void DestinySetDefaults()
 		{
@@ -31,9 +32,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
 			if (!Fired)
 			{
-				FireSound?.Stop(true);
-				FireSound = null;
-				SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
+				SoundEngine.TryGetActiveSound(FireSound, out ActiveSound fireResult);
+				fireResult?.Stop();
+				SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
 			}
 			else
             {
@@ -76,7 +77,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             {
 				if (Counter <= 0)
 				{
-					FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
+					FireSound = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
 				}
 
 				Player player = Main.player[Projectile.owner];
@@ -103,7 +104,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 				if (Counter == 43)
 				{
-					SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
+					SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
 					Fired = true;
 					player.channel = false;
 

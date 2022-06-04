@@ -25,7 +25,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/Borealis");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/Borealis");
 			Item.shootSpeed = 300f;
 		}
 

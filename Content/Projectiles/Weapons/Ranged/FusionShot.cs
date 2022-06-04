@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
+using ReLogic.Utilities;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
@@ -14,7 +15,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
     {
         private bool SwappedData;
 
-        private SoundEffectInstance FireSound;
+        private SlotId FireSound;
 
         public int FireDelay
         {
@@ -84,7 +85,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (Counter <= 0)
             {
-                FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
+                FireSound = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
             }
 
             Player player = Main.player[Projectile.owner];
@@ -115,7 +116,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
             if (Counter == ChargeTime)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
+                SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
                 Fired = true;
 
                 Item ammoItem = new Item();
@@ -159,9 +160,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (CountFires < ProjectileCount)
             {
-                FireSound?.Stop(true);
-                FireSound = null;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
+                SoundEngine.TryGetActiveSound(FireSound, out ActiveSound fireResult);
+                fireResult?.Stop();
+                SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
             }
             CountFires = FireDelay = 0;
         }

@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -24,7 +25,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 0;
 			Item.useTime = 20;
 			Item.crit = 10;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/AceOfSpades");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/AceOfSpades");
 			Item.useAnimation = 20;
 			Item.value = Item.buyPrice(gold: 1);
 		}

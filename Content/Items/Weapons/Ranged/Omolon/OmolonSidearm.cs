@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 {
@@ -19,7 +20,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/JadeRabbit");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/JadeRabbit");
 			Item.shootSpeed = 16f;
 		}
 

@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -13,8 +14,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Three round burst"
-			+ "\nCreates nanite swarms on critical kills and rapid hits"
-			+ "\n'~directive = KILL while enemies = PRESENT: execute(directive)~'");
+				+ "\nCreates nanite swarms on critical kills and rapid hits"
+				+ "\n'~directive = KILL while enemies = PRESENT: execute(directive)~'");
 		}
 
 		public override void DestinySetDefaults()
@@ -26,7 +27,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.crit = 2;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/OutbreakPerfected");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/OutbreakPerfected");
 			Item.shootSpeed = 300f;
 			DestinyModReuseDelay = 5;
 		}

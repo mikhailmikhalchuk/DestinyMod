@@ -20,9 +20,9 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Kills with this weapon grant stacks of Overcharge"
-            + "\nRight Click with Overcharge to switch firing modes"
-            + "\nHold down the trigger in the alternative firing mode to fire a more powerful shot"
-            + "\n'...a causal loop within the weapon's mechanism, suggesting that the firing process somehow binds space and time into...'");
+                + "\nRight Click with Overcharge to switch firing modes"
+                + "\nHold down the trigger in the alternative firing mode to fire a more powerful shot"
+                + "\n'...a causal loop within the weapon's mechanism, suggesting that the firing process somehow binds space and time into...'");
         }
 
         public override void DestinySetDefaults()
@@ -34,7 +34,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
             Item.knockBack = 0;
             Item.useTime = 15;
             Item.crit = 10;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclast"); //thanks, fillinek
+            Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/VexMythoclast"); //thanks, fillinek
             Item.useAnimation = 15;
             Item.value = Item.buyPrice(gold: 1);
         }
@@ -57,7 +57,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse == 2 && !UsingAltFunction && SwapCooldown <= 0 && player.HasBuff<Overcharge>())
+            if (player.altFunctionUse == 2 && !UsingAltFunction && SwapCooldown <= 0 && player.GetModPlayer<ItemPlayer>().OverchargeStacks >= 6)
             {
                 CombatText.NewText(player.getRect(), Color.Gold, "Charge Mode!");
                 UsingAltFunction = true;
@@ -71,7 +71,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
             {
                 CombatText.NewText(player.getRect(), Color.Gold, "Normal Mode!");
                 UsingAltFunction = false;
-                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclast");
+                Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/VexMythoclast");
                 SoundEngine.PlaySound(SoundID.Item101);
                 SwapCooldown = 15;
                 Item.color = default;
@@ -87,7 +87,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
                 CombatText.NewText(player.getRect(), Color.Gold, "Overcharge Depleted!");
                 UsingAltFunction = false;
                 player.ClearBuff(ModContent.BuffType<Overcharge>());
-                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclast");
+                Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/VexMythoclast");
                 Item.color = default;
             }
 
@@ -98,6 +98,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
         public override Vector2? HoldoutOffset() => new Vector2(-5, -2);
 
-        public override bool CanConsumeAmmo(Player player) => !UsingAltFunction;
+        public override bool CanConsumeAmmo(Item ammo, Player player) => !UsingAltFunction;
     }
 }

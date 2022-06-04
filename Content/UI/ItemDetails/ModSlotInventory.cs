@@ -111,7 +111,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public void HandleModSlotApply(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!Visible || ReferenceModSlot == null || listeningElement is not ItemModSlot itemModSlot || ReferenceModSlot.ItemMod.Type == itemModSlot.ItemMod.Type)
+            if (!Visible || ReferenceModSlot == null || listeningElement is not ItemModSlot itemModSlot || itemModSlot.ItemMod == null || ReferenceModSlot.ItemMod.Type == itemModSlot.ItemMod.Type)
             {
                 return;
             }

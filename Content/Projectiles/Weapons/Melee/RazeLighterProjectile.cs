@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Melee
 {
@@ -9,7 +10,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
     {
         public override void DestinySetDefaults()
         {
-            FrameCycleSound = SoundLoader.GetLegacySoundSlot("Assets/Sounds/Item/Weapons/Melee/RazeLighter");
+            FrameCycleSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Melee/RazeLighter");
         }
 
         public override Color? GetAlpha(Color lightColor) => new Color(219, 117, 61, 0) * (1f - Projectile.alpha / 255f);

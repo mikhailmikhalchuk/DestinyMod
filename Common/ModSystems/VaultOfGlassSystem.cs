@@ -105,7 +105,7 @@ namespace DestinyMod.Common.ModSystems
                     {
 						oracle.hide = false;
 
-						SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/NPC/Oracle" + (OraclePotentialPositions.IndexOf(OraclePotentialPositions.Find(p => p.Item3 == OraclesShownThisRotation)) + 1)), oracle.Center);
+						SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/NPC/Oracle" + (OraclePotentialPositions.IndexOf(OraclePotentialPositions.Find(p => p.Item3 == OraclesShownThisRotation)) + 1)), oracle.Center);
 						OraclesShownThisRotation++;
 
 						Counter = 0;

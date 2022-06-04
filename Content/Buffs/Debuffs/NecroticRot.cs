@@ -25,7 +25,7 @@ namespace DestinyMod.Content.Buffs.Debuffs
             DebuffPlayer debuffPlayer = player.GetModPlayer<DebuffPlayer>();
             if (debuffPlayer.NecroticApplier != null)
             {
-                ApplyDebuff(player, 40 + (int)(40 * debuffPlayer.NecroticApplier.GetModPlayer<DebuffPlayer>().NecroticDamageMult));
+                ApplyDebuff(player, 40 + (debuffPlayer.NecroticApplier.HasBuff(ModContent.BuffType<MarkOfTheDevourer>()) ? 16 : 0));
             }
         }
 
@@ -34,7 +34,7 @@ namespace DestinyMod.Content.Buffs.Debuffs
             DebuffNPC debuffNPC = npc.GetGlobalNPC<DebuffNPC>();
             if (debuffNPC.NecroticApplier != null)
             {
-                ApplyDebuff(npc, 40 + (int)(40 * debuffNPC.NecroticApplier.GetModPlayer<DebuffPlayer>().NecroticDamageMult));
+                ApplyDebuff(npc, 40 + (debuffNPC.NecroticApplier.HasBuff(ModContent.BuffType<MarkOfTheDevourer>()) ? 16 : 0));
             }
         }
 

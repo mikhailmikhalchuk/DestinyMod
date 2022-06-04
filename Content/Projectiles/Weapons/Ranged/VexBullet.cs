@@ -53,7 +53,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Player player = Main.player[Projectile.owner];
             ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();
             player.AddBuff(ModContent.BuffType<Buffs.Overcharge>(), 2);
-            if (itemPlayer.OverchargeStacks < 3)
+            if (itemPlayer.OverchargeStacks < 6)
             {
                 itemPlayer.OverchargeStacks++;
             }

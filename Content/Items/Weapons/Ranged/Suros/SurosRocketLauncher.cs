@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Suros
 {
@@ -24,7 +25,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Suros
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RocketLauncher");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/RocketLauncher");
 			Item.shoot = ProjectileID.RocketI;
 			Item.shootSpeed = 16f;
 			Item.useAmmo = ItemID.Grenade;

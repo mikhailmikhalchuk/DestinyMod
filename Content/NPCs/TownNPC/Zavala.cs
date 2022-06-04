@@ -153,7 +153,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 				switch (player.ZavalaBountyProgress)
 				{
 					case 0:
-						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.ZavalaBounty1");
+						Main.npcChatText = Language.GetTextValue("Mods.DestinyMod.Zavala.BountyRequisition1");
 						player.ZavalaBountyProgress = 1;
 						break;
 

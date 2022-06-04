@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -13,8 +14,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("33% chance to not consume ammo"
-			+ "\nFires bullets which have a chance to shock enemies on hit"
-			+ "\n'Charge your soul and let the electrons sing.'");
+				+ "\nFires bullets which have a chance to shock enemies on hit"
+				+ "\n'Charge your soul and let the electrons sing.'");
 		}
 
 		public override void DestinySetDefaults()
@@ -25,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/Riskrunner");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/Riskrunner");
 			Item.autoReuse = true;
 			Item.shootSpeed = 16f;
 		}
@@ -36,7 +37,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			return false;
 		}
 
-		public override bool CanConsumeAmmo(Player player) => Main.rand.NextFloat() >= .33f;
+		public override bool CanConsumeAmmo(Item ammo, Player player) => Main.rand.NextFloat() >= .33f;
 
 		public override Vector2? HoldoutOffset() =>  new Vector2(-20, 1);
 	}

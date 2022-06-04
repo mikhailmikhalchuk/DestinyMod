@@ -20,7 +20,7 @@ namespace DestinyMod.Content.Tiles
             MinPick = 50; // 500
             MineResist = 2f; // 200
             AddMapEntry(new Color(255, 255, 0));
-            SoundType = SoundID.Tink;
+            HitSound = SoundID.Tink;
         }
 
 		public override bool RightClick(int i, int j)

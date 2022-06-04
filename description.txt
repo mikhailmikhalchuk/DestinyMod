@@ -29,5 +29,7 @@ Added Titan, Warlock, and Hunter-themed decor
 --
 Added MIDA Multi-Tool's exotic perk
 Graviton Lance now only shoots 2 bullets
+Thorn buff change write here
+Vex buff change write here
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

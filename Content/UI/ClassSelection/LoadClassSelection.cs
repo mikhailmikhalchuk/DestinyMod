@@ -10,6 +10,7 @@ using System;
 using Terraria.GameContent.UI.States;
 using System.Reflection;
 using DestinyMod.Common.ModPlayers;
+using Terraria.ID;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
@@ -19,7 +20,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public DestinyClassType PlayerClassType => Player.GetModPlayer<ClassPlayer>().ClassType;
 
-		public UIElement MiddlePannel;
+		public UIElement MiddlePanel;
 
 		public MethodInfo UnselectAllCategories;
 
@@ -81,9 +82,9 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		private void Click_ClassSelection(UIMouseEvent evt, UIElement listeningElement)
 		{
-			SoundEngine.PlaySound(12);
+			SoundEngine.PlaySound(SoundID.MenuTick);
 			UnselectAllCategories.Invoke(Main.MenuUI.CurrentState, null);
-			MiddlePannel.Append(ClassSelection);
+			MiddlePanel.Append(ClassSelection);
 			DestinyModOptionsButton.SetSelected(selected: true);
 		}
 
@@ -118,7 +119,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 				return;
 			}
 			cursor.Emit(OpCodes.Ldloc, 4);
-			cursor.EmitDelegate<Action<UIElement>>(element => MiddlePannel = element);
+			cursor.EmitDelegate<Action<UIElement>>(element => MiddlePanel = element);
 		}
 	}
 }

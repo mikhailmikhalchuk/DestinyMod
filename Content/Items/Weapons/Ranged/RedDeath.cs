@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -26,7 +27,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RedDeath");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/RedDeath");
 			Item.autoReuse = true;
 			Item.shootSpeed = 16f;
 			Item.reuseDelay = 14;
@@ -40,7 +41,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override Vector2? HoldoutOffset() => new Vector2(-15, -5);
 
-		public override bool CanConsumeAmmo(Player player) => player.itemAnimation >= Item.useAnimation - 2;
+		public override bool CanConsumeAmmo(Item ammo, Player player) => player.itemAnimation >= Item.useAnimation - 2;
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ItemID.Ectoplasm, 20)

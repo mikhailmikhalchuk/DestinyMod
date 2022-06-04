@@ -88,7 +88,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
 
             if (!Main.dedServ)
             {
-                Music = SoundLoader.GetSoundSlot("Sounds/Music/SepiksPrime");
+                Music = MusicLoader.GetMusicSlot("DestinyMod/Assets/Sounds/Music/SepiksPrime");
             }
         }
 
@@ -129,7 +129,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
             { //doesnt work with others
                 NPC.dontTakeDamage = true;
                 NPC.rotation += 1;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/NPC/SepiksDie"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/NPC/SepiksDie"), NPC.Center);
                 NPC.ai[0] = 0;
                 NPC.alpha = 0;
                 return;
@@ -246,7 +246,7 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 NPC.dontTakeDamage = true;
                 TeleportNearTarget(target.Center.X + Main.rand.Next(-50, 50), target.Center.Y - 350);
                 SoundEngine.PlaySound(SoundID.Item78, NPC.Center);
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, $"Assets/Sounds/NPC/SepiksGroan{(Main.rand.NextBool() ? "1" : "2")}"), NPC.Center);
+                SoundEngine.PlaySound(new SoundStyle($"DestinyMod/Assets/Sounds/NPC/SepiksGroan{(Main.rand.NextBool() ? "1" : "2")}"), NPC.Center);
                 if (Main.netMode == NetmodeID.Server)
                 {
                     ModPacket netMessage = GetPacket(SepiksBossMessageType.DontTakeDamage);

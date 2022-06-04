@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Terraria.Audio;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Items.Materials;
 using DestinyMod.Content.Recipes.RecipeGroups;
@@ -21,7 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RocketLauncher");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/RocketLauncher");
 			Item.shoot = ProjectileID.RocketI;
 			Item.shootSpeed = 16f;
 			Item.useAmmo = ItemID.Grenade;

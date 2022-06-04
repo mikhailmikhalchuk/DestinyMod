@@ -32,14 +32,12 @@ namespace DestinyMod.Content.Items.Buffers
 
         public override bool OnPickup(Player player)
         {
-            DebuffPlayer debuffPlayer = player.GetModPlayer<DebuffPlayer>();
-            debuffPlayer.NecroticDamageMult += 0.2f;
-            if (debuffPlayer.NecroticDamageMult > 1)
+            int addValue = 420;
+            if (player.FindBuffIndex(ModContent.BuffType<Buffs.MarkOfTheDevourer>()) != -1)
             {
-                debuffPlayer.NecroticDamageMult = 1f;
+                addValue = Math.Clamp(player.buffTime[player.FindBuffIndex(ModContent.BuffType<Buffs.MarkOfTheDevourer>())] + 420, 0, 600);
             }
-
-            player.AddBuff(ModContent.BuffType<Buffs.MarkOfTheDevourer>(), 600);
+            player.AddBuff(ModContent.BuffType<Buffs.MarkOfTheDevourer>(), addValue);
             SoundEngine.PlaySound(SoundID.Grab, player.Center);
             return false;
         }

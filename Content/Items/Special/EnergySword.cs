@@ -12,6 +12,7 @@ using System.Reflection;
 using DestinyMod.Common.ModPlayers;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Audio;
+using ReLogic.Utilities;
 
 namespace DestinyMod.Content.Items.Special
 {
@@ -37,7 +38,7 @@ namespace DestinyMod.Content.Items.Special
 
         public float ShaderOffset;
 
-        public SoundEffectInstance Hum { get; private set; }
+        public SlotId Hum { get; private set; }
 
         public override void Load()
         {
@@ -119,13 +120,14 @@ namespace DestinyMod.Content.Items.Special
         {
             if (++PulloutTimer == PulloutReach - 2)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Special/EnergySword/Ready"), player.Center);
-                Hum = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Special/EnergySword/Hum").AsAmbient(), player.Center);
+                SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Special/EnergySword/Ready"), player.Center);
+                Hum = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Special/EnergySword/Hum") { Type = SoundType.Ambient }, player.Center);
             }
 
-            if (Hum != null && PulloutTimer >= PulloutReach - 2 && Hum.State == SoundState.Stopped)
+            SoundEngine.TryGetActiveSound(Hum, out ActiveSound humResult);
+            if (PulloutTimer >= PulloutReach - 2 && !humResult.IsPlaying)
 			{
-                Hum.Play();
+                humResult.Resume();
             }
         }
 
@@ -133,9 +135,10 @@ namespace DestinyMod.Content.Items.Special
         {
             PulloutTimer = 0;
 
-            if (Hum != null && Hum.State != SoundState.Stopped)
+            SoundEngine.TryGetActiveSound(Hum, out ActiveSound humResult);
+            if (humResult.IsPlaying)
 			{
-                Hum.Stop();
+                humResult.Stop();
 			}
         }
 

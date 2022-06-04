@@ -36,7 +36,7 @@ namespace DestinyMod.Content.Items.Bosses.SepiksPrime
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
+                SoundEngine.PlaySound(SoundID.Roar, player.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.SepiksPrime.SepiksPrime>());

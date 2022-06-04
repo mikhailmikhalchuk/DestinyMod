@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
@@ -25,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Purple;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/WhisperOfTheWorm");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/WhisperOfTheWorm");
 			Item.shootSpeed = 16f;
 			DestinyModReuseDelay = 15;
 		}

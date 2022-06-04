@@ -19,10 +19,10 @@ namespace DestinyMod.Content.Items.Weapons.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Right Click to rev up the blade"
-            + "\nWhile revving the blade, movement is inhibited"
-            + "\nRevving the blade fully increases swing damage for a short time"
-            + "\nDamaging enemies with this weapon restores a small portion of health"
-            + "\n'The last thing the Vex ever heard - the grinding wails of a vicious Banshee.'");
+                + "\nWhile revving the blade, movement is inhibited"
+                + "\nRevving the blade fully increases swing damage for a short time"
+                + "\nDamaging enemies with this weapon restores a small portion of health"
+                + "\n'The last thing the Vex ever heard - the grinding wails of a vicious Banshee.'");
         }
 
         public override void DestinySetDefaults()
@@ -35,7 +35,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
             Item.knockBack = 6;
             Item.value = Item.buyPrice(gold: 22, silver: 50);
             Item.rare = ItemRarityID.Orange;
-            Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Melee/RazeLighter");
+            Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Melee/RazeLighter");
             Item.autoReuse = true;
         }
 
@@ -122,7 +122,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
                 Item.useStyle = ItemUseStyleID.Swing;
                 Item.useTime = 20;
                 Item.useAnimation = 20;
-                Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RazeLighter");
+                Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/RazeLighter");
                 Item.noMelee = false;
                 DestinyModChannel = false;
                 RightClickTest = false;

@@ -166,7 +166,7 @@ namespace DestinyMod.Content.UI.Cryptarch
 
 			if (!TickPlayed)
 			{
-				SoundEngine.PlaySound(SoundID.MenuTick, -1, -1, 1, 1f, 0f);
+				SoundEngine.PlaySound(SoundID.MenuTick);
 				TickPlayed = true;
 			}
 
@@ -213,12 +213,12 @@ namespace DestinyMod.Content.UI.Cryptarch
 				while (GiveEngramItem());
 
 				InputSlot.Item.TurnToAir();
-				SoundEngine.PlaySound(SoundID.Item37, -1, -1);
+				SoundEngine.PlaySound(SoundID.Item37);
 			}
 			else if (Main.mouseRightRelease && Main.mouseRight)
 			{
 				GiveEngramItem();
-				SoundEngine.PlaySound(SoundID.Item37, -1, -1);
+				SoundEngine.PlaySound(SoundID.Item37);
 			}
 		}
 	}

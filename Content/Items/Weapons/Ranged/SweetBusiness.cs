@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -25,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Red;
 			Item.knockBack = 0;
 			Item.useTime = 5;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/SweetBusiness");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/SweetBusiness");
 			Item.shootSpeed = 20f;
 			Item.useAnimation = 5;
 			Item.value = Item.buyPrice(gold: 1);
@@ -43,7 +44,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override float UseTimeMultiplier(Player player) => player.GetModPlayer<StatsPlayer>().BusinessReduceUse;
 
-		public override bool CanConsumeAmmo(Player player) => Main.rand.NextBool(3, 4);
+		public override bool CanConsumeAmmo(Item ammo, Player player) => Main.rand.NextBool(3, 4);
 
 		public override Vector2? HoldoutOffset() => new Vector2(-15, -3);
 

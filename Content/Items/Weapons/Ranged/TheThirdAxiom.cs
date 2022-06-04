@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -12,7 +13,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Three round burst"
-			+ "\n'Don't tell me the odds.'");
+				+ "\n'Don't tell me the odds.'");
 		}
 
 		public override void DestinySetDefaults()
@@ -22,7 +23,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.useAnimation = 24;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Green;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/JadeRabbitBurst");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/JadeRabbitBurst");
 			Item.shootSpeed = 16f;
 		}
 
