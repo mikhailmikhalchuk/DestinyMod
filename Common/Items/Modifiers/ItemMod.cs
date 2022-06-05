@@ -1,8 +1,8 @@
 ﻿using Terraria;
 
-namespace DestinyMod.Common.Items.PerksAndMods
+namespace DestinyMod.Common.Items.Modifiers
 {
-    public abstract class ItemMod : ModAndPerkBase
+    public abstract class ItemMod : ModifierBase
     {
         public ItemType ApplyType;
 

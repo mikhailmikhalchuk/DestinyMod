@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using DestinyMod.Common.Items;
 using System.Collections.Generic;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.GlobalItems;
 using System.Linq;
 using DestinyMod.Content.UI.MouseText;

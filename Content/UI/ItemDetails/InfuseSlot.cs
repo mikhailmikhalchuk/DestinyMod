@@ -63,7 +63,9 @@ namespace DestinyMod.Content.UI.ItemDetails
                 return;
             }
 
-            if (Main.mouseItem.GetGlobalItem<ItemDataItem>().LightLevel < itemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel)
+            ItemDataItem mouseItemData = Main.mouseItem.GetGlobalItem<ItemDataItem>();
+            ItemDataItem inspectedItemData = itemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+            if (mouseItemData.LightLevel < inspectedItemData.LightLevel)
             {
                 PressDuration = 0;
                 mouseTextState.AppendToMasterBackground(PowerWarningElement);
@@ -82,7 +84,17 @@ namespace DestinyMod.Content.UI.ItemDetails
             {
                 if (PressDuration > PressCriterion)
                 {
+                    inspectedItemData.LightLevel = mouseItemData.LightLevel;
 
+                    Main.LocalPlayer.ConsumeItem(ModContent.ItemType<UpgradeModule>());
+
+                    Main.mouseItem.stack--;
+                    if (Main.mouseItem.stack < 0)
+                    {
+                        Main.mouseItem.SetDefaults();
+                    }
+
+                    PressDuration = 0;
                 }
 
                 PressDuration = 0;

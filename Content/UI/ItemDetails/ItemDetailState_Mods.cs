@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using DestinyMod.Core.UI;
 using DestinyMod.Common.UI;
 using System.Collections.Generic;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.GlobalItems;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.UI;
 using DestinyMod.Content.UI.MouseText;
 using DestinyMod.Core.Extensions;
+using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
@@ -24,6 +25,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 		public UISeparator WeaponModsSeparator { get; private set; }
 
 		public InfuseSlot InfuseItemSlot { get; private set; }
+
+		public CatalystSlot CatalystSlot { get; private set; }
 
 		public UIImageWithBackground ItemTierSlot { get; private set; }
 
@@ -68,14 +71,11 @@ namespace DestinyMod.Content.UI.ItemDetails
 			xPos += infuseSlot.Width() + 8;
 			Append(InfuseItemSlot);
 
-			/*if (includeItemTierSlot)
-			{
-				ItemTierSlot = new UIImageWithBackground(slotBackground, infuseSlot, 34);
-				ItemTierSlot.Left.Pixels = xPos;
-				ItemTierSlot.Top.Pixels = 28;
-				xPos += infuseSlot.Width() + 8;
-				MasterBackground.Append(ItemTierSlot);
-			}*/
+			CatalystSlot = new CatalystSlot(HakkeAutoRifleCatalyst.CreateInstanceOf<HakkeAutoRifleCatalyst>());
+			CatalystSlot.Left.Pixels = xPos;
+			CatalystSlot.Top.Pixels = 28;
+			xPos += infuseSlot.Width() + 8;
+			Append(CatalystSlot);
 
 			ModSlotInventory = new ModSlotInventory(ItemDetailsState, null, 7);
 			ModSlotInventory.Top.Pixels = 36 + slotBackground.Height;

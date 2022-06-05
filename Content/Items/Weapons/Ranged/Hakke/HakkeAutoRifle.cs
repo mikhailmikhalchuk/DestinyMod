@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using DestinyMod.Content.Items.Materials;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.Items;
 using System.Collections.Generic;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;

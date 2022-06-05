@@ -1,6 +1,6 @@
 ﻿using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Mods.Weapon;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +14,11 @@ namespace DestinyMod.Common.ModPlayers
     {
         public int LightLevel;
 
-        protected override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => false;
 
         public IList<ItemMod> UnlockedMods = new List<ItemMod>();
+
+        public IList<ItemCatalyst> DiscoveredCatalysts = new List<ItemCatalyst>();
 
         public override void PreUpdate()
         {
@@ -78,20 +80,9 @@ namespace DestinyMod.Common.ModPlayers
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(armorItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
 
-                if (armorItemData.ActivePerks != null)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
                 {
-                    foreach (ItemPerk itemPerk in armorItemData.ActivePerks)
-                    {
-                        itemPerk?.Update(Player);
-                    }
-                }
-
-                if (armorItemData.ItemMods != null)
-                {
-                    foreach (ItemMod itemMod in armorItemData.ItemMods)
-                    {
-                        itemMod?.Update(Player);
-                    }
+                    modifier?.Update(Player);
                 }
             }
 
@@ -106,20 +97,9 @@ namespace DestinyMod.Common.ModPlayers
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
 
-                if (heldItemData.ActivePerks != null)
+                foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
                 {
-                    foreach (ItemPerk itemPerk in heldItemData.ActivePerks)
-                    {
-                        itemPerk?.Update(Player);
-                    }
-                }
-
-                if (heldItemData.ItemMods != null)
-                {
-                    foreach (ItemMod itemMod in heldItemData.ItemMods)
-                    {
-                        itemMod?.Update(Player);
-                    }
+                    modifier?.Update(Player);
                 }
             }
 
@@ -139,20 +119,9 @@ namespace DestinyMod.Common.ModPlayers
                     continue;
                 }
 
-                if (armorItemData.ActivePerks != null)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
                 {
-                    foreach (ItemPerk itemPerk in armorItemData.ActivePerks)
-                    {
-                        itemPerk?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
-                    }
-                }
-
-                if (armorItemData.ItemMods != null)
-                {
-                    foreach (ItemMod itemMod in armorItemData.ItemMods)
-                    {
-                        itemMod?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
-                    }
+                    modifier?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
                 }
             }
 
@@ -162,20 +131,36 @@ namespace DestinyMod.Common.ModPlayers
                 return;
             }
 
-            if (heldItemData.ActivePerks != null)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
             {
-                foreach (ItemPerk itemPerk in heldItemData.ActivePerks)
+                modifier?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
+            }
+        }
+
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
+            foreach (Item armorItem in Player.armor)
+            {
+                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData))
                 {
-                    itemPerk?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
+                    continue;
+                }
+
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
+                {
+                    modifier?.OnHitNPC(Player, item, target, damage, knockback, crit);
                 }
             }
 
-            if (heldItemData.ItemMods != null)
+            Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+            if (heldItem == null || heldItem.IsAir || !heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
             {
-                foreach (ItemMod itemMod in heldItemData.ItemMods)
-                {
-                    itemMod?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
-                }
+                return;
+            }
+
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+            {
+                modifier?.OnHitNPC(Player, item, target, damage, knockback, crit);
             }
         }
 
@@ -188,20 +173,9 @@ namespace DestinyMod.Common.ModPlayers
                     continue;
                 }
 
-                if (armorItemData.ActivePerks != null)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
                 {
-                    foreach (ItemPerk itemPerk in armorItemData.ActivePerks)
-                    {
-                        itemPerk?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
-                    }
-                }
-
-                if (armorItemData.ItemMods != null)
-                {
-                    foreach (ItemMod itemMod in armorItemData.ItemMods)
-                    {
-                        itemMod?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
-                    }
+                    modifier?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
                 }
             }
 
@@ -211,20 +185,36 @@ namespace DestinyMod.Common.ModPlayers
                 return;
             }
 
-            if (heldItemData.ActivePerks != null)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
             {
-                foreach (ItemPerk itemPerk in heldItemData.ActivePerks)
+                modifier?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+            }
+        }
+
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            foreach (Item armorItem in Player.armor)
+            {
+                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData))
                 {
-                    itemPerk?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+                    continue;
+                }
+
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
+                {
+                    modifier?.OnHitNPCWithProj(Player, proj, target, damage, knockback, crit);
                 }
             }
 
-            if (heldItemData.ItemMods != null)
+            Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+            if (heldItem == null || heldItem.IsAir || !heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
             {
-                foreach (ItemMod itemMod in heldItemData.ItemMods)
-                {
-                    itemMod?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
-                }
+                return;
+            }
+
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+            {
+                modifier?.OnHitNPCWithProj(Player, proj, target, damage, knockback, crit);
             }
         }
 
@@ -237,22 +227,10 @@ namespace DestinyMod.Common.ModPlayers
                 return start;
             }
 
-            if (heldItemData.ActivePerks != null)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
             {
-                foreach (ItemPerk itemPerk in heldItemData.ActivePerks)
-                {
-                    itemPerk.UseSpeedMultiplier(Player, item, ref start);
-                }
+                modifier?.UseSpeedMultiplier(Player, item, ref start);
             }
-
-            if (heldItemData.ItemMods != null)
-            {
-                foreach (ItemMod itemMod in heldItemData.ItemMods)
-                {
-                    itemMod.UseSpeedMultiplier(Player, item, ref start);
-                }
-            }
-
             return start;
         }
     }

@@ -10,11 +10,15 @@ namespace DestinyMod.Content.UI.MouseText
 	{
 		public override Color BackgroundColor_Default => new Color(68, 70, 74) * CommonOpacity;
 
+		public string TitlePreScale { get; private set; }
+
 		public string Title { get; private set; }
 
 		public float TitleScale { get; private set; }
 
 		public Vector2 TitleSize { get; private set; }
+
+		public string SubtitlePreScale { get; private set; }
 
 		public string Subtitle { get; private set; }
 
@@ -33,27 +37,25 @@ namespace DestinyMod.Content.UI.MouseText
 		public MouseText_TitleAndSubtitle(string title, string subtitle, float titleScale = 1.5f, float subtitleScale = 1f)
         {
 			WidthPercentage = 1f;
-			UpdateData(title, subtitle, titleScale, subtitleScale);
+			TitlePreScale = title;
+			SubtitlePreScale = subtitle;
+			UpdateData(TitlePreScale, SubtitlePreScale, titleScale, subtitleScale);
 		}
 
-		// Exists to reduce the need to use MouseTextState's append to / remove from methods
-		public void UpdateData(string title, string subtitle, float titleScale = 1.5f, float subtitleScale = 1f)
+        // Exists to reduce the need to use MouseTextState's append to / remove from methods
+        public void UpdateData(string title, string subtitle, float titleScale = 1.5f, float subtitleScale = 1f)
         {
 			int widthAdjusted = (int)Width.Pixels - MouseTextState.CommonBorder * 2;
 
-			if (Title != title || TitleScale != titleScale)
-			{
-				Title = MouseFont.CreateWrappedText(title, widthAdjusted * (1f / titleScale));
-				TitleScale = titleScale;
-				TitleSize = MouseFont.MeasureString(Title) * titleScale;
-			}
+			TitlePreScale = title;
+			Title = MouseFont.CreateWrappedText(TitlePreScale, widthAdjusted * (1f / titleScale));
+			TitleScale = titleScale;
+			TitleSize = MouseFont.MeasureString(Title) * titleScale;
 
-			if (Subtitle != subtitle || SubtitleScale != subtitleScale)
-			{
-				Subtitle = MouseFont.CreateWrappedText(subtitle, widthAdjusted * (1f / subtitleScale));
-				SubtitleScale = subtitleScale;
-				SubtitleSize = MouseFont.MeasureString(Subtitle) * SubtitleScale;
-			}
+			SubtitlePreScale = subtitle;
+			Subtitle = MouseFont.CreateWrappedText(SubtitlePreScale, widthAdjusted * (1f / subtitleScale));
+			SubtitleScale = subtitleScale;
+			SubtitleSize = MouseFont.MeasureString(Subtitle) * SubtitleScale;
 
 			Height.Pixels = TitleSize.Y + SubtitleSize.Y;
 			if (Height.Pixels > 0)

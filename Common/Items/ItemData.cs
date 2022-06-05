@@ -1,5 +1,5 @@
 using Terraria.ModLoader;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using System;
 using System.Collections.Generic;
 using Terraria.DataStructures;
@@ -33,7 +33,19 @@ namespace DestinyMod.Common.Items
 
         public IList<ItemPerkPool> PerkPool;
 
+        public ItemCatalyst ItemCatalyst;
+
         public bool Shaderable;
+
+        public int DefaultImpact;
+
+        public int DefaultRange;
+
+        public int DefaultStability;
+
+        public int DefaultHandling;
+
+        public int DefaultReloadSpeed;
 
         public int Recoil;
 

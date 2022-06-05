@@ -1,5 +1,5 @@
 ﻿using DestinyMod.Common.Items;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Mods;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using DestinyMod.Content.UI.ItemDetails;
@@ -27,7 +27,41 @@ namespace DestinyMod.Common.GlobalItems
 
         public IList<ItemMod> ItemMods;
 
+        public ItemCatalyst ItemCatalyst;
+
+        private bool CatalystDiscoveredInternal;
+
+        public bool CatalystDiscovered
+        {
+            get => ItemCatalyst == null ? false : CatalystDiscoveredInternal;
+            set => CatalystDiscoveredInternal = ItemCatalyst == null ? false : value;
+        }
+
         public Item Shader;
+
+        public IEnumerable<ModifierBase> AllItemModifiers
+        {
+            get
+            {
+                List<ModifierBase> modifiers = new List<ModifierBase>();
+
+                if (ActivePerks != null)
+                {
+                    modifiers.AddRange(ActivePerks);
+                }
+
+                if (ItemMods != null)
+                {
+                    modifiers.AddRange(ItemMods);
+                }
+
+                if (ItemCatalyst != null)
+                {
+                    modifiers.Add(ItemCatalyst);
+                }
+                return modifiers;
+            }
+        }
 
         public override bool InstancePerEntity => true;
 

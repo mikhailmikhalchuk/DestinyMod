@@ -1,9 +1,9 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 
-namespace DestinyMod.Common.Items.PerksAndMods
+namespace DestinyMod.Common.Items.Modifiers
 {
-    public abstract class ModAndPerkBase
+    public abstract class ModifierBase
     {
         public virtual string Texture => (GetType().Namespace + "." + Name).Replace('.', '/');
 
@@ -15,7 +15,7 @@ namespace DestinyMod.Common.Items.PerksAndMods
 
         public string Description;
 
-        public static T CreateInstanceOf<T>() where T : ModAndPerkBase, new()
+        public static T CreateInstanceOf<T>() where T : ModifierBase, new()
         {
             T reference = ModContent.GetInstance<T>();
             T outPut = new T
@@ -31,11 +31,17 @@ namespace DestinyMod.Common.Items.PerksAndMods
 
         public abstract void SetDefaults();
 
+        public virtual void SetItemDefaults(Item item) { }
+
         public virtual void Update(Player player) { }
 
         public virtual void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit) { }
 
+        public virtual void OnHitNPC(Player player, Item item, NPC target, int damage, float knockback, bool crit) { }
+
         public virtual void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) { }
+
+        public virtual void OnHitNPCWithProj(Player player, Projectile proj, NPC target, int damage, float knockback, bool crit) { }
 
         /// <summary>
         /// Allows modification of the use speed of the item.

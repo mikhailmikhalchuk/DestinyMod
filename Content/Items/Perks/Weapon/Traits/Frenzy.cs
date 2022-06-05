@@ -1,4 +1,4 @@
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Traits

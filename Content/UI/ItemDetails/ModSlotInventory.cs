@@ -8,7 +8,7 @@ using DestinyMod.Content.UI.MouseText;
 using Terraria.ModLoader;
 using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.ModPlayers;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Mods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -80,7 +80,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             }
 
             ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            ItemModSlots[0].UpdateItemMod(ModAndPerkBase.CreateInstanceOf<NullMod>());
+            ItemModSlots[0].UpdateItemMod(ModifierBase.CreateInstanceOf<NullMod>());
             for (int unlockedModIndexer = 0; unlockedModIndexer < itemDataPlayer.UnlockedMods.Count; unlockedModIndexer++)
             {
                 ItemMod itemMod = itemDataPlayer.UnlockedMods[unlockedModIndexer];

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using DestinyMod.Core.UI;
 using DestinyMod.Common.UI;
 using System.Collections.Generic;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.GlobalItems;
 using System.Linq;
 using System;

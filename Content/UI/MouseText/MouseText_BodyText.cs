@@ -10,6 +10,8 @@ namespace DestinyMod.Content.UI.MouseText
 	{
         public override Color BackgroundColor_Default => new Color(20, 20, 20) * CommonOpacity;
 
+		public string TextPreScale { get; private set; }
+
 		public string Text { get; private set; }
 
 		public float TextScale { get; private set; }
@@ -27,17 +29,14 @@ namespace DestinyMod.Content.UI.MouseText
 		public MouseText_BodyText(string text, float scale = 1f)
 		{
 			WidthPercentage = 1f;
-			UpdateData(text, scale);
+			TextPreScale = text;
+			UpdateData(TextPreScale, scale);
 		}
 
-		// Exists to reduce the need to use MouseTextState's append to / remove from methods
-		public void UpdateData(string text, float scale = 1f)
+        // Exists to reduce the need to use MouseTextState's append to / remove from methods
+        public void UpdateData(string text, float scale = 1f)
 		{
-			if (Text == text && TextScale == scale)
-            {
-				return; // Lazy fix to avoid repeated call when subscribing to UIElement.OnMouseOver
-            }
-
+			TextPreScale = text;
 			int widthAdjusted = (int)Width.Pixels - MouseTextState.CommonBorder * 2;
 			Text = MouseFont.CreateWrappedText(text, widthAdjusted * (1f / scale));
 			TextScale = scale;

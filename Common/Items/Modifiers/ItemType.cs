@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DestinyMod.Common.Items.PerksAndMods
+namespace DestinyMod.Common.Items.Modifiers
 {
     [Flags]
     public enum ItemType

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using ReLogic.Content;
 using DestinyMod.Common.UI;
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {

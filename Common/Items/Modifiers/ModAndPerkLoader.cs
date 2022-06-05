@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Terraria.ModLoader;
 
-namespace DestinyMod.Common.Items.PerksAndMods
+namespace DestinyMod.Common.Items.Modifiers
 {
     public class ModAndPerkLoader : ILoadable
     {
@@ -10,13 +10,19 @@ namespace DestinyMod.Common.Items.PerksAndMods
 
         public static int ModTypeReserver;
 
+        public static int CatalystTypeReserver;
+
         public IList<ItemPerk> ItemPerks { get; private set; }
 
         public IList<ItemMod> ItemMods { get; private set; }
 
+        public IList<ItemCatalyst> ItemCatalysts { get; private set; }
+
         public static IDictionary<string, ItemPerk> ItemPerksByName { get; private set; }
 
         public static IDictionary<string, ItemMod> ItemModsByName { get; private set; }
+
+        public static IDictionary<string, ItemCatalyst> ItemCatalystsByName { get; private set; }
 
         public void Load(Mod mod)
         {
@@ -27,6 +33,10 @@ namespace DestinyMod.Common.Items.PerksAndMods
             PerkTypeReserver = 0;
             ItemPerks = new List<ItemPerk>();
             ItemPerksByName = new Dictionary<string, ItemPerk>();
+
+            CatalystTypeReserver = 0;
+            ItemCatalysts = new List<ItemCatalyst>();
+            ItemCatalystsByName = new Dictionary<string, ItemCatalyst>();
 
             foreach (Type type in mod.Code.GetTypes())
             {
@@ -60,6 +70,19 @@ namespace DestinyMod.Common.Items.PerksAndMods
                     ItemPerksByName.Add(itemPerk.Name, itemPerk);
                     ContentInstance.Register(itemPerk);
                 }
+
+                if (type.IsSubclassOf(typeof(ItemCatalyst)))
+                {
+                    ItemCatalyst itemCatalyst = Activator.CreateInstance(type) as ItemCatalyst;
+                    string internalName = type.Name;
+                    itemCatalyst.Load(ref internalName);
+                    itemCatalyst.Type = ++CatalystTypeReserver;
+                    itemCatalyst.Name = internalName;
+                    itemCatalyst.SetDefaults();
+                    ItemCatalysts.Add(itemCatalyst);
+                    ItemCatalystsByName.Add(itemCatalyst.Name, itemCatalyst);
+                    ContentInstance.Register(itemCatalyst);
+                }
             }
         }
 
@@ -69,6 +92,8 @@ namespace DestinyMod.Common.Items.PerksAndMods
             ItemModsByName?.Clear();
             ItemPerks?.Clear();
             ItemPerksByName?.Clear();
+            ItemCatalysts?.Clear();
+            ItemCatalystsByName?.Clear();
         }
     }
 }

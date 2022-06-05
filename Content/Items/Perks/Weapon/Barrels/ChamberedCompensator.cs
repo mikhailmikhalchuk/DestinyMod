@@ -1,4 +1,4 @@
-using DestinyMod.Common.Items.PerksAndMods;
+using DestinyMod.Common.Items.Modifiers;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
 {

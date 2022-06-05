@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DestinyMod.Common.Items.PerksAndMods
+namespace DestinyMod.Common.Items.Modifiers
 {
     public class ItemPerkPool
     {
