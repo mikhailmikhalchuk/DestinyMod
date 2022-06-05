@@ -1,5 +1,6 @@
 ﻿using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Items.Mods;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using DestinyMod.Content.UI.ItemDetails;
@@ -33,8 +34,8 @@ namespace DestinyMod.Common.GlobalItems
 
         public bool CatalystDiscovered
         {
-            get => ItemCatalyst == null ? false : CatalystDiscoveredInternal;
-            set => CatalystDiscoveredInternal = ItemCatalyst == null ? false : value;
+            get => ItemCatalyst != null && CatalystDiscoveredInternal;
+            set => CatalystDiscoveredInternal = ItemCatalyst != null && value;
         }
 
         public Item Shader;

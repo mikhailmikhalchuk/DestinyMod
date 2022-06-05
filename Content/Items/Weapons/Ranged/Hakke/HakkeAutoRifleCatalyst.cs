@@ -10,7 +10,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 
         public static readonly int EnemiesDefeatedRequirement = 100;
 
-        public override bool IsUnlocked => EnemiesDefeated > EnemiesDefeatedRequirement;
+        public override bool IsCompleted => EnemiesDefeated > EnemiesDefeatedRequirement;
 
         public override void SetDefaults()
         {
@@ -26,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 
         public override void OnHitNPC(Player player, Item item, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.life <= 0 && !IsUnlocked)
+            if (target.life <= 0 && !IsCompleted)
             {
                 EnemiesDefeated++;
             }
@@ -34,7 +34,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 
         public override void OnHitNPCWithProj(Player player, Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.life <= 0 && !IsUnlocked)
+            if (target.life <= 0 && !IsCompleted)
             {
                 EnemiesDefeated++;
             }

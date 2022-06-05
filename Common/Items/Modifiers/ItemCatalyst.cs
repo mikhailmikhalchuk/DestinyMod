@@ -8,8 +8,8 @@ namespace DestinyMod.Common.Items.Modifiers
         /// <summary>
         /// Expect extensive usage of this function as ItemCatalyst logic will always be considered as to cleanly implement requirements
         /// </summary>
-        /// <returns> Whether or not requirements are fulfilled and the catalyst is active</returns>
-        public virtual bool IsUnlocked => false;
+        /// <returns> Whether or not the catalyst's requirements have been completed and this catalyst is active</returns>
+        public virtual bool IsCompleted => false;
 
         /// <summary>
         /// Requirements will need to be handled individually on each derivative of ItemCatalyst.
