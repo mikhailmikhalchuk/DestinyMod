@@ -33,7 +33,7 @@ namespace DestinyMod.Content.UI.ItemDetails
         {
             Catalyst = itemCatalyst;
 
-            HasDiscoveredItemCatalyst = Main.LocalPlayer.GetModPlayer<ItemDataPlayer>().DiscoveredCatalysts.Contains(Catalyst);
+            HasDiscoveredItemCatalyst = Main.LocalPlayer.GetModPlayer<ItemDataPlayer>().DiscoveredCatalysts.Contains(Catalyst.Type);
 
             Main.NewText(Main.LocalPlayer.GetModPlayer<ItemDataPlayer>().DiscoveredCatalysts.Count);
             Main.NewText(HasDiscoveredItemCatalyst);

@@ -6,17 +6,17 @@ namespace DestinyMod.Common.Items.Modifiers
 {
     public class ModAndPerkLoader : ILoadable
     {
-        public static int PerkTypeReserver;
+        public static int PerkTypeReserver { get; private set; }
 
-        public static int ModTypeReserver;
+        public static int ModTypeReserver { get; private set; }
 
-        public static int CatalystTypeReserver;
+        public static int CatalystTypeReserver { get; private set; }
 
-        public IList<ItemPerk> ItemPerks { get; private set; }
+        public static IList<ItemPerk> ItemPerks { get; private set; }
 
-        public IList<ItemMod> ItemMods { get; private set; }
+        public static IList<ItemMod> ItemMods { get; private set; }
 
-        public IList<ItemCatalyst> ItemCatalysts { get; private set; }
+        public static IList<ItemCatalyst> ItemCatalysts { get; private set; }
 
         public static IDictionary<string, ItemPerk> ItemPerksByName { get; private set; }
 
@@ -50,7 +50,7 @@ namespace DestinyMod.Common.Items.Modifiers
                     ItemMod itemMod = Activator.CreateInstance(type) as ItemMod;
                     string internalName = type.Name;
                     itemMod.Load(ref internalName);
-                    itemMod.Type = ++ModTypeReserver;
+                    itemMod.Type = ModTypeReserver++;
                     itemMod.Name = internalName;
                     itemMod.SetDefaults();
                     ItemMods.Add(itemMod);
@@ -63,7 +63,7 @@ namespace DestinyMod.Common.Items.Modifiers
                     ItemPerk itemPerk = Activator.CreateInstance(type) as ItemPerk;
                     string internalName = type.Name;
                     itemPerk.Load(ref internalName);
-                    itemPerk.Type = ++PerkTypeReserver;
+                    itemPerk.Type = PerkTypeReserver++;
                     itemPerk.Name = internalName;
                     itemPerk.SetDefaults();
                     ItemPerks.Add(itemPerk);
@@ -76,7 +76,7 @@ namespace DestinyMod.Common.Items.Modifiers
                     ItemCatalyst itemCatalyst = Activator.CreateInstance(type) as ItemCatalyst;
                     string internalName = type.Name;
                     itemCatalyst.Load(ref internalName);
-                    itemCatalyst.Type = ++CatalystTypeReserver;
+                    itemCatalyst.Type = CatalystTypeReserver++;
                     itemCatalyst.Name = internalName;
                     itemCatalyst.SetDefaults();
                     ItemCatalysts.Add(itemCatalyst);

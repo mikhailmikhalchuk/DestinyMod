@@ -16,9 +16,9 @@ namespace DestinyMod.Common.ModPlayers
 
         protected override bool CloneNewInstances => false;
 
-        public IList<ItemMod> UnlockedMods = new List<ItemMod>();
+        public IList<int> UnlockedMods = new List<int>();
 
-        public IList<ItemCatalyst> DiscoveredCatalysts = new List<ItemCatalyst>();
+        public IList<int> DiscoveredCatalysts = new List<int>();
 
         public override void PreUpdate()
         {
@@ -29,10 +29,10 @@ namespace DestinyMod.Common.ModPlayers
 
             // Here for testing purposes
             Main.NewText("[ Testing ]: Populating IList<ItemMod> UnlockedMods with Boss Spec and Minor Spec.");
-            UnlockedMods = new List<ItemMod>()
+            UnlockedMods = new List<int>()
             {
-                ModContent.GetInstance<BossSpec>(),
-                ModContent.GetInstance<MinorSpec>(),
+                ModifierBase.GetType<BossSpec>(),
+                ModifierBase.GetType<MinorSpec>(),
             };
         }
 
@@ -45,7 +45,12 @@ namespace DestinyMod.Common.ModPlayers
         {
             if (UnlockedMods.Count > 0)
             {
-                tag.Add("UnlockedMods", UnlockedMods.Select(mod => mod?.Name).ToList());
+                tag.Add("UnlockedMods", UnlockedMods.Select(mod => ItemMod.GetInstance(mod).Name).ToList());
+            }
+
+            if (DiscoveredCatalysts.Count > 0)
+            {
+                tag.Add("DiscoveredCatalyst", DiscoveredCatalysts.Select(catalyst => ItemCatalyst.GetInstance(catalyst).Name).ToList());
             }
         }
 
@@ -61,7 +66,21 @@ namespace DestinyMod.Common.ModPlayers
                         continue;
                     }
 
-                    UnlockedMods.Add(itemMod);
+                    UnlockedMods.Add(itemMod.Type);
+                }
+            }
+
+            if (tag.ContainsKey("DiscoveredCatalyst"))
+            {
+                List<string> discoveredCatalystsSaved = tag.Get<List<string>>("DiscoveredCatalyst");
+                foreach (string catalystName in discoveredCatalystsSaved)
+                {
+                    if (!ModAndPerkLoader.ItemCatalystsByName.TryGetValue(catalystName, out ItemCatalyst itemCatalyst))
+                    {
+                        continue;
+                    }
+
+                    UnlockedMods.Add(itemCatalyst.Type);
                 }
             }
         }

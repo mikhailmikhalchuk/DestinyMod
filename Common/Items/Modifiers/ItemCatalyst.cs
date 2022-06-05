@@ -30,5 +30,7 @@ namespace DestinyMod.Common.Items.Modifiers
                 RequirementProgress = progress;
             }
         }
+
+        public static ItemCatalyst GetInstance(int type) => ModAndPerkLoader.ItemCatalysts[type];
     }
 }

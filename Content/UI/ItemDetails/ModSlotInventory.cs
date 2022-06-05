@@ -83,8 +83,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             ItemModSlots[0].UpdateItemMod(ModifierBase.CreateInstanceOf<NullMod>());
             for (int unlockedModIndexer = 0; unlockedModIndexer < itemDataPlayer.UnlockedMods.Count; unlockedModIndexer++)
             {
-                ItemMod itemMod = itemDataPlayer.UnlockedMods[unlockedModIndexer];
-                ItemModSlots[unlockedModIndexer + 1].UpdateItemMod(itemMod);
+                ItemModSlots[unlockedModIndexer + 1].UpdateItemMod(ItemMod.GetInstance(itemDataPlayer.UnlockedMods[unlockedModIndexer]));
             }
         }
 

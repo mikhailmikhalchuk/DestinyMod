@@ -27,6 +27,10 @@ namespace DestinyMod.Common.Items.Modifiers
             return outPut;
         }
 
+        public static int GetType<T>() where T : ModifierBase => ModContent.GetInstance<T>().Type;
+
+        public static string GetName<T>() where T : ModifierBase => ModContent.GetInstance<T>().Name;
+
         public virtual void Load(ref string name) { }
 
         public abstract void SetDefaults();
