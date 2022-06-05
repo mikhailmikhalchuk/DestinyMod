@@ -28,40 +28,30 @@ namespace DestinyMod.Common.GlobalItems
 
         public IList<ItemMod> ItemMods;
 
-        public ItemCatalyst ItemCatalyst;
-
-        private bool CatalystDiscoveredInternal;
-
-        public bool CatalystDiscovered
-        {
-            get => ItemCatalyst != null && CatalystDiscoveredInternal;
-            set => CatalystDiscoveredInternal = ItemCatalyst != null && value;
-        }
+        public int ItemCatalyst = -1;
 
         public Item Shader;
 
-        public IEnumerable<ModifierBase> AllItemModifiers
+        public IEnumerable<ModifierBase> AllItemModifiers(Player player)
         {
-            get
+            List<ModifierBase> modifiers = new List<ModifierBase>();
+
+            if (ActivePerks != null)
             {
-                List<ModifierBase> modifiers = new List<ModifierBase>();
-
-                if (ActivePerks != null)
-                {
-                    modifiers.AddRange(ActivePerks);
-                }
-
-                if (ItemMods != null)
-                {
-                    modifiers.AddRange(ItemMods);
-                }
-
-                if (ItemCatalyst != null)
-                {
-                    modifiers.Add(ItemCatalyst);
-                }
-                return modifiers;
+                modifiers.AddRange(ActivePerks);
             }
+
+            if (ItemMods != null)
+            {
+                modifiers.AddRange(ItemMods);
+            }
+
+            if (ItemCatalyst >= 0)
+            {
+                ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
+                modifiers.Add(itemDataPlayer.CatalystData[ItemCatalyst]);
+            }
+            return modifiers;
         }
 
         public override bool InstancePerEntity => true;
@@ -81,6 +71,7 @@ namespace DestinyMod.Common.GlobalItems
                 }
 
                 Recoil = itemData.Recoil;
+                ItemCatalyst = itemData.ItemCatalyst;
 
                 if (itemData.InterpretLightLevel == null)
                 {

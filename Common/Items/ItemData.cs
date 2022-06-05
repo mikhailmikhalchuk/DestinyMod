@@ -33,7 +33,7 @@ namespace DestinyMod.Common.Items
 
         public IList<ItemPerkPool> PerkPool;
 
-        public ItemCatalyst ItemCatalyst;
+        public int ItemCatalyst = -1;
 
         public bool Shaderable;
 

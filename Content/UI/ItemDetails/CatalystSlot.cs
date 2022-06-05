@@ -17,8 +17,6 @@ namespace DestinyMod.Content.UI.ItemDetails
     {
         public ItemCatalyst Catalyst { get; private set; }
 
-        public bool HasDiscoveredItemCatalyst { get; private set; }
-
         public static Texture2D BackgroundTexture => ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/CatalystSlot", AssetRequestMode.ImmediateLoad).Value;
 
         public MouseText_TitleAndSubtitle NameElement { get; private set; }
@@ -33,13 +31,11 @@ namespace DestinyMod.Content.UI.ItemDetails
         {
             Catalyst = itemCatalyst;
 
-            HasDiscoveredItemCatalyst = Main.LocalPlayer.GetModPlayer<ItemDataPlayer>().DiscoveredCatalysts.Contains(Catalyst.Type);
+            Main.NewText("Discovered Catalyst Count: " + Main.LocalPlayer.GetModPlayer<ItemDataPlayer>().CatalystData.Count);
+            Main.NewText("Has Discovered This Catalyst: " + itemCatalyst.IsDiscovered);
+            NameElement = new MouseText_TitleAndSubtitle(itemCatalyst.IsDiscovered ? Catalyst.DisplayName : "Empty Catalyst Socket", string.Empty);
 
-            Main.NewText(Main.LocalPlayer.GetModPlayer<ItemDataPlayer>().DiscoveredCatalysts.Count);
-            Main.NewText(HasDiscoveredItemCatalyst);
-            NameElement = new MouseText_TitleAndSubtitle(HasDiscoveredItemCatalyst ? Catalyst.DisplayName : "Empty Catalyst Socket", string.Empty);
-
-            string description = HasDiscoveredItemCatalyst ? Catalyst.Description : "An Exotic catalyst can be inserted into this socket.";
+            string description = itemCatalyst.IsDiscovered ? Catalyst.Description : "An Exotic catalyst can be inserted into this socket.";
             DescriptionElement = new MouseText_BodyText(description);
 
             ObjectivesNotice = new MouseText_LineText("Complete Objectives to Unlock")
@@ -79,7 +75,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             NameElement.UpdateData(NameElement.TitlePreScale, NameElement.SubtitlePreScale, NameElement.TitleScale, NameElement.SubtitleScale); // Bandaid fix for later
             mouseTextState.AppendToMasterBackground(NameElement);
 
-            if (ObjectivesNotice != null && !Catalyst.IsCompleted && HasDiscoveredItemCatalyst)
+            if (ObjectivesNotice != null && !Catalyst.IsCompleted && Catalyst.IsDiscovered)
             {
                 mouseTextState.AppendToMasterBackground(ObjectivesNotice);
             }
@@ -87,7 +83,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             DescriptionElement.UpdateData(DescriptionElement.TextPreScale, DescriptionElement.TextScale);
             mouseTextState.AppendToMasterBackground(DescriptionElement);
 
-            if (ObjectivesElement != null && !Catalyst.IsCompleted && HasDiscoveredItemCatalyst)
+            if (ObjectivesElement != null && Catalyst.IsDiscovered)
             {
                 mouseTextState.AppendToMasterBackground(ObjectivesElement);
             }

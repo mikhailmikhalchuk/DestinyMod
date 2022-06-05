@@ -2,6 +2,7 @@
 using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Mods.Weapon;
+using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -18,27 +19,14 @@ namespace DestinyMod.Common.ModPlayers
 
         public IList<int> UnlockedMods = new List<int>();
 
-        public IList<int> DiscoveredCatalysts = new List<int>();
+        public IList<ItemCatalyst> CatalystData = new List<ItemCatalyst>();
 
-        public override void PreUpdate()
+        public override void Initialize()
         {
-            if (UnlockedMods.Count > 0)
+            foreach (ItemCatalyst catalyst in ModAndPerkLoader.ItemCatalysts)
             {
-                return;
+                CatalystData.Add(ItemCatalyst.CreateInstance(catalyst.Name));
             }
-
-            // Here for testing purposes
-            Main.NewText("[ Testing ]: Populating IList<ItemMod> UnlockedMods with Boss Spec and Minor Spec.");
-            UnlockedMods = new List<int>()
-            {
-                ModifierBase.GetType<BossSpec>(),
-                ModifierBase.GetType<MinorSpec>(),
-            };
-        }
-
-        public override void ResetEffects()
-        {
-            LightLevel = 0;
         }
 
         public override void SaveData(TagCompound tag)
@@ -48,9 +36,13 @@ namespace DestinyMod.Common.ModPlayers
                 tag.Add("UnlockedMods", UnlockedMods.Select(mod => ItemMod.GetInstance(mod).Name).ToList());
             }
 
-            if (DiscoveredCatalysts.Count > 0)
+            if (CatalystData.Count > 0)
             {
-                tag.Add("DiscoveredCatalyst", DiscoveredCatalysts.Select(catalyst => ItemCatalyst.GetInstance(catalyst).Name).ToList());
+                tag.Add("DiscoveredCatalyst", CatalystData.Select(catalyst => new TagCompound()
+                {
+                    { "Name", catalyst.Name },
+                    { "Data", catalyst.Save() }
+                }).ToList());
             }
         }
 
@@ -72,17 +64,40 @@ namespace DestinyMod.Common.ModPlayers
 
             if (tag.ContainsKey("DiscoveredCatalyst"))
             {
-                List<string> discoveredCatalystsSaved = tag.Get<List<string>>("DiscoveredCatalyst");
-                foreach (string catalystName in discoveredCatalystsSaved)
+                List<TagCompound> discoveredCatalystsSaved = tag.Get<List<TagCompound>>("DiscoveredCatalyst");
+                foreach (TagCompound savedCatalyst in discoveredCatalystsSaved)
                 {
+                    string catalystName = savedCatalyst.Get<string>("Name");
                     if (!ModAndPerkLoader.ItemCatalystsByName.TryGetValue(catalystName, out ItemCatalyst itemCatalyst))
                     {
                         continue;
                     }
 
-                    UnlockedMods.Add(itemCatalyst.Type);
+                    ItemCatalyst catalyst = CatalystData.First(cat => cat.Name == catalystName);
+                    catalyst.Load(savedCatalyst.Get<TagCompound>("Data"));
                 }
             }
+        }
+
+        public override void PreUpdate()
+        {
+            // Here for testing purposes
+            if (UnlockedMods.Count == 0)
+            {
+                Main.NewText("[ Testing ]: Populating IList<int> UnlockedMods with Boss Spec and Minor Spec.");
+                UnlockedMods = new List<int>()
+                {
+                    ModifierBase.GetType<BossSpec>(),
+                    ModifierBase.GetType<MinorSpec>(),
+                };
+            }
+
+            CatalystData[ItemCatalyst.GetType<HakkeAutoRifleCatalyst>()].IsDiscovered = true;
+        }
+
+        public override void ResetEffects()
+        {
+            LightLevel = 0;
         }
 
         public override void PostUpdateMiscEffects()
@@ -99,7 +114,7 @@ namespace DestinyMod.Common.ModPlayers
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(armorItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
 
-                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers(Player))
                 {
                     modifier?.Update(Player);
                 }
@@ -116,7 +131,7 @@ namespace DestinyMod.Common.ModPlayers
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
 
-                foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+                foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
                 {
                     modifier?.Update(Player);
                 }
@@ -138,7 +153,7 @@ namespace DestinyMod.Common.ModPlayers
                     continue;
                 }
 
-                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers(Player))
                 {
                     modifier?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
                 }
@@ -150,7 +165,7 @@ namespace DestinyMod.Common.ModPlayers
                 return;
             }
 
-            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
             {
                 modifier?.ModifyHitNPC(Player, item, target, ref damage, ref knockback, ref crit);
             }
@@ -165,7 +180,7 @@ namespace DestinyMod.Common.ModPlayers
                     continue;
                 }
 
-                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers(Player))
                 {
                     modifier?.OnHitNPC(Player, item, target, damage, knockback, crit);
                 }
@@ -177,7 +192,7 @@ namespace DestinyMod.Common.ModPlayers
                 return;
             }
 
-            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
             {
                 modifier?.OnHitNPC(Player, item, target, damage, knockback, crit);
             }
@@ -192,7 +207,7 @@ namespace DestinyMod.Common.ModPlayers
                     continue;
                 }
 
-                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers(Player))
                 {
                     modifier?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
                 }
@@ -204,7 +219,7 @@ namespace DestinyMod.Common.ModPlayers
                 return;
             }
 
-            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
             {
                 modifier?.ModifyHitNPCWithProj(Player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
             }
@@ -219,7 +234,7 @@ namespace DestinyMod.Common.ModPlayers
                     continue;
                 }
 
-                foreach (ModifierBase modifier in armorItemData.AllItemModifiers)
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers(Player))
                 {
                     modifier?.OnHitNPCWithProj(Player, proj, target, damage, knockback, crit);
                 }
@@ -231,7 +246,7 @@ namespace DestinyMod.Common.ModPlayers
                 return;
             }
 
-            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
             {
                 modifier?.OnHitNPCWithProj(Player, proj, target, damage, knockback, crit);
             }
@@ -246,7 +261,7 @@ namespace DestinyMod.Common.ModPlayers
                 return start;
             }
 
-            foreach (ModifierBase modifier in heldItemData.AllItemModifiers)
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
             {
                 modifier?.UseSpeedMultiplier(Player, item, ref start);
             }

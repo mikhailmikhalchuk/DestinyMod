@@ -1,6 +1,7 @@
 using DestinyMod.Common.Items.Modifiers;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader.IO;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
@@ -9,8 +10,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
         public int EnemiesDefeated;
 
         public static readonly int EnemiesDefeatedRequirement = 100;
-
-        public override bool IsCompleted => EnemiesDefeated > EnemiesDefeatedRequirement;
 
         public override void SetDefaults()
         {
@@ -29,6 +28,11 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
             if (target.life <= 0 && !IsCompleted)
             {
                 EnemiesDefeated++;
+
+                if (EnemiesDefeated > EnemiesDefeatedRequirement)
+                {
+                    IsCompleted = true;
+                }
             }
         }
 
@@ -37,7 +41,22 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
             if (target.life <= 0 && !IsCompleted)
             {
                 EnemiesDefeated++;
+
+                if (EnemiesDefeated > EnemiesDefeatedRequirement)
+                {
+                    IsCompleted = true;
+                }
             }
+        }
+
+        public override void SaveInstance(TagCompound tagCompound)
+        {
+            tagCompound.Add("EnemiesDefeated", EnemiesDefeated);
+        }
+
+        public override void LoadInstance(TagCompound tag)
+        {
+            EnemiesDefeated = tag.Get<int>("EnemiesDefeated");
         }
     }
 }

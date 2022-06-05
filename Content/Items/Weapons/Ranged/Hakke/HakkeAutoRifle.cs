@@ -24,6 +24,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			});
 			hakkeItemData.Shaderable = true;
 			hakkeItemData.Recoil = 10;
+			hakkeItemData.ItemCatalyst = ModifierBase.GetType<HakkeAutoRifleCatalyst>();
 		}
 
         public override void DestinySetDefaults()
