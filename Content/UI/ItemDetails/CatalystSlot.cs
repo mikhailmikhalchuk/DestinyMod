@@ -49,7 +49,7 @@ namespace DestinyMod.Content.UI.ItemDetails
                 ObjectivesElement = new MouseText_Objectives(requirements.Select(req => new MouseText_Objective(req.RequirementName, req.RequirementProgress)).ToArray());
             }
 
-            if (Catalyst == null)
+            if (!itemCatalyst.IsDiscovered)
             {
                 Image = null;
             }

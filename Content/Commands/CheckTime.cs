@@ -15,8 +15,8 @@ namespace DestinyMod.Content.Commands
 
 		public override void Action(CommandCaller caller, string input, string[] args)
 		{
-			Common.ModSystems.VaultOfGlassSystem.StartOracles(Main.LocalPlayer.position.ToPoint());
 			Main.NewText("Time: " + Main.time + " @ " + Main.LocalPlayer.position);
+			Main.LocalPlayer.GetModPlayer<Common.ModPlayers.ItemDataPlayer>().UnlockedMods.Clear();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Content.Items.Catalysts;
 using DestinyMod.Content.Items.Mods.Weapon;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using System.Collections.Generic;
@@ -17,8 +18,15 @@ namespace DestinyMod.Common.ModPlayers
 
         protected override bool CloneNewInstances => false;
 
+        /// <summary>
+        /// Contains the types of all mods unlocked by this player.
+        /// </summary>
         public IList<int> UnlockedMods = new List<int>();
 
+        /// <summary>
+        /// Contains data on all weapon catalysts for this player, discovered or not.
+        /// Access catalysts from this list using <see cref="ModifierBase.GetType{T}"/> as an index.
+        /// </summary>
         public IList<ItemCatalyst> CatalystData = new List<ItemCatalyst>();
 
         public override void Initialize()
@@ -92,7 +100,7 @@ namespace DestinyMod.Common.ModPlayers
                 };
             }
 
-            CatalystData[ItemCatalyst.GetType<HakkeAutoRifleCatalyst>()].IsDiscovered = true;
+            CatalystData[ModifierBase.GetType<NoTimeToExplainCatalyst>()].IsDiscovered = true;
         }
 
         public override void ResetEffects()

@@ -45,7 +45,7 @@ namespace DestinyMod.Content.UI.MouseText
 
 		private Color? InternalProgressColor = null;
 
-		public static Color DefaultProgressColor => Color.Green * CommonOpacity;
+		public static Color DefaultProgressColor => Color.Red;
 
 		public Color? ProgressColor
 		{
@@ -79,7 +79,7 @@ namespace DestinyMod.Content.UI.MouseText
 			{
 				Texture2D magicPixel = TextureAssets.MagicPixel.Value;
 				Rectangle progressDestRect = new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)(dimensions.Width * Progress), (int)dimensions.Height);
-				Color pulsedColor = ProgressColor.Value * (float)Math.Abs(Math.Sin(Main.GameUpdateCount / 15f) * 0.66f);
+				Color pulsedColor = ProgressColor.Value * Math.Clamp((float)Math.Abs(Math.Sin(Main.GameUpdateCount / 10f) * 0.66f), 0.4f, 1f);
 				spriteBatch.Draw(magicPixel, progressDestRect, pulsedColor);
 			}
 

@@ -14,9 +14,9 @@ namespace DestinyMod.Content.UI.MouseText
 
 		public Vector2 OldMouseScreen { get; private set; }
 
-		public static readonly float CommonOpacity = 0.75f;
+		public const float CommonOpacity = 0.85f;
 
-		public static readonly int CommonBorder = 6;
+		public const int CommonBorder = 6;
 
 		private UIElement MasterBackground;
 

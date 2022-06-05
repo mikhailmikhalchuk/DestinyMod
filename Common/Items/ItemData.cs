@@ -11,31 +11,45 @@ using Microsoft.Xna.Framework;
 
 namespace DestinyMod.Common.Items
 {
+    /// <summary>Container class for <see cref="ItemDataItem"/> manipulation. Contains general helper methods and perk data for items.</summary>
     public class ItemData : ILoadable
 	{
+        /// <summary>
+        /// The type of this item.
+        /// </summary>
 		public int ItemType;
 
         public const int MinimumLightLevel = 1350;
 
-        public static readonly int PreHardmodeLightLevelCap = 1400; // 6x minimum
+        public const int PreHardmodeLightLevelCap = 1400; // 6x minimum
 
-        public static readonly int PrePlanteraLightLevelCap = 1420; // 11x minimum
+        public const int PrePlanteraLightLevelCap = 1420; // 11x minimum
 
-        public static readonly int PreMoonlordLightLevelCap = 1500; // 50x minimum :D ( I love Tera balancing )
+        public const int PreMoonlordLightLevelCap = 1500; // 50x minimum :D ( I love Tera balancing )
 
         public const int MaximumLightLevel = 1560; // ~90x minimum with current formula (This is the hard cap)
 
         public int DefaultLightLevel;
 
+        /// <summary>
+        /// If set, runs this action to determine the weapon's light level.
+        /// </summary>
         public Action<int> InterpretLightLevel;
 
+        /// <summary>
+        /// The maximum number of mod slots to include on this weapon.
+        /// </summary>
         public int MaximumModCount;
 
-        public IList<ItemPerkPool> PerkPool;
-
+        /// <summary>
+        /// The type of this item's catalyst, if it exists. Should be set in SetStaticDefaults along with other modifier data.
+        /// </summary>
         public int ItemCatalyst = -1;
 
-        public bool Shaderable;
+        /// <summary>
+        /// Whether or not this item can have shaders applied to it. Defaults to <see langword="true"/>.
+        /// </summary>
+        public bool Shaderable = true;
 
         public int DefaultImpact;
 
@@ -49,15 +63,18 @@ namespace DestinyMod.Common.Items
 
         public int Recoil;
 
+        /// <summary>
+        /// A dictionary of all item types mapped to their relevant data.
+        /// </summary>
         public static IDictionary<int, ItemData> ItemDatasByID { get; private set; } = new Dictionary<int, ItemData>();
 
-        private ItemData(int itemType, int defaultLightLevel = MinimumLightLevel, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
+        /// <summary>Used internally. To create new item data, use <see cref="InitializeNewItemData(int, int, Action{int}, int)"/>.</summary>
+        private ItemData(int itemType, int defaultLightLevel = MinimumLightLevel, Action<int> interpretLightLevel = null, int maximumModCount = 0)
         {
             ItemType = itemType;
             DefaultLightLevel = Math.Clamp(defaultLightLevel, MinimumLightLevel, MaximumLightLevel);
             InterpretLightLevel = interpretLightLevel;
-            MaximumModCount = maximumModCount; 
-            PerkPool = perkPool;
+            MaximumModCount = maximumModCount;
         }
 
         public void Load(Mod mod) { }
@@ -74,16 +91,15 @@ namespace DestinyMod.Common.Items
         /// <param name="defaultLightLevel">The light level to default to when rolling this weapon.</param>
         /// <param name="interpretLightLevel">An <see cref="Action"/> to be called to calculate the light level when rolling this weapon.</param>
         /// <param name="maximumModCount">The maximum amount of mod slots to include on this weapon (how many mods can be socketed at one time).</param>
-        /// <param name="perkPool">The list of perks for this weapon.</param>
         /// <returns>The generated perk data.</returns>
-        public static ItemData InitializeNewItemData(int itemType, int defaultLightLevel = MinimumLightLevel, Action<int> interpretLightLevel = null, int maximumModCount = 0, IList<ItemPerkPool> perkPool = null)
+        public static ItemData InitializeNewItemData(int itemType, int defaultLightLevel = MinimumLightLevel, Action<int> interpretLightLevel = null, int maximumModCount = 0)
         {
             if (ItemDatasByID == null || ItemDatasByID.ContainsKey(itemType))
             {
                 return null;
             }
 
-            ItemData newItemData = new ItemData(itemType, defaultLightLevel, interpretLightLevel, maximumModCount, perkPool);
+            ItemData newItemData = new ItemData(itemType, defaultLightLevel, interpretLightLevel, maximumModCount);
             ItemDatasByID.Add(itemType, newItemData);
             return newItemData;
         }
@@ -108,7 +124,14 @@ namespace DestinyMod.Common.Items
             return Math.Clamp(lightLevel, DefaultLightLevel, MaximumLightLevel);
         }
 
-        public void GenerateItem(Player player, IEntitySource source, int overrideLightLevel = -1)
+        /// <summary>
+        /// Creates an <see cref="Item"/> with <see cref="ItemDataItem"/> data and spawns it on the player.
+        /// </summary>
+        /// <param name="player">The player to spawn this item on.</param>
+        /// <param name="source">The source of this item.</param>
+        /// <param name="overrideLightLevel">The light level of this item.</param>
+        /// <param name="perkPool">The list of perk pools for this item.</param>
+        public void GenerateItem(Player player, IEntitySource source, int overrideLightLevel = -1, IList<ItemPerkPool> perkPool = null)
         {
             ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
             int itemPowerLevel = itemDataPlayer.LightLevel;
@@ -134,12 +157,13 @@ namespace DestinyMod.Common.Items
             Item item = Main.item[player.QuickSpawnItem(source, ItemType)];
             ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
             itemDataItem.LightLevel = itemPowerLevel;
+            itemDataItem.PerkPool = perkPool;
             itemDataItem.SetDefaults(item);
 
-            if (PerkPool != null)
+            if (perkPool != null)
             {
                 itemDataItem.ActivePerks = new List<ItemPerk>();
-                foreach (ItemPerkPool perkPoolType in PerkPool)
+                foreach (ItemPerkPool perkPoolType in perkPool)
                 {
                     itemDataItem.ActivePerks.Add(perkPoolType.Perks[0]);
                 }

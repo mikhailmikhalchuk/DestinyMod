@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace DestinyMod.Content.UI.ItemDetails
@@ -32,9 +34,11 @@ namespace DestinyMod.Content.UI.ItemDetails
             PressCriterion = pressCriterion;
             Key = key;
             RequiredItemElement = new MouseText_RequiredItem(ModContent.ItemType<UpgradeModule>(), 1);
-            InfuseProgressElement = new MouseText_KeyIndicator("Infuse to Dismantle");
-            PowerWarningElement = new MouseText_LineText("Base Power Too Low");
-            PowerWarningElement.BackgroundColor = DestinyColors.MouseTextWarning * MouseTextElement.CommonOpacity;
+            InfuseProgressElement = new MouseText_KeyIndicator("Dismantle for Infusion");
+            PowerWarningElement = new MouseText_LineText("Base Power Too Low")
+            {
+                BackgroundColor = DestinyColors.MouseTextWarning * MouseTextElement.CommonOpacity
+            };
         }
 
         public override void Update(GameTime gameTime)
@@ -55,7 +59,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
             MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
 
-            if (Main.mouseItem == null || !Main.mouseItem.active)
+            if (Main.mouseItem == null || Main.mouseItem.IsAir || !Main.mouseItem.active || !Main.LocalPlayer.HasItem(ModContent.ItemType<UpgradeModule>()))
             {
                 PressDuration = 0;
                 mouseTextState.AppendToMasterBackground(RequiredItemElement);
@@ -65,11 +69,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 
             ItemDataItem mouseItemData = Main.mouseItem.GetGlobalItem<ItemDataItem>();
             ItemDataItem inspectedItemData = itemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
-            if (mouseItemData.LightLevel < inspectedItemData.LightLevel)
+            if (mouseItemData.LightLevel <= inspectedItemData.LightLevel)
             {
                 PressDuration = 0;
                 mouseTextState.AppendToMasterBackground(PowerWarningElement);
                 mouseTextState.AppendToMasterBackground(RequiredItemElement);
+                mouseTextState.AppendToMasterBackground(InfuseProgressElement);
                 return;
             }
 
@@ -87,11 +92,12 @@ namespace DestinyMod.Content.UI.ItemDetails
                     inspectedItemData.LightLevel = mouseItemData.LightLevel;
 
                     Main.LocalPlayer.ConsumeItem(ModContent.ItemType<UpgradeModule>());
+                    SoundEngine.PlaySound(SoundID.Grab);
 
                     Main.mouseItem.stack--;
                     if (Main.mouseItem.stack < 0)
                     {
-                        Main.mouseItem.SetDefaults();
+                        Main.mouseItem.TurnToAir();
                     }
 
                     PressDuration = 0;

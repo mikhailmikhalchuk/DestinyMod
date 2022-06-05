@@ -17,14 +17,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 		public override void SetStaticDefaults()
 		{
 			base.SetStaticDefaults();
-			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1, new List<ItemPerkPool>()
-			{
-				new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>()),
-				new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
-			});
-			hakkeItemData.Shaderable = true;
+			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1);
 			hakkeItemData.Recoil = 10;
-			hakkeItemData.ItemCatalyst = ModifierBase.GetType<HakkeAutoRifleCatalyst>();
 		}
 
         public override void DestinySetDefaults()

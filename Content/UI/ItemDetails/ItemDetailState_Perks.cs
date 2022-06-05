@@ -58,9 +58,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			float lowestPerkPosition = 28;
 			ItemDataItem inspectedItem = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
-			for (int i = 0; i < ItemDetailsState.InspectedItemData.PerkPool.Count; i++)
+			for (int i = 0; i < inspectedItem.PerkPool.Count; i++)
 			{
-				ItemPerkPool perkTypePool = ItemDetailsState.InspectedItemData.PerkPool[i];
+				ItemPerkPool perkTypePool = inspectedItem.PerkPool[i];
 				IList<ItemPerkDisplay> itemPerksWithinType = new List<ItemPerkDisplay>();
 				for (int perkIndexer = 0; perkIndexer < perkTypePool.Perks.Count; perkIndexer++)
 				{
@@ -112,7 +112,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				}
 			}
 
-			for (int i = 1; i < ItemDetailsState.InspectedItemData.PerkPool.Count; i++)
+			for (int i = 1; i < inspectedItem.PerkPool.Count; i++)
 			{
 				UISeparator perkSeparator = new UISeparator();
 				perkSeparator.Left.Pixels = ItemPerk.TextureSize * (4f / 3f) * i;

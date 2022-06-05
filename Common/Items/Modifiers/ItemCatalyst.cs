@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
+using DestinyMod.Common.ModPlayers;
 
 namespace DestinyMod.Common.Items.Modifiers
 {
     public abstract class ItemCatalyst : ModifierBase
     {
+        /// <summary>
+        /// Contains data for a catalyst requirement.
+        /// </summary>
         public struct ItemCatalystRequirement
         {
+            /// <summary>
+            /// The name of the requirement, e.g. "Enemies Defeated"
+            /// </summary>
             public string RequirementName;
 
+            /// <summary>
+            /// The requirement's progress. Should be set to data found within the catalyst.
+            /// </summary>
             public float RequirementProgress;
 
             public ItemCatalystRequirement(string name, float progress)
@@ -19,15 +29,15 @@ namespace DestinyMod.Common.Items.Modifiers
             }
         }
 
+        /// <summary>
+        /// Whether or not the catalyst has been discovered; that is, it has been socketed in the weapon but is not active.
+        /// </summary>
         public bool IsDiscovered;
 
-        public bool IsCompleted;
-
         /// <summary>
-        /// Expect extensive usage of this function as ItemCatalyst logic will always be considered as to cleanly implement requirements
+        /// Whether or not the catalyst has been completed; that is, it is socketed in the weapon and is active.
         /// </summary>
-        /// <returns> Whether or not the catalyst's requirements have been completed and this catalyst is active</returns>
-        // public virtual bool IsCompleted => false;
+        public bool IsCompleted;
 
         public TagCompound Save()
         {
@@ -56,10 +66,9 @@ namespace DestinyMod.Common.Items.Modifiers
         public virtual void LoadInstance(TagCompound tag) { }
 
         /// <summary>
-        /// Requirements will need to be handled individually on each derivative of ItemCatalyst.
-        /// Because of this limitation -- which quite frankly, reduces complexity by a lot -- this thingo exists
+        /// Defines catalyst progress mouse text.
         /// </summary>
-        /// <returns>List of requirement data</returns>
+        /// <returns>List of requirement data.</returns>
         public virtual List<ItemCatalystRequirement> HandleRequirementMouseText() => null;
 
         public static ItemCatalyst GetInstance(int type) => ModAndPerkLoader.ItemCatalysts[type];

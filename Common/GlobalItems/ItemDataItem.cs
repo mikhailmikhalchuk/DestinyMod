@@ -2,6 +2,9 @@
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Items.Mods;
+using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.Traits;
+using DestinyMod.Content.Items.Weapons.Ranged;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using DestinyMod.Content.UI.ItemDetails;
 using Microsoft.Xna.Framework;
@@ -18,6 +21,7 @@ using Terraria.ModLoader.IO;
 
 namespace DestinyMod.Common.GlobalItems
 {
+    /// <summary>Controls and contains the light level/perk system on normal items.</summary>
     public class ItemDataItem : GlobalItem
     {
         public int LightLevel = -1;
@@ -31,6 +35,11 @@ namespace DestinyMod.Common.GlobalItems
         public int ItemCatalyst = -1;
 
         public Item Shader;
+
+        /// <summary>
+        /// The list of perk columns this weapon has (barrels, traits, etc.).
+        /// </summary>
+        public IList<ItemPerkPool> PerkPool;
 
         public IEnumerable<ModifierBase> AllItemModifiers(Player player)
         {
@@ -113,7 +122,7 @@ namespace DestinyMod.Common.GlobalItems
             Vector2 newVel = velocity.RotatedByRandom(MathHelper.ToRadians(recVal / 10));
             if (newVel.Y > Recoil)
             {
-                newVel.Y = 0; // Why?
+                newVel.Y = 0; // Why? - Plan is to have item spread according to the pinned recoil summary in developer chat
             }
             Projectile.NewProjectile(source, position, newVel, type, damage, knockback, player.whoAmI);
             return false;
@@ -186,6 +195,12 @@ namespace DestinyMod.Common.GlobalItems
                 tag.Add("ItemMods", ItemMods.Select(mod => mod == null ? ModContent.GetInstance<NullMod>().Name : mod.Name).ToList());
             }
 
+            if (PerkPool != null && PerkPool.Count > 0)
+            {
+                tag.Add("PerkPool", PerkPool.Select(perkPool => perkPool.Perks.Select(perk => perk.Name).ToList()).ToList());
+                tag.Add("PerkPoolNames", PerkPool.Select(perkPool => perkPool.TypeName).ToList());
+            }
+
             if (Shader != null)
             {
                 tag.Add("Shader", ItemIO.Save(Shader));
@@ -242,6 +257,28 @@ namespace DestinyMod.Common.GlobalItems
                 }
             }
 
+            if (tag.ContainsKey("PerkPool") && tag.ContainsKey("PerkPoolNames"))
+            {
+                PerkPool = new List<ItemPerkPool>();
+                List<List<string>> perkPoolsSaved = tag.Get<List<List<string>>>("PerkPool");
+                List<string> perkPoolNamesSaved = tag.Get<List<string>>("PerkPoolNames");
+                int index = 0;
+                foreach (List<string> perkPool in perkPoolsSaved)
+                {
+                    List<ItemPerk> perks = new List<ItemPerk>();
+                    foreach (string perk in perkPool)
+                    {
+                        if (ModAndPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
+                        {
+                            perks.Add(itemPerk);
+                        }
+                    }
+
+                    PerkPool.Add(new ItemPerkPool(perkPoolNamesSaved[index], perks.ToArray()));
+                    index++;
+                }
+            }
+
             if (tag.ContainsKey("Shader"))
             {
                 Shader = ItemIO.Load(tag.Get<TagCompound>("Shader"));
@@ -261,7 +298,7 @@ namespace DestinyMod.Common.GlobalItems
 
         public override void Action(CommandCaller caller, string input, string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length < 1)
             {
                 Main.NewText("Arg length too short");
                 return;
@@ -275,7 +312,29 @@ namespace DestinyMod.Common.GlobalItems
 
             if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<HakkeAutoRifle>(), out ItemData itemData))
             {
-                itemData.GenerateItem(caller.Player, new EntitySource_WorldEvent(), lightLevel);
+                itemData.GenerateItem(caller.Player, new EntitySource_WorldEvent(), lightLevel, new List<ItemPerkPool>()
+                {
+                    new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>()),
+                    new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
+                });
+            }
+
+            if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<HakkeAutoRifle>(), out ItemData itemData2))
+            {
+                itemData2.GenerateItem(caller.Player, new EntitySource_WorldEvent(), lightLevel, new List<ItemPerkPool>()
+                {
+                    new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>()),
+                    new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
+                });
+            }
+
+            if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<NoTimeToExplain>(), out ItemData itemData3))
+            {
+                itemData3.GenerateItem(caller.Player, new EntitySource_WorldEvent(), lightLevel, new List<ItemPerkPool>()
+                {
+                    new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>()),
+                    new ItemPerkPool("Traits", ModContent.GetInstance<HighCaliberRounds>())
+                });
             }
         }
     }

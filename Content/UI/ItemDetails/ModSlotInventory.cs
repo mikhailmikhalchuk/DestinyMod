@@ -65,6 +65,7 @@ namespace DestinyMod.Content.UI.ItemDetails
                     Append(itemModSlot);
                 }
             }
+
             PopulateInventorySlots(player);
             ItemModSlot lastModSlotCreated = ItemModSlots[ItemModSlots.Count - 1];
             NormalSize = new Vector2(lastModSlotCreated.Left.Pixels + lastModSlotCreated.Width.Pixels, lastModSlotCreated.Top.Pixels + lastModSlotCreated.Height.Pixels);

@@ -28,6 +28,7 @@ namespace DestinyMod.Common.Items
 			}
 		}
 
+		/// <inheritdoc cref="SetDefaults"/>
 		public virtual void DestinySetDefaults() { }
 
 		/// <summary>

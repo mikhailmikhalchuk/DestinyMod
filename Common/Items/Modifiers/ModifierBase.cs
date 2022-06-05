@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Common.Items.Modifiers
 {
+    /// <summary>The base of all weapon modifiers (mods), such as <see cref="ItemPerk"/>.</summary>
     public abstract class ModifierBase
     {
         public virtual string Texture => (GetType().Namespace + "." + Name).Replace('.', '/');
@@ -11,8 +12,14 @@ namespace DestinyMod.Common.Items.Modifiers
 
         public string Name { get; internal set; }
 
+        /// <summary>
+        /// The display name of the modifier.
+        /// </summary>
         public string DisplayName;
 
+        /// <summary>
+        /// The description for the modifier.
+        /// </summary>
         public string Description;
 
         public static T CreateInstanceOf<T>() where T : ModifierBase, new()

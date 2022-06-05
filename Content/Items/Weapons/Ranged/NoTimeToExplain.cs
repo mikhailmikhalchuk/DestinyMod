@@ -1,10 +1,16 @@
 using DestinyMod.Common.Items.ItemTypes;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using DestinyMod.Common.Items;
+using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.Traits;
+using DestinyMod.Content.Items.Catalysts;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -12,9 +18,14 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
+			base.SetStaticDefaults();
 			DisplayName.SetDefault("No Time to Explain");
 			Tooltip.SetDefault("Three round burst"
 				+ "\n'A single word etched onto the inside of the weapon's casing: Now.'");
+
+			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 0);
+			hakkeItemData.Recoil = 10;
+			hakkeItemData.ItemCatalyst = ModifierBase.GetType<NoTimeToExplainCatalyst>();
 		}
 
 		public override void DestinySetDefaults()
