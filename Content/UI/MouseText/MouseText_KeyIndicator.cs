@@ -75,10 +75,10 @@ namespace DestinyMod.Content.UI.MouseText
 
 			CalculatedStyle dimensions = GetDimensions();
 
-			if (Progress > 0 && Progress < 1)
+			if (Progress > 0)
 			{
 				Texture2D magicPixel = TextureAssets.MagicPixel.Value;
-				Rectangle progressDestRect = new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)(dimensions.Width * Progress), (int)dimensions.Height);
+				Rectangle progressDestRect = new Rectangle((int)dimensions.X, (int)dimensions.Y, (int)(dimensions.Width * Math.Clamp(Progress, 0f, 1f)), (int)dimensions.Height);
 				Color pulsedColor = ProgressColor.Value * Math.Clamp((float)Math.Abs(Math.Sin(Main.GameUpdateCount / 10f) * 0.66f), 0.4f, 1f);
 				spriteBatch.Draw(magicPixel, progressDestRect, pulsedColor);
 			}

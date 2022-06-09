@@ -90,6 +90,8 @@ namespace DestinyMod.Content.UI.ItemDetails
                 if (PressDuration > PressCriterion)
                 {
                     inspectedItemData.LightLevel = mouseItemData.LightLevel;
+                    inspectedItemData.SetDefaults(itemDetailsState.InspectedItem);
+                    itemDetailsState.InspectedItemPowerLevel.SetText(inspectedItemData.LightLevel.ToString());
 
                     Main.LocalPlayer.ConsumeItem(ModContent.ItemType<UpgradeModule>());
                     SoundEngine.PlaySound(SoundID.Grab);

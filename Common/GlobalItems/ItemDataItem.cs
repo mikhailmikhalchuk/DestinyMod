@@ -182,7 +182,6 @@ namespace DestinyMod.Common.GlobalItems
             return false;*/
         }
 
-
         #region Drawing
 
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
