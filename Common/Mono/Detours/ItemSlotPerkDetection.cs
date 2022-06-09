@@ -1,4 +1,5 @@
 ﻿using DestinyMod.Common.GlobalItems;
+using DestinyMod.Common.Items;
 using DestinyMod.Content.UI.ItemDetails;
 using Terraria;
 using Terraria.Audio;
@@ -22,7 +23,7 @@ namespace DestinyMod.Common.Mono.Detours
             orig.Invoke(inv, context, slot);
 
             Item item = inv[slot];
-            if (item.IsAir || !Main.mouseRight || !Main.mouseRightRelease || item.GetGlobalItem<ItemDataItem>().LightLevel == -1)
+            if (item.IsAir || !Main.mouseRight || !Main.mouseRightRelease || !ItemData.ItemDatasByID.ContainsKey(item.type))
             {
                 return;
             }
