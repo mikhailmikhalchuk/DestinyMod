@@ -63,7 +63,12 @@ namespace DestinyMod.Common.GlobalItems
             if (ItemCatalyst >= 0)
             {
                 ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-                modifiers.Add(itemDataPlayer.CatalystData[ItemCatalyst]);
+                ItemCatalyst catalyst = itemDataPlayer.CatalystData[ItemCatalyst];
+
+                if (catalyst.IsDiscovered)
+                {
+                    modifiers.Add(catalyst);
+                }
             }
             return modifiers;
         }
