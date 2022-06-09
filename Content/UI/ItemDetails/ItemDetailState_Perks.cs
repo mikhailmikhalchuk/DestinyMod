@@ -58,69 +58,73 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			float lowestPerkPosition = 28;
 			ItemDataItem inspectedItem = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
-			for (int i = 0; i < inspectedItem.PerkPool.Count; i++)
+
+			if (inspectedItem.PerkPool != null)
 			{
-				ItemPerkPool perkTypePool = inspectedItem.PerkPool[i];
-				IList<ItemPerkDisplay> itemPerksWithinType = new List<ItemPerkDisplay>();
-				for (int perkIndexer = 0; perkIndexer < perkTypePool.Perks.Count; perkIndexer++)
+				for (int i = 0; i < inspectedItem.PerkPool.Count; i++)
 				{
-					ItemPerk perkInQuestion = perkTypePool.Perks[perkIndexer];
-					bool isPerkActive = inspectedItem.ActivePerks.Contains(perkInQuestion);
-					ItemPerkDisplay perk = new ItemPerkDisplay(perkInQuestion, isPerkActive);
-					perk.Left.Pixels = ItemPerk.TextureSize * (5f / 3f) * i;
-					perk.Top.Pixels = 28 + ItemPerk.TextureSize * (6f / 5f) * perkIndexer;
-					lowestPerkPosition = Math.Max(lowestPerkPosition, perk.Top.Pixels);
-
-					perk.OnUpdate += (evt) =>
+					ItemPerkPool perkTypePool = inspectedItem.PerkPool[i];
+					IList<ItemPerkDisplay> itemPerksWithinType = new List<ItemPerkDisplay>();
+					for (int perkIndexer = 0; perkIndexer < perkTypePool.Perks.Count; perkIndexer++)
 					{
-						if (!perk.ContainsPoint(Main.MouseScreen))
+						ItemPerk perkInQuestion = perkTypePool.Perks[perkIndexer];
+						bool isPerkActive = inspectedItem.ActivePerks.Contains(perkInQuestion);
+						ItemPerkDisplay perk = new ItemPerkDisplay(perkInQuestion, isPerkActive);
+						perk.Left.Pixels = ItemPerk.TextureSize * (5f / 3f) * i;
+						perk.Top.Pixels = 28 + ItemPerk.TextureSize * (6f / 5f) * perkIndexer;
+						lowestPerkPosition = Math.Max(lowestPerkPosition, perk.Top.Pixels);
+
+						perk.OnUpdate += (evt) =>
 						{
-							return;
-						}
+							if (!perk.ContainsPoint(Main.MouseScreen))
+							{
+								return;
+							}
 
-						ItemDetailsState.MouseText_TitleAndSubtitle.UpdateData(perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name, perkTypePool.TypeName);
-						ItemDetailsState.MouseText_BodyText.UpdateData(perk.ItemPerk.Description);
-						MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
-						mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_TitleAndSubtitle);
-						mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_BodyText);
+							ItemDetailsState.MouseText_TitleAndSubtitle.UpdateData(perk.ItemPerk.DisplayName ?? perk.ItemPerk.Name, perkTypePool.TypeName);
+							ItemDetailsState.MouseText_BodyText.UpdateData(perk.ItemPerk.Description);
+							MouseTextState mouseTextState = ModContent.GetInstance<MouseTextState>();
+							mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_TitleAndSubtitle);
+							mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_BodyText);
 
-						if (!perk.IsActive)
-                        {
-							mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_ClickIndicator);
-						}
-					};
+							if (!perk.IsActive)
+							{
+								mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_ClickIndicator);
+							}
+						};
 
-					perk.OnMouseDown += (evt, listeningElement) =>
+						perk.OnMouseDown += (evt, listeningElement) =>
+						{
+							if (perk.IsActive)
+							{
+								return;
+							}
+							perk.ToggleActive();
+							SyncActivePerks();
+							SoundEngine.PlaySound(SoundID.Grab);
+						};
+
+						ItemPerks.Add(perk);
+						itemPerksWithinType.Add(perk);
+						Append(perk);
+					}
+
+					foreach (ItemPerkDisplay itemPerkDisplay in itemPerksWithinType)
 					{
-						if (perk.IsActive)
-						{
-							return;
-						}
-						perk.ToggleActive();
-						SyncActivePerks();
-						SoundEngine.PlaySound(SoundID.Grab);
-					};
-
-					ItemPerks.Add(perk);
-					itemPerksWithinType.Add(perk);
-					Append(perk);
+						itemPerkDisplay.InterconnectedPerks = itemPerksWithinType.Where(itemPerk => itemPerk != itemPerkDisplay).ToList();
+					}
 				}
 
-				foreach (ItemPerkDisplay itemPerkDisplay in itemPerksWithinType)
-                {
-					itemPerkDisplay.InterconnectedPerks = itemPerksWithinType.Where(itemPerk => itemPerk != itemPerkDisplay).ToList();
+				for (int i = 1; i < inspectedItem.PerkPool.Count; i++)
+				{
+					UISeparator perkSeparator = new UISeparator();
+					perkSeparator.Left.Pixels = ItemPerk.TextureSize * (4f / 3f) * i;
+					perkSeparator.Top.Pixels = 28;
+					perkSeparator.Width.Pixels = 2f;
+					perkSeparator.Height.Pixels = lowestPerkPosition - 20 + ItemPerk.TextureSize;
+					perkSeparator.Color = ItemDetailsState.BaseColor_Light;
+					Append(perkSeparator);
 				}
-			}
-
-			for (int i = 1; i < inspectedItem.PerkPool.Count; i++)
-			{
-				UISeparator perkSeparator = new UISeparator();
-				perkSeparator.Left.Pixels = ItemPerk.TextureSize * (4f / 3f) * i;
-				perkSeparator.Top.Pixels = 28;
-				perkSeparator.Width.Pixels = 2f;
-				perkSeparator.Height.Pixels = lowestPerkPosition - 20 + ItemPerk.TextureSize;
-				perkSeparator.Color = ItemDetailsState.BaseColor_Light;
-				Append(perkSeparator);
 			}
 
 			Vector2 size = this.CalculateChildrenSize();

@@ -1,4 +1,5 @@
-﻿using DestinyMod.Common.Items;
+﻿using DestinyMod.Common.GlobalProjectiles;
+using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Items.Mods;
@@ -26,7 +27,11 @@ namespace DestinyMod.Common.GlobalItems
     {
         public int LightLevel = -1;
 
-        public int Recoil;
+        public int Range = -1;
+
+        public int Stability = -1; // Spread
+
+        public int Handling = -1; // Recoil
 
         public IList<ItemPerk> ActivePerks;
 
@@ -79,7 +84,10 @@ namespace DestinyMod.Common.GlobalItems
                     LightLevel = itemData.DefaultLightLevel;
                 }
 
-                Recoil = itemData.Recoil;
+                Range = itemData.DefaultRange;
+                Stability = itemData.DefaultStability;
+                Handling = itemData.DefaultHandling;
+
                 ItemCatalyst = itemData.ItemCatalyst;
 
                 if (itemData.InterpretLightLevel == null)
@@ -116,17 +124,58 @@ namespace DestinyMod.Common.GlobalItems
             }
         }
 
-        /*public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            int recVal = ItemData.CalculateRecoil(Recoil);
+            if (Handling >= 0)
+            {
+                ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
+            
+                float recoilInRadians = MathHelper.ToRadians(itemDataPlayer.Recoil);
+                if (player.direction < 0)
+                {
+                    recoilInRadians *= -1;
+                }
+                velocity = velocity.RotatedBy(recoilInRadians);
+
+                player.itemRotation = velocity.ToRotation();
+
+                if (player.direction < 0)
+                {
+                    player.itemRotation = MathHelper.WrapAngle(player.itemRotation + MathHelper.Pi);
+                }
+
+                float recoilAdjustment = Handling * 0.05f + item.useTime;
+                if (Handling % 2 != 0)
+                {
+                    recoilAdjustment *= -1;
+                }
+                itemDataPlayer.Recoil += recoilAdjustment;
+            }
+
+            if (Stability >= 0)
+            {
+                velocity = velocity.RotatedByRandom(MathHelper.ToRadians(Stability * 0.45f));
+            }
+
+            if (Range >= 0)
+            {
+                Projectile projectile = Main.projectile[Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI)];
+                HandleRange handleRange = projectile.GetGlobalProjectile<HandleRange>();
+                handleRange.ProjectileRange = Range;
+                return false;
+            }
+
+            return true;
+
+            /*int recVal = ItemData.CalculateRecoil(Recoil);
             Vector2 newVel = velocity.RotatedByRandom(MathHelper.ToRadians(recVal / 10));
             if (newVel.Y > Recoil)
             {
                 newVel.Y = 0; // Why? - Plan is to have item spread according to the pinned recoil summary in developer chat
             }
             Projectile.NewProjectile(source, position, newVel, type, damage, knockback, player.whoAmI);
-            return false;
-        }*/
+            return false;*/
+        }
 
 
         #region Drawing

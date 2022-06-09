@@ -18,7 +18,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 		{
 			base.SetStaticDefaults();
 			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1);
-			hakkeItemData.Recoil = 10;
+			hakkeItemData.Recoil = -1;
+			hakkeItemData.DefaultRange = -1;
+			hakkeItemData.DefaultStability = -1;
+			hakkeItemData.DefaultHandling = -1;
 		}
 
         public override void DestinySetDefaults()

@@ -51,15 +51,15 @@ namespace DestinyMod.Common.Items
         /// </summary>
         public bool Shaderable = true;
 
-        public int DefaultImpact;
+        public int DefaultImpact = -1; // Damage
 
-        public int DefaultRange;
+        public int DefaultRange = -1; // Range
 
-        public int DefaultStability;
+        public int DefaultStability = -1; // Spread
 
-        public int DefaultHandling;
+        public int DefaultHandling = -1; // Recoil
 
-        public int DefaultReloadSpeed;
+        public int DefaultReloadSpeed = -1; // Mag Soon!
 
         public int Recoil;
 

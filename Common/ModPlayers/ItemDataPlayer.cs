@@ -16,6 +16,8 @@ namespace DestinyMod.Common.ModPlayers
     {
         public int LightLevel;
 
+        public float Recoil;
+
         protected override bool CloneNewInstances => false;
 
         /// <summary>
@@ -28,6 +30,8 @@ namespace DestinyMod.Common.ModPlayers
         /// Access catalysts from this list using <see cref="ModifierBase.GetType{T}"/> as an index.
         /// </summary>
         public IList<ItemCatalyst> CatalystData = new List<ItemCatalyst>();
+
+        #region Data Structures
 
         public override void Initialize()
         {
@@ -87,6 +91,10 @@ namespace DestinyMod.Common.ModPlayers
             }
         }
 
+        #endregion
+
+        #region Testing
+
         public override void PreUpdate()
         {
             // Here for testing purposes
@@ -103,10 +111,19 @@ namespace DestinyMod.Common.ModPlayers
             CatalystData[ModifierBase.GetType<NoTimeToExplainCatalyst>()].IsDiscovered = true;
         }
 
+        #endregion
+
         public override void ResetEffects()
         {
             LightLevel = 0;
+
+            if (Recoil > 0)
+            {
+                Recoil--;
+            }
         }
+
+        #region Implement Modifiers
 
         public override void PostUpdateMiscEffects()
         {
@@ -275,5 +292,7 @@ namespace DestinyMod.Common.ModPlayers
             }
             return start;
         }
+
+        #endregion
     }
 }
