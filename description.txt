@@ -27,9 +27,17 @@ Added the Podium, purchasable from Zavala for the duration of the Games
 Added Laurels, which drop from enemies during the Games with a 1/25 chance
 Added Titan, Warlock, and Hunter-themed decor
 --
+Added perks and mods! (light level?)
+New items will be created with randomly generated perks (subject to change, maybe command that brings old weapons to new system)
+Mods can be purchased from Xur on a random rotation
+
 Added MIDA Multi-Tool's exotic perk
 Graviton Lance now only shoots 2 bullets
-Thorn buff change write here
-Vex buff change write here
+Thorn's Mark of the Devourer buff now reflects its in-game behavior better (increases burn damage by a fixed amount)
+Vex Mythoclast's Overcharge buff now reflects its in-game behavior better (max charges at 6, charge shot reduces by 2, can only switch at max charge)
+Divinity's Judgment buff now reflects its in-game behavior better (now causes affected enemies to always take critical damage, triggers buff quicker, removes it faster)
+Added the last half of Ticuu's Divination's exotic perk (homing arrows apply Sacred Flame debuff, normal arrows detonate it)
+Gjallarhorn's Wolfpack Rockets now fire off in the opposite direction of the main rocket on collision
+Renamed Gjallarhorn's rockets from "Wolfpack Round" to "Wolfpack Rocket"
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.

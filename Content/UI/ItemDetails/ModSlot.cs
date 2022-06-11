@@ -6,13 +6,13 @@ using DestinyMod.Common.Items.Modifiers;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
-    public class ItemModSlot : UIImageWithBackground
+    public class ModSlot : UIImageWithBackground
     {
         public ItemMod ItemMod { get; private set; }
 
         public static Texture2D BackgroundTexture => ModContent.Request<Texture2D>("DestinyMod/Content/UI/ItemDetails/ModSlot", AssetRequestMode.ImmediateLoad).Value;
 
-        public ItemModSlot(ItemMod itemMod = null, int scaleSize = 34) : base(BackgroundTexture, null, scaleSize) => UpdateItemMod(itemMod);
+        public ModSlot(ItemMod itemMod = null, int scaleSize = 34) : base(BackgroundTexture, null, scaleSize) => UpdateItemMod(itemMod);
 
         public void UpdateItemMod(ItemMod newMod)
         {

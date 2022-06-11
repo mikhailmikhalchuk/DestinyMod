@@ -22,6 +22,11 @@ namespace DestinyMod.Common.Items.Modifiers
         /// </summary>
         public string Description;
 
+        /// <summary>
+        /// Creates an instance of the specified type. Note that this will cause all update-related functions on the created type to run, so only create new instances that you will use.
+        /// </summary>
+        /// <typeparam name="T">The type (inheriting <see cref="ModifierBase"/>) to create an instance of.</typeparam>
+        /// <returns>The created instance.</returns>
         public static T CreateInstanceOf<T>() where T : ModifierBase, new()
         {
             T reference = ModContent.GetInstance<T>();

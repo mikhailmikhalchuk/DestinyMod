@@ -1,4 +1,6 @@
+using Terraria.ModLoader;
 using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Common.Items.ItemTypes;
 
 namespace DestinyMod.Content.Items.Mods.Weapon
 {
@@ -9,6 +11,23 @@ namespace DestinyMod.Content.Items.Mods.Weapon
             DisplayName = "Backup Mag";
             Description = "Increases magazine.";
             ApplyType = ItemType.Weapon;
+        }
+    }
+
+    public class BackupMagGranter : ItemModGranter
+    {
+        public override string Texture => "DestinyMod/Content/Items/Mods/Weapon/BackupMag";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Backup Mag");
+            Tooltip.SetDefault("Increases magazine.");
+        }
+
+        public override void DestinySetDefaults()
+        {
+            ItemModType = ModifierBase.GetType<BackupMag>();
+            ItemModName = ModifierBase.GetName<BackupMag>();
         }
     }
 }

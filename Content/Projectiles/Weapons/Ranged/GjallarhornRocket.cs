@@ -16,7 +16,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wolfpack Round");
+			DisplayName.SetDefault("Wolfpack Rocket");
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 
@@ -64,8 +64,6 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void OnHitNPC(NPC npc, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[Projectile.owner];
-
 			if (Target == -1)
             {
 				return;
@@ -73,28 +71,17 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 			for (int i = 0; i < 5; i++)
 			{
-				Projectile.NewProjectile(player.GetSource_OnHit(npc), Projectile.position, Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f), ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, -Projectile.oldVelocity.RotatedByRandom(1.8), ModContent.ProjectileType<GjallarhornMiniRocket>(), damage / 5, 0, Projectile.owner);
 			}
+
 			Target = -1;
 		}
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-			Player player = Main.player[Projectile.owner];
-			int safetyCheck = 0;
-
 			for (int i = 0; i < 5; i++)
 			{
-				Vector2 futureVec = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
-
-				while (WillCollideInSteps(10, futureVec) && safetyCheck < 100)
-                {
-					safetyCheck++;
-					futureVec = Main.rand.NextVector2Unit() * Utils.NextFloat(Main.rand, 6f, 12f);
-				}
-
-				//-oldVelocity.SafeNormalize(Vector2.One).RotateRandom(MathHelper.PiOver2) * Utils.NextFloat(Main.rand, 5f, 9f)
-				Projectile.NewProjectile(player.GetSource_TileInteraction((int)(Projectile.position.X / 16), (int)(Projectile.position.Y / 16)), Projectile.position, futureVec, ModContent.ProjectileType<GjallarhornMiniRocket>(), 10, 0, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, -oldVelocity.RotatedByRandom(1.8), ModContent.ProjectileType<GjallarhornMiniRocket>(), 10, 0, Projectile.owner);
 			}
 
 			return true;

@@ -85,14 +85,14 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[Projectile.owner] = 5;
-			if (Counter > 120)
+			if (Counter > 39 || target.HasBuff(ModContent.BuffType<Judgment>()))
 			{
-				target.AddBuff(ModContent.BuffType<Judgment>(), 150);
+				target.AddBuff(ModContent.BuffType<Judgment>(), 15);
 				Counter = 0;
 			}
 		}
 
-		public override void AI()
+        public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
 			Projectile.position = player.MountedCenter + Projectile.velocity * 60;
@@ -109,7 +109,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 				Fire = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Magic/DivinityFire"), Projectile.Center);
 			}
 
-			if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 == 0 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
+			if ((int)Main.time % 10 == 0 && !player.CheckMana(player.inventory[player.selectedItem].mana, true) || !player.channel && player.whoAmI == Main.myPlayer)
 			{
 				Projectile.Kill();
 			}

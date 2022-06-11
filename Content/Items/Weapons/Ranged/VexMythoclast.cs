@@ -20,7 +20,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Kills with this weapon grant stacks of Overcharge"
-                + "\nRight Click with Overcharge to switch firing modes"
+                + "\nRight Click with multiple stacks of Overcharge to switch firing modes"
                 + "\nHold down the trigger in the alternative firing mode to fire a more powerful shot"
                 + "\n'...a causal loop within the weapon's mechanism, suggesting that the firing process somehow binds space and time into...'");
         }
@@ -51,7 +51,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
                 Item.autoReuse = true;
                 type = ModContent.ProjectileType<VexBullet>();
             }
-            Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 4), velocity, type, !UsingAltFunction ? damage * 2 : damage, knockback, player.whoAmI, 0, source.AmmoItemIdUsed);
+            Projectile.NewProjectile(source, new Vector2(position.X, position.Y - 4), velocity, type, damage, knockback, player.whoAmI, 0, source.AmmoItemIdUsed);
             return false;
         }
 

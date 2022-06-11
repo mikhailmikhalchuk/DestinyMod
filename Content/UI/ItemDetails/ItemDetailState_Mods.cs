@@ -33,7 +33,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public ModSlotInventory ModSlotInventory { get; private set; }
 
-		public IList<ItemModSlot> ModSlots { get; private set; }
+		public IList<ModSlot> ModSlots { get; private set; }
 
 		public int NormalHeight { get; private set; }
 
@@ -88,11 +88,11 @@ namespace DestinyMod.Content.UI.ItemDetails
 			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
 			if (inspectedItemData.ItemMods != null)
 			{
-				ModSlots = new List<ItemModSlot>();
+				ModSlots = new List<ModSlot>();
 				for (int modSlotIndexer = 0; modSlotIndexer < inspectedItemData.ItemMods.Count; modSlotIndexer++)
 				{
 					ItemMod mod = inspectedItemData.ItemMods[modSlotIndexer];
-					ItemModSlot modSlot = new ItemModSlot(mod);
+					ModSlot modSlot = new ModSlot(mod);
 					modSlot.Left.Pixels = xPos;
 					modSlot.Top.Pixels = 28;
 					modSlot.OnUpdate += HandleModMouseText;
@@ -134,7 +134,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public void HandleModMouseText(UIElement affectedElement)
 		{
-			if (affectedElement is not ItemModSlot itemModSlot || !itemModSlot.ContainsPoint(Main.MouseScreen))
+			if (affectedElement is not ModSlot itemModSlot || !itemModSlot.ContainsPoint(Main.MouseScreen))
 			{
 				return;
 			}
@@ -150,7 +150,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public void HandleBringingUpModSlotInventory(UIMouseEvent evt, UIElement listeningElement)
         {
-			if (listeningElement is not ItemModSlot itemModSlot)
+			if (listeningElement is not ModSlot itemModSlot)
 			{
 				return;
 			}
@@ -163,7 +163,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public void HandleClosingModSlotInventory(UIElement affectedElement)
 		{
-			if (affectedElement is not ItemModSlot itemModSlot || ModSlotInventory.ReferenceModSlot != itemModSlot)
+			if (affectedElement is not ModSlot itemModSlot || ModSlotInventory.ReferenceModSlot != itemModSlot)
 			{
 				return;
 			}

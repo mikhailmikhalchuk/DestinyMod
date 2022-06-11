@@ -53,6 +53,10 @@ namespace DestinyMod.Common.Items.Modifiers
             return savedData;
         }
 
+        /// <summary>
+        /// Used to save data partaining to the catalyst progression (i.e. amount of enemies killed)
+        /// </summary>
+        /// <param name="tagCompound">The <see cref="TagCompound"/> to save data to.</param>
         public virtual void SaveInstance(TagCompound tagCompound) { }
 
         public void Load(TagCompound tag)
@@ -63,6 +67,10 @@ namespace DestinyMod.Common.Items.Modifiers
             LoadInstance(instancedData);
         }
 
+        /// <summary>
+        /// Used to load data partaining to the catalyst progression (i.e. amount of enemies killed)
+        /// </summary>
+        /// <param name="tagCompound">The <see cref="TagCompound"/> to load data from.</param>
         public virtual void LoadInstance(TagCompound tag) { }
 
         /// <summary>

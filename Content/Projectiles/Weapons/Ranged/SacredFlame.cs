@@ -7,7 +7,7 @@ using DestinyMod.Common.Projectiles;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
-	public class SacredFlame : DestinyModProjectile
+	public class SacredFlame : DestinyModProjectile //the ticuu's HOMING one
 	{
 		public override void SetStaticDefaults()
 		{
@@ -36,7 +36,17 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			}
 		}
 
-		public override void AI()
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.SacredFlame>(), 600);
+        }
+
+        public override void OnHitPvp(Player target, int damage, bool crit)
+        {
+			target.AddBuff(ModContent.BuffType<Buffs.Debuffs.SacredFlame>(), 600);
+		}
+
+        public override void AI()
 		{
 			GradualHomeInOnNPC(400, 15f, 0.1f);
 		}

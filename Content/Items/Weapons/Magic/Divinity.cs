@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Weapons.Magic
 		public override void SetStaticDefaults()
 		{
 			Tooltip.SetDefault("Fires a solid beam"
-				+ "\nSustained damage with the beam cuts the target's defense by 20%"
+				+ "\nSustained damage with the beam creates a field that weakens the target"
 				+ "\n'Calibrate reality. Seek inevitability. Embody divinity.'");
 		}
 

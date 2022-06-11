@@ -25,7 +25,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
 
             if (_apply)
             {
-                damage = (int)(damage * 0.15f);
+                damage = (int)(damage * 1.15f);
             }
         }
 

@@ -25,14 +25,14 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public ItemDetailsState ItemDetailsState { get; private set; }
 
-        public ItemModSlot ReferenceModSlot;
+        public ModSlot ReferenceModSlot;
 
-        public IList<ItemModSlot> ItemModSlots { get; private set; }
+        public IList<ModSlot> ItemModSlots { get; private set; }
 
         public int Columns { get; private set; }
 
         // I am good coder, please no fire
-        public ModSlotInventory(ItemDetailsState itemDetailState, ItemModSlot referenceModSlot, int columns)
+        public ModSlotInventory(ItemDetailsState itemDetailState, ModSlot referenceModSlot, int columns)
         {
             if (columns <= 0)
             {
@@ -40,25 +40,25 @@ namespace DestinyMod.Content.UI.ItemDetails
             }
 
             ItemDetailsState = itemDetailState;
-            ItemModSlots = new List<ItemModSlot>();
+            ItemModSlots = new List<ModSlot>();
             Columns = columns;
             SetUpInventorySlots(referenceModSlot);
         }
 
-        public void SetUpInventorySlots(ItemModSlot referenceModSlot)
+        public void SetUpInventorySlots(ModSlot referenceModSlot)
         {
             ReferenceModSlot = referenceModSlot;
             Player player = Main.LocalPlayer;
             ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
             int minimumRowsRequired = (itemDataPlayer.UnlockedMods.Count + 1) / Columns + 1;
-            ItemModSlots = new List<ItemModSlot>();
+            ItemModSlots = new List<ModSlot>();
             for (int y = 0; y < minimumRowsRequired; y++)
             {
                 for (int x = 0; x < Columns; x++)
                 {
-                    ItemModSlot itemModSlot = new ItemModSlot();
-                    itemModSlot.Left.Pixels = (ItemModSlot.BackgroundTexture.Width + CommonSpacing) * x;
-                    itemModSlot.Top.Pixels = (ItemModSlot.BackgroundTexture.Height + CommonSpacing) * y;
+                    ModSlot itemModSlot = new ModSlot();
+                    itemModSlot.Left.Pixels = (ModSlot.BackgroundTexture.Width + CommonSpacing) * x;
+                    itemModSlot.Top.Pixels = (ModSlot.BackgroundTexture.Height + CommonSpacing) * y;
                     itemModSlot.OnUpdate += HandleModSlotMouseText;
                     itemModSlot.OnMouseDown += HandleModSlotApply;
                     ItemModSlots.Add(itemModSlot);
@@ -67,7 +67,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             }
 
             PopulateInventorySlots(player);
-            ItemModSlot lastModSlotCreated = ItemModSlots[ItemModSlots.Count - 1];
+            ModSlot lastModSlotCreated = ItemModSlots[ItemModSlots.Count - 1];
             NormalSize = new Vector2(lastModSlotCreated.Left.Pixels + lastModSlotCreated.Width.Pixels, lastModSlotCreated.Top.Pixels + lastModSlotCreated.Height.Pixels);
             Width.Pixels = NormalSize.X;
             Height.Pixels = NormalSize.Y;
@@ -75,7 +75,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public void PopulateInventorySlots(Player player)
         {
-            foreach (ItemModSlot itemModSlot in ItemModSlots)
+            foreach (ModSlot itemModSlot in ItemModSlots)
             {
                 itemModSlot.UpdateItemMod(null);
             }
@@ -90,7 +90,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public void HandleModSlotMouseText(UIElement affectedElement)
         {
-            if (!Visible || affectedElement is not ItemModSlot itemModSlot || itemModSlot.ItemMod == null || !affectedElement.ContainsPoint(Main.MouseScreen))
+            if (!Visible || affectedElement is not ModSlot itemModSlot || itemModSlot.ItemMod == null || !affectedElement.ContainsPoint(Main.MouseScreen))
             {
                 return;
             }
@@ -111,7 +111,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public void HandleModSlotApply(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!Visible || ReferenceModSlot == null || listeningElement is not ItemModSlot itemModSlot || itemModSlot.ItemMod == null || ReferenceModSlot.ItemMod.Type == itemModSlot.ItemMod.Type)
+            if (!Visible || ReferenceModSlot == null || listeningElement is not ModSlot itemModSlot || itemModSlot.ItemMod == null || ReferenceModSlot.ItemMod.Type == itemModSlot.ItemMod.Type)
             {
                 return;
             }
@@ -120,7 +120,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
             SoundEngine.PlaySound(SoundID.Grab);
             inspectedItemData.ItemMods.Clear();
-            foreach (ItemModSlot itemMod in ItemDetailsState.Mods.ModSlots)
+            foreach (ModSlot itemMod in ItemDetailsState.Mods.ModSlots)
             {
                 inspectedItemData.ItemMods.Add(itemMod.ItemMod);
             }

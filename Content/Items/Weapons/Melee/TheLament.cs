@@ -122,7 +122,7 @@ namespace DestinyMod.Content.Items.Weapons.Melee
                 Item.useStyle = ItemUseStyleID.Swing;
                 Item.useTime = 20;
                 Item.useAnimation = 20;
-                Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/RazeLighter");
+                Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Melee/RazeLighter");
                 Item.noMelee = false;
                 DestinyModChannel = false;
                 RightClickTest = false;

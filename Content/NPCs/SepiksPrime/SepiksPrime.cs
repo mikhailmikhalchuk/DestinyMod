@@ -287,7 +287,10 @@ namespace DestinyMod.Content.NPCs.SepiksPrime
                 if (NPC.ai[0] == 40f || NPC.ai[0] == 55f || NPC.ai[0] == 70f)
                 {
                     if (TimesFiredThisCycle >= 3)
+                    {
                         return;
+                    }
+
                     TimesFiredThisCycle++;
                     FireBlastAtTarget();
                 }

@@ -14,6 +14,7 @@ using DestinyMod.Common.ModSystems;
 using DestinyMod.Common.ModPlayers;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
+using DestinyMod.Content.Items.Mods.Weapon;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
@@ -202,6 +203,9 @@ namespace DestinyMod.Content.NPCs.TownNPC
 		{
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SalvagersSalvo>());
 			shop.item[nextSlot].shopCustomPrice = 500000;
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<BackupMagGranter>());
+			shop.item[nextSlot].shopCustomPrice = 1;
 			nextSlot++;
 			if (GuardianGamesSystem.Active)
 			{

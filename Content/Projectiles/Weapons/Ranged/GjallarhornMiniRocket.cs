@@ -14,7 +14,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Wolfpack Round");
+			DisplayName.SetDefault("Wolfpack Rocket");
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 
