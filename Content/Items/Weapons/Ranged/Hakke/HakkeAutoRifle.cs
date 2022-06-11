@@ -22,7 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			hakkeItemData.DefaultRange = -1;
 			hakkeItemData.DefaultStability = -1;
 			hakkeItemData.DefaultHandling = -1;
-			hakkeItemData.GeneratePerkPool = player => new List<ItemPerkPool>()
+			hakkeItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
 			{
 				new ItemPerkPool("Barrels", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
 				new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())

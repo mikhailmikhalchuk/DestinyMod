@@ -37,7 +37,7 @@ namespace DestinyMod.Common.Items
         /// </summary>
         public Action<int> InterpretLightLevel;
 
-        public Func<Player, List<ItemPerkPool>> GeneratePerkPool;
+        public Func<List<ItemPerkPool>> GeneratePerkPool;
 
         /// <summary>
         /// The maximum number of mod slots to include on this weapon.
@@ -159,7 +159,7 @@ namespace DestinyMod.Common.Items
 
             if (perkPool == null && GeneratePerkPool != null)
             {
-                perkPool = GeneratePerkPool(player);
+                perkPool = GeneratePerkPool();
             }
 
             Item item = new Item(ItemType);
@@ -218,7 +218,7 @@ namespace DestinyMod.Common.Items
 
             if (perkPool == null && GeneratePerkPool != null)
             {
-                perkPool = GeneratePerkPool(player);
+                perkPool = GeneratePerkPool();
             }
 
             ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();

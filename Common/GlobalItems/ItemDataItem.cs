@@ -105,6 +105,25 @@ namespace DestinyMod.Common.GlobalItems
                 {
                     itemData.InterpretLightLevel(LightLevel);
                 }
+
+                if (PerkPool == null && itemData.GeneratePerkPool != null)
+                {
+                    PerkPool = itemData.GeneratePerkPool();
+                    ActivePerks = new List<ItemPerk>();
+                    foreach (ItemPerkPool perkPoolType in PerkPool)
+                    {
+                        ActivePerks.Add(perkPoolType.Perks[0]);
+                    }
+                }
+
+                if (ItemMods == null)
+                {
+                    ItemMods = new List<ItemMod>();
+                    for (int modIndexer = 0; modIndexer < itemData.MaximumModCount; modIndexer++)
+                    {
+                        ItemMods.Add(ModContent.GetInstance<NullMod>());
+                    }
+                }
             }
         }
 
