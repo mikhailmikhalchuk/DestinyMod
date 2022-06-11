@@ -1,4 +1,6 @@
 using Terraria.ModLoader;
+using Terraria.GameContent.UI;
+using DestinyMod.Content.Items.Misc;
 
 namespace DestinyMod
 {
@@ -8,6 +10,11 @@ namespace DestinyMod
 
 		public DestinyMod() => Instance = this;
 
-		public override void Unload() => Instance = null;
+        public override void Load()
+        {
+            Content.Currencies.ExoticCipher.ID = CustomCurrencyManager.RegisterCurrency(new Content.Currencies.ExoticCipher(ModContent.ItemType<ExoticCipher>(), 30L));
+        }
+
+        public override void Unload() => Instance = null;
     }
 }

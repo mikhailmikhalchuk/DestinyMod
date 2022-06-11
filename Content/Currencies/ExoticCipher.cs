@@ -6,18 +6,11 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Content.Currencies
 {
-	public class ExoticCipher : CustomCurrencySingleCoin, ILoadable
+	public class ExoticCipher : CustomCurrencySingleCoin
 	{
 		public ExoticCipher(int coinItemID, long currencyCap) : base(coinItemID, currencyCap) { }
 
-		public static int ID { get; private set; }
-
-		public void Load(Mod mod)
-		{
-			ID = CustomCurrencyManager.RegisterCurrency(new ExoticCipher(ModContent.ItemType<Items.Misc.ExoticCipher>(), 30));
-		}
-
-		public void Unload() { }
+		public static int ID { get; set; }
 
 		public override void GetPriceText(string[] lines, ref int currentLine, int price)
 		{

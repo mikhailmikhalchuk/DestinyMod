@@ -22,8 +22,8 @@ namespace DestinyMod.Common.NPCs.Data
             return new TagCompound()
             {
                 { "ItemType", ItemType },
-                { "Currency", ItemCurrency },
-                { "Price", ItemPrice },
+                { "ItemCurrency", ItemCurrency },
+                { "ItemPrice", ItemPrice },
             };
         }
 

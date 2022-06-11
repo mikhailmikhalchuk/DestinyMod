@@ -39,5 +39,6 @@ Divinity's Judgment buff now reflects its in-game behavior better (now causes af
 Added the last half of Ticuu's Divination's exotic perk (homing arrows apply Sacred Flame debuff, normal arrows detonate it)
 Gjallarhorn's Wolfpack Rockets now fire off in the opposite direction of the main rocket on collision
 Renamed Gjallarhorn's rockets from "Wolfpack Round" to "Wolfpack Rocket"
+Xur has now been redone and should now sell items consistently
 
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
