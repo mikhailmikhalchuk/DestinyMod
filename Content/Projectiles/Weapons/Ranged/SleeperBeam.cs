@@ -26,6 +26,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
 			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 30;
 		}
 
 		public override void Kill(int timeLeft)

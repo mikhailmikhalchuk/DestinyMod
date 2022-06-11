@@ -2,6 +2,7 @@ using DestinyMod.Common.GlobalProjectiles;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -19,7 +20,7 @@ namespace DestinyMod.Common.Projectiles
 
 		public virtual void AutomaticSetDefaults() { }
 
-		public virtual void DestinySetDefaults() { }
+        public virtual void DestinySetDefaults() { }
 
         /// <summary>
         /// Causes a <see cref="Projectile"/> to instantly home in on an <see cref="NPC"/>.
