@@ -26,6 +26,14 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 0);
 			hakkeItemData.Recoil = 10;
 			hakkeItemData.ItemCatalyst = ModifierBase.GetType<NoTimeToExplainCatalyst>();
+			hakkeItemData.GeneratePerkPool = player =>
+			{
+				return new List<ItemPerkPool>()
+				{
+					new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>()),
+					new ItemPerkPool("Traits", ModContent.GetInstance<HighCaliberRounds>())
+				};
+			};
 		}
 
 		public override void DestinySetDefaults()

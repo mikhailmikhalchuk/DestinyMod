@@ -37,6 +37,8 @@ namespace DestinyMod.Common.Items
         /// </summary>
         public Action<int> InterpretLightLevel;
 
+        public Func<Player, List<ItemPerkPool>> GeneratePerkPool;
+
         /// <summary>
         /// The maximum number of mod slots to include on this weapon.
         /// </summary>
@@ -155,6 +157,11 @@ namespace DestinyMod.Common.Items
                 itemPowerLevel = ClampLightLevel(itemPowerLevel);
             }
 
+            if (perkPool == null && GeneratePerkPool != null)
+            {
+                perkPool = GeneratePerkPool(player);
+            }
+
             Item item = new Item(ItemType);
             ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
             itemDataItem.LightLevel = itemPowerLevel;
@@ -209,6 +216,11 @@ namespace DestinyMod.Common.Items
                 itemPowerLevel = ClampLightLevel(itemPowerLevel);
             }
 
+            if (perkPool == null && GeneratePerkPool != null)
+            {
+                perkPool = GeneratePerkPool(player);
+            }
+
             ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
             itemDataItem.LightLevel = itemPowerLevel;
             itemDataItem.PerkPool = perkPool;
@@ -242,11 +254,13 @@ namespace DestinyMod.Common.Items
             {
                 throw new ArgumentException("Amount of selectable perks cannot be more than the amount of perks provided.");
             }
+
             if (perks.Distinct().ToArray().Length != perks.Length)
             {
                 Main.NewText("Latest call to RollRandomPerks included duplicate perks. They were filtered, but consider removing the duplicates from the call.", Color.Red);
                 perks = perks.Distinct().ToArray();
             }
+
             ItemPerk[] start = new ItemPerk[amountOfPerks];
             for (int i = 0; i < amountOfPerks; i++)
             {

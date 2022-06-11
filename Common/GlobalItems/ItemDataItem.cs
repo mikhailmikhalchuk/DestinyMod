@@ -363,32 +363,32 @@ namespace DestinyMod.Common.GlobalItems
                 return;
             }
 
-            if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<HakkeAutoRifle>(), out ItemData itemData))
+            if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<HakkeAutoRifle>(), out ItemData hakkeAutoRifleData))
             {
-                caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(),
-                    itemData.GenerateItem(caller.Player, lightLevel, new List<ItemPerkPool>()
+                hakkeAutoRifleData.GenerateItem(Main.item[caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(), hakkeAutoRifleData.ItemType)], caller.Player, lightLevel);
+                hakkeAutoRifleData.GenerateItem(Main.item[caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(), hakkeAutoRifleData.ItemType)], caller.Player, lightLevel);
+
+                /*caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(),
+                    hakkeAutoRifleData.GenerateItem(caller.Player, lightLevel, new List<ItemPerkPool>()
                     {
                         new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>()),
                         new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
                     })
                 );
-            }
 
-            if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<HakkeAutoRifle>(), out ItemData itemData2))
-            {
-                caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(), 
-                    itemData2.GenerateItem(caller.Player, lightLevel, new List<ItemPerkPool>()
+                caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(),
+                    hakkeAutoRifleData.GenerateItem(caller.Player, lightLevel, new List<ItemPerkPool>()
                     {
                         new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>()),
                         new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
                     })
-                );
+                );*/
             }
 
-            if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<NoTimeToExplain>(), out ItemData itemData3))
+            if (ItemData.ItemDatasByID.TryGetValue(ModContent.ItemType<NoTimeToExplain>(), out ItemData mtteData))
             {
                 caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(), 
-                    itemData3.GenerateItem(caller.Player, lightLevel, new List<ItemPerkPool>()
+                    mtteData.GenerateItem(caller.Player, lightLevel, new List<ItemPerkPool>()
                     {
                         new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>()),
                         new ItemPerkPool("Traits", ModContent.GetInstance<HighCaliberRounds>())
