@@ -1,4 +1,5 @@
 using DestinyMod.Common.Items.Modifiers;
+using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
 {
@@ -9,6 +10,11 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
             DisplayName = "Arrowhead Brake";
             Description = "- Decreases bullet spread"
                 + "\n- Increases firing speed";
+        }
+
+        public override void UseSpeedMultiplier(Player player, Item item, ref float multiplier)
+        {
+            multiplier *= 1.1f;
         }
     }
 }

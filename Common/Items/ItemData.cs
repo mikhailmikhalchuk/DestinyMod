@@ -8,6 +8,7 @@ using DestinyMod.Common.ModPlayers;
 using DestinyMod.Common.GlobalItems;
 using DestinyMod.Content.Items.Mods;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace DestinyMod.Common.Items
 {
@@ -125,13 +126,13 @@ namespace DestinyMod.Common.Items
         }
 
         /// <summary>
-        /// Creates an <see cref="Item"/> with <see cref="ItemDataItem"/> data and spawns it on the player.
+        /// Creates an <see cref="Item"/> with <see cref="ItemDataItem"/> data.
         /// </summary>
         /// <param name="player">The player to spawn this item on.</param>
-        /// <param name="source">The source of this item.</param>
         /// <param name="overrideLightLevel">The light level of this item.</param>
         /// <param name="perkPool">The list of perk pools for this item.</param>
-        public void GenerateItem(Player player, IEntitySource source, int overrideLightLevel = -1, IList<ItemPerkPool> perkPool = null)
+        /// <returns>The generated <see cref="Item"/> with <see cref="ItemDataItem"/> data.</returns>
+        public Item GenerateItem(Player player, int overrideLightLevel = -1, IList<ItemPerkPool> perkPool = null)
         {
             ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
             int itemPowerLevel = itemDataPlayer.LightLevel;
@@ -154,7 +155,7 @@ namespace DestinyMod.Common.Items
                 itemPowerLevel = ClampLightLevel(itemPowerLevel);
             }
 
-            Item item = Main.item[player.QuickSpawnItem(source, ItemType)];
+            Item item = new Item(ItemType);
             ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
             itemDataItem.LightLevel = itemPowerLevel;
             itemDataItem.PerkPool = perkPool;
@@ -174,6 +175,91 @@ namespace DestinyMod.Common.Items
             {
                 itemDataItem.ItemMods.Add(ModContent.GetInstance<NullMod>());
             }
+
+            return item;
+        }
+
+        /// <summary>
+        /// Creates an <see cref="Item"/> with <see cref="ItemDataItem"/> data.
+        /// </summary>
+        /// <param name="player">The player to spawn this item on.</param>
+        /// <param name="overrideLightLevel">The light level of this item.</param>
+        /// <param name="perkPool">The list of perk pools for this item.</param>
+        /// <returns>The generated <see cref="Item"/> with <see cref="ItemDataItem"/> data.</returns>
+        public void GenerateItem(Item item, Player player, int overrideLightLevel = -1, IList<ItemPerkPool> perkPool = null)
+        {
+            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
+            int itemPowerLevel = itemDataPlayer.LightLevel;
+
+            if (overrideLightLevel != -1)
+            {
+                itemPowerLevel = overrideLightLevel;
+            }
+            else
+            {
+                if (Main.rand.NextFloat() < 0.2) // 1 in 5 to be 2 light level stronger or weaker than your current light level
+                {
+                    itemPowerLevel += Main.rand.NextFloat() < 0.33f ? 2 : -2; // NextFloat() in case you want to make weaker/stronger more probable than the other
+                }
+                else if (Main.rand.NextFloat() < 0.5f) // 50% chance otherwise
+                {
+                    itemPowerLevel += Main.rand.NextFloat() < 0.5f ? 1 : -1; // NextFloat() in case you want to make weaker/stronger more probable than the other
+                }
+
+                itemPowerLevel = ClampLightLevel(itemPowerLevel);
+            }
+
+            ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
+            itemDataItem.LightLevel = itemPowerLevel;
+            itemDataItem.PerkPool = perkPool;
+            itemDataItem.SetDefaults(item);
+
+            if (perkPool != null)
+            {
+                itemDataItem.ActivePerks = new List<ItemPerk>();
+                foreach (ItemPerkPool perkPoolType in perkPool)
+                {
+                    itemDataItem.ActivePerks.Add(perkPoolType.Perks[0]);
+                }
+            }
+
+            itemDataItem.ItemMods = new List<ItemMod>();
+            for (int modIndexer = 0; modIndexer < MaximumModCount; modIndexer++)
+            {
+                itemDataItem.ItemMods.Add(ModContent.GetInstance<NullMod>());
+            }
+        }
+
+        /// <summary>
+        /// Randomly generates an <see cref="ItemPerk"/> array, for use with <see cref="ItemPerkPool"/>.
+        /// </summary>
+        /// <param name="amountOfPerks">How many perks to include in the array.</param>
+        /// <param name="perks">The perks to choose from.</param>
+        /// <returns>The <see cref="ItemPerk"/> array.</returns>
+        public static ItemPerk[] RollRandomPerks(int amountOfPerks, params ItemPerk[] perks)
+        {
+            if (amountOfPerks > perks.Length)
+            {
+                throw new ArgumentException("Amount of selectable perks cannot be more than the amount of perks provided.");
+            }
+            if (perks.Distinct().ToArray().Length != perks.Length)
+            {
+                Main.NewText("Latest call to RollRandomPerks included duplicate perks. They were filtered, but consider removing the duplicates from the call.", Color.Red);
+                perks = perks.Distinct().ToArray();
+            }
+            ItemPerk[] start = new ItemPerk[amountOfPerks];
+            for (int i = 0; i < amountOfPerks; i++)
+            {
+                int indexer = Main.rand.Next(0, perks.Length);
+                while (perks[indexer] == null)
+                {
+                    indexer = Main.rand.Next(0, perks.Length);
+                }
+
+                start[i] = perks[indexer];
+                perks[indexer] = null;
+            }
+            return start;
         }
 
         public static int CalculateRecoil(int recoil) => (int)Math.Round(Math.Sin((recoil + 5) * (MathHelper.TwoPi / 20)) * (100 - recoil));

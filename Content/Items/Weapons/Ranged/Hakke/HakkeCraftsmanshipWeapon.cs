@@ -5,6 +5,13 @@ using Terraria.DataStructures;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using DestinyMod.Content.Buffs;
+using System;
+using DestinyMod.Common.Items;
+using System.Collections.Generic;
+using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.Traits;
+using DestinyMod.Common.GlobalItems;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
@@ -14,7 +21,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 
 		public float SpreadRadians;
 
-		public override void SetStaticDefaults() => Tooltip.SetDefault("Has a chance to grant the 'Hakke Craftsmanship' buff on use");
+        public override void SetStaticDefaults() => Tooltip.SetDefault("Has a chance to grant the 'Hakke Craftsmanship' buff on use");
 
 		protected static void HandleMuzzleOffset(ref Vector2 position, Vector2 velocity)
 		{
@@ -41,5 +48,20 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			HandleApplyingHakke(player);
 			return false;
 		}
-	}
+
+        public override ModItem Clone(Item newEntity)
+        {
+			HakkeCraftsmanshipWeapon clone = (HakkeCraftsmanshipWeapon)base.Clone(newEntity);
+			IList<ItemPerkPool> perkPool = clone.Item.GetGlobalItem<ItemDataItem>().PerkPool;
+			if (ItemData.ItemDatasByID.TryGetValue(clone.Type, out ItemData itemData) && (perkPool == null || perkPool?.Count <= 0))
+			{
+				itemData.GenerateItem(clone.Item, Main.LocalPlayer, 1500, new List<ItemPerkPool>()
+					{
+						new ItemPerkPool("Barrels", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
+						new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
+					});
+			}
+			return clone;
+        }
+    }
 }

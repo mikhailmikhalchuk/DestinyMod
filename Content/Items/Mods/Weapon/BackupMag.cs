@@ -14,7 +14,7 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         }
     }
 
-    public class BackupMagGranter : ItemModGranter
+    public class BackupMagGranter : ModItem, IItemModGranter
     {
         public override string Texture => "DestinyMod/Content/Items/Mods/Weapon/BackupMag";
 
@@ -24,10 +24,8 @@ namespace DestinyMod.Content.Items.Mods.Weapon
             Tooltip.SetDefault("Increases magazine.");
         }
 
-        public override void DestinySetDefaults()
-        {
-            ItemModType = ModifierBase.GetType<BackupMag>();
-            ItemModName = ModifierBase.GetName<BackupMag>();
-        }
+        public int ItemModType() => ModifierBase.GetType<BackupMag>();
+
+        public string ItemModName() => "Backup Mag";
     }
 }

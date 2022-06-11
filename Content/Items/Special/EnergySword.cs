@@ -136,10 +136,7 @@ namespace DestinyMod.Content.Items.Special
             PulloutTimer = 0;
 
             SoundEngine.TryGetActiveSound(Hum, out ActiveSound humResult);
-            if (humResult.IsPlaying)
-			{
-                humResult.Stop();
-			}
+            humResult?.Stop();
         }
 
         public override ItemPlayer.IterationContext PostUpdateRunSpeedsContext(Player player) => ItemPlayer.IterationContext.HeldItem;

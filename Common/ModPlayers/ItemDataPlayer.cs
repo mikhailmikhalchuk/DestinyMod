@@ -1,9 +1,11 @@
 ﻿using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items;
+using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Catalysts;
 using DestinyMod.Content.Items.Mods.Weapon;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -120,6 +122,22 @@ namespace DestinyMod.Common.ModPlayers
             if (Recoil > 0)
             {
                 Recoil--;
+            }
+        }
+
+        public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)
+        {
+            if (item.ModItem is IItemModGranter modGranter)
+            {
+                ItemDataPlayer itemDataPlayer = Player.GetModPlayer<ItemDataPlayer>();
+                if (itemDataPlayer.UnlockedMods.Contains(modGranter.ItemModType()))
+                {
+                    return;
+                }
+
+                itemDataPlayer.UnlockedMods.Add(modGranter.ItemModType());
+                Main.NewText($"Unlocked [c/0092E0:{modGranter.ItemModName()}]! You can now socket this mod in any compatible item.", Color.LimeGreen);
+                item.TurnToAir();
             }
         }
 
