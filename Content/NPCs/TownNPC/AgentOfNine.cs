@@ -14,13 +14,14 @@ using DestinyMod.Common.NPCs.NPCTypes;
 using DestinyMod.Content.Currencies;
 using Terraria.GameContent.Bestiary;
 using Terraria.DataStructures;
+using DestinyMod.Content.Items.Mods.Weapon;
 
 namespace DestinyMod.Content.NPCs.TownNPC
 {
 	[AutoloadHead]
 	public class AgentOfNine : GenericTownNPC
 	{
-		public static List<NPCShopData> Shop = new List<NPCShopData>();
+		private static List<NPCShopData> Shop = new List<NPCShopData>();
 
 		public override void DestinySetStaticDefaults()
 		{
@@ -94,6 +95,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public static void CreateNewShop()
 		{
+			Shop.Clear();
 			NPCShopData shopData = new NPCShopData();
 			switch (Main.rand.Next(3))
 			{
@@ -115,7 +117,27 @@ namespace DestinyMod.Content.NPCs.TownNPC
 					shopData.ItemPrice = 1;
 					break;
 			}
+
 			Shop.Add(shopData);
+			List<int> modList = new List<int>()
+			{
+				ModContent.ItemType<BackupMagGranter>(),
+				ModContent.ItemType<BossSpecGranter>(),
+				ModContent.ItemType<MinorSpecGranter>()
+			};
+
+			for (int i = 20; i < 23; i++)
+            {
+				NPCShopData slot = new NPCShopData()
+				{
+					ItemSlot = i
+				};
+
+				int rand = Main.rand.Next(0, modList.Count);
+				slot.ItemType = modList[rand];
+				modList.RemoveAt(rand);
+				Shop.Add(slot);
+			}
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2)
@@ -150,10 +172,19 @@ namespace DestinyMod.Content.NPCs.TownNPC
 					continue;
 				}
 
-				shop.item[nextSlot].SetDefaults(shopItemData.ItemType);
-				shop.item[nextSlot].shopSpecialCurrency = shopItemData.ItemCurrency;
-				shop.item[nextSlot].shopCustomPrice = shopItemData.ItemPrice;
-				nextSlot++;
+				if (shopItemData.ItemSlot == -1)
+                {
+					shop.item[nextSlot].SetDefaults(shopItemData.ItemType);
+					shop.item[nextSlot].shopSpecialCurrency = shopItemData.ItemCurrency;
+					shop.item[nextSlot].shopCustomPrice = shopItemData.ItemPrice;
+					nextSlot++;
+				}
+				else
+                {
+					shop.item[shopItemData.ItemSlot].SetDefaults(shopItemData.ItemType);
+					shop.item[shopItemData.ItemSlot].shopSpecialCurrency = shopItemData.ItemCurrency;
+					shop.item[shopItemData.ItemSlot].shopCustomPrice = shopItemData.ItemPrice;
+				}
 			}
 		}
 
@@ -183,7 +214,7 @@ namespace DestinyMod.Content.NPCs.TownNPC
 
 		public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)
 		{
-			scale = 0.5f;
+			scale = 1f;
 			item = ModContent.ItemType<UniversalRemote>();
 			closeness = 20;
 		}

@@ -1,3 +1,4 @@
+using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.Items.Modifiers;
 using Terraria;
@@ -29,7 +30,7 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         public override void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => Function(target, ref damage);
     }
 
-    public class BossSpecGranter : ModItem, IItemModGranter
+    public class BossSpecGranter : DestinyModItem, IItemModGranter
     {
         public override string Texture => "DestinyMod/Content/Items/Mods/Weapon/BossSpec";
 
@@ -37,6 +38,11 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         {
             DisplayName.SetDefault("Boss Spec");
             Tooltip.SetDefault("Increases damage against bosses and vehicles.");
+        }
+
+        public override void DestinySetDefaults()
+        {
+            Item.value = 30000;
         }
 
         public int ItemModType() => ModifierBase.GetType<BossSpec>();

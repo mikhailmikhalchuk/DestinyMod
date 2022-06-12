@@ -1,3 +1,4 @@
+using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.Items.Modifiers;
 using Terraria;
@@ -31,7 +32,7 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         public override void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => Function(target, ref damage);
     }
 
-    public class MinorSpecGranter : ModItem, IItemModGranter
+    public class MinorSpecGranter : DestinyModItem, IItemModGranter
     {
         public override string Texture => "DestinyMod/Content/Items/Mods/Weapon/MinorSpec";
 
@@ -39,6 +40,11 @@ namespace DestinyMod.Content.Items.Mods.Weapon
         {
             DisplayName.SetDefault("Minor Spec");
             Tooltip.SetDefault("Deals extra damage against rank-and-file enemies.");
+        }
+
+        public override void DestinySetDefaults()
+        {
+            Item.value = 30000;
         }
 
         public int ItemModType() => ModifierBase.GetType<MinorSpec>();

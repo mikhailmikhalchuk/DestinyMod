@@ -17,7 +17,7 @@ namespace DestinyMod.Content.UI.MouseText
 
 		public override Color BackgroundColor_Default => new Color(10, 10, 10) * CommonOpacity;
 
-		public MouseText_LineText(string text = null, Keys key = Keys.F)
+		public MouseText_LineText(string text = null)
 		{
 			UpdateText(text ?? string.Empty);
 			WidthPercentage = 1f;
