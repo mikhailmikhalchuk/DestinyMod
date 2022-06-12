@@ -167,7 +167,8 @@ namespace DestinyMod.Common.GlobalItems
             if (Recoil >= 0)
             {
                 ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            
+
+                itemDataPlayer.OldWeaponBounce = itemDataPlayer.WeaponUseBounce;
                 float recoilInRadians = MathHelper.ToRadians(itemDataPlayer.WeaponUseBounce);
                 if (player.direction < 0)
                 {
@@ -188,6 +189,9 @@ namespace DestinyMod.Common.GlobalItems
                     recoilAdjustment *= -1;
                 }
                 itemDataPlayer.WeaponUseBounce += recoilAdjustment;
+                itemDataPlayer.ResetBounceTimer = 0;
+                itemDataPlayer.ResetBounceThreshold = item.useAnimation * 2;
+                //Main.NewText("Current Recoil: " + itemDataPlayer.WeaponUseBounce + " Old Recoil: " + itemDataPlayer.OldWeaponBounce + " Delta: " + recoilAdjustment);
             }
 
             return true;

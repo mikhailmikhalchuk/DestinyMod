@@ -18,10 +18,16 @@ namespace DestinyMod.Common.ModPlayers
     {
         public int LightLevel;
 
+        public float OldWeaponBounce;
+
         /// <summary>
         /// Used for weapon recoil "bouncing" calculation (weapon rotational deviation on use).
         /// </summary>
         public float WeaponUseBounce;
+
+        public int ResetBounceTimer;
+
+        public int ResetBounceThreshold = 60;
 
         protected override bool CloneNewInstances => false;
 
@@ -122,9 +128,34 @@ namespace DestinyMod.Common.ModPlayers
         {
             LightLevel = 0;
 
+            if (++ResetBounceTimer > ResetBounceThreshold)
+            {
+                WeaponUseBounce = 0;
+                ResetBounceThreshold = 60;
+            }
+
             if (WeaponUseBounce > 0)
             {
                 WeaponUseBounce--;
+
+                WeaponUseBounce -= ResetBounceTimer / 10;
+
+                if (WeaponUseBounce < 0)
+                {
+                    WeaponUseBounce = 0;
+                }
+            }
+
+            if (WeaponUseBounce < 0)
+            {
+                WeaponUseBounce++;
+
+                WeaponUseBounce += ResetBounceTimer / 10;
+
+                if (WeaponUseBounce > 0)
+                {
+                    WeaponUseBounce = 0;
+                }
             }
         }
 
