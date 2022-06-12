@@ -118,7 +118,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 				for (int i = 1; i < inspectedItem.PerkPool.Count; i++)
 				{
 					UISeparator perkSeparator = new UISeparator();
-					perkSeparator.Left.Pixels = ItemPerk.TextureSize * (4f / 3f) * i;
+					perkSeparator.Left.Pixels = ItemPerk.TextureSize * (5f / 3f) * i - (ItemPerk.TextureSize / 3f);
 					perkSeparator.Top.Pixels = 28;
 					perkSeparator.Width.Pixels = 2f;
 					perkSeparator.Height.Pixels = lowestPerkPosition - 20 + ItemPerk.TextureSize;

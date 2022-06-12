@@ -34,7 +34,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			{
 				new ItemPerkPool("Barrel", ModContent.GetInstance<ArrowheadBrake>()),
 				new ItemPerkPool("Magazine", ModContent.GetInstance<AccurizedRounds>()),
-				new ItemPerkPool("Amongus", ModContent.GetInstance<AccurizedRounds>()),
+				new ItemPerkPool("Amongus", ModContent.GetInstance<AccurizedRounds>()), // https://www.reddit.com/r/ComedyNecrophilia/comments/v77n45/soos/
 				new ItemPerkPool("Trait", ModContent.GetInstance<HighCaliberRounds>())
 			};
 		}
