@@ -1,5 +1,5 @@
-using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Common.ModPlayers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
@@ -16,12 +16,12 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
 
         public override void Update(Player player)
         {
-            if (SocketedItem == null)
+            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
+            if (itemDataPlayer.Stability < 0)
             {
                 return;
             }
-
-            SocketedItem.GetGlobalItem<ItemDataItem>().Stability += 10;
+            itemDataPlayer.Stability += 10;
         }
     }
 }

@@ -40,10 +40,9 @@ namespace DestinyMod.Content.UI.ItemDetails
             spriteBatch.Draw(PerkTexture.Value, GetDimensions().ToRectangle(), Color.White);
         }
 
-        public void ToggleActive(Item socketedIn)
+        public void ToggleActive()
         {
             IsActive = true;
-            ItemPerk.SocketedItem = socketedIn;
 
             foreach (ItemPerkDisplay itemPerkDisplay in InterconnectedPerks)
             {

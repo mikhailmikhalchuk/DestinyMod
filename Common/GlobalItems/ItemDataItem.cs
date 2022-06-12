@@ -156,13 +156,43 @@ namespace DestinyMod.Common.GlobalItems
 
         public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            if (Stability >= 0)
+            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
+
+            if (itemDataPlayer.Stability >= 0)
             {
-                velocity = velocity.RotatedByRandom(MathHelper.ToRadians((100 - Stability) * 0.2f));
+                velocity = velocity.RotatedByRandom(MathHelper.ToRadians((100 - itemDataPlayer.Stability) * 0.2f));
+            }
+
+            if (itemDataPlayer.Recoil >= 0)
+            {
+                itemDataPlayer.OldWeaponBounce = itemDataPlayer.WeaponUseBounce;
+                float recoilInRadians = MathHelper.ToRadians(itemDataPlayer.WeaponUseBounce);
+                if (player.direction < 0)
+                {
+                    recoilInRadians *= -1;
+                }
+                velocity = velocity.RotatedBy(recoilInRadians);
+
+                player.itemRotation = velocity.ToRotation();
+
+                if (player.direction < 0)
+                {
+                    player.itemRotation = MathHelper.WrapAngle(player.itemRotation + MathHelper.Pi);
+                }
+
+                float recoilAdjustment = Recoil * 0.05f + item.useTime;
+                if (Recoil % 2 != 0)
+                {
+                    recoilAdjustment *= -1;
+                }
+                itemDataPlayer.WeaponUseBounce += recoilAdjustment;
+                itemDataPlayer.ResetBounceTimer = 0;
+                itemDataPlayer.ResetBounceThreshold = item.useAnimation * 2;
+                Main.NewText(itemDataPlayer.Range + " | " + itemDataPlayer.Stability + " | " + itemDataPlayer.Recoil);
             }
         }
 
-        public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        /*public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Recoil >= 0)
             {
@@ -196,15 +226,15 @@ namespace DestinyMod.Common.GlobalItems
 
             return true;
 
-            /*int recVal = ItemData.CalculateRecoil(Recoil);
+            int recVal = ItemData.CalculateRecoil(Recoil);
             Vector2 newVel = velocity.RotatedByRandom(MathHelper.ToRadians(recVal / 10));
             if (newVel.Y > Recoil)
             {
                 newVel.Y = 0; // Why? - Plan is to have item spread according to the pinned recoil summary in developer chat
             }
             Projectile.NewProjectile(source, position, newVel, type, damage, knockback, player.whoAmI);
-            return false;*/
-        }
+            return false;
+        }*/
 
         #region Drawing
 
@@ -302,8 +332,14 @@ namespace DestinyMod.Common.GlobalItems
 
                     if (ModAndPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
                     {
-                        itemPerk.SocketedItem = item;
-                        ActivePerks.Add(itemPerk);
+                        if (itemPerk.IsInstanced)
+                        {
+                            ActivePerks.Add(ItemPerk.CreateInstance(itemPerk.Name));
+                        }
+                        else
+                        {
+                            ActivePerks.Add(itemPerk);
+                        }
                     }
                     else
                     {
@@ -346,10 +382,12 @@ namespace DestinyMod.Common.GlobalItems
                     List<ItemPerk> perks = new List<ItemPerk>();
                     foreach (string perk in perkPool)
                     {
-                        if (ModAndPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
+                        if (!ModAndPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
                         {
-                            perks.Add(itemPerk);
+                            continue;
                         }
+
+                        perks.Add(itemPerk);
                     }
 
                     PerkPool.Add(new ItemPerkPool(perkPoolNamesSaved[index], perks.ToArray()));
@@ -415,8 +453,8 @@ namespace DestinyMod.Common.GlobalItems
                 caller.Player.QuickSpawnItem(new EntitySource_WorldEvent(), 
                     mtteData.GenerateItem(caller.Player, lightLevel, new List<ItemPerkPool>()
                     {
-                        new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>()),
-                        new ItemPerkPool("Traits", ModContent.GetInstance<HighCaliberRounds>())
+                        new ItemPerkPool("Barrels", ModifierBase.CreateInstanceOf<ArrowheadBrake>()),
+                        new ItemPerkPool("Traits", ModifierBase.CreateInstanceOf<HighCaliberRounds>())
                     })
                 );
             }

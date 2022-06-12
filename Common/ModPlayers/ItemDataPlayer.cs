@@ -4,7 +4,6 @@ using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Catalysts;
 using DestinyMod.Content.Items.Mods.Weapon;
-using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +16,30 @@ namespace DestinyMod.Common.ModPlayers
     public class ItemDataPlayer : ModPlayer
     {
         public int LightLevel;
+
+        private int RangeInternal = -1;
+
+        public int Range
+        {
+            get => RangeInternal;
+            set => RangeInternal = Utils.Clamp(value, 0, 100);
+        }
+
+        private int StabilityInternal = -1;
+
+        public int Stability
+        {
+            get => StabilityInternal;
+            set => StabilityInternal = Utils.Clamp(value, 0, 100);
+        }
+
+        private int RecoilInternal = -1;
+
+        public int Recoil
+        {
+            get => RecoilInternal;
+            set => RecoilInternal = Utils.Clamp(value, 0, 100);
+        }
 
         public float OldWeaponBounce;
 
@@ -127,6 +150,9 @@ namespace DestinyMod.Common.ModPlayers
         public override void ResetEffects()
         {
             LightLevel = 0;
+            RangeInternal = -1;
+            StabilityInternal = -1;
+            RecoilInternal = -1;
 
             if (++ResetBounceTimer > ResetBounceThreshold)
             {
@@ -181,22 +207,6 @@ namespace DestinyMod.Common.ModPlayers
         {
             int itemsConsidered = 0;
 
-            foreach (Item armorItem in Player.armor)
-            {
-                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData) || armorItemData.LightLevel < ItemData.MaximumLightLevel)
-                {
-                    continue;
-                }
-
-                itemsConsidered++;
-                LightLevel += Utils.Clamp(armorItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
-
-                foreach (ModifierBase modifier in armorItemData.AllItemModifiers(Player))
-                {
-                    modifier?.Update(Player);
-                }
-            }
-
             Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
             if (heldItem != null && !heldItem.IsAir && heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
             {
@@ -214,8 +224,27 @@ namespace DestinyMod.Common.ModPlayers
 
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
+                Range = heldItemData.Range;
+                Stability = heldItemData.Stability;
+                Recoil = heldItemData.Recoil;
 
                 foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
+                {
+                    modifier?.Update(Player);
+                }
+            }
+
+            foreach (Item armorItem in Player.armor)
+            {
+                if (armorItem == null || armorItem.IsAir || !armorItem.TryGetGlobalItem(out ItemDataItem armorItemData) || armorItemData.LightLevel < ItemData.MaximumLightLevel)
+                {
+                    continue;
+                }
+
+                itemsConsidered++;
+                LightLevel += Utils.Clamp(armorItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
+
+                foreach (ModifierBase modifier in armorItemData.AllItemModifiers(Player))
                 {
                     modifier?.Update(Player);
                 }

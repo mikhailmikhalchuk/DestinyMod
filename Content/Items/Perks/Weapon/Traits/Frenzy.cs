@@ -1,5 +1,5 @@
-using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Common.ModPlayers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Traits
@@ -13,6 +13,8 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
         private int _prevLife;
 
         private bool _apply;
+
+        public override bool IsInstanced => true;
 
         public override void SetDefaults()
         {
@@ -44,10 +46,12 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
 
         public override void Update(Player player)
         {
-            if (_apply && SocketedItem != null)
+            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
+            if (_apply && itemDataPlayer.Recoil >= 0)
             {
-                SocketedItem.GetGlobalItem<ItemDataItem>().Recoil += 50;
+                itemDataPlayer.Recoil += 50;
             }
+
             if (_hitTimer > 0)
             {
                 _hitTimer--;

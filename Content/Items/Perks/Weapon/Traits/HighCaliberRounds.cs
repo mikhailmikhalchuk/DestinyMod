@@ -1,5 +1,6 @@
 using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Common.ModPlayers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Traits
@@ -17,12 +18,11 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
 
         public override void Update(Player player)
         {
-            if (SocketedItem == null)
+            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
+            if (itemDataPlayer.Range >= 0)
             {
-                return;
+                itemDataPlayer.Range += 5;
             }
-
-            SocketedItem.GetGlobalItem<ItemDataItem>().Range += 5;
         }
     }
 }

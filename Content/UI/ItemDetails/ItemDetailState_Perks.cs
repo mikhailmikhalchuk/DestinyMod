@@ -99,7 +99,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 							{
 								return;
 							}
-							perk.ToggleActive(ItemDetailsState.InspectedItem);
+
+							perk.ToggleActive();
 							SyncActivePerks();
 							SoundEngine.PlaySound(SoundID.Grab);
 						};
@@ -159,13 +160,20 @@ namespace DestinyMod.Content.UI.ItemDetails
 			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
 			inspectedItemData.ActivePerks.Clear();
 			foreach (ItemPerkDisplay itemPerk in ItemPerks)
-            {
+			{
 				if (!itemPerk.IsActive)
-                {
+				{
 					continue;
-                }
+				}
 
-				inspectedItemData.ActivePerks.Add(itemPerk.ItemPerk);
+				if (itemPerk.ItemPerk.IsInstanced)
+				{
+					inspectedItemData.ActivePerks.Add(ItemPerk.CreateInstance(itemPerk.ItemPerk.Name));
+				}
+				else
+				{
+					inspectedItemData.ActivePerks.Add(itemPerk.ItemPerk);
+				}
             }
         }
 	}

@@ -299,18 +299,6 @@ namespace DestinyMod.Common.Items
             return start;
         }
 
-        public static Vector2 AccountForRecoil(Player player, Vector2 velocity)
-        {
-            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            float recoilInRadians = MathHelper.ToRadians(itemDataPlayer.OldWeaponBounce);
-            if (player.direction < 0)
-            {
-                recoilInRadians *= -1;
-            }
-            velocity = velocity.RotatedBy(recoilInRadians);
-            return velocity;
-        }
-
         public static int CalculateRecoil(int recoil) => (int)Math.Round(Math.Sin((recoil + 5) * (MathHelper.TwoPi / 20)) * (100 - recoil));
     }
 }

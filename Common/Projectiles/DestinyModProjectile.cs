@@ -1,5 +1,6 @@
 using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.GlobalProjectiles;
+using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using System;
@@ -150,9 +151,9 @@ namespace DestinyMod.Common.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (source is EntitySource_ItemUse_WithAmmo itemSource)
+            if (source is EntitySource_ItemUse_WithAmmo itemSource && itemSource.Entity is Player player)
             {
-                ProjectileRange = itemSource.Item.GetGlobalItem<ItemDataItem>().Range;
+                ProjectileRange = player.GetModPlayer<ItemDataPlayer>().Range;
             }
         }
 
