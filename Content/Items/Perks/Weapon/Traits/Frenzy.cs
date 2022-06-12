@@ -1,3 +1,4 @@
+using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items.Modifiers;
 using Terraria;
 
@@ -16,7 +17,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
         public override void SetDefaults()
         {
             DisplayName = "Frenzy";
-            Description = "Being in combat for an extended time increases this weapon's damage and firing speed until you are out of combat.";
+            Description = "Being in combat for an extended time increases this weapon's damage, firing speed, and controls recoil until you are out of combat.";
         }
 
         public void Function(Player player, NPC target, ref int damage)
@@ -43,6 +44,10 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
 
         public override void Update(Player player)
         {
+            if (_apply && SocketedItem != null)
+            {
+                SocketedItem.GetGlobalItem<ItemDataItem>().Recoil += 50;
+            }
             if (_hitTimer > 0)
             {
                 _hitTimer--;

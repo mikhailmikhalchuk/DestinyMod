@@ -64,7 +64,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.penetrate = -1;
         }
 
-		public override bool PreAI()
+		public override bool DestinyPreAI()
 		{
             if (!SwappedData)
 			{
@@ -152,7 +152,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
             Player player = Main.player[Projectile.owner];
             Vector2 perturbedSpeed = (10 * Projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
-            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), new Vector2(Projectile.position.X, Projectile.position.Y - 5), perturbedSpeed, UtilisedProjectileType, Projectile.damage, Projectile.knockBack, player.whoAmI);
+            Projectile p = Projectile.NewProjectileDirect(player.GetSource_ItemUse(player.HeldItem), new Vector2(Projectile.position.X, Projectile.position.Y - 5), perturbedSpeed, UtilisedProjectileType, Projectile.damage, Projectile.knockBack, player.whoAmI);
+            p.extraUpdates = 2;
             FireDelay = 4;
         }
 

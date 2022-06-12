@@ -4,14 +4,14 @@ using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
 {
-    public class BarrelShroud : ItemPerk
+    public class FlutedBarrel : ItemPerk
     {
         public override void SetDefaults()
         {
-            DisplayName = "Barrel Shroud";
-            Description = "Balanced shotgun barrel."
-                + "\n- Increases stability"
-                + "\n- Increases bullet speed";
+            DisplayName = "Fluted Barrel";
+            Description = "Ultra-light barrel."
+                + "\n- Greatly increases bullet speed"
+                + "\n- Slightly increases stability";
         }
 
         public override void Update(Player player)
@@ -21,7 +21,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
                 return;
             }
 
-            SocketedItem.GetGlobalItem<ItemDataItem>().Stability += 10;
+            SocketedItem.GetGlobalItem<ItemDataItem>().Stability += 5;
         }
     }
 }

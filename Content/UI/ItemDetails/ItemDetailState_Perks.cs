@@ -99,7 +99,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 							{
 								return;
 							}
-							perk.ToggleActive();
+							perk.ToggleActive(ItemDetailsState.InspectedItem);
 							SyncActivePerks();
 							SoundEngine.PlaySound(SoundID.Grab);
 						};

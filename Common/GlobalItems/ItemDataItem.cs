@@ -31,10 +31,16 @@ namespace DestinyMod.Common.GlobalItems
 
         public int Stability = -1; // Spread
 
-        public int Handling = -1; // Recoil
+        public int Recoil = -1; // Recoil
 
+        /// <summary>
+        /// The list of perks that are currently active on this weapon.
+        /// </summary>
         public IList<ItemPerk> ActivePerks;
 
+        /// <summary>
+        /// The list of mods socketed on this item.
+        /// </summary>
         public IList<ItemMod> ItemMods;
 
         public int ItemCatalyst = -1;
@@ -91,7 +97,7 @@ namespace DestinyMod.Common.GlobalItems
 
                 Range = itemData.DefaultRange;
                 Stability = itemData.DefaultStability;
-                Handling = itemData.DefaultHandling;
+                Recoil = itemData.DefaultRecoil;
 
                 ItemCatalyst = itemData.ItemCatalyst;
 
@@ -148,13 +154,21 @@ namespace DestinyMod.Common.GlobalItems
             }
         }
 
+        public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            if (Stability >= 0)
+            {
+                velocity = velocity.RotatedByRandom(MathHelper.ToRadians((100 - Stability) * 0.2f));
+            }
+        }
+
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Handling >= 0)
+            if (Recoil >= 0)
             {
                 ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
             
-                float recoilInRadians = MathHelper.ToRadians(itemDataPlayer.Recoil);
+                float recoilInRadians = MathHelper.ToRadians(itemDataPlayer.WeaponUseBounce);
                 if (player.direction < 0)
                 {
                     recoilInRadians *= -1;
@@ -168,25 +182,12 @@ namespace DestinyMod.Common.GlobalItems
                     player.itemRotation = MathHelper.WrapAngle(player.itemRotation + MathHelper.Pi);
                 }
 
-                float recoilAdjustment = Handling * 0.05f + item.useTime;
-                if (Handling % 2 != 0)
+                float recoilAdjustment = Recoil * 0.05f + item.useTime;
+                if (Recoil % 2 != 0)
                 {
                     recoilAdjustment *= -1;
                 }
-                itemDataPlayer.Recoil += recoilAdjustment;
-            }
-
-            if (Stability >= 0)
-            {
-                velocity = velocity.RotatedByRandom(MathHelper.ToRadians(Stability * 0.45f));
-            }
-
-            if (Range >= 0)
-            {
-                Projectile projectile = Main.projectile[Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI)];
-                HandleRange handleRange = projectile.GetGlobalProjectile<HandleRange>();
-                handleRange.ProjectileRange = Range;
-                return false;
+                itemDataPlayer.WeaponUseBounce += recoilAdjustment;
             }
 
             return true;
@@ -297,6 +298,7 @@ namespace DestinyMod.Common.GlobalItems
 
                     if (ModAndPerkLoader.ItemPerksByName.TryGetValue(perk, out ItemPerk itemPerk))
                     {
+                        itemPerk.SocketedItem = item;
                         ActivePerks.Add(itemPerk);
                     }
                     else

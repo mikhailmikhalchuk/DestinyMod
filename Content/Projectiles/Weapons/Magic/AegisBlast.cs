@@ -29,7 +29,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
             Projectile.timeLeft = 200;
         }
 
-        public override bool PreAI()
+        public override bool DestinyPreAI()
         {
             Player player = Main.player[Projectile.owner];
             ItemPlayer itemPlayer = player.GetModPlayer<ItemPlayer>();

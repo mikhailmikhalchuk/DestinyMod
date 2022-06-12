@@ -4,14 +4,14 @@ using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
 {
-    public class ChamberedCompensator : ItemPerk
+    public class FullBore : ItemPerk
     {
         public override void SetDefaults()
         {
-            DisplayName = "Chambered Compensator";
-            Description = "Stable barrel attachment."
-                + "\n- Increases stability"
-                + "\n- Moderately controls recoil"
+            DisplayName = "Full Bore";
+            Description = "Barrel optimized for distance."
+                + "\n- Greatly increases range"
+                + "\n- Decreases stability"
                 + "\n- Slightly decreases bullet speed";
         }
 
@@ -22,8 +22,8 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
                 return;
             }
 
-            SocketedItem.GetGlobalItem<ItemDataItem>().Stability += 10;
-            SocketedItem.GetGlobalItem<ItemDataItem>().Recoil += 10;
+            SocketedItem.GetGlobalItem<ItemDataItem>().Range += 15;
+            SocketedItem.GetGlobalItem<ItemDataItem>().Stability -= 10;
         }
     }
 }

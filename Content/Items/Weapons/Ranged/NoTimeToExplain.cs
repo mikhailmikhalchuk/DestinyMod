@@ -9,6 +9,7 @@ using Terraria.Audio;
 using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.Magazines;
 using DestinyMod.Content.Items.Perks.Weapon.Traits;
 using DestinyMod.Content.Items.Catalysts;
 
@@ -23,16 +24,18 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Tooltip.SetDefault("Three round burst"
 				+ "\n'A single word etched onto the inside of the weapon's casing: Now.'");
 
-			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 0);
-			hakkeItemData.Recoil = 10;
-			hakkeItemData.ItemCatalyst = ModifierBase.GetType<NoTimeToExplainCatalyst>();
-			hakkeItemData.GeneratePerkPool = () =>
+			ItemData ntteItemData = ItemData.InitializeNewItemData(Type, 1370, null, 0);
+			ntteItemData.DefaultImpact = 33;
+			ntteItemData.DefaultRange = 70;
+			ntteItemData.DefaultStability = 55;
+			ntteItemData.DefaultRecoil = 90;
+			ntteItemData.ItemCatalyst = ModifierBase.GetType<NoTimeToExplainCatalyst>();
+			ntteItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
 			{
-				return new List<ItemPerkPool>()
-				{
-					new ItemPerkPool("Barrels", ModContent.GetInstance<ArrowheadBrake>()),
-					new ItemPerkPool("Traits", ModContent.GetInstance<HighCaliberRounds>())
-				};
+				new ItemPerkPool("Barrel", ModContent.GetInstance<ArrowheadBrake>()),
+				new ItemPerkPool("Magazine", ModContent.GetInstance<AccurizedRounds>()),
+				new ItemPerkPool("Amongus", ModContent.GetInstance<AccurizedRounds>()),
+				new ItemPerkPool("Trait", ModContent.GetInstance<HighCaliberRounds>())
 			};
 		}
 

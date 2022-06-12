@@ -9,6 +9,8 @@ using DestinyMod.Common.GlobalItems;
 using DestinyMod.Content.Items.Mods;
 using Microsoft.Xna.Framework;
 using System.Linq;
+using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.Traits;
 
 namespace DestinyMod.Common.Items
 {
@@ -54,17 +56,38 @@ namespace DestinyMod.Common.Items
         /// </summary>
         public bool Shaderable = true;
 
-        public int DefaultImpact = -1; // Damage
+        public int DefaultImpact = 0; // Damage
 
-        public int DefaultRange = -1; // Range
+        public int DefaultRange = 0; // Range
 
-        public int DefaultStability = -1; // Spread
+        public int DefaultStability = 0; // Spread
 
-        public int DefaultHandling = -1; // Recoil
+        public int DefaultRecoil = 0; // Recoil
 
-        public int DefaultReloadSpeed = -1; // Mag Soon!
+        public int DefaultReloadSpeed = 0; // Mag Soon!
 
-        public int Recoil;
+        public static readonly ItemPerk[] AutoRifleBarrels = new ItemPerk[]
+        {
+            ModContent.GetInstance<ArrowheadBrake>(),
+            ModContent.GetInstance<BarrelShroud>(),
+            ModContent.GetInstance<ChamberedCompensator>(),
+        };
+
+        public static readonly ItemPerk[] AllLauncherBarrels = new ItemPerk[]
+        {
+            
+        };
+
+        public static readonly ItemPerk[] AllTraits = new ItemPerk[]
+        {
+            ModContent.GetInstance<Frenzy>(),
+            ModContent.GetInstance<HighCaliberRounds>()
+        };
+
+        public static readonly ItemPerk[] AllHafts = new ItemPerk[]
+        {
+            
+        };
 
         /// <summary>
         /// A dictionary of all item types mapped to their relevant data.

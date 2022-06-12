@@ -6,6 +6,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using DestinyMod.Common.Items;
+using System.Collections.Generic;
+using DestinyMod.Common.Items.Modifiers;
+using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.Traits;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
@@ -16,6 +21,12 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			DisplayName.SetDefault("Salvager's Salvo");
 			Tooltip.SetDefault("Grenades fired will explode when the fire button is released"
 				+ "\n'The only way out is through.'");
+			ItemData salvagersItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1);
+			salvagersItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
+			{
+				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
+				new ItemPerkPool("Trait", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
+			};
 		}
 
 		public override void DestinySetDefaults()

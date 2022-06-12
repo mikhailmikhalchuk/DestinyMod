@@ -18,7 +18,10 @@ namespace DestinyMod.Common.ModPlayers
     {
         public int LightLevel;
 
-        public float Recoil;
+        /// <summary>
+        /// Used for weapon recoil "bouncing" calculation (weapon rotational deviation on use).
+        /// </summary>
+        public float WeaponUseBounce;
 
         protected override bool CloneNewInstances => false;
 
@@ -119,9 +122,9 @@ namespace DestinyMod.Common.ModPlayers
         {
             LightLevel = 0;
 
-            if (Recoil > 0)
+            if (WeaponUseBounce > 0)
             {
-                Recoil--;
+                WeaponUseBounce--;
             }
         }
 
@@ -170,6 +173,13 @@ namespace DestinyMod.Common.ModPlayers
                 {
                     return;
                 }*/
+
+                if (ItemData.ItemDatasByID != null && ItemData.ItemDatasByID.TryGetValue(heldItem.type, out ItemData itemData))
+                {
+                    heldItemData.Range = itemData.DefaultRange;
+                    heldItemData.Stability = itemData.DefaultStability;
+                    heldItemData.Recoil = itemData.DefaultRecoil;
+                }
 
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);

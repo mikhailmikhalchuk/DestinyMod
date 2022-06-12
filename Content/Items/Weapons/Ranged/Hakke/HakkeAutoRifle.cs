@@ -9,6 +9,7 @@ using DestinyMod.Common.Items;
 using System.Collections.Generic;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
 using DestinyMod.Content.Items.Perks.Weapon.Traits;
+using Terraria.DataStructures;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
@@ -18,14 +19,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 		{
 			base.SetStaticDefaults();
 			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1);
-			hakkeItemData.Recoil = -1;
-			hakkeItemData.DefaultRange = -1;
-			hakkeItemData.DefaultStability = -1;
-			hakkeItemData.DefaultHandling = -1;
 			hakkeItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
 			{
-				new ItemPerkPool("Barrels", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
-				new ItemPerkPool("Traits", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
+				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
+				new ItemPerkPool("Trait", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
 			};
 		}
 
@@ -44,7 +41,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			SpreadRadians = MathHelper.ToRadians(5);
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(-10, -2);
+        public override Vector2? HoldoutOffset() => new Vector2(-10, -2);
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ModContent.ItemType<RelicIron>(), 45)
