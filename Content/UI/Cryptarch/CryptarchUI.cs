@@ -87,10 +87,8 @@ namespace DestinyMod.Content.UI.Cryptarch
 				output.Add(ModContent.ItemType<OmolonAutoRifle>(),
 					ModContent.ItemType<OmolonPulseRifle>(),
 					ModContent.ItemType<OmolonScoutRifle>(),
-					ModContent.ItemType<OmolonShotgun>(),
 					ModContent.ItemType<OmolonSidearm>(),
 					ModContent.ItemType<OmolonSniper>(),
-					ModContent.ItemType<OmolonRocketLauncher>(),
 					ModContent.ItemType<OmolonGrenadeLauncher>(),
 					ModContent.ItemType<OmolonHandcannon>());
 			}

@@ -23,7 +23,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 			Item.shootSpeed = 300f;
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(-10, 3);
+		public override Vector2? HoldoutOffset() => new Vector2(-10, -1);
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ItemID.SoulofNight, 5)

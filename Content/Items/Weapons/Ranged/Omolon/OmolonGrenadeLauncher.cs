@@ -32,7 +32,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Omolon
 			return false;
 		}
 
-		public override Vector2? HoldoutOffset() => new Vector2(-10, -5);
+		public override Vector2? HoldoutOffset() => new Vector2(-8, -3);
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ItemID.SoulofLight, 15)
