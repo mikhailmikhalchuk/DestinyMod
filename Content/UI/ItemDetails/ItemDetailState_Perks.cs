@@ -68,7 +68,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 					for (int perkIndexer = 0; perkIndexer < perkTypePool.Perks.Count; perkIndexer++)
 					{
 						ItemPerk perkInQuestion = perkTypePool.Perks[perkIndexer];
-						bool isPerkActive = inspectedItem.ActivePerks.Contains(perkInQuestion);
+						bool isPerkActive = inspectedItem.ActivePerks.FirstOrDefault(perk => perk.Name == perkInQuestion.Name) != null;
 						ItemPerkDisplay perk = new ItemPerkDisplay(perkInQuestion, isPerkActive);
 						perk.Left.Pixels = ItemPerk.TextureSize * (5f / 3f) * i;
 						perk.Top.Pixels = 28 + ItemPerk.TextureSize * (6f / 5f) * perkIndexer;

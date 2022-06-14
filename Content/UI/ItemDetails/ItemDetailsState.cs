@@ -48,6 +48,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public ItemDetailState_Customization Customization { get; private set; }
 
+		public ItemDetailState_ItemStats Stats { get; private set; }
+
 		public MouseText_TitleAndSubtitle MouseText_TitleAndSubtitle { get; private set; }
 
 		public MouseText_BodyText MouseText_BodyText { get; private set; }
@@ -143,19 +145,15 @@ namespace DestinyMod.Content.UI.ItemDetails
 			MasterBackground.Append(Customization);
 			top += (int)Customization.Height.Pixels + 8;
 
+			Stats = new ItemDetailState_ItemStats(this)
+			{
+				Visible = true
+			};
+			Stats.Left.Pixels = MasterBackground.Width.Pixels - 10 - Stats.Width.Pixels;
+			Stats.Top.Pixels = top - Stats.Height.Pixels;
+			MasterBackground.Append(Stats);
+
 			MasterBackground.Height.Pixels = top;
-
-			InspectedItemPowerLevel = new UIText(InspectedItem.GetGlobalItem<ItemDataItem>().LightLevel.ToString(), 0.7f, large: true);
-			InspectedItemPowerLevel.Left.Pixels = 375;
-			InspectedItemPowerLevel.Top.Pixels = InspectedItemLargeDisplay.Top.Pixels + InspectedItemLargeDisplay.Height.Pixels + 8;
-			InspectedItemPowerLevel.VAlign = 0.5f;
-			InspectedItemDisplay.Append(InspectedItemPowerLevel);
-
-			UIText InspectedItemPowerLevelText = new UIText("Power", 0.8f);
-			InspectedItemPowerLevelText.Left.Pixels = 440;
-			InspectedItemPowerLevelText.Top.Pixels = InspectedItemLargeDisplay.Top.Pixels + InspectedItemLargeDisplay.Height.Pixels + 13;
-			InspectedItemPowerLevelText.VAlign = 0.5f;
-			InspectedItemDisplay.Append(InspectedItemPowerLevelText);
 
 			UIImageButton CloseButton = new UIImageButton(Main.Assets.Request<Texture2D>("Images/UI/SearchCancel"));
 			CloseButton.Left.Pixels = MasterBackground.Width.Pixels - 10;

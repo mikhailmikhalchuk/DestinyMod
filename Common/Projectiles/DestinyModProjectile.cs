@@ -1,10 +1,7 @@
-using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.GlobalProjectiles;
-using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -14,10 +11,6 @@ namespace DestinyMod.Common.Projectiles
 {
 	public abstract class DestinyModProjectile : ModProjectile
 	{
-        public Vector2? StartingPosition = null;
-
-        public float ProjectileRange = -1;
-
         public sealed override void SetDefaults()
 		{
 			AutomaticSetDefaults();
@@ -114,11 +107,6 @@ namespace DestinyMod.Common.Projectiles
 
         public sealed override bool PreAI()
         {
-            if (ProjectileRange >= 0 && StartingPosition == null)
-            {
-                StartingPosition = Projectile.Center;
-            }
-
             return DestinyPreAI();
         }
 
@@ -127,35 +115,9 @@ namespace DestinyMod.Common.Projectiles
         public sealed override void ModifyDamageScaling(ref float damageScale)
         {
             DestinyModifyDamageScaling(ref damageScale);
-            if (!StartingPosition.HasValue)
-            {
-                return;
-            }
-
-            // Gets the distance travelled in whole blocks
-            Vector2 startingPosInBlocks = StartingPosition.Value.ToTileCoordinates().ToVector2();
-            Vector2 currentPosInBlocks = Projectile.Center.ToTileCoordinates().ToVector2();
-            int distanceTraversed = (int)currentPosInBlocks.Distance(startingPosInBlocks);
-
-            // Feel free to tweak the range thingamajig however you please, this implementation is expected to only be temporary
-            // Summary: Every blocks, damage drops off by 2%. The current implementation is linear for simplicity's sake
-            // I.E. 5 blocks = 90% of damage, 10 blocks = 80% of damage, 50+ blocks = 1 damage
-            // Range serves as a multiplier to that said 2%.
-            // I.E. A weapon with 0 range recieves the full dropoff, whereas 50 range recieves only half, and 100 range recieves none
-            float dropoffPreMultiplied = distanceTraversed * 0.02f;
-            float dropoffAdjusted = dropoffPreMultiplied * (1 - Math.Clamp(ProjectileRange / 100f, 0, 1));
-            damageScale = (float)Math.Clamp(1 - dropoffAdjusted, 0, double.MaxValue);
         }
 
         public virtual void DestinyModifyDamageScaling(ref float damageScale) { }
-
-        public override void OnSpawn(IEntitySource source)
-        {
-            if (source is EntitySource_ItemUse_WithAmmo itemSource && itemSource.Entity is Player player)
-            {
-                ProjectileRange = player.GetModPlayer<ItemDataPlayer>().Range;
-            }
-        }
 
         /// <summary>
         /// Fires a fusion rifle bullet, causing the current weapon to act like a fusion rifle. Should be called within <c>ModItem.Shoot()</c>
