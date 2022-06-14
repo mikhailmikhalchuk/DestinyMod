@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.Items.ItemTypes;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Yellow;
 			Item.knockBack = 0;
 			Item.useTime = 55;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/UniversalRemote");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/UniversalRemote");
 			Item.shootSpeed = 16f;
 			Item.useAnimation = 55;
 			Item.value = Item.buyPrice(gold: 1);

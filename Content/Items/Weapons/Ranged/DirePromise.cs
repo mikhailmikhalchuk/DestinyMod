@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using DestinyMod.Common.Items.ItemTypes;
 
@@ -20,7 +21,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.LightRed;
 			Item.knockBack = 0;
 			Item.useTime = 20;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/HandCannon120");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/HandCannon120");
 			Item.shootSpeed = 40f;
 			Item.useAnimation = 20;
 			Item.value = Item.buyPrice(gold: 1);

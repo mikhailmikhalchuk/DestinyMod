@@ -20,7 +20,5 @@ namespace DestinyMod.Content.Items.Weapons.Super
 			Item.shoot = ModContent.ProjectileType<DawnbladeShot>();
 			Item.shootSpeed = 30f;
 		}
-
-        public override bool OnlyShootOnSwing => true;
 	}
 }

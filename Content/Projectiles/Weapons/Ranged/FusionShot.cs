@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
+using ReLogic.Utilities;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
@@ -14,7 +15,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
     {
         private bool SwappedData;
 
-        private SoundEffectInstance FireSound;
+        private SlotId FireSound;
 
         public int FireDelay
         {
@@ -23,10 +24,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         }
 
         public int ProjectileCount
-		{
+        {
             get => (int)(SwappedData ? Projectile.localAI[0] : Projectile.ai[0]);
             set => Projectile.localAI[0] = value;
-		}
+        }
 
         public int ProjectileType => (int)(SwappedData ? Projectile.localAI[1] : Projectile.ai[1]);
 
@@ -63,10 +64,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
             Projectile.penetrate = -1;
         }
 
-		public override bool PreAI()
-		{
+        public override bool PreAI()
+        {
             if (!SwappedData)
-			{
+            {
                 Projectile.localAI[0] = Projectile.ai[0];
                 Projectile.localAI[1] = Projectile.ai[1];
 
@@ -78,13 +79,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
                 SwappedData = true;
             }
             return true;
-		}
+        }
 
         public override void AI()
         {
             if (Counter <= 0)
             {
-                FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
+                FireSound = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
             }
 
             Player player = Main.player[Projectile.owner];
@@ -115,7 +116,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
             if (Counter == ChargeTime)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
+                SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
                 Fired = true;
 
                 Item ammoItem = new Item();
@@ -148,7 +149,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         }
 
         public void FireProjectile()
-		{
+        {
             Player player = Main.player[Projectile.owner];
             Vector2 perturbedSpeed = (10 * Projectile.velocity * 2f).RotatedByRandom(MathHelper.ToRadians(15));
             Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), new Vector2(Projectile.position.X, Projectile.position.Y - 5), perturbedSpeed, UtilisedProjectileType, Projectile.damage, Projectile.knockBack, player.whoAmI);
@@ -159,9 +160,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (CountFires < ProjectileCount)
             {
-                FireSound?.Stop(true);
-                FireSound = null;
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
+                SoundEngine.TryGetActiveSound(FireSound, out ActiveSound fireResult);
+                fireResult?.Stop();
+                SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
             }
             CountFires = FireDelay = 0;
         }

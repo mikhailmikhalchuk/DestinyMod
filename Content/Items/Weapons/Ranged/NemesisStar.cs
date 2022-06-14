@@ -2,6 +2,7 @@ using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.ModPlayers;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +24,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Red;
 			Item.knockBack = 0;
 			Item.useTime = 12;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/NemesisStar");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/NemesisStar");
 			Item.shootSpeed = 20f;
 			Item.useAnimation = 12;
 			Item.value = Item.buyPrice(gold: 1);

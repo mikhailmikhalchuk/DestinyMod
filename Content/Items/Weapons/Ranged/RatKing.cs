@@ -3,6 +3,7 @@ using DestinyMod.Content.Items.Materials;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.knockBack = 0;
 			Item.useTime = 15;
 			Item.crit = 10;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RatKing");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/RatKing");
 			Item.useAnimation = 15;
 			Item.value = Item.buyPrice(0, 1, 0, 0);
 		}

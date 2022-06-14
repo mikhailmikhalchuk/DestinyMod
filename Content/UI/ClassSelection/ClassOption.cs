@@ -7,6 +7,7 @@ using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
@@ -72,7 +73,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			{
 				if (!SoundedHovered)
 				{
-					SoundEngine.PlaySound(12);
+					SoundEngine.PlaySound(SoundID.MenuTick);
 				}
 
 				SoundedHovered = true;
@@ -100,7 +101,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			base.MouseDown(evt);
 			Player.GetModPlayer<ClassPlayer>().ClassType = ClassType;
 			CreateButton.BackgroundColor = new Color(63, 82, 151) * 0.8f;
-			SoundEngine.PlaySound(12);
+			SoundEngine.PlaySound(SoundID.MenuTick);
 		}
 
 		public override void MouseOver(UIMouseEvent evt)

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.Items.ItemTypes;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.crit = 2;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VisionOfConfluence");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/VisionOfConfluence");
 			// item.autoReuse = false;
 			Item.shootSpeed = 300f;
 		}

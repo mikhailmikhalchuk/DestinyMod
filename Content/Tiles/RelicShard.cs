@@ -24,8 +24,7 @@ namespace DestinyMod.Content.Tiles
             MineResist = 2f;
             DustType = 144;
             ItemDrop = ModContent.ItemType<RelicIron>();
-            SoundType = SoundID.Tink;
-            SoundStyle = 1;
+            HitSound = SoundID.Tink;
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Relic Shard");

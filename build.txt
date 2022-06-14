@@ -1,5 +1,5 @@
 author = MikhailMCraft & Co.
-version = 0.8.3
+version = 0.8.2.1
 displayName = Destiny Mod
 homepage = https://discord.gg/ZrjsCq96zM
 hideCode = true

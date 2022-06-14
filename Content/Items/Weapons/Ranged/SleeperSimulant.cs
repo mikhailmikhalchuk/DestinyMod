@@ -38,6 +38,6 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 
 		public override Vector2? HoldoutOffset() => new Vector2(-12, 0);
 
-		public override bool CanConsumeAmmo(Player player) => false;
+		public override bool CanConsumeAmmo(Item ammo, Player player) => false;
 	}
 }

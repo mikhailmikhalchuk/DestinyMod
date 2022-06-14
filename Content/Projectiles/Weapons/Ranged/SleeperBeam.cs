@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using DestinyMod.Common.Projectiles;
 using Microsoft.Xna.Framework.Audio;
+using ReLogic.Utilities;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
@@ -16,7 +17,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public int SurfaceHits = 3;
 
-		private SoundEffectInstance FireSound;
+		private SlotId FireSound;
 
 		public override void DestinySetDefaults()
 		{
@@ -31,12 +32,12 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
 			if (!Fired)
 			{
-				FireSound?.Stop(true);
-				FireSound = null;
-				SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
+				SoundEngine.TryGetActiveSound(FireSound, out ActiveSound fireResult);
+				fireResult?.Stop();
+				SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleRelease"), Projectile.Center);
 			}
 			else
-            {
+			{
 				Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 				SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			}
@@ -44,13 +45,13 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 		public override Color? GetAlpha(Color lightColor) => new Color(lightColor.R, 0f, 0f, lightColor.A);
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
+		public override bool OnTileCollide(Vector2 oldVelocity)
+		{
 			if (--SurfaceHits <= 0)
-            {
+			{
 				Projectile.Kill();
 				return false;
-            }
+			}
 			if (Projectile.velocity.X != oldVelocity.X)
 			{
 				Projectile.velocity.X = 0f - oldVelocity.X;
@@ -60,7 +61,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 				Projectile.velocity.Y = 0f - oldVelocity.Y;
 			}
 			if (Projectile.ai[1] == 5f && SurfaceHits == 2)
-            {
+			{
 				for (int i = 0; i < 2; i++)
 				{
 					Projectile.NewProjectile(Projectile.GetSource_TileInteraction((int)(Projectile.position.X / 16), (int)(Projectile.position.Y / 16)), Projectile.Center, Projectile.velocity + new Vector2(Main.rand.Next(-15, 16) * 0.2f, Main.rand.Next(-15, 16) * 0.2f), ModContent.ProjectileType<SleeperBeam>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, 6);
@@ -73,10 +74,10 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 		{
 			Projectile.localAI[1]++;
 			if (Projectile.ai[1] == 4f)
-            {
+			{
 				if (Counter <= 0)
 				{
-					FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
+					FireSound = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleCharge"), Projectile.Center);
 				}
 
 				Player player = Main.player[Projectile.owner];
@@ -103,7 +104,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
 				if (Counter == 43)
 				{
-					SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
+					SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/FusionRifleFire"), Projectile.Center);
 					Fired = true;
 					player.channel = false;
 
@@ -127,9 +128,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 			}
 
 			if (Projectile.ai[1] >= 5f)
-            {
+			{
 				if (Projectile.localAI[0] <= 0)
-                {
+				{
 					Projectile.extraUpdates = 100;
 					Projectile.timeLeft = 300;
 					//Projectile.velocity = 10 * Projectile.velocity * 2f;

@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.Items;
@@ -23,7 +24,7 @@ namespace DestinyMod.Content.Items.Equipables.Pets
 			Item.shoot = ModContent.ProjectileType<Projectiles.Pets.Ghost>();
 			Item.buffType = ModContent.BuffType<Buffs.Pets.Ghost>();
 			Item.buffTime = 3600;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Pets/Ghost");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Pets/Ghost");
 		}
 
 		public override void UseAnimation(Player player)

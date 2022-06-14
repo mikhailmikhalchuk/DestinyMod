@@ -8,6 +8,7 @@ using DestinyMod.Common.Projectiles;
 using DestinyMod.Content.Buffs;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.Audio;
+using ReLogic.Utilities;
 
 namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 {
@@ -15,7 +16,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
     {
         public bool Fired { get => Projectile.ai[0] != 0; set => Projectile.ai[0] = value ? 1 : 0; }
 
-        private SoundEffectInstance FireSound;
+        private SlotId FireSound;
 
         private int Counter;
 
@@ -40,7 +41,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (Counter <= 0)
             {
-                FireSound = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"), Projectile.Center);
+                FireSound = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/VexMythoclastStart"), Projectile.Center);
             }
 
             Player player = Main.player[Projectile.owner];
@@ -64,7 +65,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
 
             if (Counter == 90)
             {
-                SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/VexMythoclastFire"), Projectile.Center);
+                SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/VexMythoclastFire"), Projectile.Center);
                 Fired = true;
                 player.channel = false;
 
@@ -115,8 +116,8 @@ namespace DestinyMod.Content.Projectiles.Weapons.Ranged
         {
             if (!Fired)
             {
-                FireSound?.Stop(true);
-                FireSound = null;
+                SoundEngine.TryGetActiveSound(FireSound, out ActiveSound fireResult);
+                fireResult?.Stop();
             }
         }
 

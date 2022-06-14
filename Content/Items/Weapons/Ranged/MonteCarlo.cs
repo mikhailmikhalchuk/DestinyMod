@@ -3,6 +3,7 @@ using DestinyMod.Content.Items.Materials;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Red;
 			Item.knockBack = 0;
 			Item.useTime = 9;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/MonteCarlo");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/MonteCarlo");
 			Item.shootSpeed = 20f;
 			Item.useAnimation = 9;
 			Item.value = Item.buyPrice(gold: 1);

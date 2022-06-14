@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using DestinyMod.Content.Items.Materials;
@@ -24,7 +25,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.damage = 135;
 			Item.knockBack = 0;
 			Item.crit = 10;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/AceOfSpades");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/AceOfSpades")
+            {
+				Volume = 0.8f
+            };
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
 		}

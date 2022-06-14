@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using DestinyMod.Common.Items.ItemTypes;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,14 +28,14 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.rare = ItemRarityID.Purple;
 			Item.shootSpeed = 16f;
 			Item.useAmmo = AmmoID.Arrow;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/SacredShot");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/SacredShot");
 		}
 
 		public override bool AltFunctionUse(Player player) => true;
 
 		public override bool CanUseItem(Player player)
 		{
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, player.altFunctionUse == 2 ? "Assets/Sounds/Item/Weapons/Ranged/CausalityShot" : "Assets/Sounds/Item/Weapons/Ranged/SacredShot");
+			Item.UseSound = new SoundStyle(player.altFunctionUse == 2 ? "DestinyMod/Assets/Sounds/Item/Weapons/Ranged/CausalityShot" : "DestinyMod/Assets/Sounds/Item/Weapons/Ranged/SacredShot");
 			return base.CanUseItem(player);
 		}
 

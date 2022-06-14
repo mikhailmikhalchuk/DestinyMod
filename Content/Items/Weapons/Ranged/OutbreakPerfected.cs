@@ -2,6 +2,7 @@ using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			Item.crit = 2;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/OutbreakPerfected");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/OutbreakPerfected");
 			Item.shootSpeed = 300f;
 			DestinyModReuseDelay = 5;
 		}

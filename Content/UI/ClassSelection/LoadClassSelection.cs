@@ -10,6 +10,7 @@ using System;
 using Terraria.GameContent.UI.States;
 using System.Reflection;
 using DestinyMod.Common.ModPlayers;
+using Terraria.ID;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
@@ -81,7 +82,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		private void Click_ClassSelection(UIMouseEvent evt, UIElement listeningElement)
 		{
-			SoundEngine.PlaySound(12);
+			SoundEngine.PlaySound(SoundID.MenuTick);
 			UnselectAllCategories.Invoke(Main.MenuUI.CurrentState, null);
 			MiddlePannel.Append(ClassSelection);
 			DestinyModOptionsButton.SetSelected(selected: true);

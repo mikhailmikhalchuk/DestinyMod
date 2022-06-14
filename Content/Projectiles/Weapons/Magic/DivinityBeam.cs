@@ -16,9 +16,9 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 {
 	public class DivinityBeam : DestinyModProjectile
 	{
-		private SoundEffectInstance Fire; //thanks, solstice
+		private SlotId Fire; //thanks, solstice
 
-		private SoundEffectInstance Start;
+		private SlotId Start;
 
 		public float Distance { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
 
@@ -75,9 +75,11 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 
 		public override void Kill(int timeLeft)
 		{
-			Fire?.Stop(true);
-			Start?.Stop(true);
-			SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStop"), Projectile.Center);
+			SoundEngine.TryGetActiveSound(Start, out ActiveSound startStatus);
+			SoundEngine.TryGetActiveSound(Fire, out ActiveSound fireStatus);
+			startStatus?.Stop();
+			fireStatus?.Stop();
+			SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Magic/DivinityStop"), Projectile.Center);
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -95,14 +97,16 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 			Player player = Main.player[Projectile.owner];
 			Projectile.position = player.MountedCenter + Projectile.velocity * 60;
 			Projectile.timeLeft = 4;
-			if (Start == null)
+			if (Start.Value == 0)
 			{
-				Start = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityStart"), Projectile.Center);
+				Start = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Magic/DivinityStart"), Projectile.Center);
 			}
 
-			if ((Fire == null && Start != null && Start.State != SoundState.Playing) || (Fire != null && Start.State != SoundState.Playing && Fire.State == SoundState.Stopped))
+			bool startSuccess = SoundEngine.TryGetActiveSound(Start, out ActiveSound startStatus);
+			bool fireSuccess = SoundEngine.TryGetActiveSound(Fire, out ActiveSound fireStatus);
+			if (!startSuccess && !fireSuccess)
 			{
-				Fire = SoundEngine.PlaySound(SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Magic/DivinityFire"), Projectile.Center);
+				Fire = SoundEngine.PlaySound(new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Magic/DivinityFire"), Projectile.Center);
 			}
 
 			if (!player.channel && player.whoAmI == Main.myPlayer || Main.time % 10 == 0 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
@@ -158,7 +162,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Magic
 					}
 				}
 			}
-			End:
+		End:
 
 			Vector2 dustPos = player.Center + Projectile.velocity * Distance;
 

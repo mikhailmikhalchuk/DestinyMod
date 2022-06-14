@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Content.Items.Materials;
@@ -19,7 +20,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			Item.knockBack = 4;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/RedDeath");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/RedDeath");
 			Item.shootSpeed = 16f;
 			DestinyModReuseDelay = 14;
 			ShootOffset = new Vector2(0, -3);

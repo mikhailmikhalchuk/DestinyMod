@@ -16,7 +16,7 @@ namespace DestinyMod.Content.Projectiles.Weapons.Melee
             Main.projFrames[Projectile.type] = 14;
         }
 
-        public LegacySoundStyle FrameCycleSound;
+        public SoundStyle FrameCycleSound;
 
 		public override void AutomaticSetDefaults()
 		{

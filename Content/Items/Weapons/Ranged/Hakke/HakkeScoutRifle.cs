@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using DestinyMod.Content.Items.Materials;
@@ -18,7 +19,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			Item.crit = 2;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundLoader.GetLegacySoundSlot(Mod, "Assets/Sounds/Item/Weapons/Ranged/HakkeLongRifle");
+			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/HakkeLongRifle");
 			Item.shootSpeed = 300f;
 			ShootOffset = new Vector2(0, -3);
 		}

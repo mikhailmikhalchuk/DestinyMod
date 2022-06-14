@@ -21,13 +21,4 @@ Changelogs can be found on the Discord, join it if you would like to see the con
 
 Support us on Patreon: https://patreon.com/destinymod
 
-The Guardian Games are on! :party:
-Start participating by heading to the mod config screen (Mods -> Destiny Mod -> Gear Icon)
-Added the Podium, purchasable from Zavala for the duration of the Games
-Added Laurels, which drop from enemies during the Games with a 1/25 chance
-Added Titan, Warlock, and Hunter-themed decor
---
-Added MIDA Multi-Tool's exotic perk
-Graviton Lance now only shoots 2 bullets
-
 (Copyright) Bungie, Inc. All rights reserved. Destiny, the Destiny Logo, Bungie and the Bungie logo are among the trademarks of Bungie, Inc.
