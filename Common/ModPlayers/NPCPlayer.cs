@@ -3,6 +3,7 @@ using DestinyMod.Content.NPCs.TownNPC;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -52,12 +53,12 @@ namespace DestinyMod.Common.ModPlayers
 
 		public override void SaveData(TagCompound tag)
 		{
-			tag.Add("DecryptedItems", DecryptedItems?.Select(type =>
+			/*tag.Add("DecryptedItems", DecryptedItems?.Select(type =>
 			{
 				Item item = new Item();
 				item.SetDefaults(type);
 				return ItemIO.Save(item);
-			}).ToList());
+			}).ToList());*/ // This breaky for some reason idk, I didn't feel like fixing it
 			tag.Add("MotesGiven", MotesGiven);
 			tag.Add("ZavalaBountyProgress", ZavalaBountyProgress);
 			tag.Add("ZavalaEnemies", ZavalaEnemies);
