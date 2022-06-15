@@ -6,10 +6,11 @@ using Microsoft.Xna.Framework;
 using DestinyMod.Core.Extensions;
 using System.Collections.Generic;
 using Terraria;
+using DestinyMod.Common.ModPlayers;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
-	public class ItemDetailState_ItemStats : UIElement
+	public class ItemDetailsState_ItemStats : UIElement
 	{
 		public ItemDetailsState ItemDetailsState { get; private set; }
 
@@ -37,7 +38,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public List<StatDisplayElement> StatsElement { get; private set; }
 
-		public ItemDetailState_ItemStats(ItemDetailsState itemDetailsState)
+		public ItemDetailsState_ItemStats(ItemDetailsState itemDetailsState)
 		{
 			ItemDetailsState = itemDetailsState;
 
@@ -79,15 +80,16 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemPowerValue.HAlign = 1;
 			PowerDisplayBackground.Append(InspectedItemPowerValue);
 
+			ItemDataPlayer dataPlayer = Main.LocalPlayer.GetModPlayer<ItemDataPlayer>();
 			StatsElement = new List<StatDisplayElement>();
 			StatDisplayElement range = new StatDisplayElement("Range", inspectedItemData.Range);
-			range.UpdateDataEvent += () => range.Progress = inspectedItemData.Range;
+			range.UpdateDataEvent += () => range.Progress = dataPlayer.Range;
 
 			StatDisplayElement stability = new StatDisplayElement("Stability", inspectedItemData.Stability);
-			stability.UpdateDataEvent += () => stability.Progress = inspectedItemData.Stability;
+			stability.UpdateDataEvent += () => stability.Progress = dataPlayer.Stability;
 
 			StatDisplayElement recoil = new StatDisplayElement("Recoil", inspectedItemData.Recoil);
-			recoil.UpdateDataEvent += () => recoil.Progress = inspectedItemData.Recoil;
+			recoil.UpdateDataEvent += () => recoil.Progress = dataPlayer.Recoil;
 
 			StatDisplayElement impact = new StatDisplayElement("Impact", inspectedItem.damage, displayProgressBar: false);
 			impact.UpdateDataEvent += () => impact.Progress = inspectedItem.damage;

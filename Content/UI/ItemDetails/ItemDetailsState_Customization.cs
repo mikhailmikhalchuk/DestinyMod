@@ -12,7 +12,7 @@ using DestinyMod.Core.Extensions;
 
 namespace DestinyMod.Content.UI.ItemDetails
 {
-	public class ItemDetailState_Customization : UIElement
+	public class ItemDetailsState_Customization : UIElement
 	{
 		public ItemDetailsState ItemDetailsState { get; private set; }
 
@@ -34,7 +34,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			}
 		}
 
-		public ItemDetailState_Customization(ItemDetailsState itemDetailsState)
+		public ItemDetailsState_Customization(ItemDetailsState itemDetailsState)
 		{
 			ItemDetailsState = itemDetailsState;
 

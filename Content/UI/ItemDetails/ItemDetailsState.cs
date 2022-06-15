@@ -46,9 +46,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public ItemDetailsState_Mods Mods { get; private set; }
 
-		public ItemDetailState_Customization Customization { get; private set; }
+		public ItemDetailsState_Customization Customization { get; private set; }
 
-		public ItemDetailState_ItemStats Stats { get; private set; }
+		public ItemDetailsState_ItemStats Stats { get; private set; }
 
 		public MouseText_TitleAndSubtitle MouseText_TitleAndSubtitle { get; private set; }
 
@@ -136,7 +136,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			MasterBackground.Append(Mods);
 			top += (int)Mods.Height.Pixels + 8;
 
-            Customization = new ItemDetailState_Customization(this)
+            Customization = new ItemDetailsState_Customization(this)
             {
                 Visible = true
             };
@@ -145,12 +145,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 			MasterBackground.Append(Customization);
 			top += (int)Customization.Height.Pixels + 8;
 
-			Stats = new ItemDetailState_ItemStats(this)
+			Stats = new ItemDetailsState_ItemStats(this)
 			{
 				Visible = true
 			};
 			Stats.Left.Pixels = MasterBackground.Width.Pixels - 10 - Stats.Width.Pixels;
-			Stats.Top.Pixels = top - Stats.Height.Pixels;
+			Stats.Top.Pixels = top - Stats.Height.Pixels + 5;
 			MasterBackground.Append(Stats);
 
 			MasterBackground.Height.Pixels = top;
