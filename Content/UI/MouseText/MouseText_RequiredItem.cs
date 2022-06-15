@@ -7,7 +7,7 @@ using Terraria;
 
 namespace DestinyMod.Content.UI.MouseText
 {
-	// Again, please feel free to rename this to anything better
+	/// <summary>Used for mouseover info item requirements, such as upgrade module requirements on infusion slot.</summary>
 	public class MouseText_RequiredItem : MouseTextElement
 	{
 		public Texture2D RequiredItemTexture { get; }

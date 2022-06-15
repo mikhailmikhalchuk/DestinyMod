@@ -9,7 +9,7 @@ using DestinyMod.Core.Data;
 
 namespace DestinyMod.Content.UI.MouseText
 {
-	// Again, please feel free to rename this to anything better
+	/// <summary>Used for mouseover info mouse press indicators, such as that seen on unselected perks.</summary>
 	public class MouseText_ClickIndicator : MouseTextElement
 	{
 		public string Text { get; private set; }

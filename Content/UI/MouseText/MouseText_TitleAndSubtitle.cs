@@ -5,7 +5,7 @@ using ReLogic.Graphics;
 
 namespace DestinyMod.Content.UI.MouseText
 {
-	// Please feel free to rename this to anything better
+	/// <summary>Used for mouseover info title/subtitle, such as that seen on perk name and classification.</summary>
 	public class MouseText_TitleAndSubtitle : MouseTextElement
 	{
 		public override Color BackgroundColor_Default => new Color(68, 70, 74) * CommonOpacity;

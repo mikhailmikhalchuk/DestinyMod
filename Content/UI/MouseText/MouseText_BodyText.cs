@@ -5,7 +5,7 @@ using ReLogic.Graphics;
 
 namespace DestinyMod.Content.UI.MouseText
 {
-	// Again, please feel free to rename this to anything better
+	/// <summary>Used for mouseover info body text, such as that seen on perk descriptions.</summary>
 	public class MouseText_BodyText : MouseTextElement
 	{
         public override Color BackgroundColor_Default => new Color(20, 20, 20) * CommonOpacity;

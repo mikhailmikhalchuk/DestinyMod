@@ -1,34 +1,40 @@
-﻿using DestinyMod.Common.Items;
+﻿using System.Collections.Generic;
+using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.ModPlayers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Traits
 {
-    public class ZenMoment : ItemPerk
+    public class StatsForAll : ItemPerk
     {
         private int _timer;
 
+        private int _durationTimer;
+
         private float _multiplier;
+
+        private List<int> _hitNPCs = new List<int>();
 
         public override bool IsInstanced => true;
 
         public override void SetDefaults()
         {
-            DisplayName = "Zen Moment";
-            Description = "Causing damage with this weapon increases its stability.";
+            DisplayName = "Stats for All";
+            Description = "Hitting three separate targets increases weapon bullet speed, stability, and range for a moderate duration.";
         }
 
         public void Function(NPC npc)
         {
-            if (npc.damage <= 0 || npc.lifeMax <= 5 || npc.friendly)
+            if (!_hitNPCs.Contains(npc.whoAmI) && npc.damage > 0 && npc.lifeMax > 5 && !npc.friendly)
             {
-                return;
+                _hitNPCs.Add(npc.whoAmI);
+                _timer = 180;
             }
-            _timer = 420;
-            if (_multiplier < 0.66f)
+            if (_hitNPCs.Count >= 3 && _durationTimer <= 0)
             {
-                _multiplier += 0.132f;
+                _durationTimer = 600;
+                _hitNPCs.Clear();
             }
         }
 
@@ -39,11 +45,17 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
         public override void Update(Player player)
         {
             ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            if (itemDataPlayer.Stability >= 0 && _timer > 0 && ItemData.ItemDatasByID != null && ItemData.ItemDatasByID.TryGetValue(player.HeldItem.type, out ItemData itemData))
+            if (itemDataPlayer.Stability >= 0 && _durationTimer > 0)
             {
-                itemDataPlayer.Stability += (int)(itemData.DefaultStability * _multiplier);
-                _timer--;
+                itemDataPlayer.Stability += 10;
+                itemDataPlayer.Range += 10;
             }
+
+            if (_timer <= 0)
+            {
+                _hitNPCs.Clear();
+            }
+            _timer--;
         }
     }
 }

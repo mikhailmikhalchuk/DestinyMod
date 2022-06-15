@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DestinyMod.Content.UI.MouseText
 {
-	// Again, please feel free to rename this to anything better
+	/// <summary>Container class for objective mouseover info, to enable multi-objective info display.</summary>
 	public class MouseText_Objectives : MouseTextElement
 	{
 		public Texture2D RequiredItemTexture { get; }

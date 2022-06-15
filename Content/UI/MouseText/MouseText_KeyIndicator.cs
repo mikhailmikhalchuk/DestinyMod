@@ -11,7 +11,7 @@ using System;
 
 namespace DestinyMod.Content.UI.MouseText
 {
-	// Again, please feel free to rename this to anything better
+	/// <summary>Used for mouseover info key press indicators, such as that seen on the infusion slot.</summary>
 	public class MouseText_KeyIndicator : MouseTextElement
 	{
 		public string Text { get; private set; }

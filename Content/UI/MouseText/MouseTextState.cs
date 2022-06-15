@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace DestinyMod.Content.UI.MouseText
 {
+	/// <summary>Container class for mouseover info classes, such as perk hover info, mod hover info, etc.</summary>
 	public class MouseTextState : DestinyModUIState
 	{
 		public bool Visible;
@@ -20,7 +21,7 @@ namespace DestinyMod.Content.UI.MouseText
 
 		private UIElement MasterBackground;
 
-		public int DefaultWidth = 420;
+		public const int DefaultWidth = 420;
 
 		public int FocusTimer; // Scuffed way to fix an issue where Widths haven't been properly updated yet
 

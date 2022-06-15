@@ -6,6 +6,7 @@ using Terraria.UI;
 
 namespace DestinyMod.Content.UI.MouseText
 {
+    /// <summary>Class which all <c>MouseText_X</c> classes derive from.</summary>
     public class MouseTextElement : UIElement
     {
         public static DynamicSpriteFont MouseFont => FontAssets.MouseText.Value;

@@ -10,6 +10,7 @@ using Terraria.UI;
 
 namespace DestinyMod.Content.UI.MouseText
 {
+    /// <summary>Used for mouseover info objective requirements, such as that seen on catalysts.</summary>
     public class MouseText_Objective : MouseTextElement
     {
         public string Name { get; private set; }

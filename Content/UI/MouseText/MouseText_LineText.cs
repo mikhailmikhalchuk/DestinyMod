@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DestinyMod.Content.UI.MouseText
 {
-	// Again, please feel free to rename this to anything better
+	/// <summary>Used for mouseover info subtext, such as that seen in messages on the mouse that disallow actions ("Base Power too Low" etc.) .</summary>
 	public class MouseText_LineText : MouseTextElement
 	{
 		public string Text { get; private set; }
