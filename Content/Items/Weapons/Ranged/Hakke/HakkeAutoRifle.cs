@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
 using DestinyMod.Content.Items.Perks.Weapon.Traits;
 using Terraria.DataStructures;
+using DestinyMod.Content.Items.Perks.Weapon.Magazines;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
-	public class HakkeAutoRifle : HakkeCraftsmanshipWeapon
+    public class HakkeAutoRifle : HakkeCraftsmanshipWeapon
 	{
 		public override void SetStaticDefaults()
 		{

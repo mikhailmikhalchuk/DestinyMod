@@ -4,7 +4,7 @@ using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Items.Mods;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
-using DestinyMod.Content.Items.Perks.Weapon.Traits;
+using DestinyMod.Content.Items.Perks.Weapon.Magazines;
 using DestinyMod.Content.Items.Weapons.Ranged;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
 using DestinyMod.Content.UI.ItemDetails;
@@ -188,7 +188,7 @@ namespace DestinyMod.Common.GlobalItems
                 itemDataPlayer.WeaponUseBounce += recoilAdjustment;
                 itemDataPlayer.ResetBounceTimer = 0;
                 itemDataPlayer.ResetBounceThreshold = item.useAnimation * 2;
-                Main.NewText(itemDataPlayer.Range + " | " + itemDataPlayer.Stability + " | " + itemDataPlayer.Recoil);
+                Main.NewText($"Range: {itemDataPlayer.Range} | Stability: {itemDataPlayer.Stability} | Recoil: {itemDataPlayer.Recoil}");
             }
         }
 

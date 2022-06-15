@@ -22,7 +22,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
             Description = "Being in combat for an extended time increases this weapon's damage, firing speed, and controls recoil until you are out of combat.";
         }
 
-        public void Function(Player player, NPC target, ref int damage)
+        public void Function(ref int damage)
         {
             _hits++;
 
@@ -32,9 +32,9 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
             }
         }
 
-        public override void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit) => Function(player, target, ref damage);
+        public override void ModifyHitNPC(Player player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit) => Function(ref damage);
 
-        public override void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => Function(player, target, ref damage);
+        public override void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => Function(ref damage);
 
         public override void UseSpeedMultiplier(Player player, Item item, ref float multiplier)
         {

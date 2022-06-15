@@ -3,7 +3,7 @@ using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.ModPlayers;
 using Terraria;
 
-namespace DestinyMod.Content.Items.Perks.Weapon.Traits
+namespace DestinyMod.Content.Items.Perks.Weapon.Magazines
 {
     public class HighCaliberRounds : ItemPerk
     {

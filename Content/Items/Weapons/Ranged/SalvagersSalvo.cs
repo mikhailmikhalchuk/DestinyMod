@@ -11,10 +11,11 @@ using System.Collections.Generic;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
 using DestinyMod.Content.Items.Perks.Weapon.Traits;
+using DestinyMod.Content.Items.Perks.Weapon.Magazines;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged
 {
-	public class SalvagersSalvo : Gun
+    public class SalvagersSalvo : Gun
 	{
 		public override void SetStaticDefaults()
 		{

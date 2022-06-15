@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using System.Linq;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
 using DestinyMod.Content.Items.Perks.Weapon.Traits;
+using DestinyMod.Content.Items.Perks.Weapon.Magazines;
 
 namespace DestinyMod.Common.Items
 {
