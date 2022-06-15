@@ -1,6 +1,5 @@
 using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items.Modifiers;
-using DestinyMod.Common.ModPlayers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Magazines
@@ -14,15 +13,15 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Magazines
                 + "\n- Slightly increases range";
         }
 
-        public override void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => knockback += 2.5f;
-
-        public override void Update(Player player)
+        public override void SetItemDefaults(Item item)
         {
-            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            if (itemDataPlayer.Range >= 0)
+            ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
+            if (itemDataItem.Range >= 0)
             {
-                itemDataPlayer.Range += 5;
+                itemDataItem.Range += 5;
             }
         }
+
+        public override void ModifyHitNPCWithProj(Player player, Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => knockback += 2.5f;
     }
 }

@@ -1,5 +1,5 @@
+using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items.Modifiers;
-using DestinyMod.Common.ModPlayers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
@@ -14,12 +14,12 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
                 + "\n- Slightly increases stability";
         }
 
-        public override void Update(Player player)
+        public override void SetItemDefaults(Item item)
         {
-            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            if (itemDataPlayer.Stability >= 0)
+            ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
+            if (itemDataItem.Stability >= 0)
             {
-                itemDataPlayer.Stability += 5;
+                itemDataItem.Stability += 5;
             }
         }
     }

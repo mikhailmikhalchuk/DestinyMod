@@ -1,5 +1,5 @@
-﻿using DestinyMod.Common.Items.Modifiers;
-using DestinyMod.Common.ModPlayers;
+﻿using DestinyMod.Common.GlobalItems;
+using DestinyMod.Common.Items.Modifiers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Magazines
@@ -13,12 +13,12 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Magazines
                 + "\n- Increases range";
         }
 
-        public override void Update(Player player)
+        public override void SetItemDefaults(Item item)
         {
-            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            if (itemDataPlayer.Range >= 0)
+            ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
+            if (itemDataItem.Range >= 0)
             {
-                itemDataPlayer.Range += 10;
+                itemDataItem.Range += 10;
             }
         }
     }

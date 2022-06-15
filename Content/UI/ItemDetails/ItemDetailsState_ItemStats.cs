@@ -80,16 +80,15 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemPowerValue.HAlign = 1;
 			PowerDisplayBackground.Append(InspectedItemPowerValue);
 
-			ItemDataPlayer dataPlayer = Main.LocalPlayer.GetModPlayer<ItemDataPlayer>();
 			StatsElement = new List<StatDisplayElement>();
 			StatDisplayElement range = new StatDisplayElement("Range", inspectedItemData.Range);
-			range.UpdateDataEvent += () => range.Progress = dataPlayer.Range;
+			range.UpdateDataEvent += () => range.Progress = inspectedItemData.Range;
 
 			StatDisplayElement stability = new StatDisplayElement("Stability", inspectedItemData.Stability);
-			stability.UpdateDataEvent += () => stability.Progress = dataPlayer.Stability;
+			stability.UpdateDataEvent += () => stability.Progress = inspectedItemData.Stability;
 
 			StatDisplayElement recoil = new StatDisplayElement("Recoil", inspectedItemData.Recoil);
-			recoil.UpdateDataEvent += () => recoil.Progress = dataPlayer.Recoil;
+			recoil.UpdateDataEvent += () => recoil.Progress = inspectedItemData.Recoil;
 
 			StatDisplayElement impact = new StatDisplayElement("Impact", inspectedItem.damage, displayProgressBar: false);
 			impact.UpdateDataEvent += () => impact.Progress = inspectedItem.damage;

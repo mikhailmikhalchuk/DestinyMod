@@ -52,7 +52,7 @@ namespace DestinyMod.Common.GlobalItems
         /// </summary>
         public IList<ItemPerkPool> PerkPool;
 
-        public IEnumerable<ModifierBase> AllItemModifiers(Player player)
+        public IEnumerable<ModifierBase> AllItemModifiers(Player player = null)
         {
             List<ModifierBase> modifiers = new List<ModifierBase>();
 
@@ -66,7 +66,7 @@ namespace DestinyMod.Common.GlobalItems
                 modifiers.AddRange(ItemMods);
             }
 
-            if (ItemCatalyst >= 0)
+            if (player != null && ItemCatalyst >= 0)
             {
                 ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
                 ItemCatalyst catalyst = itemDataPlayer.CatalystData[ItemCatalyst];
@@ -110,6 +110,21 @@ namespace DestinyMod.Common.GlobalItems
                 else
                 {
                     itemData.InterpretLightLevel(LightLevel);
+                }
+
+                if (Main.LocalPlayer != null && Main.LocalPlayer.TryGetModPlayer(out ItemDataPlayer _))
+                {
+                    foreach (ModifierBase modifiers in AllItemModifiers(Main.LocalPlayer)) // Maybe not LocalPlayer?
+                    {
+                        modifiers?.SetItemDefaults(item);
+                    }
+                }
+                else
+                {
+                    foreach (ModifierBase modifiers in AllItemModifiers())
+                    {
+                        modifiers?.SetItemDefaults(item);
+                    }
                 }
 
                 if (PerkPool == null && itemData.GeneratePerkPool != null)

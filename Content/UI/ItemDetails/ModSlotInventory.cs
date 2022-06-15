@@ -124,6 +124,8 @@ namespace DestinyMod.Content.UI.ItemDetails
             {
                 inspectedItemData.ItemMods.Add(itemMod.ItemMod);
             }
+            ItemDetailsState.InspectedItem.ModItem?.SetDefaults();
+            inspectedItemData.SetDefaults(ItemDetailsState.InspectedItem);
         }
 
         public override void Update(GameTime gameTime)

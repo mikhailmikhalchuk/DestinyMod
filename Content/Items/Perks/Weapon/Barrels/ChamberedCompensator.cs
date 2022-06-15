@@ -1,5 +1,5 @@
+using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items.Modifiers;
-using DestinyMod.Common.ModPlayers;
 using Terraria;
 
 namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
@@ -15,17 +15,17 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Barrels
                 + "\n- Slightly decreases bullet speed";
         }
 
-        public override void Update(Player player)
+        public override void SetItemDefaults(Item item)
         {
-            ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-            if (itemDataPlayer.Recoil >= 0)
+            ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();
+            if (itemDataItem.Recoil >= 0)
             {
-                itemDataPlayer.Recoil += 10;
+                itemDataItem.Recoil += 10;
             }
 
-            if (itemDataPlayer.Stability >= 0)
+            if (itemDataItem.Stability >= 0)
             {
-                itemDataPlayer.Stability += 10;
+                itemDataItem.Stability += 10;
             }
         }
     }

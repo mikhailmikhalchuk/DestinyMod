@@ -25,6 +25,10 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
 				new ItemPerkPool("Trait", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
 			};
+			// Throwaway stats for testing
+			hakkeItemData.DefaultStability = 80;
+			hakkeItemData.DefaultRecoil = 20;
+			hakkeItemData.DefaultRange = 50;
 		}
 
         public override void DestinySetDefaults()

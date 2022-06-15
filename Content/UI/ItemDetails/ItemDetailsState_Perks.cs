@@ -174,7 +174,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 				{
 					inspectedItemData.ActivePerks.Add(itemPerk.ItemPerk);
 				}
-            }
+				ItemDetailsState.InspectedItem.ModItem?.SetDefaults();
+				inspectedItemData.SetDefaults(ItemDetailsState.InspectedItem);
+			}
         }
 	}
 }
