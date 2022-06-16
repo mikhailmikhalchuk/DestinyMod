@@ -122,14 +122,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Height.Pixels = size.Y;
 		}
 
-        public override void Update(GameTime gameTime)
+		public void UpdateElementData()
         {
-            base.Update(gameTime);
-
 			foreach (StatDisplayElement statDisplayElement in StatsElement)
-            {
+			{
 				statDisplayElement?.UpdateData();
-            }
-        }
+			}
+		}
     }
 }

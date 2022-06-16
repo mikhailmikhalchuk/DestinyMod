@@ -215,13 +215,6 @@ namespace DestinyMod.Common.ModPlayers
                     return;
                 }*/
 
-                if (ItemData.ItemDatasByID != null && ItemData.ItemDatasByID.TryGetValue(heldItem.type, out ItemData itemData))
-                {
-                    heldItemData.Range = itemData.DefaultRange;
-                    heldItemData.Stability = itemData.DefaultStability;
-                    heldItemData.Recoil = itemData.DefaultRecoil;
-                }
-
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
                 Range = heldItemData.Range;
