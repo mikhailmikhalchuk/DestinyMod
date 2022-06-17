@@ -227,7 +227,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 			SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 			if (itemData.Shader != null && itemData.Shader.dye > 0)
 			{
 				GameShaders.Armor.GetShaderFromItemId(itemData.Shader.type).Apply(InspectedItem, itemDisplay);
