@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace DestinyMod.Common.Items.Modifiers
@@ -65,9 +67,8 @@ namespace DestinyMod.Common.Items.Modifiers
         /// <param name="player">The player using the item.</param>
         /// <param name="item">The item being used.</param>
         /// <param name="multiplier">The current multiplier. This is stacking with other perks on the item, and is unsorted - that is, this multiplier can be changed by other perks in the handler call.</param>
-        public virtual void UseSpeedMultiplier(Player player, Item item, ref float multiplier)
-        {
-            multiplier *= 1f;
-        }
+        public virtual void UseSpeedMultiplier(Player player, Item item, ref float multiplier) => multiplier *= 1f;
+
+        public virtual bool Shoot(Player player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) => true;
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -372,6 +373,30 @@ namespace DestinyMod.Common.ModPlayers
                 modifier?.UseSpeedMultiplier(Player, item, ref start);
             }
             return start;
+        }
+
+        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
+            if (heldItem == null || heldItem.IsAir || !heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
+            {
+                return true;
+            }
+
+            bool canShoot = true;
+            foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
+            {
+                if (modifier == null)
+                {
+                    continue;
+                }
+
+                if (!modifier.Shoot(Player, item, source, position, velocity, type, damage, knockback))
+                {
+                    canShoot = false;
+                }
+            }
+            return canShoot;
         }
 
         #endregion

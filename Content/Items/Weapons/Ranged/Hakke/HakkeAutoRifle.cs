@@ -9,12 +9,13 @@ using DestinyMod.Common.Items;
 using System.Collections.Generic;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
 using DestinyMod.Content.Items.Perks.Weapon.Traits;
-using Terraria.DataStructures;
 using DestinyMod.Content.Items.Perks.Weapon.Magazines;
+using DestinyMod.Common.Items.ItemTypes;
+using DestinyMod.Content.Projectiles.Weapons.Ranged;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
-    public class HakkeAutoRifle : HakkeCraftsmanshipWeapon
+    public class HakkeAutoRifle : Gun
 	{
 		public override void SetStaticDefaults()
 		{
@@ -23,7 +24,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			hakkeItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
 			{
 				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
-				new ItemPerkPool("Trait", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
+				new ItemPerkPool("Trait", ModContent.GetInstance<HakkeCraftsmanship>(), ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
 			};
 			// Throwaway stats for testing
 			hakkeItemData.DefaultStability = 80;
@@ -42,11 +43,20 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			Item.UseSound = new SoundStyle("DestinyMod/Assets/Sounds/Item/Weapons/Ranged/HakkeAutoRifle");
 			Item.autoReuse = true;
 			Item.shootSpeed = 30f;
-			ShootOffset = new Vector2(0, -2);
-			SpreadRadians = MathHelper.ToRadians(5);
 		}
 
-        public override Vector2? HoldoutOffset() => new Vector2(-10, -2);
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			Vector2 muzzleOffset = Vector2.Normalize(velocity) * 10f;
+			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+			{
+				position += muzzleOffset;
+			}
+			position += new Vector2(0, -2);
+			type = ModContent.ProjectileType<HakkeBullet>();
+		}
+
+		public override Vector2? HoldoutOffset() => new Vector2(-10, -2);
 
 		public override void AddRecipes() => CreateRecipe(1)
 			.AddIngredient(ModContent.ItemType<RelicIron>(), 45)
