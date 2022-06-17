@@ -12,6 +12,7 @@ using System.Linq;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
 using DestinyMod.Content.Items.Perks.Weapon.Traits;
 using DestinyMod.Content.Items.Perks.Weapon.Magazines;
+using DestinyMod.Content.Items.Perks.Weapon.KillTrackers;
 
 namespace DestinyMod.Common.Items
 {
@@ -67,27 +68,45 @@ namespace DestinyMod.Common.Items
 
         public int DefaultReloadSpeed = 0; // Mag Soon!
 
-        public static readonly ItemPerk[] AutoRifleBarrels = new ItemPerk[]
+        /// <summary>
+        /// Barrels for auto rifles, fusion rifles, hand cannons, linear fusion rifles, machine guns, pulse rifles, submachine guns, scout rifles, sidearms, sniper rifles, and trace rifles.
+        /// </summary>
+        public static readonly ItemPerk[] GenericBarrels = new ItemPerk[]
         {
             ModContent.GetInstance<ArrowheadBrake>(),
-            ModContent.GetInstance<BarrelShroud>(),
             ModContent.GetInstance<ChamberedCompensator>(),
+            ModContent.GetInstance<FlutedBarrel>(),
+            ModContent.GetInstance<FullBore>(),
         };
 
+        /// <summary>
+        /// Barrels for grenade and rocket launchers.
+        /// </summary>
         public static readonly ItemPerk[] AllLauncherBarrels = new ItemPerk[]
         {
             
+        };
+
+        /// <summary>
+        /// Hafts (barrels) for glaives.
+        /// </summary>
+        public static readonly ItemPerk[] AllHafts = new ItemPerk[]
+        {
+
+        };
+
+        /// <summary>
+        /// Barrels for shotguns.
+        /// </summary>
+        public static readonly ItemPerk[] AllShotgunBarrels = new ItemPerk[]
+        {
+            ModContent.GetInstance<BarrelShroud>(),
         };
 
         public static readonly ItemPerk[] AllTraits = new ItemPerk[]
         {
             ModContent.GetInstance<Frenzy>(),
             ModContent.GetInstance<HighCaliberRounds>()
-        };
-
-        public static readonly ItemPerk[] AllHafts = new ItemPerk[]
-        {
-            
         };
 
         /// <summary>
@@ -184,6 +203,7 @@ namespace DestinyMod.Common.Items
             if (perkPool == null && GeneratePerkPool != null)
             {
                 perkPool = GeneratePerkPool();
+                perkPool.Add(new ItemPerkPool("Tracker", ModContent.GetInstance<EmptyTracker>(), ModContent.GetInstance<EnemyTracker>()));
             }
 
             Item item = new Item(ItemType);
@@ -243,6 +263,7 @@ namespace DestinyMod.Common.Items
             if (perkPool == null && GeneratePerkPool != null)
             {
                 perkPool = GeneratePerkPool();
+                perkPool.Add(new ItemPerkPool("Tracker", ModContent.GetInstance<EmptyTracker>(), ModContent.GetInstance<EnemyTracker>()));
             }
 
             ItemDataItem itemDataItem = item.GetGlobalItem<ItemDataItem>();

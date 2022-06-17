@@ -49,6 +49,10 @@ namespace DestinyMod.Common.Items.Modifiers
 
         public abstract void SetDefaults();
 
+        /// <summary>
+        /// Sets modifier-related data on the selected item. Use this for static stat changes that take effect on perk application.
+        /// </summary>
+        /// <param name="item">The item this modifier is socketed in.</param>
         public virtual void SetItemDefaults(Item item) { }
 
         public virtual void Update(Player player) { }

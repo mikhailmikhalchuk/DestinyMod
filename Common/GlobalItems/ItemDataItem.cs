@@ -4,6 +4,7 @@ using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.ModPlayers;
 using DestinyMod.Content.Items.Mods;
 using DestinyMod.Content.Items.Perks.Weapon.Barrels;
+using DestinyMod.Content.Items.Perks.Weapon.KillTrackers;
 using DestinyMod.Content.Items.Perks.Weapon.Magazines;
 using DestinyMod.Content.Items.Weapons.Ranged;
 using DestinyMod.Content.Items.Weapons.Ranged.Hakke;
@@ -32,6 +33,10 @@ namespace DestinyMod.Common.GlobalItems
         public int Stability = -1; // Spread
 
         public int Recoil = -1; // Recoil
+
+        public int EnemiesKilled;
+
+        public int PlayersKilled;
 
         /// <summary>
         /// The list of perks that are currently active on this weapon.
@@ -130,6 +135,7 @@ namespace DestinyMod.Common.GlobalItems
                 if (PerkPool == null && itemData.GeneratePerkPool != null)
                 {
                     PerkPool = itemData.GeneratePerkPool();
+                    PerkPool.Add(new ItemPerkPool("Tracker", ModContent.GetInstance<EmptyTracker>(), ModContent.GetInstance<EnemyTracker>()));
                     ActivePerks = new List<ItemPerk>();
                     foreach (ItemPerkPool perkPoolType in PerkPool)
                     {
@@ -166,6 +172,23 @@ namespace DestinyMod.Common.GlobalItems
             else
             {
                 tooltips.Add(lightLevelTooltip);
+            }
+
+            TooltipLine killsTooltip = new TooltipLine(DestinyMod.Instance, "KillTracker", "Nothing");
+            TooltipLine knockbackTooltip = tooltips.FirstOrDefault(tooltip => tooltip.Mod == "Terraria" && tooltip.Name == "Knockback");
+            if (ActivePerks.Any(item => item.DisplayName == "Enemy Tracker"))
+            {
+                killsTooltip = new TooltipLine(DestinyMod.Instance, "KillTracker", "Enemies Defeated: " + EnemiesKilled);
+            }
+            else if (ActivePerks.Any(item => item.DisplayName == "Crucible Tracker"))
+            {
+                killsTooltip = new TooltipLine(DestinyMod.Instance, "KillTracker", "Opposing Players Defeated: " + EnemiesKilled);
+            }
+
+            if (knockbackTooltip != null && killsTooltip.Text != "Nothing")
+            {
+                int nameIndex = tooltips.IndexOf(knockbackTooltip);
+                tooltips.Insert(nameIndex + 1, killsTooltip);
             }
         }
 
@@ -306,6 +329,8 @@ namespace DestinyMod.Common.GlobalItems
         public override void SaveData(Item item, TagCompound tag)
         {
             tag.Add("LightLevel", LightLevel);
+            tag.Add("EnemiesKilled", EnemiesKilled);
+            tag.Add("PlayersKilled", PlayersKilled);
 
             if (ActivePerks != null)
             {
@@ -332,6 +357,8 @@ namespace DestinyMod.Common.GlobalItems
         public override void LoadData(Item item, TagCompound tag)
         {
             LightLevel = tag.Get<int>("LightLevel");
+            EnemiesKilled = tag.Get<int>("EnemiesKilled");
+            PlayersKilled = tag.Get<int>("PlayersKilled");
 
             if (tag.ContainsKey("ItemPerks"))
             {

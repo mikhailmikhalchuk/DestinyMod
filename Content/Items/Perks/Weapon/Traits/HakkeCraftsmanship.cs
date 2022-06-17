@@ -12,7 +12,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
         public override void SetDefaults()
         {
             DisplayName = "Hakke Craftsmanship";
-            Description = "Weapon usage can grant 'Hakke Craftsmanship', improving general statistics.";
+            Description = "Firing this weapon slightly improves defense, movement speed, and ranged damage.";
         }
 
         public override bool Shoot(Player player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

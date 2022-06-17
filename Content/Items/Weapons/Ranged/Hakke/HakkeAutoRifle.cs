@@ -23,8 +23,9 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1);
 			hakkeItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
 			{
-				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, ModContent.GetInstance<ArrowheadBrake>(), ModContent.GetInstance<BarrelShroud>(), ModContent.GetInstance<ChamberedCompensator>())),
-				new ItemPerkPool("Trait", ModContent.GetInstance<HakkeCraftsmanship>(), ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>())
+				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, ItemData.GenericBarrels)),
+				new ItemPerkPool("Trait", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>()),
+				new ItemPerkPool("Origin Trait", ModContent.GetInstance<HakkeCraftsmanship>())
 			};
 			// Throwaway stats for testing
 			hakkeItemData.DefaultStability = 80;

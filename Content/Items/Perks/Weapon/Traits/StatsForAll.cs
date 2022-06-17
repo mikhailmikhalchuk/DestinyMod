@@ -12,9 +12,7 @@ namespace DestinyMod.Content.Items.Perks.Weapon.Traits
 
         private int _durationTimer;
 
-        private float _multiplier;
-
-        private List<int> _hitNPCs = new List<int>();
+        private readonly List<int> _hitNPCs = new List<int>();
 
         public override bool IsInstanced => true;
 
