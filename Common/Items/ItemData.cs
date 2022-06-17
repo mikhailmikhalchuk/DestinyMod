@@ -69,47 +69,6 @@ namespace DestinyMod.Common.Items
         public int DefaultReloadSpeed = 0; // Mag Soon!
 
         /// <summary>
-        /// Barrels for auto rifles, fusion rifles, hand cannons, linear fusion rifles, machine guns, pulse rifles, submachine guns, scout rifles, sidearms, sniper rifles, and trace rifles.
-        /// </summary>
-        public static readonly ItemPerk[] GenericBarrels = new ItemPerk[]
-        {
-            ModContent.GetInstance<ArrowheadBrake>(),
-            ModContent.GetInstance<ChamberedCompensator>(),
-            ModContent.GetInstance<FlutedBarrel>(),
-            ModContent.GetInstance<FullBore>(),
-        };
-
-        /// <summary>
-        /// Barrels for grenade and rocket launchers.
-        /// </summary>
-        public static readonly ItemPerk[] AllLauncherBarrels = new ItemPerk[]
-        {
-            
-        };
-
-        /// <summary>
-        /// Hafts (barrels) for glaives.
-        /// </summary>
-        public static readonly ItemPerk[] AllHafts = new ItemPerk[]
-        {
-
-        };
-
-        /// <summary>
-        /// Barrels for shotguns.
-        /// </summary>
-        public static readonly ItemPerk[] AllShotgunBarrels = new ItemPerk[]
-        {
-            ModContent.GetInstance<BarrelShroud>(),
-        };
-
-        public static readonly ItemPerk[] AllTraits = new ItemPerk[]
-        {
-            ModContent.GetInstance<Frenzy>(),
-            ModContent.GetInstance<HighCaliberRounds>()
-        };
-
-        /// <summary>
         /// A dictionary of all item types mapped to their relevant data.
         /// </summary>
         public static IDictionary<int, ItemData> ItemDatasByID { get; private set; } = new Dictionary<int, ItemData>();
@@ -300,10 +259,11 @@ namespace DestinyMod.Common.Items
                 throw new ArgumentException("Amount of selectable perks cannot be more than the amount of perks provided.");
             }
 
-            if (perks.Distinct().ToArray().Length != perks.Length)
+            ItemPerk[] distinctPerks = perks.Distinct().ToArray();
+            if (distinctPerks.Length != perks.Length)
             {
                 Main.NewText("Latest call to RollRandomPerks included duplicate perks. They were filtered, but consider removing the duplicates from the call.", Color.Red);
-                perks = perks.Distinct().ToArray();
+                perks = distinctPerks;
             }
 
             ItemPerk[] start = new ItemPerk[amountOfPerks];

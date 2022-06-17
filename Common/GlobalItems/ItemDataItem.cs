@@ -176,11 +176,11 @@ namespace DestinyMod.Common.GlobalItems
 
             TooltipLine killsTooltip = new TooltipLine(DestinyMod.Instance, "KillTracker", "Nothing");
             TooltipLine knockbackTooltip = tooltips.FirstOrDefault(tooltip => tooltip.Mod == "Terraria" && tooltip.Name == "Knockback");
-            if (ActivePerks.Any(item => item.DisplayName == "Enemy Tracker"))
+            if (ActivePerks.Any(perk => perk.DisplayName == "Enemy Tracker"))
             {
                 killsTooltip = new TooltipLine(DestinyMod.Instance, "KillTracker", "Enemies Defeated: " + EnemiesKilled);
             }
-            else if (ActivePerks.Any(item => item.DisplayName == "Crucible Tracker"))
+            else if (ActivePerks.Any(perk => perk.DisplayName == "Crucible Tracker"))
             {
                 killsTooltip = new TooltipLine(DestinyMod.Instance, "KillTracker", "Opposing Players Defeated: " + EnemiesKilled);
             }

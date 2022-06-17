@@ -12,6 +12,7 @@ using DestinyMod.Content.Items.Perks.Weapon.Traits;
 using DestinyMod.Content.Items.Perks.Weapon.Magazines;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Content.Projectiles.Weapons.Ranged;
+using DestinyMod.Common.Data;
 
 namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 {
@@ -23,7 +24,7 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			ItemData hakkeItemData = ItemData.InitializeNewItemData(Type, 1370, null, 1);
 			hakkeItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
 			{
-				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, ItemData.GenericBarrels)),
+				new ItemPerkPool("Barrel", ItemData.RollRandomPerks(2, PerkClassifications.GenericBarrels)),
 				new ItemPerkPool("Trait", ModContent.GetInstance<Frenzy>(), ModContent.GetInstance<HighCaliberRounds>()),
 				new ItemPerkPool("Origin Trait", ModContent.GetInstance<HakkeCraftsmanship>())
 			};
