@@ -30,7 +30,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 	{
 		public Item InspectedItem { get; }
 
-		public ItemData InspectedItemData { get; }
+		public ItemData InspectedItemTypeData { get; }
+
+		public ItemDataItem InspectedItemData { get; }
 
 		public UIElement MasterBackground { get; private set; }
 
@@ -73,8 +75,9 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItem = inspectedItem;
 			if (ItemData.ItemDatasByID.TryGetValue(InspectedItem.type, out ItemData itemData))
             {
-				InspectedItemData = itemData;
+				InspectedItemTypeData = itemData;
             }
+			InspectedItemData = InspectedItem.GetGlobalItem<ItemDataItem>();
 		}
 
 		public override void PreLoad(ref string name)
@@ -175,9 +178,6 @@ namespace DestinyMod.Content.UI.ItemDetails
 		{
 			base.Update(gameTime);
 
-			/*if (Main.GameUpdateCount % 60 == 0)
-			Main.NewText(GetElementAt(Main.MouseScreen).ToString());*/
-
 			if (Main.keyState.IsKeyDown(Keys.Escape))
 			{
 				SoundEngine.PlaySound(SoundID.MenuClose);
@@ -218,19 +218,12 @@ namespace DestinyMod.Content.UI.ItemDetails
 			Rectangle destinationRect = new Rectangle(destX, destY, destWidth, destHeight);
 
 			DrawData itemDisplay = new DrawData(itemTexture, destinationRect, Color.White);
-			if (!InspectedItem.TryGetGlobalItem(out ItemDataItem itemData))
-            {
-				SoundEngine.PlaySound(SoundID.MenuClose);
-				ModContent.GetInstance<ItemDetailsState>().UserInterface.SetState(null);
-				return;
-            }
-
 			SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-			if (itemData.Shader != null && itemData.Shader.dye > 0)
+			if (InspectedItemData.Shader != null && InspectedItemData.Shader.dye > 0)
 			{
-				GameShaders.Armor.GetShaderFromItemId(itemData.Shader.type).Apply(InspectedItem, itemDisplay);
+				GameShaders.Armor.GetShaderFromItemId(InspectedItemData.Shader.type).Apply(InspectedItem, itemDisplay);
 			}
 
 			itemDisplay.effect = SpriteEffects.FlipHorizontally;

@@ -71,8 +71,8 @@ namespace DestinyMod.Content.UI.ItemDetails
 			InspectedItemPowerText.HAlign = 1;
 			PowerDisplayBackground.Append(InspectedItemPowerText);
 
-			Item inspectedItem = itemDetailsState.InspectedItem;
-			ItemDataItem inspectedItemData = inspectedItem.GetGlobalItem<ItemDataItem>();
+			Item inspectedItem = ItemDetailsState.InspectedItem;
+			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItemData;
 
 			InspectedItemPowerValue = new UIText(inspectedItemData.LightLevel.ToString(), 0.7f, large: true);
 			InspectedItemPowerValue.Left.Pixels = -10;
@@ -90,7 +90,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			StatDisplayElement recoil = new StatDisplayElement("Recoil", inspectedItemData.Recoil);
 			recoil.UpdateDataEvent += () => recoil.Progress = inspectedItemData.Recoil;
 
-			StatDisplayElement impact = new StatDisplayElement("Impact", inspectedItem.damage, displayProgressBar: false);
+			StatDisplayElement impact = new StatDisplayElement("Impact", inspectedItem.damage, false);
 			impact.UpdateDataEvent += () => impact.Progress = inspectedItem.damage;
 
 			StatsElement.Add(range, stability, recoil, impact);

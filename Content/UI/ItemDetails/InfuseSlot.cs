@@ -68,7 +68,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             }
 
             ItemDataItem mouseItemData = Main.mouseItem.GetGlobalItem<ItemDataItem>();
-            ItemDataItem inspectedItemData = itemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+            ItemDataItem inspectedItemData = itemDetailsState.InspectedItemData;
             if (mouseItemData.LightLevel <= inspectedItemData.LightLevel)
             {
                 PressDuration = 0;

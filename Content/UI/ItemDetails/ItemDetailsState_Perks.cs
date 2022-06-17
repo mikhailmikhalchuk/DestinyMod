@@ -57,7 +57,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			ItemPerks = new List<ItemPerkDisplay>();
 
 			float lowestPerkPosition = 28;
-			ItemDataItem inspectedItem = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+			ItemDataItem inspectedItem = ItemDetailsState.InspectedItemData;
 
 			if (inspectedItem.PerkPool != null)
 			{
@@ -157,7 +157,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 
 		public void SyncActivePerks()
         {
-			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItemData;
 			inspectedItemData.ActivePerks.Clear();
 			foreach (ItemPerkDisplay itemPerk in ItemPerks)
 			{

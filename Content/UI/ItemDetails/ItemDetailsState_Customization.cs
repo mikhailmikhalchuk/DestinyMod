@@ -38,7 +38,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 		{
 			ItemDetailsState = itemDetailsState;
 
-			if (ItemDetailsState == null || !ItemDetailsState.InspectedItemData.Shaderable)
+			if (ItemDetailsState == null || !ItemDetailsState.InspectedItemTypeData.Shaderable)
             {
 				return;
             }
@@ -57,7 +57,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			DyeSlot = new UIItemSlotWithBackground(dyeSlotBackground, isItemValid: (item) => item.dye > 0);
 			DyeSlot.Top.Pixels = 28;
 			DyeSlot.BlockItemInput = false;
-			DyeSlot.Item = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>().Shader;
+			DyeSlot.Item = ItemDetailsState.InspectedItemData.Shader;
 			DyeSlot.OnUpdate += HandleDyeSlotMouseText;
 			DyeSlot.OnUpdateItem += UpdateItemShader;
 			Append(DyeSlot);
@@ -104,9 +104,6 @@ namespace DestinyMod.Content.UI.ItemDetails
 			mouseTextState.AppendToMasterBackground(ItemDetailsState.MouseText_TitleAndSubtitle);
 		}
 
-		public void UpdateItemShader(UIItemSlotWithBackground uIItemSlotWithBackground)
-		{
-			ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>().Shader = uIItemSlotWithBackground.Item;
-		}
+		public void UpdateItemShader(UIItemSlotWithBackground uIItemSlotWithBackground) => ItemDetailsState.InspectedItemData.Shader = uIItemSlotWithBackground.Item;
     }
 }

@@ -117,7 +117,7 @@ namespace DestinyMod.Content.UI.ItemDetails
             }
 
             ReferenceModSlot.UpdateItemMod(itemModSlot.ItemMod);
-            ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+            ItemDataItem inspectedItemData = ItemDetailsState.InspectedItemData;
             SoundEngine.PlaySound(SoundID.Grab);
             inspectedItemData.ItemMods.Clear();
             foreach (ModSlot itemMod in ItemDetailsState.Mods.ModSlots)

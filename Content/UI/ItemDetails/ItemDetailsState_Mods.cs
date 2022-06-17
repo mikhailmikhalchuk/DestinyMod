@@ -72,10 +72,10 @@ namespace DestinyMod.Content.UI.ItemDetails
 			xPos += infuseSlot.Width() + 8;
 			Append(InfuseItemSlot);
 
-			if (ItemDetailsState.InspectedItemData.ItemCatalyst >= 0)
+			if (ItemDetailsState.InspectedItemTypeData.ItemCatalyst >= 0)
 			{
 				ItemDataPlayer itemDataPlayer = Main.LocalPlayer.GetModPlayer<ItemDataPlayer>();
-				CatalystSlot = new CatalystSlot(itemDataPlayer.CatalystData[ItemDetailsState.InspectedItemData.ItemCatalyst]);
+				CatalystSlot = new CatalystSlot(itemDataPlayer.CatalystData[ItemDetailsState.InspectedItemTypeData.ItemCatalyst]);
 				CatalystSlot.Left.Pixels = xPos;
 				CatalystSlot.Top.Pixels = 28;
 				xPos += infuseSlot.Width() + 8;
@@ -85,7 +85,7 @@ namespace DestinyMod.Content.UI.ItemDetails
 			ModSlotInventory = new ModSlotInventory(ItemDetailsState, null, 7);
 			ModSlotInventory.Top.Pixels = 36 + slotBackground.Height;
 			ModSlotInventory.Visible = false;
-			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItem.GetGlobalItem<ItemDataItem>();
+			ItemDataItem inspectedItemData = ItemDetailsState.InspectedItemData;
 			if (inspectedItemData.ItemMods != null)
 			{
 				ModSlots = new List<ModSlot>();

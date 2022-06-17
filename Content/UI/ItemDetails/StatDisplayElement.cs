@@ -20,18 +20,18 @@ namespace DestinyMod.Content.UI.ItemDetails
 
         public event Action UpdateDataEvent;
 
-        public StatDisplayElement(string name, int progress, int maxProgress = 100, bool displayProgressBar = true)
+        public StatDisplayElement(string name, int progress, bool displayProgressBar = true)
         {
             Name = name;
-            MaxProgress = maxProgress;
+            DisplayProgressBar = displayProgressBar;
 
-            if (MaxProgress > 0)
+            if (DisplayProgressBar)
             {
                 Progress = Utils.Clamp(progress, 0, MaxProgress);
             }
-            else if (Progress < 0)
+            else
             {
-                Progress = 0;
+                Progress = Math.Max(0, progress);
             }
 
             DisplayProgressBar = displayProgressBar;
