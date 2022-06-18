@@ -41,6 +41,9 @@ namespace DestinyMod.Common.Items
         /// </summary>
         public Action<int> InterpretLightLevel;
 
+        /// <summary>
+        /// The function to run when generating the entire perk pool; most of the time, this can just return a list of perk pools to roll for.
+        /// </summary>
         public Func<List<ItemPerkPool>> GeneratePerkPool;
 
         /// <summary>

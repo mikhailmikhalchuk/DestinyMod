@@ -37,6 +37,9 @@ namespace DestinyMod.Common.GlobalItems
 
         public int MagazineCapacity = -1;
 
+        /// <summary>
+        /// Contains all ammo in the weapon's current magazine.
+        /// </summary>
         public Queue<AmmoData> Magazine; // This seems like a really bad way to handle ammo but /shrug
 
         public int ReloadSpeed = -1;
@@ -260,7 +263,7 @@ namespace DestinyMod.Common.GlobalItems
                 itemDataPlayer.WeaponUseBounce += recoilAdjustment;
                 itemDataPlayer.ResetBounceTimer = 0;
                 itemDataPlayer.ResetBounceThreshold = item.useAnimation * 2;
-                Main.NewText($"Range: {itemDataPlayer.Range} | Stability: {itemDataPlayer.Stability} | Recoil: {itemDataPlayer.Recoil}");
+                Main.NewText($"Range: {itemDataPlayer.Range} | Stability: {itemDataPlayer.Stability} | Recoil: {itemDataPlayer.Recoil} | Reload: {itemDataPlayer.ReloadSpeed}");
             }
         }
 

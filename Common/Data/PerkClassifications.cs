@@ -6,8 +6,6 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Common.Data
 {
-    // If you want these to be fields, you should populate them in PostSetUpContent or anywhere after load.
-    // Otherwise these will be created upon first reference and populate your array with whatever's loaded and nulls
     public static class PerkClassifications
     {
         /// <summary>

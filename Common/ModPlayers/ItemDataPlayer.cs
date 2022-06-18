@@ -5,6 +5,7 @@ using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Content.Items.Catalysts;
 using DestinyMod.Content.Items.Mods.Weapon;
+using DestinyMod.Content.Load;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,13 @@ namespace DestinyMod.Common.ModPlayers
             set => RecoilInternal = Utils.Clamp(value, 0, 100);
         }
 
-        public int ReloadSpeed;
+        private int ReloadSpeedInternal = -1;
+
+        public int ReloadSpeed
+        {
+            get => ReloadSpeedInternal;
+            set => ReloadSpeedInternal = Utils.Clamp(value, 0, 100);
+        }
 
         public float OldWeaponBounce;
 
@@ -243,7 +250,8 @@ namespace DestinyMod.Common.ModPlayers
                     }
                     else if (ReloadTimer == 0)
                     {
-                        for (int i = 0; i < heldItemData.MagazineCapacity; i++)
+                        int size = heldItemData.MagazineCapacity - heldItemData.Magazine.Count;
+                        for (int i = 0; i < size; i++)
                         {
                             if (Player.PickAmmo(heldItem, out int projToShoot, out float speed, out int damage, out float knockBack, out int usedAmmoItemID))
                             {
@@ -251,14 +259,14 @@ namespace DestinyMod.Common.ModPlayers
                             }
                         }
 
-                        Main.NewText("Mag: " + heldItemData.Magazine.Count() + "/" + heldItemData.MagazineCapacity);
+                        Main.NewText("Mag: " + heldItemData.Magazine.Count + "/" + heldItemData.MagazineCapacity);
                     }
 
-                    if (ReloadTimer < 0 && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
+                    if (ReloadTimer < 0 && heldItemData.Magazine.Count < heldItemData.MagazineCapacity && HotKeys.ReloadWeapon.JustPressed)
                     {
-                        ReloadTimer = (int)(DefaultReloadSpeed * (1 - (ReloadSpeed / 100f)));
+                        ReloadTimer = (int)(DefaultReloadSpeed * (1.1f - (ReloadSpeed / 100f)));
                         ReloadItem = heldItem;
-                        Main.NewText("Mag: " + heldItemData.Magazine.Count() + "/" + heldItemData.MagazineCapacity + " | Reload: " + ReloadTimer);
+                        Main.NewText("Mag: " + heldItemData.Magazine.Count + "/" + heldItemData.MagazineCapacity + " | Reload Speed: " + ReloadTimer / 60f + " sec.");
                     }
                 }
             }
