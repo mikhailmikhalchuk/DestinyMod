@@ -1,4 +1,5 @@
-﻿using DestinyMod.Common.GlobalItems;
+﻿using DestinyMod.Common.Data;
+using DestinyMod.Common.GlobalItems;
 using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.ItemTypes;
 using DestinyMod.Common.Items.Modifiers;
@@ -42,6 +43,8 @@ namespace DestinyMod.Common.ModPlayers
             set => RecoilInternal = Utils.Clamp(value, 0, 100);
         }
 
+        public int ReloadSpeed;
+
         public float OldWeaponBounce;
 
         /// <summary>
@@ -52,6 +55,12 @@ namespace DestinyMod.Common.ModPlayers
         public int ResetBounceTimer;
 
         public int ResetBounceThreshold = 60;
+
+        public static readonly int DefaultReloadSpeed = 300; // 5 seconds for a reload on a weapon with minimum reload stats
+
+        public int ReloadTimer;
+
+        public Item ReloadItem;
 
         protected override bool CloneNewInstances => false;
 
@@ -184,6 +193,8 @@ namespace DestinyMod.Common.ModPlayers
                     WeaponUseBounce = 0;
                 }
             }
+
+            ReloadTimer--;
         }
 
         public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)
@@ -211,20 +222,44 @@ namespace DestinyMod.Common.ModPlayers
             Item heldItem = Main.mouseItem.IsAir ? Player.HeldItem : Main.mouseItem;
             if (heldItem != null && !heldItem.IsAir && heldItem.TryGetGlobalItem(out ItemDataItem heldItemData))
             {
-                /*if (heldItemData.LightLevel < ItemData.MaximumLightLevel) huh?
-                {
-                    return;
-                }*/
-
                 itemsConsidered++;
                 LightLevel += Utils.Clamp(heldItemData.LightLevel, ItemData.MinimumLightLevel, ItemData.MaximumLightLevel);
                 Range = heldItemData.Range;
                 Stability = heldItemData.Stability;
                 Recoil = heldItemData.Recoil;
+                ReloadSpeed = heldItemData.ReloadSpeed;
 
                 foreach (ModifierBase modifier in heldItemData.AllItemModifiers(Player))
                 {
                     modifier?.Update(Player);
+                }
+
+                if (heldItemData.MagazineCapacity != -1)
+                {
+                    if (heldItem != null && ReloadItem != heldItem)
+                    {
+                        ReloadTimer = -1;
+                        ReloadItem = null;
+                    }
+                    else if (ReloadTimer == 0)
+                    {
+                        for (int i = 0; i < heldItemData.MagazineCapacity; i++)
+                        {
+                            if (Player.PickAmmo(heldItem, out int projToShoot, out float speed, out int damage, out float knockBack, out int usedAmmoItemID))
+                            {
+                                heldItemData.Magazine.Enqueue(new AmmoData(projToShoot, speed, damage, knockBack, usedAmmoItemID));
+                            }
+                        }
+
+                        Main.NewText("Mag: " + heldItemData.Magazine.Count() + "/" + heldItemData.MagazineCapacity);
+                    }
+
+                    if (ReloadTimer < 0 && Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.R))
+                    {
+                        ReloadTimer = (int)(DefaultReloadSpeed * (1 - (ReloadSpeed / 100f)));
+                        ReloadItem = heldItem;
+                        Main.NewText("Mag: " + heldItemData.Magazine.Count() + "/" + heldItemData.MagazineCapacity + " | Reload: " + ReloadTimer);
+                    }
                 }
             }
 

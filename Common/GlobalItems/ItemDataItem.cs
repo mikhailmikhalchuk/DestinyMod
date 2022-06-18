@@ -1,4 +1,5 @@
-﻿using DestinyMod.Common.GlobalProjectiles;
+﻿using DestinyMod.Common.Data;
+using DestinyMod.Common.GlobalProjectiles;
 using DestinyMod.Common.Items;
 using DestinyMod.Common.Items.Modifiers;
 using DestinyMod.Common.ModPlayers;
@@ -33,6 +34,12 @@ namespace DestinyMod.Common.GlobalItems
         public int Stability = -1; // Spread
 
         public int Recoil = -1; // Recoil
+
+        public int MagazineCapacity = -1;
+
+        public Queue<AmmoData> Magazine; // This seems like a really bad way to handle ammo but /shrug
+
+        public int ReloadSpeed = -1;
 
         public int EnemiesKilled;
 
@@ -103,6 +110,14 @@ namespace DestinyMod.Common.GlobalItems
                 Range = itemData.DefaultRange;
                 Stability = itemData.DefaultStability;
                 Recoil = itemData.DefaultRecoil;
+                MagazineCapacity = itemData.DefaultMagazineCapacity;
+
+                if (MagazineCapacity > 0)
+                {
+                    Magazine = new Queue<AmmoData>();
+                }
+
+                ReloadSpeed = itemData.DefaultReloadSpeed;
 
                 ItemCatalyst = itemData.ItemCatalyst;
 
@@ -192,6 +207,25 @@ namespace DestinyMod.Common.GlobalItems
             }
         }
 
+        #region ImplementStatistics
+
+        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player) => MagazineCapacity < 0 || player.GetModPlayer<ItemDataPlayer>().ReloadTimer >= 0;
+
+        public override bool CanUseItem(Item item, Player player) => (Magazine == null || Magazine.Count > 0) && player.GetModPlayer<ItemDataPlayer>().ReloadTimer <= 0;
+
+        public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
+        {
+            ItemDataItem weaponData = weapon.GetGlobalItem<ItemDataItem>();
+            if (weaponData.Magazine != null && player.GetModPlayer<ItemDataPlayer>().ReloadTimer < 0 && weaponData.Magazine.Count > 0)
+            {
+                AmmoData ammoData = weaponData.Magazine.Dequeue();
+                type = ammoData.ProjectileType;
+                speed = ammoData.Speed;
+                damage.Flat = ammoData.Damage;
+                knockback = ammoData.Knockback;
+            }
+        }
+
         public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
@@ -230,49 +264,7 @@ namespace DestinyMod.Common.GlobalItems
             }
         }
 
-        /*public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            if (Recoil >= 0)
-            {
-                ItemDataPlayer itemDataPlayer = player.GetModPlayer<ItemDataPlayer>();
-
-                itemDataPlayer.OldWeaponBounce = itemDataPlayer.WeaponUseBounce;
-                float recoilInRadians = MathHelper.ToRadians(itemDataPlayer.WeaponUseBounce);
-                if (player.direction < 0)
-                {
-                    recoilInRadians *= -1;
-                }
-                velocity = velocity.RotatedBy(recoilInRadians);
-
-                player.itemRotation = velocity.ToRotation();
-
-                if (player.direction < 0)
-                {
-                    player.itemRotation = MathHelper.WrapAngle(player.itemRotation + MathHelper.Pi);
-                }
-
-                float recoilAdjustment = Recoil * 0.05f + item.useTime;
-                if (Recoil % 2 != 0)
-                {
-                    recoilAdjustment *= -1;
-                }
-                itemDataPlayer.WeaponUseBounce += recoilAdjustment;
-                itemDataPlayer.ResetBounceTimer = 0;
-                itemDataPlayer.ResetBounceThreshold = item.useAnimation * 2;
-                //Main.NewText("Current Recoil: " + itemDataPlayer.WeaponUseBounce + " Old Recoil: " + itemDataPlayer.OldWeaponBounce + " Delta: " + recoilAdjustment);
-            }
-
-            return true;
-
-            int recVal = ItemData.CalculateRecoil(Recoil);
-            Vector2 newVel = velocity.RotatedByRandom(MathHelper.ToRadians(recVal / 10));
-            if (newVel.Y > Recoil)
-            {
-                newVel.Y = 0; // Why? - Plan is to have item spread according to the pinned recoil summary in developer chat
-            }
-            Projectile.NewProjectile(source, position, newVel, type, damage, knockback, player.whoAmI);
-            return false;
-        }*/
+        #endregion
 
         #region Drawing
 

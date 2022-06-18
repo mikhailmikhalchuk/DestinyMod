@@ -66,6 +66,8 @@ namespace DestinyMod.Common.Items
 
         public int DefaultRecoil = 0; // Recoil
 
+        public int DefaultMagazineCapacity = -1;
+
         public int DefaultReloadSpeed = 0; // Mag Soon!
 
         /// <summary>

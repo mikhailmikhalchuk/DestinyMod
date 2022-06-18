@@ -28,13 +28,15 @@ namespace DestinyMod.Content.Items.Weapons.Ranged
 			ntteItemData.DefaultImpact = 33;
 			ntteItemData.DefaultRange = 70;
 			ntteItemData.DefaultStability = 55;
-			ntteItemData.DefaultRecoil = 90;
+			ntteItemData.DefaultRecoil = 91;
+			ntteItemData.DefaultMagazineCapacity = 20;
+			ntteItemData.DefaultReloadSpeed = 50;
 			ntteItemData.ItemCatalyst = ModifierBase.GetType<NoTimeToExplainCatalyst>();
 			ntteItemData.GeneratePerkPool = () => new List<ItemPerkPool>()
 			{
 				new ItemPerkPool("Barrel", ModContent.GetInstance<ArrowheadBrake>()),
 				new ItemPerkPool("Magazine", ModContent.GetInstance<AccurizedRounds>()),
-				new ItemPerkPool("Amongus", ModContent.GetInstance<PerpetualMotion>()), // https://www.reddit.com/r/ComedyNecrophilia/comments/v77n45/soos/ why does this go so hard
+				new ItemPerkPool("Amongus", ModContent.GetInstance<PerpetualMotion>()), // https://www.reddit.com/r/ComedyNecrophilia/comments/v77n45/soos/ why does this go so hard :)
 				new ItemPerkPool("Trait", ModContent.GetInstance<HighCaliberRounds>())
 			};
 		}

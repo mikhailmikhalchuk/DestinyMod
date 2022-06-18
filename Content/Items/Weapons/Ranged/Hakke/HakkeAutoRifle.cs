@@ -32,6 +32,8 @@ namespace DestinyMod.Content.Items.Weapons.Ranged.Hakke
 			hakkeItemData.DefaultStability = 80;
 			hakkeItemData.DefaultRecoil = 20;
 			hakkeItemData.DefaultRange = 50;
+			hakkeItemData.DefaultReloadSpeed = 80;
+			hakkeItemData.DefaultMagazineCapacity = 30;
 		}
 
         public override void DestinySetDefaults()
