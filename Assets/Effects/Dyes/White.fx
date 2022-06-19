@@ -15,12 +15,22 @@ float uRotation;
 float uDirection;
 float2 uImageSize1;
 
+float4 Tint(float4 oldColor, float4 refColor, float tintProgress)
+{
+    float4 colorDifference = (refColor - oldColor) * tintProgress;
+    return oldColor + colorDifference;
+}
+
 float4 White(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
     float4 baseColor = tex2D(uImage0, coords);
+    if (baseColor.a == 0)
+    {
+        return baseColor;
+    }
     float averageColor = (baseColor.r + baseColor.g + baseColor.g) / 3;
-    float averageColorButBrighter = averageColor * 2;
-    return float4(averageColorButBrighter, averageColorButBrighter, averageColorButBrighter, averageColorButBrighter);
+    float4 averageColor4 = float4(averageColor, averageColor, averageColor, baseColor.a);
+    return Tint(averageColor4, float4(1, 1, 1, baseColor.a), uSaturation);
 }
     
 technique Technique1

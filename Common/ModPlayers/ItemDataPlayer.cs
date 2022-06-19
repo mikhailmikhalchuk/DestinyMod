@@ -65,6 +65,8 @@ namespace DestinyMod.Common.ModPlayers
 
         public static readonly int DefaultReloadSpeed = 300; // 5 seconds for a reload on a weapon with minimum reload stats
 
+        public int ReloadTime;
+
         public int ReloadTimer;
 
         public Item ReloadItem;
@@ -259,14 +261,15 @@ namespace DestinyMod.Common.ModPlayers
                             }
                         }
 
-                        Main.NewText("Mag: " + heldItemData.Magazine.Count + "/" + heldItemData.MagazineCapacity);
+                        // Main.NewText("Mag: " + heldItemData.Magazine.Count + "/" + heldItemData.MagazineCapacity);
                     }
 
                     if (ReloadTimer < 0 && heldItemData.Magazine.Count < heldItemData.MagazineCapacity && HotKeys.ReloadWeapon.JustPressed)
                     {
-                        ReloadTimer = (int)(DefaultReloadSpeed * (1.1f - (ReloadSpeed / 100f)));
+                        ReloadTime = (int)(DefaultReloadSpeed * (1.1f - (ReloadSpeed / 100f)));
+                        ReloadTimer = ReloadTime;
                         ReloadItem = heldItem;
-                        Main.NewText("Mag: " + heldItemData.Magazine.Count + "/" + heldItemData.MagazineCapacity + " | Reload Speed: " + ReloadTimer / 60f + " sec.");
+                        // Main.NewText("Mag: " + heldItemData.Magazine.Count + "/" + heldItemData.MagazineCapacity + " | Reload Speed: " + ReloadTimer / 60f + " sec.");
                     }
                 }
             }

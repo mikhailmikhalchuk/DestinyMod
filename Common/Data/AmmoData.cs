@@ -1,4 +1,6 @@
-﻿namespace DestinyMod.Common.Data
+﻿using Terraria.ModLoader.IO;
+
+namespace DestinyMod.Common.Data
 {
     /// <summary>Represents data for ammo.</summary>
     public struct AmmoData
@@ -36,5 +38,21 @@
             Knockback = knockBack;
             AmmoItemID = ammoItemID;
         }
+
+        public TagCompound Save() => new TagCompound()
+        {
+            { "ProjectileType", ProjectileType },
+            { "Speed", Speed },
+            { "Damage", Damage },
+            { "Knockback", Knockback },
+            { "AmmoItemID", AmmoItemID }
+        };
+
+        public static AmmoData Load(TagCompound tagCompound) => new AmmoData(
+            tagCompound.Get<int>("ProjectileType"),
+            tagCompound.Get<float>("Speed"),
+            tagCompound.Get<int>("Damage"),
+            tagCompound.Get<float>("Knockback"),
+            tagCompound.Get<int>("AmmoItemID"));
     }
 }

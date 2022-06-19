@@ -11,6 +11,8 @@ using ReLogic.Graphics;
 using DestinyMod.Common.GlobalItems;
 using Terraria.ModLoader;
 using DestinyMod.Content.UI.ItemDetails;
+using DestinyMod.Content.Items.Equipables.Dyes;
+using DestinyMod.Common.ModPlayers;
 
 namespace DestinyMod.Content.UI.GameplayInformation
 {
@@ -109,7 +111,7 @@ namespace DestinyMod.Content.UI.GameplayInformation
 				SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 				spriteBatch.End();
 				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-				GameShaders.Armor.GetShaderFromItemId(ItemID.BrightSilverDye).Apply(null, itemDisplay);
+				GameShaders.Armor.GetShaderFromItemId(ModContent.ItemType<MysteriousDye>()).Apply(null, itemDisplay);
 				itemDisplay.effect = SpriteEffects.FlipHorizontally;
 				itemDisplay.Draw(spriteBatch);
 				spriteBatch.End();
@@ -132,6 +134,16 @@ namespace DestinyMod.Content.UI.GameplayInformation
 			Vector2 ammoTextSize = Font.MeasureString(ammoText) * ammoTextScale;
 			Vector2 ammoTextPosition = new Vector2(rightBorderDestRect.X - borderSize * 2 - ammoTextSize.X, heightPosHalved - 1); // Same thing here
 			spriteBatch.DrawString(Font, ammoText, ammoTextPosition, Color.White, 0f, new Vector2(0, ammoTextSize.Y / 2), ammoTextScale, SpriteEffects.None, 0f);
+
+			// Simple reload progress bar until / unless you want to do dreaded reload animations
+			ItemDataPlayer itemDataPlayer = Main.LocalPlayer.GetModPlayer<ItemDataPlayer>();
+			if (itemDataPlayer.ReloadTimer > 0)
+			{
+				float reloadProgress = Utils.Clamp((itemDataPlayer.ReloadTime - itemDataPlayer.ReloadTimer) / (float)itemDataPlayer.ReloadTime, 0f, 1f);
+				Rectangle reloadProgressBarDestRect = new Rectangle(bottomBorderDestRect.X, bottomBorderDestRect.Y, (int)(bottomBorderDestRect.Width * reloadProgress), bottomBorderDestRect.Height);
+				Color reloadProgressBarColor = ammoBorderColor * Math.Clamp((float)Math.Abs(Math.Sin(Main.GameUpdateCount / 10f) * 0.66f), 0.4f, 1f);
+				spriteBatch.Draw(magicPixel, reloadProgressBarDestRect, reloadProgressBarColor);
+			}
 		}
 	}
 }

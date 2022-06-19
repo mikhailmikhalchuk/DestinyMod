@@ -115,7 +115,7 @@ namespace DestinyMod.Common.GlobalItems
                 Recoil = itemData.DefaultRecoil;
                 MagazineCapacity = itemData.DefaultMagazineCapacity;
 
-                if (MagazineCapacity > 0)
+                if (MagazineCapacity > 0 && Magazine == null)
                 {
                     Magazine = new Queue<AmmoData>();
                 }
@@ -263,7 +263,7 @@ namespace DestinyMod.Common.GlobalItems
                 itemDataPlayer.WeaponUseBounce += recoilAdjustment;
                 itemDataPlayer.ResetBounceTimer = 0;
                 itemDataPlayer.ResetBounceThreshold = item.useAnimation * 2;
-                Main.NewText($"Range: {itemDataPlayer.Range} | Stability: {itemDataPlayer.Stability} | Recoil: {itemDataPlayer.Recoil} | Reload: {itemDataPlayer.ReloadSpeed}");
+                // Main.NewText($"Range: {itemDataPlayer.Range} | Stability: {itemDataPlayer.Stability} | Recoil: {itemDataPlayer.Recoil} | Reload: {itemDataPlayer.ReloadSpeed}");
             }
         }
 
@@ -327,6 +327,12 @@ namespace DestinyMod.Common.GlobalItems
             tag.Add("EnemiesKilled", EnemiesKilled);
             tag.Add("PlayersKilled", PlayersKilled);
 
+            ItemDataItem itemData = item.GetGlobalItem<ItemDataItem>();
+            if (Magazine != null)
+            {
+                tag.Add("Magazine", Magazine.Select(ammoData => ammoData.Save()).ToList());
+            }
+
             if (ActivePerks != null)
             {
                 tag.Add("ItemPerks", ActivePerks.Select(itemPerk => itemPerk == null ? "Null" : itemPerk.Name).ToList());
@@ -354,6 +360,17 @@ namespace DestinyMod.Common.GlobalItems
             LightLevel = tag.Get<int>("LightLevel");
             EnemiesKilled = tag.Get<int>("EnemiesKilled");
             PlayersKilled = tag.Get<int>("PlayersKilled");
+
+            if (tag.ContainsKey("Magazine"))
+            {
+                ItemDataItem itemData = item.GetGlobalItem<ItemDataItem>();
+                Magazine = new Queue<AmmoData>();
+                List<TagCompound> savedAmmoData = tag.Get<List<TagCompound>>("Magazine");
+                foreach (TagCompound ammoData in savedAmmoData)
+                {
+                    Magazine.Enqueue(AmmoData.Load(ammoData));
+                }
+            }
 
             if (tag.ContainsKey("ItemPerks"))
             {
