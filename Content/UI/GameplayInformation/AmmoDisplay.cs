@@ -83,26 +83,32 @@ namespace DestinyMod.Content.UI.GameplayInformation
 			// Idk the actual in-game color values so
 			spriteBatch.Draw(magicPixel, dimensions.ToRectangle(), new Color(200, 220, 230) * 0.2f);
 
-			int ammoBorderSize = 1;
+			const int ammoBorderSize = 1;
 			Color ammoBorderColor = new Color(135, 142, 142);
-			int borderSize = 4;
+			const int borderSize = 4;
+
 			Rectangle ammoBorderDestRect = new Rectangle((int)(dimensions.X + dimensions.Width * 0.7f), (int)dimensions.Y, ammoBorderSize, (int)dimensions.Height - borderSize);
 			spriteBatch.Draw(magicPixel, ammoBorderDestRect, ammoBorderColor);
+
 			Color borderColor = new Color(242, 244, 244);
 			Rectangle bottomBorderDestRect = new Rectangle((int)dimensions.X, (int)(dimensions.Y + dimensions.Height - borderSize), (int)dimensions.Width, borderSize);
 			spriteBatch.Draw(magicPixel, bottomBorderDestRect, borderColor);
+
 			Rectangle rightBorderDestRect = new Rectangle((int)(dimensions.X + dimensions.Width - borderSize), (int)dimensions.Y, borderSize, (int)dimensions.Height);
 			spriteBatch.Draw(magicPixel, rightBorderDestRect, borderColor);
 
-			int weaponIconBorderSize = 6;
+			const int weaponIconBorderSize = 6;
 			Rectangle weaponIconFrame = new Rectangle((int)dimensions.X + weaponIconBorderSize, (int)dimensions.Y + weaponIconBorderSize, (int)Width.Pixels / 2, (int)dimensions.Height - 2 * weaponIconBorderSize - borderSize);
+			
 			bool isXGreaterThanY = WeaponIcon.Width > WeaponIcon.Height;
 			int greaterDimension = Math.Max(WeaponIcon.Width, WeaponIcon.Height);
 			float scaleRatio = isXGreaterThanY ? weaponIconFrame.Width / greaterDimension : weaponIconFrame.Height / greaterDimension;
+
 			int destWidth = (int)(WeaponIcon.Width * scaleRatio);
 			int destHeight = (int)(WeaponIcon.Height * scaleRatio);
 			int destX = (int)(weaponIconFrame.X + (weaponIconFrame.Width - destWidth) / 2f);
 			int destY = (int)(weaponIconFrame.Y + (weaponIconFrame.Height - destHeight) / 2f);
+
 			Rectangle destinationRect = new Rectangle(destX, destY, destWidth, destHeight);
 			DrawData itemDisplay = new DrawData(WeaponIcon, destinationRect, Color.White);
 
@@ -110,11 +116,13 @@ namespace DestinyMod.Content.UI.GameplayInformation
 			{
 				SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
 				spriteBatch.End();
+
 				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 				GameShaders.Armor.GetShaderFromItemId(ModContent.ItemType<MysteriousDye>()).Apply(null, itemDisplay);
 				itemDisplay.effect = SpriteEffects.FlipHorizontally;
 				itemDisplay.Draw(spriteBatch);
 				spriteBatch.End();
+
 				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, ItemDetailsState.OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);
 			}
 			else
@@ -141,7 +149,7 @@ namespace DestinyMod.Content.UI.GameplayInformation
 			{
 				float reloadProgress = Utils.Clamp((itemDataPlayer.ReloadTime - itemDataPlayer.ReloadTimer) / (float)itemDataPlayer.ReloadTime, 0f, 1f);
 				Rectangle reloadProgressBarDestRect = new Rectangle(bottomBorderDestRect.X, bottomBorderDestRect.Y, (int)(bottomBorderDestRect.Width * reloadProgress), bottomBorderDestRect.Height);
-				Color reloadProgressBarColor = ammoBorderColor * Math.Clamp((float)Math.Abs(Math.Sin(Main.GameUpdateCount / 10f) * 0.66f), 0.4f, 1f);
+				Color reloadProgressBarColor = Color.Black * Math.Clamp((float)Math.Abs(Math.Sin(Main.GameUpdateCount / 10f) * 0.66f), 0.4f, 1f);
 				spriteBatch.Draw(magicPixel, reloadProgressBarDestRect, reloadProgressBarColor);
 			}
 		}
