@@ -7,7 +7,7 @@ using DestinyMod.Common.Items;
 
 namespace DestinyMod.Common.Mono.Modifications
 {
-	public class ImplementCanEquip : ILoadable
+	public sealed class ImplementCanEquip : ILoadable
 	{
 		public void Load(Mod mod)
 		{

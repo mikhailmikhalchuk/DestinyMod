@@ -13,10 +13,11 @@ using Terraria.GameContent;
 using Terraria.IO;
 using System.Reflection;
 using ReLogic.Content;
+using DestinyMod.Common.Configs;
 
 namespace DestinyMod.Content.UI.ClassSelection
 {
-	public class ModifyCharacterSelectScreen : ILoadable
+	public sealed class ModifyCharacterSelectScreen : ILoadable
 	{
 		public Asset<Texture2D> InnerPanelTexture;
 
@@ -26,6 +27,10 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public void Load(Mod mod)
 		{
+			if (!DestinyClientConfig.Instance.CharacterClassLabels)
+            {
+				return;
+            }
 			InnerPanelTexture = Main.Assets.Request<Texture2D>("Images/UI/InnerPanelBackground");
 
 			PlayerPanel = typeof(UICharacterListItem).GetField("_playerPanel", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -37,7 +42,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 
 		public void Unload() { }
 
-		private void ResizeCharacterSelect(ILContext il)
+		/*private void ResizeCharacterSelect(ILContext il)
 		{
 			ILCursor cursor = new ILCursor(il);
 
@@ -48,7 +53,7 @@ namespace DestinyMod.Content.UI.ClassSelection
 			}
 			cursor.Emit(OpCodes.Ldloc_0);
 			cursor.EmitDelegate<Action<UIElement>>(background => background.MaxWidth.Set(800f, 0f));
-		}
+		}*/
 
 		public void DrawPanel(SpriteBatch spriteBatch, Vector2 position, float width)
 		{

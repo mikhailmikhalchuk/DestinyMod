@@ -11,7 +11,7 @@ using Terraria.Graphics.Shaders;
 
 namespace DestinyMod.Common.Mono.Modifications
 {
-	public class ImplementHeldItemShader : ILoadable
+	public sealed class ImplementHeldItemShader : ILoadable
 	{
 		public void Load(Mod mod) => IL.Terraria.DataStructures.PlayerDrawLayers.DrawPlayer_27_HeldItem += PlayerDrawLayers_DrawPlayer_27_HeldItem;
 

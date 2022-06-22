@@ -17,7 +17,7 @@ using DestinyMod.Content.Items.Perks.Weapon.KillTrackers;
 namespace DestinyMod.Common.Items
 {
     /// <summary>Container class for <see cref="ItemDataItem"/> manipulation. Contains general helper methods and perk data for items.</summary>
-    public class ItemData : ILoadable
+    public sealed class ItemData : ILoadable
 	{
         /// <summary>
         /// The type of this item.

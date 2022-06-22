@@ -8,7 +8,7 @@ using DestinyMod.Common.Items;
 
 namespace DestinyMod.Common.Mono.Detours
 {
-	public class ImplementDestinyModItem : ILoadable
+	public sealed class ImplementDestinyModItem : ILoadable
 	{
 		public Action<Item, bool> ItemLoaderSetDefaults;
 

@@ -49,6 +49,7 @@ namespace DestinyMod.Common.Configs
         [Label("Class Labels")]
         [BackgroundColor(26, 70, 143, 192)]
         [DefaultValue(true)]
+        [ReloadRequired]
         [Tooltip("Displays character classes on the character selection screen.")]
         public bool CharacterClassLabels { get; set; }
     }

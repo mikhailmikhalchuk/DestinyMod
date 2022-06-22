@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace DestinyMod.Common.Items.Modifiers
 {
-    public class ModAndPerkLoader : ILoadable
+    public sealed class ModAndPerkLoader : ILoadable
     {
         public static int PerkTypeReserver { get; private set; }
 
