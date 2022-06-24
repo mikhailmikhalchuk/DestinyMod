@@ -90,10 +90,16 @@ namespace DestinyMod.Content.UI.ItemDetails
 			StatDisplayElement recoil = new StatDisplayElement("Recoil", inspectedItemData.Recoil);
 			recoil.UpdateDataEvent += () => recoil.Progress = inspectedItemData.Recoil;
 
+			StatDisplayElement reloadSpeed = new StatDisplayElement("Reload Speed", inspectedItemData.ReloadSpeed);
+			reloadSpeed.UpdateDataEvent += () => reloadSpeed.Progress = inspectedItemData.ReloadSpeed;
+
 			StatDisplayElement impact = new StatDisplayElement("Impact", inspectedItem.damage, false);
 			impact.UpdateDataEvent += () => impact.Progress = inspectedItem.damage;
 
-			StatsElement.Add(range, stability, recoil, impact);
+			StatDisplayElement magazine = new StatDisplayElement("Magazine", inspectedItemData.MagazineCapacity, false);
+			magazine.UpdateDataEvent += () => magazine.Progress = inspectedItemData.MagazineCapacity;
+
+			StatsElement.Add(range, stability, recoil, reloadSpeed, impact, magazine);
 
 			for (int i = 0; i < StatsElement.Count; i++)
             {
